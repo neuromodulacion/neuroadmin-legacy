@@ -61,7 +61,7 @@ include($ruta.'footer1.php');
 // Incluir la segunda parte del footer que finaliza la estructura del pie de página
 include($ruta.'footer2.php'); 
 */?>
-<!DOCTYPE html>
+<!DOCTYPE html>     
 <html>
 <head>
     <meta charset="UTF-8">
@@ -83,7 +83,7 @@ include($ruta.'footer2.php');
 </head>
 <body>
     <div class="description">
-        Este es un diagrama de flujo que muestra cómo el menú de la aplicación presenta opciones basadas en el rol de usuario.
+        Este es un diagrama de flujos que muestra cómo el menú de la aplicación presenta opciones basadas en el rol de usuario.
     </div>
     <div class="mermaid">
         flowchart TD
