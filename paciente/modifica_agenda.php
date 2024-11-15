@@ -1,0 +1,138 @@
+<?php
+include('../functions/funciones_mysql.php');
+session_start();
+error_reporting(7);
+iconv_set_encoding('internal_encoding', 'utf-8'); 
+header('Content-Type: text/html; charset=UTF-8');
+date_default_timezone_set('America/Monterrey');
+setlocale(LC_TIME, 'es_ES.UTF-8');
+$_SESSION['time']=mktime();
+
+$ruta = "../";
+extract($_SESSION);
+extract($_POST);
+//print_r($_POST);
+// echo "<hr>";
+
+//print_r($_SESSION);
+// echo "<hr>";
+//$aviso = stripslashes($_POST['aviso']); 
+
+$f_registro = date("Y-m-d");
+$h_registro = date("H:i:s"); 
+
+
+$h_ini = date("H:i:s",strtotime($h_ini.":00"));
+$h_fin = date("H:i:s",strtotime($h_fin.":00"));
+
+	$update ="
+	UPDATE agenda
+	SET
+	agenda.paciente_id = $paciente_id,
+	agenda.usuario_id = $usuario_id,
+	agenda.f_ini = '$f_ini',
+	agenda.h_ini = '$h_ini',
+	agenda.f_fin = '$f_fin',
+	agenda.h_fin = '$h_fin',
+	agenda.f_registro = '$f_registro',
+	agenda.h_registro = '$h_registro',
+	agenda.color = '$color',
+	agenda.observ = '$observ'
+	WHERE 
+	agenda.agenda_id = $agenda_id
+	";
+
+	 echo "<hr>".$update."<hr>";
+	$result_insert = ejecutar($update);
+	// echo $result_insert."<hr>";
+			
+echo "
+<div class='modal-footer'>
+	<div class='form-group'> 
+		<div class='col-sm-12'>
+			<h1>Se modifico correctamente</h1>
+	        <a class='btn bg-$body waves-effect' href='agenda.php?paciente_id=$paciente_id'>
+	             <B>Continuar</B>
+			</a>
+		</div>
+	</div>
+</div>";			
+
+$f_ini = strftime("%A %e de %B del %Y",strtotime($f_ini));
+
+
+$sql = "
+SELECT
+	pacientes.paciente_id, 
+	CONCAT(pacientes.paciente,' ',pacientes.apaterno,' ',pacientes.amaterno) as paciente, 
+	pacientes.email
+FROM
+	pacientes
+WHERE
+	pacientes.paciente_id = $paciente_id";
+	
+$result_agenda = ejecutar($sql); 
+$row_agenda = mysqli_fetch_array($result_agenda);
+extract($row_agenda);	
+
+$cuerpo_correo = "
+Estimada/o $paciente:<br>
+<br>
+Se le notifica que su terapia fue re-agendada para el d&iacute;a $f_ini a las $h_ini <br>
+<br>
+Atte: Neuromodulaci&oacute;n Gdl
+
+";
+$correo = $email;
+
+	//Import PHPMailer classes into the global namespace
+	//These must be at the top of your script, not inside a function
+	use PHPMailer\PHPMailer\PHPMailer;
+	use PHPMailer\PHPMailer\SMTP;
+	use PHPMailer\PHPMailer\Exception;
+	
+	//Load Composer's autoloader
+	require $ruta.'vendor/autoload.php';
+	
+	//Create an instance; passing `true` enables exceptions
+	$mail = new PHPMailer(true);
+    //$mail->setLanguage('es', '/optional/path/to/language/directory/');
+	//To load the French version
+// Configuración del mensaje
+    $mail->CharSet = 'UTF-8'; // Establecer la codificación de caracteres	
+	$mail->setLanguage('es', $ruta.'/optional/path/to/language/directory/');
+
+try {
+    //Server settings
+    $mail->SMTPDebug = 0; //SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = 'mail.neuromodulaciongdl.com';                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = 'no_responder@neuromodulaciongdl.com';                     //SMTP username
+    $mail->Password   = 'S{K?v5%X,u,D';                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+    //Recipients
+    $mail->setFrom('no_responder@neuromodulaciongdl.com', 'Neuromodulacion Gdl');
+    $mail->addAddress($correo, $paciente);     //Add a recipient
+    //$mail->addAddress('ellen@example.com');               //Name is optional
+    $mail->addReplyTo('no_responder@neuromodulaciongdl.com', 'Neuromodulacion Gdl');
+    //$mail->addCC('cc@example.com');
+    //$mail->addBCC('bcc@example.com');
+
+    //Attachments
+    // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+    //Content
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = 'Notificación de modificación registro de cita';
+    $mail->Body    = $cuerpo_correo;
+    $mail->AltBody = $cuerpo_correo;;
+
+    $mail->send();
+    echo '&nbsp;&nbsp;&nbsp;El mensaje se ha sido enviado';
+} catch (Exception $e) {
+    echo "No se pudo enviar el mensaje. Mailer Error: {$mail->ErrorInfo}";
+}

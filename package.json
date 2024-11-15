@@ -1,0 +1,25 @@
+{
+  "name": "adminbsb-materialdesign",
+  "version": "1.0.7",
+  "description": "AdminBSB - Free admin panel that is based on Bootstrap 3.x with Material Design",
+  "main": "js/admin.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gurayyarar/AdminBSBMaterialDesign.git"
+  },
+  "author": "Güray Yarar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gurayyarar/AdminBSBMaterialDesign/issues"
+  },
+  "homepage": "https://github.com/gurayyarar/AdminBSBMaterialDesign#readme",
+  "dependencies": {
+    "@fullcalendar/core": "^6.1.7",
+    "@fullcalendar/daygrid": "^6.1.7",
+    "@fullcalendar/google-calendar": "^6.1.7",
+    "@fullcalendar/interaction": "^6.1.7",
+    "@fullcalendar/list": "^6.1.7",
+    "@fullcalendar/timegrid": "^6.1.7"
+  }
+}

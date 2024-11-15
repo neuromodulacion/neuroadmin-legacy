@@ -1,0 +1,7 @@
+[06-Nov-2024 13:18:45 UTC] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/test/mensaje_guardado.php on line 26
+[06-Nov-2024 13:18:45 UTC] PHP Notice:  Undefined variable: mensaje in /home/lamanad1/neuromodulaciongdl.com/test/mensaje_guardado.php on line 36
+[06-Nov-2024 13:18:45 UTC] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/test/mensaje_guardado.php on line 38
+[06-Nov-2024 13:18:45 UTC] PHP Notice:  Undefined variable: nombre in /home/lamanad1/neuromodulaciongdl.com/test/mensaje_guardado.php on line 39
+[06-Nov-2024 13:18:45 UTC] PHP Notice:  Undefined variable: usuario in /home/lamanad1/neuromodulaciongdl.com/test/mensaje_guardado.php on line 40
+[06-Nov-2024 13:18:45 UTC] PHP Notice:  Undefined variable: celular in /home/lamanad1/neuromodulaciongdl.com/test/mensaje_guardado.php on line 41
+[06-Nov-2024 13:18:45 UTC] PHP Notice:  Undefined variable: ruta in /home/lamanad1/neuromodulaciongdl.com/test/mensaje_guardado.php on line 43

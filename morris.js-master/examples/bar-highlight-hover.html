@@ -1,0 +1,59 @@
+<!doctype html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+  <script src="../morris.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
+  <script src="lib/example.js"></script>
+  <link rel="stylesheet" href="lib/example.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
+    <style type="text/css">
+    .morris-hover.morris-default-style {
+      display: none !important;
+    }
+    </style>
+</head>
+<body>
+<h1>Title</h1>
+<div id="graph"></div>
+<pre id="code" class="prettyprint linenums">
+Morris.Bar({
+  element: 'graph',
+  data: [
+    {x: 'One', y: 8, z: 6, a: 1, q: 2},
+    {x: 'Two', y: 2, z: null, a: 1, q: 2},
+    {x: 'Three', y: 0, z: 2, a: 1, q: 2},
+    {x: 'Four', y: 2, z: 4, a: 1, q: 2}
+  ],
+  xkey: 'x',
+  ykeys: ['y', 'z'],
+  labels: [],
+  barColors: ['#4AE103', '#f8aa33', '#4da74d', '#afd8f8', '#edc240', '#cb4b4b', '#9440ed'],
+  barOpacity: 0.5,
+  resize: true,
+  gridTextColor: '#666',
+  grid: false
+
+});
+</pre>
+<!-- <script>
+Morris.Bar({
+  element: 'graph',
+  data: [
+    {x: '25 May 2023', y: 5, z: 6, a: 1, q: 2},
+    {x: 'Two', y: 2, z: 5, a: 1, q: 2},
+    {x: 'Three', y: 0, z: 2, a: 1, q: 2},
+    {x: 'Four', y: 2, z: 4, a: 1, q: 2}
+  ],
+  xkey: 'x',
+  ykeys: ['y', 'z'],
+  labels: [],
+  barColors: ['#1fbba6', '#f8aa33', '#4da74d', '#afd8f8', '#edc240', '#cb4b4b', '#9440ed'],
+  barOpacity: 0.5,
+  resize: true,
+  gridTextColor: '#666',
+  grid: false
+
+});	
+</script> -->
+</body>

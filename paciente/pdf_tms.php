@@ -1,0 +1,553 @@
+<?php
+
+session_start();
+error_reporting(7);
+iconv_set_encoding('internal_encoding', 'utf-8'); 
+header('Content-Type: text/html; charset=UTF-8');
+date_default_timezone_set('America/Monterrey');
+setlocale(LC_TIME, 'es_ES.UTF-8');
+$_SESSION['time']=mktime();
+extract($_SESSION);
+extract($_GET);
+extract($_POST);
+
+include('../functions/funciones_mysql.php');
+
+include('../paciente/calendario.php');
+
+include('../paciente/fun_paciente.php');
+
+//$paciente_id=26;
+
+$sql ="
+SELECT
+	pacientes.paciente_id, 
+	pacientes.usuario_id, 
+	CONCAT(pacientes.paciente,' ',pacientes.apaterno,' ',pacientes.amaterno) as paciente, 
+	pacientes.email, 
+	pacientes.celular, 
+	pacientes.f_nacimiento, 
+	pacientes.sexo, 
+	pacientes.contacto, 
+	pacientes.parentesco, 
+	pacientes.tel1, 
+	pacientes.tel2, 
+	pacientes.resumen_caso, 
+	pacientes.diagnostico, 
+	pacientes.diagnostico2, 
+	pacientes.diagnostico3, 
+	pacientes.medicamentos, 
+	pacientes.f_captura, 
+	pacientes.h_captura, 
+	pacientes.estatus, 
+	pacientes.observaciones, 
+	pacientes.notificaciones, 
+	pacientes.comentarios_reporte,
+	pacientes.tratamiento,
+	admin.nombre as medico
+FROM
+	pacientes
+	INNER JOIN
+	admin
+	ON 
+		pacientes.usuario_id = admin.usuario_id
+WHERE
+		pacientes.paciente_id = $paciente_id";
+	//echo $sql;	
+    $result=ejecutar($sql); 
+    $row = mysqli_fetch_array($result);
+    extract($row);	
+	//print_r($row);
+
+$terapia = substr($tratamiento, 0, 4);
+// echo $terapia."<br>";	
+$terapia == "TMS";
+
+$tabla_lineas ="";
+$tabla_header ="";
+
+
+		$tabla_header.="
+		<tr>
+			<td width='10px'></td>
+			<td width='70px'></td>
+			<td width='10px'></td>
+			<td width='120px' align='center'>FIRMA</td>
+			<td width='10px'></td>
+			<td width='80px' align='center'>FECHA</td>
+			<td width='10px'></td>
+			<td width='10px'></td>
+			<td width='120px' align='center'>FIRMA</td>
+			<td width='10px'></td>
+			<td width='80px' align='center'>FECHA</td>
+			<td width='10px'></td>	
+		</tr>	
+		";
+
+
+
+
+for ($i=1; $i <16 ; $i++) { 
+
+$e = $i+15;
+
+
+		$tabla_lineas.="
+			<tr>		
+				<td width='10px'></td>
+				<td>Sesion No. $i</td>
+				<td width='10px'></td>
+				<td  align='center'><hr></td>
+				<td width='10px'></td>
+				<td  align='center'><hr></td>			
+				<td width='10px'></td>
+				<td>Sesíon No.$e</td>
+				<td  align='center'><hr></td>
+				<td width='10px'></td>
+				<td  align='center'><hr></td>
+				<td width='10px'></td>																											
+			</tr>";	
+			
+	}
+
+
+
+	
+
+		
+$dia = date("d");
+$mes = strftime("%B");
+$anio = date("Y");    
+
+$header1="
+	<table style='width: 100%' >
+		<tr>
+			<td align='center' style='background: #fff; width: 20%'>
+				<img style='width: auto; height: 80px;' src='../$logo' alt='grafica'>					
+			</td>
+			<td style='background: #fff; width: 65%'>
+			<h2 align='center'><strong>NEUROMODULACI&Oacute;N GDL S.A. DE C.V.</strong></h2>	
+			</td>
+			<td align='center' style='background: #fff; width: 15%'>
+
+			</td>			
+		</tr>
+	</table>";
+$header="
+	<table style='width: 100%' >
+		<tr>
+			<td align='center' style='background: #fff; width: 20%'>
+				<img style='width: auto; height: 80px;' src='../$logo' alt='grafica'>					
+			</td>
+			<td align='center'  style='background: #fff; width: 60%'>
+	
+			</td>
+			<td align='center' style='background: #fff; width: 20%'>
+
+			</td>			
+		</tr>
+	</table>";	
+
+$footer ="<hr>
+	<table style='width: 100%' >
+		<tbody>
+			<tr>
+				<td align='center' style='background: #fff; width: 70%'>
+					
+				</td>
+				<td align='right'  style='background: #fff; width: 30%'>
+					<h5 style='color: #005157; '>
+					        Tel. 33 3995 9901<br>   
+				                 33 3995 9904<br>
+				                 33 3470 2176<br>
+				      Av. De los Arcos N. 876<br>
+				     Col. Jardines del Bosque<br>
+				neuromodulacion.gdl@gmail.com<br>
+				   www.neuromodulaciongdl.com<br>
+					</h5>
+				</td>			
+			</tr>
+		</tbody>
+	</table>
+";
+
+//$mpdf->SetHTMLHeader($header);
+    
+$cuerpo_pdf="
+<html>
+<head>
+    <title></title>
+
+</head>
+<body style='font-family: Arial, sans-serif; text-align: justify'>
+	$header1
+
+<br>
+<p><strong>Guadalajara, Jalisco a $dia de $mes del $anio.</strong></p>
+<br>
+<p><strong>Nombre del paciente:</strong>  $paciente</p>
+<br>
+<h2  align='center'> <strong>Terapia de Estimulaci&oacute;n Magn&eacute;tica Transcraneal</strong></h2>
+<br>
+<p>La EMT es un procedimiento m&eacute;dico no invasivo y autorizado en varios pa&iacute;ses, incluyendo su aprobaci&oacute;n en Estados Unidos por la FDA (Food and Drug Agency) para el tratamiento de diversos padecimientos. La EMT es una t&eacute;cnica de estimulaci&oacute;n cerebral que se basa en la generaci&oacute;n de campos magn&eacute;ticos breves por medio de una espiral recubierta por un aislante que se coloca sobre el cuero cabelludo.</p>
+
+<p>Estos campos magn&eacute;ticos son del mismo tipo y potencia que los empleados en las m&aacute;quinas de imagenolog&iacute;a por resonancia magn&eacute;tica (IRM). Los pulsos magn&eacute;ticos generan una corriente el&eacute;ctrica d&eacute;bil en el cerebro que activa en forma breve los circuitos neuronales en el sitio de estimulaci&oacute;n. Se ha demostrado que la EMT es un procedimiento seguro y bien tolerado que puede ser un tratamiento eficaz para los pacientes.</p>
+
+<p>El beneficio potencial de la EMT es que puede conducir a mejor&iacute;as en los s&iacute;ntomas de mi condici&oacute;n psiqui&aacute;trica. Comprendo que no todos los pacientes responden igualmente bien a la EMT. Lo mismo que todas las formas de tratamiento m&eacute;dico, algunos pacientes se recuperan con rapidez, otros se recuperan por un tiempo corto y luego recaen, mientras que otros no logran tener respuesta alguna a la terapia por EMT.</p>
+<br>
+<h2>Cl&aacute;usulas</h2>
+
+<p><strong>Primera.</strong> NEUROMODULACI&Oacute;N GDL, S.A. DE C.V. se compromete a brindar el servicio de la(s) sesi&oacute;n(es) de terapia de estimulaci&oacute;n magn&eacute;tica transcraneal (EMT) en el centro destinado para tal fin en un horario de lunes a viernes de 9:00 am a 8:00 pm y s&aacute;bados de 10:00 am a 2:00 pm con previa cita y confirmaci&oacute;n de la disponibilidad para el uso del equipo.</p>
+
+$footer
+<pagebreak />
+$header
+<br>
+<p><strong>Segunda. </strong>NEUROMODULACI&Oacute;N GDL, S.A. DE C.V. y EL PACIENTE acuerdan que el precio de la sesi&oacute;n de terapia de estimulaci&oacute;n magn&eacute;tica transcraneal (EMT) se estipulara en la consulta &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;de evaluaci&oacute;n del paciente.</p>
+
+<p><strong>Tercera. </strong>Las partes acuerdan que solo el titular del presente acuerdo podr&aacute; recibir el servicio antes descrito.</p>
+
+<p><strong>Cuarta</strong>. EL PACIENTE comprende y acepta el &ldquo;Consentimiento Informado previo a la Terapia de Estimulaci&oacute;n Magn&eacute;tica Transcraneal (EMT)&rdquo; que se le entreg&oacute; por el m&eacute;dico explic&aacute;ndole el alcance del tratamiento y posibles efectos secundarios.</p>
+
+<p><strong>Quinta. </strong>EL PACIENTE reconoce y acepta que su inasistencia a la sesi&oacute;n de terapia de estimulaci&oacute;n magn&eacute;tica transcraneal (EMT) no lo exime de las obligaciones contra&iacute;das, adem&aacute;s que se considerar&aacute; c&oacute;mo sesi&oacute;n otorgada.</p>
+
+<p><strong>Sexta. </strong>El PACIENTE acepta que s&oacute;lo cuenta con diez minutos de tolerancia en su cita, y Neuromodulaci&oacute;n GDL, S.A. de C.V. se reserva el derecho de reagendar o de otorgar la sesi&oacute;n.</p>
+
+<p><strong>S&eacute;ptima: </strong>EL PACIENTE se obliga en caso de no poder asistir a su cita, notificar con 24 horas de anticipaci&oacute;n para poder reagendar, sin afectar su tratamiento.</p>
+
+<p><strong>Octava. </strong>Las partes convienen que el(los) pago(s) de la(s) sesi&oacute;n(es) de terapia de estimulaci&oacute;n magn&eacute;tica transcraneal (EMT) <strong>deber&aacute;n ser previos a recibir el servicio</strong>.</p>
+
+<p><strong>Novena</strong>. Las partes no podr&aacute;n ceder los derechos y obligaciones de este acuerdo, en la inteligencia de que solo las obligaciones preimpresas pactadas en este instrumento regir&aacute;n entre las partes.</p>
+
+<p><strong>D&eacute;cima. </strong>En caso de que EL PACIENTE decida no continuar con la sesi&oacute;n(es) de terapia de estimulaci&oacute;n magn&eacute;tica transcraneal (EMT) y haya efectuado alg&uacute;n pago(s) correspondiente (s), &eacute;ste no ser&aacute; reembolsado.</p>
+
+<p><strong>Onceava. </strong>La terapia de estimulaci&oacute;n magn&eacute;tica transcraneal (EMT) requiere de continuidad para su mejor funcionamiento, es as&iacute; que el paciente se compromete a tomar sus sesiones completas en tiempo y forma, de no ser as&iacute; su tratamiento no ser&aacute; el &oacute;ptimo y puede influir en sus resultados.</p>
+<p>&nbsp;</p><p>&nbsp;</p><br>
+$footer
+<pagebreak />
+$header
+<p>&nbsp;</p>
+
+
+<h1>Paquete contratado:</h1>
+
+<p> __________________________________</p>
+
+<p><strong>Cantidad de sesiones:</strong></p>
+
+<p>________________________</p>
+
+<p><strong>Padecimiento:</strong></p>
+
+<p>$diagnostico</p>
+
+<p>&nbsp;</p>
+
+<p><strong>M&eacute;dico tratante:</strong></p>
+
+<p>$medico</p>
+
+
+
+<p>Total, a pagar:</p>
+
+
+<p>________________________</p>
+
+
+	<table style='width: 100%' >
+		<tr>
+			<td align='center' style='background: #fff; width: 45%; height: 220px; '>
+				<img style=' width: 170px' src='../images/vacio.png' >
+				<p style='vertical-align: bottom;'>_____________________________</p> 				
+			</td>
+			<td align='center'  style='background: #fff; width: 10%'>
+	
+			</td>
+			<td align='center' style='background: #fff; width: 45%; height: 220px;'>
+				<img style=' width: 170px' src='../images/firma.png' >
+				<p style='vertical-align: bottom;'>_____________________________</p>
+			</td>			
+		</tr>	
+		<tr>
+			<td align='center' style='background: #fff; width: 45%'>
+				<p>Nombre y firma<br>El paciente</p> 				
+			</td>
+			<td align='center'  style='background: #fff; width: 10%'>
+	
+			</td>
+			<td align='center' style='background: #fff; width: 45%'>
+				<p>Nombre y firma<br>El responsable</p>
+			</td>			
+		</tr>
+	</table>
+<br>
+$footer
+<pagebreak />
+$header
+
+<h2 align='center'>Aviso de privacidad<br />
+&nbsp;</h2>
+
+<p><strong>DECLARO</strong></p>
+
+<p>Con fundamento en lo dispuesto por los art&iacute;culos 3, fracci&oacute;n I, 15, 40 y 43, fracci&oacute;n III, de la Ley Federal de Protecci&oacute;n de Datos Personales en Posesi&oacute;n de los Particulares y sus correlativos; 23 y 26 de su Reglamento; adem&aacute;s de lo considerado en el art&iacute;culo 16 de la Constituci&oacute;n Pol&iacute;tica de los Estados Unidos Mexicanos en el que se reconoce que toda persona tiene derecho a la Protecci&oacute;n de sus Datos Personales.</p>
+
+<p>&nbsp;</p>
+
+<p><strong>Identificaci&oacute;n del responsable</strong></p>
+
+<p>NEUROMODULACION GDL, S.A. DE C.V., el responsable para efectos de la Ley Federal de Protecci&oacute;n de Datos personales en Posesi&oacute;n de los Particulares y sus disposiciones reglamentarias (la &ldquo;Ley de Datos&rdquo;), con domicilio en Av. De los Arcos No. 876, Jardines del Bosque, Guadalajara, Jalisco, C.P. 44520; le informa que tratar&aacute; los datos personales que recabe de Usted con las siguientes:</p>
+
+<p><strong>Finalidades</strong></p>
+
+<p>Brindarle la atenci&oacute;n m&eacute;dica que requiera conforme al Contrato de la Prestaci&oacute;n de Servicios M&eacute;dicos, as&iacute; como a las pol&iacute;ticas, procedimientos, protocolos y dem&aacute;s normatividad institucional de Neuromodulaci&oacute;n GDL, S.A. de C.V.</p>
+
+<p>Con relaci&oacute;n a lo considerado sensible seg&uacute;n lo establece la Ley Federal de Protecci&oacute;n de Datos en Posesi&oacute;n de los Particulares, la informaci&oacute;n necesaria al respecto.</p>
+
+<p>Su informaci&oacute;n personal ser&aacute; utilizada para proveer los servicios de salud que ha solicitado, con fines de diagn&oacute;stico, terap&eacute;utico y de tratamiento m&eacute;dico, sus datos cl&iacute;nicos servir&aacute;n para investigaci&oacute;n, seguimiento, mejora en la calidad del servicio y avances en la medicina, para los fines antes se&ntilde;alados, requerimos obtener los siguientes datos personales:</p>
+
+<p>Nombre completo, direcci&oacute;n, tel&eacute;fono, CURP, corre&oacute; electr&oacute;nico y El tratamiento leg&iacute;timo, controlado e informado de sus Datos Personales es de vital importancia para alcanzar los objetivos de prestaci&oacute;n de servicios de atenci&oacute;n m&eacute;dica, reiteramos nuestro compromiso con la privacidad y a su derecho a la autodeterminaci&oacute;n informativa, por lo que se hace de su conocimiento que los Datos Personales y sensibles que proporcione durante su consulta y atenci&oacute;n, le ser&aacute;n recabados en forma licita y con su </p>
+<br>
+$footer
+<pagebreak />
+$header
+
+<p>consentimiento, BAJO LA RESPONSABILIDAD de su m&eacute;dico tratante, EN LOS TERMINOS DEL AVISO DE PRIVACIDAD QUE &Eacute;STE LE PRESENTE con estricto apego a la Ley Federal de Protecci&oacute;n de Datos Personales en Posesi&oacute;n de Particulares y su Reglamento.</p>
+
+<ul>
+	<li>Incorporar sus datos a nuestras bases de atenci&oacute;n de pacientes.</li>
+	<li>Integrar su expediente cl&iacute;nico.</li>
+	<li>Compartir sus datos con su m&eacute;dico tratante y m&eacute;dicos Interconsultantes que indique su m&eacute;dico tratante, quienes son profesionistas independientes de Neuromodulaci&oacute;n GDL y quienes han asumido frente a Usted, la responsabilidad de su diagn&oacute;stico, pron&oacute;stico y tratamiento.</li>
+	<li>Subir al sistema de Consulta de Resultados</li>
+</ul>
+
+<p><strong>Fines publicitarios</strong></p>
+
+<p>Sus datos personales de contacto (domicilio, tel&eacute;fono y/o correo electr&oacute;nico) pueden llegar a ser empleados para hacerle llegar informaci&oacute;n acerca de las promociones y de las caracter&iacute;sticas de los servicios que ofrece Neuromodulaci&oacute;n GDL, S.A. de C.V</p>
+
+<p>Si usted no desea recibir ning&uacute;n tipo de informaci&oacute;n al respecto o que sus datos no sean utilizados para alguna de las finalidades secundarias, le solicitamos as&iacute; lo informe a este NEUROMODULACI&Oacute;N GDL, S.A. DE C.V., enviando un correo a neuromodulacion.gdl@gmail.com</p>
+
+<p><strong>Datos personales</strong></p>
+
+<p>Para alcanzar las finalidades antes expuestas, se tratar&aacute;n los siguientes datos personales: nombre completo, CURP, domicilio, tel&eacute;fono, correo electr&oacute;nico, estado civil, edad, sexo, nacionalidad, fecha de nacimiento, nombre, domicilio y tel&eacute;fono de alg&uacute;n familiar que designe como familiar responsable y con quien podamos comunicarnos en caso de urgencia. En algunos servicios, tambi&eacute;n se tomar&aacute;n fotograf&iacute;as o videos que se integrar&aacute;n a su expediente cl&iacute;nico, con la finalidad de llevar un registro de su evoluci&oacute;n o del tratamiento.</p>
+
+
+<p><strong>Datos personales sensibles</strong></p>
+
+<p>A fin de poder brindar la atenci&oacute;n y conforme a la legislaci&oacute;n en salud aplicable, le ser&aacute;n solicitados los datos personales sensibles que se requieran para tal efecto: , estado de salud actual, padecimientos pasados y presentes, antecedentes heredofamiliares, s&iacute;ntomas, antecedentes patol&oacute;gicos relevantes, antecedentes de salud, y en algunos casos, cuando se requiera para su adecuada atenci&oacute;n m&eacute;dica, tambi&eacute;n podr&aacute;n ser tratados datos personales sensibles como su preferencia sexual e informaci&oacute;n gen&eacute;tica (este &uacute;ltimo dato, para estudios de diagn&oacute;stico cl&iacute;nico que usted o su m&eacute;dico tratante hayan solicitado).</p>
+
+
+$footer
+<pagebreak />
+$header
+<p><strong>Modificaciones al aviso de privacidad:</strong></p>
+
+<p>NEUROMDULACION GDL, S.A. DE C.V., se reserva el derecho de efectuar en cualquier momento modificaciones o actualizaciones al presente aviso de privacidad, lo cual dar&aacute; a conocer de forma personal o bien, por medio de la publicaci&oacute;n de un aviso en lugar visible y/o en la p&aacute;gina de internet&nbsp;www.neuromodulaciongdl.com<br />
+&nbsp;</p>
+
+<p><strong>Consentimiento</strong></p>
+
+<p>En caso de que Usted desee revocar o negar su consentimiento para que sus datos personales sean usados para las finalidades secundarias, le solicitamos nos lo haga saber a trav&eacute;s del correo electr&oacute;nico: neuromodulacion.gdl@gmail.com</p>
+
+<p>&nbsp;</p>
+
+<p><strong>Guadalajara, Jalisco a $dia del mes de $mes del $anio.<strong></p>
+<br>
+<br>
+<br>
+<br>
+<p>$paciente<br><b>Nombre y Firma del Paciente</b></p>
+
+<p>&nbsp;</p>
+
+<p><b>M&eacute;dico tratante:</b><br> $medico</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+$footer
+<pagebreak />
+$header1
+
+<h2 align='center'><strong>Consentimiento para recibir el tratamiento con TMS </strong></h2>
+
+<p><strong>Descripci&oacute;n de procedimiento</strong></p>
+
+<p>La estimulaci&oacute;n magn&eacute;tica transcraneal, TMS, por sus siglas en ingles es un tratamiento m&eacute;dico que se realiza por cl&iacute;nicos capacitados. El aparato que se utiliza para ella tiene diferentes componentes. En general, este aparato genera un campo magn&eacute;tico que termina produciendo un campo el&eacute;ctrico en la zona cerebral en donde se posiciona su bobina.</p>
+
+<p>Para comenzar a tratar al paciente con este aparato se debe determinar el umbral motor o la dosis del campo magn&eacute;tico. Esto es determinado espec&iacute;ficamente con cada uno de los pacientes. Se realiza al implementar un pulso magn&eacute;tico sobre la corteza motora, determinando cuanta energ&iacute;a se necesita para generar una corriente el&eacute;ctrica dentro de esta. Esta es la cantidad necesaria para que el aparato de TMS produzca un movimiento en sus dedos.</p>
+
+<p>Una persona entrenada tomar&aacute; la bobina que emite el pulso magn&eacute;tico sobre la cabeza de su paciente mientras que una serie de pulsos (no m&aacute;s r&aacute;pidos que un pulso por segundo) que ser&aacute; emitida hasta que los dedos de la mano contralateral de donde se est&aacute; aplicando realicen un movimiento. Durante este proceso, el &uacute;nico efecto que el paciente podr&aacute; notar es un sonido de &ldquo;clic&rdquo; cuando los pulsos se est&eacute;n emitiendo.</p>
+
+<p>El paciente podr&aacute; elegir utilizar tapones de los o&iacute;dos durante este proceso y todo su tratamiento para proteger su audici&oacute;n. Si los impulsos por serie de su protocolo son mayores a un pulso por segundo es recomendable usar estos tapones por comodidad y seguridad.</p>
+
+<p>El paciente se debe de mantener despierto durante el tratamiento completo con TMS. Si efectos indeseables se desarrollan durante el tratamiento, este puede ser pausado en cualquier momento sin consecuencias en sus efectos.</p>
+
+<p><strong>Riesgos</strong></p>
+
+<p>Lo mismo que cualquier tratamiento m&eacute;dico, la EMT conlleva un riesgo de efectos&nbsp; secundarios. No obstante, la EMT por lo general es bien tolerada y s&oacute;lo un porcentaje&nbsp;peque&ntilde;o de pacientes suspende el tratamiento debido a efectos secundarios.&nbsp;&nbsp;</p>
+
+<p>Es posible que, durante el tratamiento, sienta golpeteo, espasmos faciales o&nbsp; sensaciones dolorosas en el sitio del tratamiento mientras se enciende la espiral&nbsp; magn&eacute;tica.&nbsp;</p>
+
+<br>
+
+
+$footer
+<pagebreak />
+$header
+
+<p>Cerca de un tercio de los pacientes ha informado sobre este tipo de&nbsp; sensaciones. Comprendo que debo informar al personal si esto ocurre. A continuaci&oacute;n, el&nbsp; personal de tratamiento puede ajustar los valores de estimulaci&oacute;n o hacer cambios en el&nbsp; sitio de colocaci&oacute;n de la espiral con el fin de ayudar a hacer que el procedimiento sea m&aacute;s&nbsp; c&oacute;modo para m&iacute;. Asimismo, cerca de la mitad de los pacientes tratados con EMT han&nbsp; sufrido dolores de cabeza.</p>
+
+<p>Comprendo que tanto las molestias como los dolores de&nbsp; cabeza tienden a disminuir con el tiempo y que, por lo general, estos dolores&nbsp; respondieron bien a medicamentos analg&eacute;sicos que no requieren receta.</p>
+
+<p>El riesgo m&aacute;s grave conocido de la EMT es la producci&oacute;n de una convulsi&oacute;n.&nbsp; Aunque ha habido algunos informes sobre casos de ataques con el uso de dispositivos de&nbsp; EMT, el riesgo es peque&ntilde;o en extremo, y no se han observado convulsiones con el uso de&nbsp; este dispositivo particular de EMT. No obstante, informar&eacute; a mi doctor si presento&nbsp; antecedentes de alg&uacute;n trastorno convulsivo, ya que esto podr&iacute;a influir en mi riesgo de&nbsp; desarrollar convulsiones con este procedimiento. El equipo de EMT sigue lineamientos de&nbsp; seguridad actualizados para el uso de EMT dise&ntilde;ados para minimizar el riesgo de convulsiones con esta t&eacute;cnica.</p>
+
+<p>La terapia de EMT no es eficaz para todos los pacientes con depresi&oacute;n. Cualquier&nbsp; signo o s&iacute;ntoma de empeoramiento debe informarse de inmediato a su Doctor. Es posible&nbsp;que desee pedir a un familiar o cuidador que vigile sus s&iacute;ntomas para ayudarle a detectar&nbsp; cualquier signo de empeoramiento de la depresi&oacute;n. No se han reportado efectos&nbsp;adversos cognitivos (pensamiento y memoria) asociados con la terapia de EMT.&nbsp;</p>
+
+<p>Con TMS, el sonido de &ldquo;clic&rdquo; hecho por el estimulador puede afectar temporalmente la audici&oacute;n, es por esto que se le ofrecer&aacute; utilizar protectores auditivos.</p>
+
+<p>Responda este cuestionario y firme debajo.</p>
+
+<p>&iquest;Est&aacute; usted embarazada?</p>
+
+<p>&iquest;Tiene alg&uacute;n metal magn&eacute;tico en su cabeza?</p>
+
+<p>&iquest;Existe alguna raz&oacute;n por la que no puede pasar por una resonancia magn&eacute;tica?</p>
+
+<p>&iquest;Durmi&oacute; por menos de 4 horas?</p>
+
+<p>&iquest;Ha consumido alcohol durante las &uacute;ltimas 24 horas?</p>
+
+<p>&iquest;Ha consumido alguna sustancia que podr&iacute;a disminuir su umbral motor en las &uacute;ltimas 24 horas?</p>
+
+$footer
+<pagebreak />
+$header
+
+<p>Si ha respondido SI a alguna de las preguntas anteriores, debe de hac&eacute;rselo saber al responsable de la aplicaci&oacute;n del tratamiento.</p>
+
+<p>&nbsp;A trav&eacute;s del presente escrito manifiesto que yo:</p>
+
+<p>________________________________________________________________________ acud&iacute; por mi propia voluntad y bajo mi responsabilidad a Neuromodulacion GDL, el d&iacute;a <b>$dia de $mes del $anio </b>, para que con mi consentimiento se me realice la aplicaci&oacute;n de un protocolo de estimulaci&oacute;n magn&eacute;tica transcraneal o estimulaci&oacute;n el&eacute;ctrica directa indicada por mi m&eacute;dico tratante. Reconozco que el personal de Neuromodulaci&oacute;n GDL inform&oacute; y asesor&oacute; acerca de la naturaleza del tratamiento, los posibles resultados tras el tratamiento, as&iacute; como&nbsp; tambi&eacute;n se me informo de los y riesgos las consecuencias que puede tener para mi salud este tratamiento.</p>
+
+<p>Asimismo, se me dio la oportunidad de hacer las preguntas que consider&eacute; necesarias, las cuales fueron respondidas a mi entera satisfacci&oacute;n.</p>
+
+<p>Adem&aacute;s, el personal de Neuromodulacion GDL me inform&oacute; el procedimiento de detecci&oacute;n y las molestias derivadas del mismo. Expreso que se aclararon mis dudas y se ampli&oacute; la informaci&oacute;n cuando as&iacute; lo solicit&eacute;, incluso se me comunic&oacute; que tengo el derecho de cambiar de decisi&oacute;n en cualquier momento y manifestarla previo al procedimiento.</p>
+
+<p>A efecto de facilitar mi atenci&oacute;n integral, me comprometo a acudir a revisi&oacute;n m&eacute;dica cuando se me indique, o en el caso de presentar alguna molestia o duda al procedimiento.</p>
+
+<p>Se me inform&oacute; que todos los datos que proporcione a Neuromodulacion GDL ser&aacute;n utilizados de manera estrictamente confidencial y si es mi voluntad se considerar&aacute;n de manera an&oacute;nima.</p>
+
+<p>Acorde con lo anterior, declaro que es mi decisi&oacute;n libre, consciente e informada de aceptar el procedimiento de Estimulaci&oacute;n Magn&eacute;tica Transcraneal □ / Estimulaci&oacute;n Directa Craneal □ a fin de llevar a cabo las acciones m&eacute;dico preventivas requeridas en beneficio de mi salud.</p>
+
+	<table style='width: 100%' >
+		<tr>
+			<td align='center' style='background: #fff; width: 45%'>
+				<img style=' width: 170px' src='../images/vacio.png' >
+				<p>_____________________________</p> 				
+			</td>
+			<td align='center'  style='background: #fff; width: 10%'>
+	
+			</td>
+			<td align='center' style='background: #fff; width: 45%'>
+				<img style=' width: 170px' src='../images/firma.png' >
+				<p>_____________________________</p>
+			</td>			
+		</tr>	
+		<tr>
+			<td align='center' style='background: #fff; width: 45%'>
+				<p>Nombre y firma<br>El paciente</p> 				
+			</td>
+			<td align='center'  style='background: #fff; width: 10%'>
+	
+			</td>
+			<td align='center' style='background: #fff; width: 45%'>
+				<p>Nombre y firma<br>El responsable</p>
+			</td>			
+		</tr>
+	</table>
+
+$footer
+<pagebreak />
+$header1 
+
+<table width='100%'>
+	<tr>
+		<td  align='center' colspan='11'>
+			<h2> <b>REGISTRO DE SESIONES APLICADAS </b></h2>
+		</td>
+	</tr>
+	<tr>
+		<td align='center' colspan='11'>
+			<h3><b>$tratamiento</h3><hr>
+		</td>
+	</tr>	
+	<tr>
+		<td colspan='11'>
+			<b>PACIENTE:</b> $paciente
+		</td>
+	</tr>
+	<tr>			
+		<td colspan='11'>
+			<b>PADECIMIENTO:</b> $diagnostico
+		</td>
+	</tr>
+	<tr>		
+		<td colspan='11'>
+			<b>MEDICO TRATANTE:</b> $medico<hr>
+		</td>						
+	</tr>
+
+	$tabla_header
+	<tr>
+		<td colspan='11'>
+			<br>
+		</td>
+	</tr>
+	
+	$tabla_lineas
+	
+	<tr>
+		<td colspan='11'>
+			<br>
+		</td>
+	</tr>		
+	<tr>		
+		<td colspan='11'>
+			<h3><b>OBSERVACIONES:</b></h3><br><br><br><br>
+		</td>						
+	</tr>
+</table>
+
+$footer
+</body>
+";
+
+
+
+
+// echo $cuerpo_pdf;
+// Require composer autoload
+require_once __DIR__ . '/../vendor/autoload.php';
+// Create an instance of the class:
+$mpdf = new \Mpdf\Mpdf();
+
+// Write some HTML code:
+$mpdf->WriteHTML($cuerpo_pdf);
+
+// D descarga
+// F guarda
+// I imprime
+
+// Output a PDF file directly to the browser
+$mpdf->Output('Paciente_'.$paciente_id.'.pdf','I');
+
+?>

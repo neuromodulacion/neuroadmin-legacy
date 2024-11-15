@@ -1,0 +1,579 @@
+[01-Aug-2024 18:39:30 UTC] PHP Notice:  Undefined variable: ruta in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 3
+[01-Aug-2024 18:39:30 UTC] PHP Warning:  include(functions/fun_inicio.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 3
+[01-Aug-2024 18:39:30 UTC] PHP Warning:  include(functions/fun_inicio.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 3
+[01-Aug-2024 18:39:30 UTC] PHP Warning:  include(): Failed opening 'functions/fun_inicio.php' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 3
+[01-Aug-2024 18:39:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ejecutar() in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php:22
+Stack trace:
+#0 {main}
+  thrown in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 22
+[01-Aug-2024 18:41:29 UTC] PHP Notice:  Undefined variable: ruta in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 3
+[01-Aug-2024 18:41:29 UTC] PHP Warning:  include(functions/fun_inicio.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 3
+[01-Aug-2024 18:41:29 UTC] PHP Warning:  include(functions/fun_inicio.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 3
+[01-Aug-2024 18:41:29 UTC] PHP Warning:  include(): Failed opening 'functions/fun_inicio.php' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 3
+[01-Aug-2024 18:41:29 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ejecutar() in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php:23
+Stack trace:
+#0 {main}
+  thrown in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 23
+[01-Aug-2024 18:42:25 UTC] PHP Parse error:  syntax error, unexpected 'include' (T_INCLUDE) in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 4
+[10-Aug-2024 21:56:04 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 176
+[10-Aug-2024 22:08:13 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 196
+[10-Aug-2024 22:13:25 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 196
+[10-Aug-2024 22:13:57 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 196
+[10-Aug-2024 22:14:31 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 196
+[10-Aug-2024 22:14:54 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 196
+[10-Aug-2024 22:15:31 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 196
+[10-Aug-2024 22:15:43 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 196
+[10-Aug-2024 22:20:24 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 196
+[10-Aug-2024 22:32:01 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 208
+[10-Aug-2024 22:34:30 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 206
+[10-Aug-2024 22:35:00 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 206
+[10-Aug-2024 22:37:01 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 206
+[10-Aug-2024 22:37:13 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 206
+[10-Aug-2024 22:37:32 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 206
+[11-Aug-2024 10:05:11 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 206
+[11-Aug-2024 10:09:24 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 206
+[11-Aug-2024 16:46:09 UTC] PHP Notice:  Undefined variable: ruta in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 4
+[11-Aug-2024 16:46:09 UTC] PHP Warning:  include(functions/funciones_mysql.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 4
+[11-Aug-2024 16:46:09 UTC] PHP Warning:  include(functions/funciones_mysql.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 4
+[11-Aug-2024 16:46:09 UTC] PHP Warning:  include(): Failed opening 'functions/funciones_mysql.php' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 4
+[11-Aug-2024 16:46:09 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 19
+[11-Aug-2024 16:46:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function ejecutar() in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php:39
+Stack trace:
+#0 {main}
+  thrown in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 39
+[11-Aug-2024 16:46:33 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 16:47:27 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 16:56:16 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 16:56:16 UTC] PHP Notice:  Undefined variable: nombre in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 92
+[11-Aug-2024 16:57:24 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 16:58:18 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 16:58:27 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 17:00:52 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 17:01:25 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 17:02:19 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 17:02:28 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 17:04:09 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 17:04:56 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 17:05:10 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 17:05:39 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 12:12:52 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 206
+[11-Aug-2024 12:13:57 America/Monterrey] PHP Warning:  Use of undefined constant variable - assumed 'variable' (this will throw an Error in a future version of PHP) in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 206
+[11-Aug-2024 17:17:44 UTC] PHP Notice:  Undefined index: email in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 18
+[11-Aug-2024 17:18:32 UTC] PHP Notice:  Undefined index: email in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 18
+[11-Aug-2024 17:18:32 UTC] PHP Warning:  include(pdf_perros.php?id=5): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:18:32 UTC] PHP Warning:  include(pdf_perros.php?id=5): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:18:32 UTC] PHP Warning:  include(): Failed opening 'pdf_perros.php?id=5' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:18:51 UTC] PHP Warning:  include(pdf_perros.php?id=6): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:18:51 UTC] PHP Warning:  include(pdf_perros.php?id=6): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:18:51 UTC] PHP Warning:  include(): Failed opening 'pdf_perros.php?id=6' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:21:27 UTC] PHP Warning:  include(pdf_perros.php?id=7): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:21:27 UTC] PHP Warning:  include(pdf_perros.php?id=7): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:21:27 UTC] PHP Warning:  include(): Failed opening 'pdf_perros.php?id=7' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:22:32 UTC] PHP Warning:  include(pdf_perros.php?id=8): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:22:32 UTC] PHP Warning:  include(pdf_perros.php?id=8): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:22:32 UTC] PHP Warning:  include(): Failed opening 'pdf_perros.php?id=8' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:22:41 UTC] PHP Warning:  include(pdf_perros.php?id=9): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:22:41 UTC] PHP Warning:  include(pdf_perros.php?id=9): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:22:41 UTC] PHP Warning:  include(): Failed opening 'pdf_perros.php?id=9' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 37
+[11-Aug-2024 17:24:07 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[11-Aug-2024 17:24:07 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[11-Aug-2024 17:24:19 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[11-Aug-2024 17:24:19 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[11-Aug-2024 17:49:05 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[11-Aug-2024 17:49:05 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[11-Aug-2024 17:49:07 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 33
+[11-Aug-2024 17:49:07 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 33
+[11-Aug-2024 17:49:07 UTC] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 33
+[11-Aug-2024 21:27:26 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[11-Aug-2024 21:27:26 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[11-Aug-2024 21:27:29 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 33
+[11-Aug-2024 21:27:29 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 33
+[11-Aug-2024 21:27:29 UTC] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 33
+[11-Aug-2024 21:33:19 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[11-Aug-2024 21:33:19 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[11-Aug-2024 21:33:21 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 36
+[11-Aug-2024 21:33:21 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 36
+[11-Aug-2024 21:33:21 UTC] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 36
+[11-Aug-2024 21:49:48 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[11-Aug-2024 21:49:48 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[11-Aug-2024 21:49:50 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 34
+[11-Aug-2024 21:49:50 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 34
+[11-Aug-2024 21:49:50 UTC] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 34
+[11-Aug-2024 21:51:48 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[11-Aug-2024 21:51:48 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[11-Aug-2024 21:51:50 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 34
+[11-Aug-2024 21:51:50 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 34
+[11-Aug-2024 21:51:50 UTC] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 34
+[11-Aug-2024 21:52:28 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[11-Aug-2024 21:52:28 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[11-Aug-2024 21:52:29 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 34
+[11-Aug-2024 21:52:29 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 34
+[11-Aug-2024 21:52:29 UTC] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 34
+[12-Aug-2024 00:14:00 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[12-Aug-2024 00:14:00 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[12-Aug-2024 00:16:24 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[12-Aug-2024 00:16:24 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[12-Aug-2024 00:34:43 UTC] PHP Warning:  Unterminated comment starting line 336 in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 336
+[12-Aug-2024 00:34:43 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[12-Aug-2024 00:34:43 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[12-Aug-2024 00:34:45 UTC] PHP Notice:  Undefined variable: time in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 324
+[12-Aug-2024 00:47:42 UTC] PHP Warning:  Unterminated comment starting line 336 in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 336
+[12-Aug-2024 00:47:42 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[12-Aug-2024 00:47:42 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[12-Aug-2024 00:47:44 UTC] PHP Notice:  Undefined variable: time in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 324
+[12-Aug-2024 00:47:55 UTC] PHP Warning:  Unterminated comment starting line 378 in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 378
+[12-Aug-2024 00:47:55 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[12-Aug-2024 00:47:55 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[12-Aug-2024 00:47:58 UTC] PHP Notice:  Undefined variable: time in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 326
+[12-Aug-2024 00:47:58 UTC] PHP Notice:  Undefined variable: <h3>&nbsp;&nbsp;&nbsp;El archivo ha sido enviado con éxito al correo sanzaleonardo@gmail.com</h3> in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 362
+[12-Aug-2024 00:49:35 UTC] PHP Warning:  Unterminated comment starting line 378 in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 378
+[12-Aug-2024 00:49:36 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[12-Aug-2024 00:49:36 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[12-Aug-2024 00:49:38 UTC] PHP Notice:  Undefined variable: time in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 326
+[12-Aug-2024 00:50:06 UTC] PHP Warning:  Unterminated comment starting line 379 in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 379
+[12-Aug-2024 00:50:06 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[12-Aug-2024 00:50:06 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[12-Aug-2024 00:50:12 UTC] PHP Notice:  Undefined variable: time in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 326
+[12-Aug-2024 00:50:42 UTC] PHP Warning:  Unterminated comment starting line 379 in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 379
+[12-Aug-2024 00:50:42 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[12-Aug-2024 00:50:42 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[12-Aug-2024 00:50:45 UTC] PHP Notice:  Undefined variable: time in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 326
+[12-Aug-2024 01:09:18 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[12-Aug-2024 01:09:42 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[12-Aug-2024 01:09:43 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[12-Aug-2024 01:10:45 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[12-Aug-2024 01:10:45 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[12-Aug-2024 01:10:47 UTC] PHP Notice:  Undefined variable: time in /home/lamanad1/neuromodulaciongdl.com/carta/procesar_formulario.php on line 349
+[11-Aug-2024 20:15:49 America/Monterrey] PHP Fatal error:  Uncaught Error: Call to undefined function ejecutar() in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php:53
+Stack trace:
+#0 {main}
+  thrown in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 53
+[11-Aug-2024 20:15:52 America/Monterrey] PHP Fatal error:  Uncaught Error: Call to undefined function ejecutar() in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php:53
+Stack trace:
+#0 {main}
+  thrown in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 53
+[11-Aug-2024 20:16:22 America/Monterrey] PHP Fatal error:  Uncaught Error: Call to undefined function ejecutar() in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php:53
+Stack trace:
+#0 {main}
+  thrown in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 53
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: sesion in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 32
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/uso.php on line 35
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: time in /home/lamanad1/neuromodulaciongdl.com/uso.php on line 50
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/uso.php on line 54
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 9
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 15
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: emp_nombre in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 48
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: empresa_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 63
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 66
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: nombre_corto in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 114
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 115
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 141
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 141
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 141
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 151
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 157
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 157
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 157
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 157
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 157
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 157
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 157
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 165
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 165
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 165
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 165
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 165
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 165
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 165
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 173
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 173
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 173
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 173
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 173
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 173
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 173
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 198
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 198
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 198
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 198
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 198
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 198
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 198
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 206
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 206
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 206
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 206
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 206
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 206
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 206
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 220
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 220
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 220
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 220
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 220
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 220
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 228
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 228
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 238
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 238
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 238
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 347
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 347
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 347
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 347
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 347
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 384
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 384
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 384
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 384
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 384
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 437
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 437
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 437
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 437
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 437
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 471
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 471
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 471
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 471
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 471
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 471
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 494
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 494
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 494
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 494
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 574
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 574
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 574
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 574
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 607
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 614
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 629
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 637
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 650
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 658
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 671
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 679
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 692
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 700
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 713
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 721
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 734
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 742
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 755
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 763
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 776
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 784
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 798
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 806
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 820
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 828
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 841
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 849
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 862
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 870
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 883
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 891
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 904
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 912
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 925
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 933
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 946
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 954
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 967
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 975
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 988
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 996
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 1009
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 1017
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 1030
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 1038
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 1062
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 1068
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 1077
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 1083
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 1092
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 1098
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/carta/genera_invitacion.php on line 57
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/carta/genera_invitacion.php on line 57
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/carta/genera_invitacion.php on line 93
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: empresa_id in /home/lamanad1/neuromodulaciongdl.com/carta/genera_invitacion.php on line 94
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined variable: time in /home/lamanad1/neuromodulaciongdl.com/carta/genera_invitacion.php on line 95
+[11-Aug-2024 19:19:00 America/Mazatlan] PHP Notice:  Undefined index: usuario_id in /home/lamanad1/neuromodulaciongdl.com/footer1.php on line 67
+[12-Aug-2024 01:19:11 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 20:19:43 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[11-Aug-2024 20:19:43 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[12-Aug-2024 02:26:40 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[12-Aug-2024 02:26:42 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[11-Aug-2024 21:27:24 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[11-Aug-2024 21:27:24 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[12-Aug-2024 02:31:50 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[18-Sep-2024 05:18:34 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[18-Sep-2024 00:19:49 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[18-Sep-2024 00:19:49 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[23-Sep-2024 00:24:15 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta/vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:24:15 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta/vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:24:15 UTC] PHP Fatal error:  require(): Failed opening required '/home/lamanad1/neuromodulaciongdl.com/carta/vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:25:45 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta/vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:25:45 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta/vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:25:45 UTC] PHP Fatal error:  require(): Failed opening required '/home/lamanad1/neuromodulaciongdl.com/carta/vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:40:01 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:40:01 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:40:01 UTC] PHP Fatal error:  require(): Failed opening required '/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:41:09 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:41:09 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:41:09 UTC] PHP Fatal error:  require(): Failed opening required '/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:41:10 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:41:10 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:41:10 UTC] PHP Fatal error:  require(): Failed opening required '/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 3
+[23-Sep-2024 00:41:18 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 8
+[23-Sep-2024 00:41:18 UTC] PHP Warning:  require(/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php): failed to open stream: No such file or directory in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 8
+[23-Sep-2024 00:41:18 UTC] PHP Fatal error:  require(): Failed opening required '/home/lamanad1/neuromodulaciongdl.com/carta../vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/lamanad1/neuromodulaciongdl.com/carta/pago.php on line 8
+[23-Sep-2024 00:41:34 UTC] {"message":"unknown_error","error":"","status":400,"cause":[]}
+[23-Sep-2024 00:41:34 UTC] PHP Notice:  Undefined index: id in /home/lamanad1/neuromodulaciongdl.com/vendor/mercadopago/dx-php/src/MercadoPago/Config.php on line 113
+[23-Sep-2024 00:41:34 UTC] PHP Notice:  Undefined index: country_id in /home/lamanad1/neuromodulaciongdl.com/vendor/mercadopago/dx-php/src/MercadoPago/Config.php on line 114
+[23-Sep-2024 00:41:34 UTC] {"message":"invalid_token","error":"bad_request","status":400,"cause":null}
+[23-Sep-2024 00:43:46 UTC] {"message":"unknown_error","error":"","status":400,"cause":[]}
+[23-Sep-2024 00:43:46 UTC] PHP Notice:  Undefined index: id in /home/lamanad1/neuromodulaciongdl.com/vendor/mercadopago/dx-php/src/MercadoPago/Config.php on line 113
+[23-Sep-2024 00:43:46 UTC] PHP Notice:  Undefined index: country_id in /home/lamanad1/neuromodulaciongdl.com/vendor/mercadopago/dx-php/src/MercadoPago/Config.php on line 114
+[23-Sep-2024 00:43:46 UTC] {"message":"invalid_token","error":"bad_request","status":400,"cause":null}
+[23-Sep-2024 02:26:56 UTC] {"message":"unknown_error","error":"","status":400,"cause":[]}
+[23-Sep-2024 02:26:56 UTC] PHP Notice:  Undefined index: id in /home/lamanad1/neuromodulaciongdl.com/vendor/mercadopago/dx-php/src/MercadoPago/Config.php on line 113
+[23-Sep-2024 02:26:56 UTC] PHP Notice:  Undefined index: country_id in /home/lamanad1/neuromodulaciongdl.com/vendor/mercadopago/dx-php/src/MercadoPago/Config.php on line 114
+[23-Sep-2024 02:26:56 UTC] {"message":"invalid_token","error":"bad_request","status":400,"cause":null}
+[23-Sep-2024 02:30:53 UTC] {"message":"unknown_error","error":"","status":400,"cause":[]}
+[23-Sep-2024 02:30:53 UTC] PHP Notice:  Undefined index: id in /home/lamanad1/neuromodulaciongdl.com/vendor/mercadopago/dx-php/src/MercadoPago/Config.php on line 113
+[23-Sep-2024 02:30:53 UTC] PHP Notice:  Undefined index: country_id in /home/lamanad1/neuromodulaciongdl.com/vendor/mercadopago/dx-php/src/MercadoPago/Config.php on line 114
+[23-Sep-2024 02:30:53 UTC] {"message":"invalid_token","error":"bad_request","status":400,"cause":null}
+[23-Sep-2024 02:30:57 UTC] {"message":"unknown_error","error":"","status":400,"cause":[]}
+[23-Sep-2024 02:30:57 UTC] PHP Notice:  Undefined index: id in /home/lamanad1/neuromodulaciongdl.com/vendor/mercadopago/dx-php/src/MercadoPago/Config.php on line 113
+[23-Sep-2024 02:30:57 UTC] PHP Notice:  Undefined index: country_id in /home/lamanad1/neuromodulaciongdl.com/vendor/mercadopago/dx-php/src/MercadoPago/Config.php on line 114
+[23-Sep-2024 02:30:57 UTC] {"message":"invalid_token","error":"bad_request","status":400,"cause":null}
+[23-Sep-2024 02:41:57 UTC] PHP Fatal error:  Uncaught Error: Class 'MercadoPago\MercadoPagoConfig' not found in /home/lamanad1/neuromodulaciongdl.com/carta/snippet.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/lamanad1/neuromodulaciongdl.com/carta/snippet.php on line 7
+[23-Sep-2024 02:43:05 UTC] PHP Fatal error:  Uncaught Error: Class 'MercadoPago\MercadoPagoConfig' not found in /home/lamanad1/neuromodulaciongdl.com/carta/snippet.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/lamanad1/neuromodulaciongdl.com/carta/snippet.php on line 11
+[23-Sep-2024 02:43:07 UTC] PHP Fatal error:  Uncaught Error: Class 'MercadoPago\MercadoPagoConfig' not found in /home/lamanad1/neuromodulaciongdl.com/carta/snippet.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/lamanad1/neuromodulaciongdl.com/carta/snippet.php on line 11
+[28-Sep-2024 17:39:40 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[28-Sep-2024 17:41:45 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[28-Sep-2024 17:41:58 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[30-Sep-2024 04:06:35 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[29-Sep-2024 23:14:43 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[29-Sep-2024 23:14:43 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[30-Sep-2024 04:16:43 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[29-Sep-2024 23:18:23 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[29-Sep-2024 23:18:23 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[23-Oct-2024 18:23:33 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[23-Oct-2024 18:24:20 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: sesion in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 49
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/uso.php on line 59
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/uso.php on line 81
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 9
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 17
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: emp_nombre in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 59
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: empresa_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 73
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 76
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: nombre_corto in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 130
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 131
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 11
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 11
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 11
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 21
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 27
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 27
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 27
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 27
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 27
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 27
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 27
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 35
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 35
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 35
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 35
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 35
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 35
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 35
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 43
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 43
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 43
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 43
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 43
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 43
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 43
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 52
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 52
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 52
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 52
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 52
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 52
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 52
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 60
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 60
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 60
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 60
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 60
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 60
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 69
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 69
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 69
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 69
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 69
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 69
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 77
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 77
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 85
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 95
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 95
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 95
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 197
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 197
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 197
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 197
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 197
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 226
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 226
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 226
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 226
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 226
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 315
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 315
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 315
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 315
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 315
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 315
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 339
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 339
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 339
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 339
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 4
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 11
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 26
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 34
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 47
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 55
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 68
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 76
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 89
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 97
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 110
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 118
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 131
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 139
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 152
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 160
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 173
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 181
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 195
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 203
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 217
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 225
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 238
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 246
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 259
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 267
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 280
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 288
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 301
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 309
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 322
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 330
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 343
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 351
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 364
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 372
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 385
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 393
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 406
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 414
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 427
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 435
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 182
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 189
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 199
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 206
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 216
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 223
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/carta/genera_invitacion.php on line 57
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/carta/genera_invitacion.php on line 57
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/carta/genera_invitacion.php on line 93
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: empresa_id in /home/lamanad1/neuromodulaciongdl.com/carta/genera_invitacion.php on line 94
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined variable: time in /home/lamanad1/neuromodulaciongdl.com/carta/genera_invitacion.php on line 95
+[23-Oct-2024 16:04:36 America/Mazatlan] PHP Notice:  Undefined index: usuario_id in /home/lamanad1/neuromodulaciongdl.com/footer1.php on line 82
+[28-Oct-2024 14:52:52 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[29-Oct-2024 13:50:18 UTC] PHP Notice:  Undefined index: generador in /home/lamanad1/neuromodulaciongdl.com/carta/registros_carta_perro.php on line 21
+[29-Oct-2024 07:51:15 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/calendario.php on line 6
+[29-Oct-2024 07:51:15 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/paciente/fun_paciente.php on line 6
+[05-Nov-2024 16:57:27 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/pdf_perros.php on line 55
+[05-Nov-2024 23:22:07 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[05-Nov-2024 17:22:07 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:22:07 America/Monterrey] PHP Notice:  Undefined variable: paciente_id in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 17:22:07 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:22:07 America/Monterrey] PHP Notice:  Undefined variable: paciente_id in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 17:22:07 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:22:07 America/Monterrey] PHP Notice:  Undefined variable: paciente_id in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 17:22:07 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:22:07 America/Monterrey] PHP Notice:  Undefined variable: paciente_id in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 23:23:35 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[05-Nov-2024 17:23:36 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:23:36 America/Monterrey] PHP Notice:  Undefined variable: d in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 17:23:36 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:23:36 America/Monterrey] PHP Notice:  Undefined variable: d in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 17:23:36 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:23:36 America/Monterrey] PHP Notice:  Undefined variable: d in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 17:23:36 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:23:36 America/Monterrey] PHP Notice:  Undefined variable: d in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 23:23:49 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[05-Nov-2024 17:23:49 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:23:49 America/Monterrey] PHP Notice:  Undefined variable: d in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 17:23:49 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:23:49 America/Monterrey] PHP Notice:  Undefined variable: d in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 17:23:49 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:23:49 America/Monterrey] PHP Notice:  Undefined variable: d in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 17:23:49 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:23:49 America/Monterrey] PHP Notice:  Undefined variable: d in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 128
+[05-Nov-2024 23:24:00 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[05-Nov-2024 17:24:01 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:01 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:01 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:01 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 23:24:03 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[05-Nov-2024 17:24:04 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:04 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:04 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:04 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 23:24:23 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[05-Nov-2024 17:24:23 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:23 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:23 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:23 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 23:24:24 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[05-Nov-2024 17:24:24 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:24 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:24 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:24:24 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 23:34:28 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[05-Nov-2024 17:34:29 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:34:29 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:34:29 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 17:34:29 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 120
+[05-Nov-2024 23:36:12 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[05-Nov-2024 17:36:12 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 103
+[05-Nov-2024 17:36:12 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 103
+[05-Nov-2024 17:36:12 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 103
+[05-Nov-2024 17:36:12 America/Monterrey] PHP Notice:  Undefined variable: fecha in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 103
+[05-Nov-2024 23:37:20 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[05-Nov-2024 23:42:36 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[05-Nov-2024 23:42:45 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
+[09-Nov-2024 21:02:09 UTC] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/carta/cartas_generadas.php on line 8
