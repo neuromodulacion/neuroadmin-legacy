@@ -1,0 +1,5 @@
+Rfc: 		EKU9003173C9
+Password:	12345678a
+No. Serie: 	30001000000500003416
+Validez de obligaciones: 2
+SCNF:		No

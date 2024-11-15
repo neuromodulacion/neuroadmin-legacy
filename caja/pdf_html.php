@@ -1,0 +1,322 @@
+<?php
+
+session_start();
+error_reporting(7);
+iconv_set_encoding('internal_encoding', 'utf-8'); 
+header('Content-Type: text/html; charset=UTF-8');
+date_default_timezone_set('America/Mazatlan');
+setlocale(LC_TIME, 'es_ES.UTF-8');
+$_SESSION['time']=mktime();
+extract($_SESSION);
+//echo "<hr>$paciente_id hola<hr>";
+extract($_GET);
+extract($_POST);
+
+include('../functions/funciones_mysql.php');
+
+include('../paciente/calendario.php');
+
+include('../paciente/fun_paciente.php');
+
+function tildes($palabra) {
+    //Rememplazamos caracteres especiales latinos minusculas
+    $encuentra = array('&','<','>','¢','£','¥','€','©','®','™','§','†','‡','¶','•','…','±','¹','²','³','½','¼','¾','µ','°','√','∞','Ω','Σ','μ','←','→','↑','↓','↔','↵','⇐','⇒'
+);
+     $remplaza = array('&amp;','&lt','&gt','&cent','&pound','&yen','&euro','&copy','&reg','&trade','&sect','&dagger','&Dagger','&para','&bull','&hellip','&plusmn','&sup1','&sup2','&sup3','&frac12','&frac14','&frac34','&micro','&deg','&radic','&infin','&ohm','&sigma','&mu','&larr','&rarr','&uarr','&darr','&harr','&crarr','&lArr','&rArr'
+
+);
+    $palabra = str_replace($encuentra, $remplaza, $palabra);
+return $palabra;
+}
+
+//$paciente_id = 26;
+
+$grafica = "image/imagen_$paciente_id.png";
+
+//$ticket = 1712383079;
+
+$sql ="
+	SELECT
+		cobros.cobros_id, 
+		cobros.usuario_id, 
+		cobros.empresa_id, 
+		cobros.protocolo_ter_id, 
+		cobros.paciente_id, 
+		cobros.tipo, 
+		cobros.doctor, 
+		cobros.paciente_consulta, 
+		cobros.consulta, 
+		cobros.f_pago, 
+		cobros.importe, 
+		cobros.f_captura, 
+		cobros.h_captura, 
+		cobros.otros, 
+		cobros.cantidad, 
+		cobros.protocolo, 
+		cobros.ticket, 
+		cobros.facturado, 
+		cobros.email, 
+		cobros.req_factura, 
+		cobros.Invoice_ID, 
+		cobros.paciente_cons_id
+	FROM
+		cobros
+	WHERE
+		cobros.ticket = $ticket";
+	//echo $sql;	
+    $result=ejecutar($sql); 
+    $row = mysqli_fetch_array($result);
+    extract($row);	
+ //print_r($row);
+
+ $clabe = substr($Invoice_ID, -8);
+ 
+ 
+if ($tipo == 'Consulta Medica') {
+	switch ($doctor) {
+		case 'Dr. Alejandro Aldana':
+			$logo = '
+		            <img style="height: 150px; width: auto" src="../images/logo_aldana_g.jpg" alt="logo">	
+			';	
+			$fiscales = '
+		        <h2><b>DR. JESÚS ALEJANDRO ALDANA LÓPEZ</b></h2>
+		        <p style="font-size: 10px;">
+					RFC: AALJ871226N11 Tel.: 33 3995 9901 / 33 3995 9904<br>
+					AV DE LOS ARCOS No. 876, Col. JARDINES DEL BOSQUE CENTRO<br>
+					C.P 44520 Guadalajara, Jalisco, México<br>
+		        </p>	
+			';	
+			$color_th = "#0096AA";
+			$color_td = "#EBF5FB";	
+			$receptor = "#eee";					
+			break;
+		
+		case 'Dra. Eleonora Ocampo':
+			$logo = '
+		            <img style="height: 150px; width: auto" src="../images/logo_eleonor.png" alt="logo">	
+			';	
+			$fiscales = '
+		        <h2><b>DRA. ELEONORA OCAMPO CORONADO</b></h2>
+		        <p style="font-size: 10px;">
+					RFC: OACE871228767 Tel.: 33 3995 9901 / 33 3995 9904<br>
+					AV DE LOS ARCOS No. 876, Col. JARDINES DEL BOSQUE CENTRO<br>
+					C.P 44520 Guadalajara, Jalisco, México<br>
+		        </p>	
+			';
+			$color_th = "#F3C2BC";
+			$color_td = "#FFEFED";	
+			$receptor = "#9CB8D6";						
+			break;
+		
+		case 'Dr Capacitacion':
+			$logo = '
+		            <img style="height: 150px; width: auto" src="../images/logo_aldana_g.jpg" alt="logo">	
+			';	
+			$fiscales = '
+		        <h2><b>DR. CAPACITACIÓN</b></h2>
+		        <p style="font-size: 10px;">
+					RFC: AALJ871226N11 Tel.: 33 3995 9901 / 33 3995 9904<br>
+					AV DE LOS ARCOS No. 876, Col. JARDINES DEL BOSQUE CENTRO<br>
+					C.P 44520 Guadalajara, Jalisco, México<br>
+		        </p>	
+			';
+			$color_th = "#0096AA";
+			$color_td = "#EBF5FB";
+			$receptor = "#eee";								
+			break;
+		
+		case 'Capacitacion Neuromodulacion':
+			$logo = '
+		            <img align="center" style="width: 100px" style="height: 150px; width: auto" src="../images/logo_aldana_g.jpg" alt="logo">	
+			';	
+			$fiscales = '
+		        <h2><b>DR. CAPACITACIÓN</b></h2>
+		        <p style="font-size: 10px;">
+					RFC: AALJ871226N11 Tel.: 33 3995 9901 / 33 3995 9904<br>
+					AV DE LOS ARCOS No. 876, Col. JARDINES DEL BOSQUE CENTRO<br>
+					C.P 44520 Guadalajara, Jalisco, México<br>
+		        </p>	
+			';
+			$color_th = "#0096AA";
+			$color_td = "#EBF5FB";
+			$receptor = "#eee";								
+			break;				
+	}
+	
+
+} else {
+	$logo = '
+            <img src="../images/logo_aldana_tc.png" alt="logo">
+            <h3>Neuromodulación GDL</h3>	
+	';
+	$fiscales = '
+		<h2><b>NEUROMODULACION GDL</b></h2>
+        <p style="font-size: 10px;">
+            RFC: NGD240109G4A  Tel.: 33 1261 3701<br>
+            AV DE LOS ARCOS No. 876, Col. JARDINES DEL BOSQUE CENTRO<br>
+            C.P 44520<br>
+            Guadalajara, Jalisco, México Régimen Fiscal: Ley General de Personas Morales<br>
+        </p>	
+	';	
+	$color_th = "#0096AA";
+	$color_td = "#EBF5FB";
+	$receptor = "#eee";	
+}
+
+
+
+
+$sql ="
+SELECT
+	pacientes.paciente_id, 
+	pacientes.empresa_id,
+	CONCAT(pacientes.paciente,' ',pacientes.apaterno,' ',pacientes.amaterno) as pacientes
+FROM
+	pacientes
+WHERE
+	pacientes.paciente_id = $paciente_id";
+	//echo $sql;	
+    $result=ejecutar($sql); 
+    $row = mysqli_fetch_array($result);
+    extract($row);	
+
+$comentarios_reporte = stripslashes($row["comentarios_reporte"]);    
+    
+$edad = obtener_edad_segun_fecha($f_nacimiento);
+
+$hoy = date("d-m-Y");
+
+$n_importe = numero_letra($importe); // $importe; //
+
+
+$f_pago = date('d-m-Y', strtotime($f_captura));
+
+
+
+
+$cuerpo_pdf = '
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recibo de Pago</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        img { width: auto; height: 100px; }
+        .info-section h3, .info-section td { color: #FFF; text-align: center; background: #005157; }
+        .receptor, .fecha-pago { background: '.$receptor.'; padding: 10px; }
+		.totals-table th, .totals-table td, .payment-methods-table th, .payment-methods-table td { color: #FFF; background: '.$color_th.'; text-align: center; padding: 10px; }
+        .totals-table td, .payment-methods-table td { color: #000; background: '.$color_td.';  text-align: center; }
+        
+                /* Ajusta más estilos según sea necesario */
+    </style>
+</head>
+<body>
+<br>
+    <table>
+        <tr>
+            <td align="center" style="width: 30%">
+                '.$logo.'
+            </td>
+            <td align="right">
+                <table>
+                    <tr>
+                        <td class="info-section">
+                            <h3>Recibo de pago</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b style="color: red">Folio:</b> <b>'.$ticket.'</b></td>
+                    </tr>
+                    <tr>
+                    	<td>
+                        '.$fiscales.'
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br><br><br>
+    <table>
+        <tr>
+            <td class="receptor"  style="width: 60%">
+                <h4>Receptor</h4>
+                <p>'.$paciente_consulta.$pacientes.'</p>
+            </td>
+            <td class="fecha-pago">
+                <h4>Fecha de Pago:</h4>
+                <p>'.$f_pago.'</p>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table class="totals-table">
+        <tr>
+            <th>Concepto</th>
+            <th>Cantidad</th>
+            <th>Descripción</th>
+            <th>Precio unitario</th>
+        </tr>
+        <tr>
+            <td><b>'.$tipo.'</b></td>
+            <td>'.$cantidad.'</td>
+            <td>'.$consulta.'</td>
+            <td> $ '.number_format($importe).'</td>
+        </tr>
+    </table>
+ 
+	<br>  
+    <table class="payment-methods-table">
+        <tr>
+            <th>Fecha de pago</th>
+            <th>Forma de pago</th>
+            <th>Moneda</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td>'.$f_pago.'</td>
+            <td>'.$tipo.'</td>
+            <td>MXN</td>
+            <td> $ '.number_format($importe).'</td>
+        </tr>
+    </table>
+    <hr>
+    <br>
+    <p style="font-size: 12px;">Tipo Comprobante: <b>Nota</b><br>Importe con letra: <b>'.$n_importe.' PESOS 00/100 M.N. </b><p>
+	
+    <table>
+        <tr>
+            <td class="receptor"  style="width: 100%">
+                <h4 style="color: #005157">Notas:</h4>
+                <p><b>'.$consulta.'</b></p>
+            </td>
+        </tr>
+    </table> 
+    <p align="center"><b>Obtén tu factura en:</b> https://factura.bind.com.mx  <b>Empresa:</b> 127792  <b>Referencia:</b> '.$clabe.'</p>
+    <br>
+</html>
+';
+
+
+
+// echo $cuerpo_pdf;
+ 
+//Require composer autoload
+require_once __DIR__ . '/../vendor/autoload.php';
+// Create an instance of the class:
+$mpdf = new \Mpdf\Mpdf();
+
+// Write some HTML code:
+$mpdf->WriteHTML($cuerpo_pdf);
+
+// D descarga
+// F guarda
+// I imprime
+
+// Output a PDF file directly to the browser
+$mpdf->Output('Recibo_'.$ticket.'.pdf','I');
+
+?>	

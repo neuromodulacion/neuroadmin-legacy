@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guardar imagen de gráfica</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+  <script src="../morris.js-master/morris.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
+  <script src="../morris.js-master/lib/example.js"></script>
+  <link rel="stylesheet" href="../morris.js-master/lib/example.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
+  <link rel="stylesheet" href="../morris.js-master/morris.css">
+</head>
+<body>
+<h1>Displaying X Labels Diagonally</h1>
+<div id="graph"></div>
+<script>
+	/* data stolen from https://howmanyleft.co.uk/vehicle/jaguar_'e'_type */
+	var day_data = [
+	  {"period": "2012-10-30", "licensed": 3407, "sorned": 660},
+	  {"period": "2012-09-30", "licensed": 3351, "sorned": 629},
+	  {"period": "2012-09-29", "licensed": 3269, "sorned": 618},
+	  {"period": "2012-09-20", "licensed": 3246, "sorned": 661},
+	  {"period": "2012-09-19", "licensed": 3257, "sorned": 667},
+	  {"period": "2012-09-18", "licensed": 3248, "sorned": 627},
+	  {"period": "2012-09-17", "licensed": 3171, "sorned": 660},
+	  {"period": "2012-09-16", "licensed": 3171, "sorned": 676},
+	  {"period": "2012-09-15", "licensed": 3201, "sorned": 656},
+	  {"period": "2012-09-10", "licensed": 3215, "sorned": 622}
+	];
+	Morris.Line({
+	  element: 'graph',
+	  data: day_data,
+	  xkey: 'period',
+	  ykeys: ['licensed', 'sorned'],
+	  labels: ['Licensed', 'SORN'],
+	  xLabelAngle: 60
+	});	
+
+	
+</script>
+
+
+	<button style="display: none"  id="myButton" onclick="handleClick()">Botón</button>
+                 
+	          
+	<script type='text/javascript'>
+        $('#myButton').click(function(){ 
+            //alert('test');	
+	       //Captura la imagen de la gráfica con html2canvas
+	        html2canvas(document.getElementById('graph')).then(function(canvas) {
+	            // Convierte el canvas en base64
+	            var imgData = canvas.toDataURL('image/png');
+	
+	            // Envía la imagen al servidor utilizando una solicitud AJAX con jQuery
+	            $.ajax({
+	                url: 'guardar_imagen.php',
+	                type: 'POST',
+	                data: { image: imgData },
+	                success: function(response) {
+	                    alert('La imagen se ha guardado correctamente.');
+	                }
+	            });
+	        });                    
+            
+         });
+    </script> 
+                
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var button = document.getElementById('myButton');
+            button.click();
+        });
+
+        function handleClick() {
+            //alert('Se hizo clic en el botón');
+            // Aquí puedes agregar el código que deseas ejecutar al hacer clic en el botón
+        }
+    </script>
+    
+
+
+
+</head>
+
+</body>
+</html>
