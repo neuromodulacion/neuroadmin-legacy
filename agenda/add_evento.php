@@ -1,10 +1,11 @@
 <?php
-// Incluir archivo de funciones MySQL necesarias para interactuar con la base de datos
-include('../functions/funciones_mysql.php');
+// Incluir archivo de conexión MySQL
+require_once "../functions/conexion_mysqli.php";
 
 // Iniciar sesión y configurar opciones de error, codificación y zona horaria
 session_start();
 error_reporting(E_ALL);
+ini_set('display_errors', 1);
 ini_set('default_charset', 'UTF-8');
 header('Content-Type: text/html; charset=UTF-8');
 date_default_timezone_set('America/Mazatlan');
@@ -13,9 +14,22 @@ $_SESSION['time'] = time(); // Guardar la hora actual en la sesión
 
 $ruta = "../"; // Ruta base para incluir archivos y recursos
 
-// Extraer variables de la sesión y del formulario POST
-extract($_SESSION);
-extract($_POST);
+// Incluir el archivo de configuración y obtener las credenciales
+$configPath = $ruta.'../config.php';
+
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
+}
+
+$config = require $configPath;
+
+// Crear instancia de la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+// Obtener variables de la sesión
+$empresa_id = $_SESSION['empresa_id'] ?? '';
+$usuario_id = $_SESSION['usuario_id'] ?? '';
+$body = $_SESSION['body'] ?? '';
 
 // Configurar variables de fecha y hora actuales
 $f_registro = date("Y-m-d");
@@ -24,16 +38,16 @@ $h_registro = date("H:i:s");
 
 <!-- Formulario para guardar una nueva cita en la agenda -->
 <form id="form_guarda_agenda" class="form-evento" method="POST">
-    <input type="hidden" id="agenda_id" name="agenda_id" value="<?php echo $agenda_id; ?>"/>
+    <input type="hidden" id="agenda_id" name="agenda_id" value=""/>
     <div class="modal-body">  
         <h3 align="center">Agrega Cita</h3>
         
         <!-- Selección de Paciente -->
         <div class="form-group">
-            <label for="color" class="col-sm-2 control-label">Paciente</label>
+            <label for="paciente_id" class="col-sm-2 control-label">Paciente</label>
             <div class="col-sm-10">
                 <select name="paciente_id" class='form-control show-tick' id="paciente_id" required>
-                    <option <?php if($paciente_id == ''){ echo "selected";} ?> value="">Seleccionar</option>
+                    <option value="">Seleccionar</option>
                     <?php
                         // Consulta SQL para obtener los pacientes de la empresa actual
                         $sql_paciente = "
@@ -44,15 +58,23 @@ $h_registro = date("H:i:s");
                                 pacientes
                             WHERE
                                 pacientes.estatus NOT IN('No interezado') 
-                                AND pacientes.empresa_id = $empresa_id
+                                AND pacientes.empresa_id = ?
                             ORDER BY 2 ASC";
                         
+                        $params = [$empresa_id];
+
                         // Ejecutar la consulta y listar los pacientes en el dropdown
-                        $result_paciente = ejecutar($sql_paciente);  
-                        while($row_paciente = mysqli_fetch_array($result_paciente)){
-                            extract($row_paciente); 
+                        $result_paciente = $mysql->consulta($sql_paciente, $params);  
+
+                        if ($result_paciente === false) {
+                            die('Error al obtener la lista de pacientes.');
+                        }
+
+                        foreach ($result_paciente['resultado'] as $row_paciente) {
+                            $paciente_idx = $row_paciente['paciente_idx'];
+                            $paciente_nombre = utf8_decode($row_paciente['paciente']);
                     ?>
-                    <option <?php if($paciente_idx == $paciente_id){ echo "selected";} ?> value="<?php echo $paciente_idx; ?>"><?php echo $paciente; ?></option>
+                    <option value="<?php echo htmlspecialchars($paciente_idx); ?>"><?php echo htmlspecialchars($paciente_nombre); ?></option>
                     <?php } ?>
                 </select>
             </div>
@@ -63,9 +85,9 @@ $h_registro = date("H:i:s");
             </div>
             
             <!-- Campo para la fecha de inicio de la cita -->
-            <label for="title" class="col-sm-2 control-label">Fecha inicio</label>
+            <label for="f_ini" class="col-sm-2 control-label">Fecha inicio</label>
             <div class="col-sm-4">
-                <input type="date" name="f_ini" class="form-control" id="f_ini" placeholder="Fecha inicio" value="<?php echo $f_ini; ?>" required>
+                <input type="date" name="f_ini" class="form-control" id="f_ini" placeholder="Fecha inicio" required>
                 <script>
                     // Sincronizar la fecha de fin con la fecha de inicio cuando esta cambia
                     $('#f_ini').change(function(){    
@@ -76,9 +98,9 @@ $h_registro = date("H:i:s");
             </div>
 
             <!-- Campo para la hora de inicio de la cita -->
-            <label for="title" class="col-sm-2 control-label">Hora inicio</label>
+            <label for="h_ini" class="col-sm-2 control-label">Hora inicio</label>
             <div class="col-sm-4">
-              <input type="time" name="h_ini" class="form-control" id="h_ini" placeholder="Hora inicio" value="<?php echo $h_ini; ?>" required>
+              <input type="time" name="h_ini" class="form-control" id="h_ini" placeholder="Hora inicio" required>
                 <script>
                     // Sincronizar la hora de fin con la hora de inicio más 30 minutos
                     $('#h_ini').change(function(){    
@@ -115,15 +137,15 @@ $h_registro = date("H:i:s");
             </div>
 
             <!-- Campo para la fecha de fin de la cita -->
-            <label for="title" class="col-sm-2 control-label">Fecha final</label>
+            <label for="f_fin" class="col-sm-2 control-label">Fecha final</label>
             <div class="col-sm-4">
-              <input type="date" name="f_fin" class="form-control" id="f_fin" placeholder="Fecha final" value="<?php echo $f_fin; ?>" required>
+              <input type="date" name="f_fin" class="form-control" id="f_fin" placeholder="Fecha final" required>
             </div>
     
             <!-- Campo para la hora de fin de la cita -->
-            <label for="title" class="col-sm-2 control-label">Hora final</label>
+            <label for="h_fin" class="col-sm-2 control-label">Hora final</label>
             <div class="col-sm-4">
-              <input type="time" name="h_fin" class="form-control" id="h_fin" placeholder="Hora final" value="<?php echo $h_fin; ?>" required>
+              <input type="time" name="h_fin" class="form-control" id="h_fin" placeholder="Hora final" required>
             </div>
 
             <!-- Separador visual -->
@@ -132,10 +154,10 @@ $h_registro = date("H:i:s");
             </div>
 
             <!-- Campo para la descripción de la cita -->
-            <label for="title" class="col-sm-2 control-label">Descripción</label>
+            <label for="observ" class="col-sm-2 control-label">Descripción</label>
             <div class="col-sm-10">
                <div class="form-line">
-                    <textarea rows='4' id='observ' name='observ' class='form-control no-resize' placeholder='Descripción' required><?php echo $observ; ?></textarea>
+                    <textarea rows='4' id='observ' name='observ' class='form-control no-resize' placeholder='Descripción' required></textarea>
                 </div>
             </div>
 
@@ -145,23 +167,26 @@ $h_registro = date("H:i:s");
             </div>
 
             <!-- Selección de los días de la semana para la recurrencia -->
-            <label for="title" class="col-sm-2 control-label">Días de la semana</label>
+            <label for="dias_semana" class="col-sm-2 control-label">Días de la semana</label>
             <div class="col-sm-10">
                 <div id="check" class="checkbox">
-                    <input type="checkbox" name="dias_semana[]" value="1" id="lunes" class="filled-in chk-col-<?php echo $body; ?>" />
-                    <label for="lunes">Lunes</label>
-                    <input type="checkbox" name="dias_semana[]" value="2" id="martes" class="filled-in chk-col-<?php echo $body; ?>" />
-                    <label for="martes">Martes</label>
-                    <input type="checkbox" name="dias_semana[]" value="3" id="miercoles" class="filled-in chk-col-<?php echo $body; ?>" />
-                    <label for="miercoles">Miércoles</label>
-                    <input type="checkbox" name="dias_semana[]" value="4" id="jueves" class="filled-in chk-col-<?php echo $body; ?>" />
-                    <label for="jueves">Jueves</label>
-                    <input type="checkbox" name="dias_semana[]" value="5" id="viernes" class="filled-in chk-col-<?php echo $body; ?>" />
-                    <label for="viernes">Viernes</label>
-                    <input type="checkbox" name="dias_semana[]" value="6" id="sabado" class="filled-in chk-col-<?php echo $body; ?>" />
-                    <label for="sabado">Sábado</label>
-                    <input type="checkbox" name="dias_semana[]" value="7" id="domingo" class="filled-in chk-col-<?php echo $body; ?>" />
-                    <label for="domingo">Domingo</label>
+                    <?php
+                    $dias_semana_nombres = [
+                        1 => 'Lunes',
+                        2 => 'Martes',
+                        3 => 'Miércoles',
+                        4 => 'Jueves',
+                        5 => 'Viernes',
+                        6 => 'Sábado',
+                        7 => 'Domingo',
+                    ];
+                    foreach ($dias_semana_nombres as $numero => $nombre) {
+                        ?>
+                        <input type="checkbox" name="dias_semana[]" value="<?php echo $numero; ?>" id="<?php echo strtolower($nombre); ?>" class="filled-in chk-col-<?php echo htmlspecialchars($body); ?>" />
+                        <label for="<?php echo strtolower($nombre); ?>"><?php echo $nombre; ?></label>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
 
@@ -171,7 +196,7 @@ $h_registro = date("H:i:s");
             </div>
 
             <!-- Selección de la recurrencia de la cita -->
-            <label for="title" class="col-sm-2 control-label">Recurrencia</label>
+            <label for="recurrencia" class="col-sm-2 control-label">Recurrencia</label>
             <div class="col-sm-4">
                 <select name="recurrencia" class="form-control" id="recurrencia" required>
                     <option value="diaria">Diaria</option>
@@ -183,18 +208,18 @@ $h_registro = date("H:i:s");
                     $('#recurrencia').change(function(){                          
                         var recurrencia = $('#recurrencia').val();
                         if (recurrencia === 'mensual'){
-                        	$('#check').hide();
+                            $('#check').hide();
                         }else{
-                        	$('#check').show();
+                            $('#check').show();
                         }                               
                     });  
                 </script>                
             </div>
 
             <!-- Campo para definir la frecuencia de la recurrencia -->
-            <label for="title" class="col-sm-2 control-label">Frecuencia</label>
+            <label for="frecuencia" class="col-sm-2 control-label">Frecuencia</label>
             <div class="col-sm-4">
-                <input type="number" name="frecuencia" class="form-control" id="frecuencia" placeholder="Frecuencia" value="1" required>
+                <input type="number" name="frecuencia" class="form-control" id="frecuencia" placeholder="Frecuencia" value="1" min="1" required>
                 <script>
                     // Validar que la frecuencia no sea menor a 1
                     $('#frecuencia').change(function(){
@@ -221,7 +246,7 @@ $h_registro = date("H:i:s");
     <div class="modal-footer">
         <div class="form-group"> 
             <div class="col-sm-12"> 
-            	<hr>            
+                <hr>            
                 <button type="button" id="cerrar" class="btn btn-info" data-dismiss="modal"><i class="material-icons">close</i>Cerrar</button>
                 <button type="button" id="guarda_agenda" class="btn btn-success"><i class="material-icons">save</i>Guardar</button>
                 <button style="display: none" type="submit" id="submit_test" class="btn btn-success">submit_test</button>

@@ -14,56 +14,31 @@ $genera ="";
 
 include($ruta.'header1.php'); ?>
 
-	<!-- JQuery DataTable Css -->
-	<link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
-	<script src="../morris.js-master/morris.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
-	<script src="../morris.js-master/examples/lib/example.js"></script>
-	<!--<script src="../morris.js-master/lib/example.js"></script>
-	<link rel="stylesheet" href="../morris.js-master/examples/lib/example.css">-->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
-	<link rel="stylesheet" href="../morris.js-master/morris.css">
+<!-- JQuery DataTable Css -->
+<link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+<script src="../morris.js-master/morris.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
+<script src="../morris.js-master/examples/lib/example.js"></script>
+<!--<script src="../morris.js-master/lib/example.js"></script>
+<link rel="stylesheet" href="../morris.js-master/examples/lib/example.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
+<link rel="stylesheet" href="../morris.js-master/morris.css">
     <!-- Enlace al archivo CSS para el selector de opciones en Bootstrap -->
-    <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />  
-        
-    <!-- Custom Css -->
-    <link href="<?php echo $ruta; ?>css/style.css" rel="stylesheet">
-	<script>
-	    document.addEventListener('DOMContentLoaded', function() {
-	        CKEDITOR.replace('editor1');
-	        CKEDITOR.replace('editor2');
-	        CKEDITOR.replace('comentarios_rep');
-	    });
-	</script>
+    <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />   
 	
 <?php
 include($ruta.'header2.php');
 include('calendario.php');
 include('fun_paciente.php');
-
-$sql = "
-SELECT
-	*
-FROM
-	pacientes
-	WHERE
-	pacientes.paciente_id = $paciente_id";
-			
-// echo $sql."<hr>";	
-$result=ejecutar($sql); 
-$row = mysqli_fetch_array($result);
-extract($row);
-?>
- 
- 
-<section class="content">
+ ?>
+    <section class="content">
         <div id="body" class="container-fluid">
             <div class="block-header">
                 <h2>PACIENTE</h2>
@@ -74,114 +49,16 @@ extract($row);
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div style="height: 95%"  class="header">
-							<?php if ($funcion == 'SISTEMAS') {?>
-								<button class="btn bg-blue waves-effect m-b-15"  id="botonCopiar">Copiar Informe</button>
-								<button class="btn bg-blue waves-effect m-b-15" id="botonCopiar2">Copiar Datos</button>									
-							<?php } ?>
-							
-								<button class="btn bg-<?php echo $body; ?> waves-effect m-b-15" id="botonCopiarx"><i class="material-icons">send</i>  Genera Recomendacion IA</button>
-								
-							<?php if ($funcion !== 'MEDICO' ) {?>
-								<button class="btn bg-<?php echo $body; ?> waves-effect m-b-15" id="botonCopiary"><i class="material-icons">send</i>  Genera Informe GPT IA</button>								
-							<?php } ?>
-							<hr>
- 							<div class="card" style="background: #eee; padding: 10px" >								
-								<div class="panel-group" id="accordion_1_info" role="tablist" aria-multiselectable="true">
-								    <?php
-								    // Validación de contenido en recomendación e informe
-								    if (!empty($recomendacion_gpt)) { 
-								        $style = ''; 
-								        $mensj = ''; 
-								    } else {
-								        $style = 'style="display: none"'; 
-								        $mensj = '<h5>No hay recomendación disponible para este paciente; necesita generarla en caso de que lo necesite.</h5>';
-								    } 
-									
-								    // Validación de contenido en recomendación e informe
-								    if (!empty($informe_gpt)) { 
-								        $style1 = ''; 
-								        $mensj = ''; 
-								    } else {
-								        $style1 = 'style="display: none"'; 
-								        $mensj = '<h5>No hay reporte disponible para este paciente; necesita generarla en caso de que lo necesite.</h5>';
-								    } 	
-								    ?>
-								
-								    <!-- Panel para la Recomendación -->
-								    <div <?php echo $style; ?> class="panel panel-primary" id="accordion_1x_info">
-								        <div class="panel-heading" role="tab" id="headingOne_1_info">
-								            <h4 class="panel-title">
-								                <a role="button" data-toggle="collapse" data-parent="#accordion_1_info" href="#collapseOne_1_info" aria-expanded="true" aria-controls="collapseOne_1_info">
-								                    Recomendación
-								                </a>
-								            </h4>
-								        </div>
-								        <div id="collapseOne_1_info" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne_1_info">
-								            <div class="panel-body card" style="max-width: 100%; margin: 0 auto; padding: 20px;">
-								                <textarea id="editor1"><?php echo utf8_encode($recomendacion_gpt); ?></textarea>
-								            </div>
-								        </div>
-								    </div>
-								    <!-- Panel para el Informe -->
-								    <?php if ($funcion !== 'MEDICO') { ?>
-							        <div <?php echo $style1; ?> class="panel panel-primary" id="accordion_2x_info">
-							            <div class="panel-heading" role="tab" id="headingTwo_1_info">
-							                <h4 class="panel-title">
-							                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1_info" href="#collapseTwo_1_info" aria-expanded="false" aria-controls="collapseTwo_1_info">
-							                        Informe
-							                    </a>
-							                </h4>
-							            </div>
-							            <div id="collapseTwo_1_info" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo_1_info">
-							                <div class="panel-body" style="width: 100%; margin: 0 auto; padding: 20px; overflow: auto; overflow-wrap: break-word;">
-							                    <textarea id="editor2"><?php echo utf8_encode($informe_gpt); ?></textarea>
-							                </div>
-							            </div>
-							        </div>
-								    <?php } ?>
-								</div>
 
- 								<?php if ($funcion !== 'MEDICO' ) {?>                           
-                        		<button id="guardarCambios" class="btn btn-success">Guardar Cambios</button>
-								<?php } ?>  
-								<script>
-									document.getElementById('guardarCambios').addEventListener('click', function() {
-									    var paciente_id = '<?php echo $paciente_id; ?>'; // ID del paciente
-									    var recomendacion_gpt = CKEDITOR.instances.editor1.getData(); // Obtener contenido de editor1
-									    var informe_gpt = CKEDITOR.instances.editor2.getData(); // Obtener contenido de editor2
-									
-									    $.ajax({
-									        url: 'guardar_informacion.php', // Archivo PHP que guardará los cambios
-									        type: 'POST',
-									        data: { 
-									            paciente_id: paciente_id,
-									            recomendacion_gpt: recomendacion_gpt,
-									            informe_gpt: informe_gpt
-									        },
-									        success: function(response) {
-									            var data = JSON.parse(response);
-									            if (data.success) {
-									                alert('Información guardada correctamente.');
-									            } else {
-									                alert('No se pudo guardar la información.');
-									            }
-									        },
-									        error: function() {
-									            alert('Error al conectar con el servidor.');
-									        }
-									    });
-									});
-								</script>
-    						
-	 							<!-- <div class="container" id="recomendacion_gpt"><h1>Recomendación</h1><?php echo utf8_encode($recomendacion_gpt); ?></div>	
-	 							<hr>
-	 							<div class="container" id="informe_gpt"><h1>Informe</h1><?php echo utf8_encode($informe_gpt); ?></div> -->	
-	 							<div id="gpt">
-								    <!-- Mostrar mensaje si no hay recomendación -->
-								    <?php if (empty($recomendacion_gpt)) {
-								        echo $mensj;
-								    } ?>
-	 							</div>
+							<button id="botonCopiar">Copiar Informe</button>
+							<button id="botonCopiar2">Copiar Datos</button>
+														
+							<button id="botonCopiarx">Recomendacion GPT</button>
+							<button id="botonCopiary">Informe GPT</button>
+							
+							<hr>
+ 							<div style="background: #eee; padding: 10px" >
+ 							<div id="gpt"></div>
 
 	 	                        <div style="display: none" align="center" id="loadx">
 	                                <div class="preloader pl-size-xl">
@@ -201,12 +78,129 @@ extract($row);
 	                        </div>
 	                        <hr>  
 								                                            	
-                        	<h1 align="center">Paciente<br><b>No. <?php echo $paciente_id." ".$paciente." ".$apaterno." ".$amaterno ; ?><b></h1>
+                        	<h1 align="center">Paciente</h1>
                              	<div class="row">
                              		<div id="codigo" align="left" class="col-xs-12">
+                             			<hr>
                              			<div class="caption">
-		                                	<div class="form-line">	                                	
-			                                	<?php 
+                             				
+
+                            <button class="btn bg-cyan waves-effect m-b-15" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+                                    aria-controls="collapseExample"><i class="material-icons">system_update_alt</i> 
+                                CARGAR DOCUMENTOS
+                            </button>
+                            <div class="collapse" id="collapseExample">
+                                <div class="well">
+                          				
+								<?php
+								
+								// Definir el directorio del paciente
+								$directory = "uploads/archivos/paciente_" . $paciente_id;
+								
+								// Verificar si el directorio existe y listar los archivos
+								$fileList = [];
+								if (is_dir($directory)) {
+								    $files = scandir($directory);
+								    foreach ($files as $file) {
+								        if ($file !== '.' && $file !== '..') {
+								            $filePath = "$directory/$file";
+								            $fileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+								            $fileTypeLabel = in_array($fileType, ['jpg', 'jpeg', 'png', 'gif']) ? 'Imagen' : ($fileType === 'pdf' ? 'PDF' : 'Otro');
+								            if ($fileTypeLabel !== 'Otro') { // Ignorar archivos no soportados
+								                $fileList[] = [
+								                    'name' => $file,
+								                    'type' => $fileTypeLabel,
+								                    'path' => $filePath
+								                ];
+								            }
+								        }
+								    }
+								}
+								?>
+								
+								    <h3>Subir Archivos</h3>
+								    <p>Es para subir contratos en PDF, JPG o PNG, máximo 3 MB</p>
+								    <form id="uploadForm_zz" enctype="multipart/form-data">
+								        <input type="hidden" name="paciente_id" value="<?php echo $paciente_id; ?>">
+								        <p><input class="btn btn-primary" type="file" name="file" id="file_zz"></p> 
+								        <p><input class="btn btn-default" type="button" value="Subir Archivo" id="btnUpload_zz"></p>
+								    </form>
+								
+								    <div id="status_zz"></div>
+								    
+								    <div class="file-list">
+								        <h3>Archivos del Paciente</h3>
+								        <ul id="fileList">
+								            <?php foreach ($fileList as $file): ?>
+								                <li>
+								                    <strong><?php echo htmlspecialchars($file['name']); ?></strong>
+								                    (<?php echo $file['type']; ?>) - 
+								                    <a href="<?php echo htmlspecialchars($file['path']); ?>" target="_blank">Ver archivo</a>
+								                </li>
+								            <?php endforeach; ?>
+								        </ul>
+								    </div>
+								
+								    <script>
+								        $(document).ready(function() {
+								            $("#btnUpload_zz").click(function() {
+								                var fileInput = $('#file_zz')[0];
+								                var filePath = fileInput.value;
+								                var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.pdf)$/i;
+								                var paciente_id = '<?php echo $paciente_id; ?>';
+								                $('#status_zz').html("Cargando...");
+								
+								                if (!allowedExtensions.exec(filePath)) {
+								                    alert('Por favor sube archivos con las extensiones .jpeg/.jpg/.png/.gif/.pdf solamente.');
+								                    fileInput.value = '';
+								                    return false;
+								                }
+								
+								                if (fileInput.files[0].size > 3 * 1024 * 1024) {
+								                    alert('El archivo es demasiado grande. Tamaño máximo permitido: 3 MB.');
+								                    fileInput.value = '';
+								                    return false;
+								                }
+								
+								                var formData = new FormData($("#uploadForm_zz")[0]);
+								                $("#btnUpload_zz").prop('disabled', true);
+								
+								                $.ajax({
+								                    url: 'upload.php',
+								                    type: 'POST',
+								                    data: formData,
+								                    contentType: false,
+								                    processData: false,
+								                    success: function(response) {
+								                        var data = JSON.parse(response);
+								                        if (data.error) {
+								                            $('#status_zz').html(data.error);
+								                        } else {
+								                            $('#status_zz').html('Archivo subido correctamente.');
+								                            $("#fileList").append(
+								                                "<li><strong>" + data.name + "</strong> (" + data.type + ") - " +
+								                                "<a href='" + data.path + "' target='_blank'>Ver archivo</a></li>"
+								                            );
+								                            $('#file_zz').val('');
+								                        }
+								                        $("#btnUpload_zz").prop('disabled', false);
+								                    },
+								                    error: function() {
+								                        $('#status_zz').html('Ocurrió un error al subir el archivo.');
+								                        $("#btnUpload_zz").prop('disabled', false);
+								                    }
+								                });
+								            });
+								        });
+								    </script>
+                                    
+                                </div>
+                            </div>                              				
+                             				
+
+		                                <div class="form-line">	                                	
+		                                	<?php //print_r($_GET); 
+		                                	// print_r($_SESSION);
 												if ($origen == 'agenda'   ) {
 													$sql ="
 													SELECT
@@ -227,9 +221,8 @@ extract($row);
 													    extract($row);		
 														
 														$f_ini = strftime("%e-%b-%Y",strtotime($f_ini));
-														
 																										
-														echo "<hr><h2><b>Cita</b></h2><br>
+														$dia .="<hr><h2><b>Cita</b></h2><br>
 														Fecha: $f_ini<br>
 														Hora de inicio: $h_ini<br>
 														Hora final: $h_fin"; 
@@ -258,286 +251,156 @@ extract($row);
 													$style ='';
 												}
 												
-												?>	
-											    
-											    <div  id='codigo_2'  class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>												    													<hr>
-													<?php if ($funcion !== 'MEDICO' ) {?>                             									
-						                            <button class="btn bg-cyan waves-effect m-b-15" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
-						                                    aria-controls="collapseExample"><i class="material-icons">system_update_alt</i> 
-						                                CARGAR DOCUMENTOS
-						                            </button>
-						                            <?php } ?>
-														<div class="collapse" id="collapseExample">
-	                                						<div class="well">                         				
-																<?php
-																// Definir el directorio del paciente
-																$directory = "uploads/archivos/paciente_" . $paciente_id;
-																
-																// Verificar si el directorio existe y listar los archivos
-																$fileList = [];
-																if (is_dir($directory)) {
-																    $files = scandir($directory);
-																    foreach ($files as $file) {
-																        if ($file !== '.' && $file !== '..') {
-																            $filePath = "$directory/$file";
-																            $fileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
-																            $fileTypeLabel = in_array($fileType, ['jpg', 'jpeg', 'png', 'gif']) ? 'Imagen' : ($fileType === 'pdf' ? 'PDF' : 'Otro');
-																            if ($fileTypeLabel !== 'Otro') { // Ignorar archivos no soportados
-																                $fileList[] = [
-																                    'name' => $file,
-																                    'type' => $fileTypeLabel,
-																                    'path' => $filePath
-																                ];
-																            }
-																        }
-																    }
-																}
-																?>								
-															    <h3>Subir Archivos</h3>
-															    <p>Es para subir contratos en PDF, JPG o PNG, máximo 3 MB</p>
-															    <form id="uploadForm_zz" enctype="multipart/form-data">
-															        <input type="hidden" name="paciente_id" value="<?php echo $paciente_id; ?>">
-															        <p><input class="btn btn-primary" type="file" name="file" id="file_zz"></p> 
-															        <p><input class="btn btn-default" type="button" value="Subir Archivo" id="btnUpload_zz"></p>
-															    </form>
-									
-															    <div id="status_zz"></div>														    
-															    <div class="file-list">
-															        <h3>Archivos del Paciente</h3>
-															        <ul id="fileList">
-															            <?php foreach ($fileList as $file): ?>
-															                <li>
-															                    <strong><?php echo htmlspecialchars($file['name']); ?></strong>
-															                    (<?php echo $file['type']; ?>) - 
-															                    <a href="<?php echo htmlspecialchars($file['path']); ?>" target="_blank">Ver archivo</a>
-															                </li>
-															            <?php endforeach; ?>
-															        </ul>
-															    </div>					
-															    <script>
-															        $(document).ready(function() {
-															            $("#btnUpload_zz").click(function() {
-															                var fileInput = $('#file_zz')[0];
-															                var filePath = fileInput.value;
-															                var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.pdf)$/i;
-															                var paciente_id = '<?php echo $paciente_id; ?>';
-															                $('#status_zz').html("Cargando...");
-															
-															                if (!allowedExtensions.exec(filePath)) {
-															                    alert('Por favor sube archivos con las extensiones .jpeg/.jpg/.png/.gif/.pdf solamente.');
-															                    fileInput.value = '';
-															                    return false;
-															                }
-															
-															                if (fileInput.files[0].size > 3 * 1024 * 1024) {
-															                    alert('El archivo es demasiado grande. Tamaño máximo permitido: 3 MB.');
-															                    fileInput.value = '';
-															                    return false;
-															                }
-															
-															                var formData = new FormData($("#uploadForm_zz")[0]);
-															                $("#btnUpload_zz").prop('disabled', true);
-															
-															                $.ajax({
-															                    url: 'upload.php',
-															                    type: 'POST',
-															                    data: formData,
-															                    contentType: false,
-															                    processData: false,
-															                    success: function(response) {
-															                        var data = JSON.parse(response);
-															                        if (data.error) {
-															                            $('#status_zz').html(data.error);
-															                        } else {
-															                            $('#status_zz').html('Archivo subido correctamente.');
-															                            $("#fileList").append(
-															                                "<li><strong>" + data.name + "</strong> (" + data.type + ") - " +
-															                                "<a href='" + data.path + "' target='_blank'>Ver archivo</a></li>"
-															                            );
-															                            $('#file_zz').val('');
-															                        }
-															                        $("#btnUpload_zz").prop('disabled', false);
-															                    },
-															                    error: function() {
-															                        $('#status_zz').html('Ocurrió un error al subir el archivo.');
-															                        $("#btnUpload_zz").prop('disabled', false);
-															                    }
-															                });
-															            });
-															        });
-															    </script>						                                    
-							                                </div>
-							                            </div>                              										                             											
-														<button id='descarga_open' class='btn bg-<?php echo $body; ?> waves-effect m-b-15' type='button' data-toggle='collapse' data-target='#collapseExamplex' aria-expanded='false' aria-controls='collapseExamplex'>
-														    <i class='material-icons'>file_download</i>  Descarga Reporte
-														</button>
-														
-														<div class='collapse' id='collapseExamplex'>
-														    <div class='well'>
-														        <h2><b>* Comentarios para el reporte:</b></h2><br>
-														        <textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'>
-														            <?php echo $comentarios_reporte; ?>
-														        </textarea>
-														        <br>
-														        <button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'>Guarda Comentarios</button>
-														
-														        <script type='text/javascript'>
-														            // Asegúrate de que CKEditor esté listo antes de inicializar el editor
-														            $(document).ready(function() {
-														                // Inicializar CKEditor para comentarios_rep
-														                if (typeof CKEDITOR !== 'undefined') {
-														                    CKEDITOR.replace('comentarios_rep');
-														                } else {
-														                    console.error("CKEditor no está disponible.");
-														                }
-														
-														                $('#guarda_comentarios').click(function() {
-														                    var paciente_id = '<?php echo $paciente_id; ?>';
-														
-														                    // Verificar si CKEditor está activo y obtener el valor de comentarios_rep
-														                    var comentarios_rep;
-														                    if (CKEDITOR.instances.comentarios_rep) {
-														                        comentarios_rep = CKEDITOR.instances.comentarios_rep.getData();
-														                    } else {
-														                        comentarios_rep = $('#comentarios_rep').val(); // Fallback en caso de que CKEditor no esté disponible
-														                    }
-														
-														                    // Preparar los datos en un objeto JSON para AJAX
-														                    var datastring = { 
-														                        comentarios_reporte: comentarios_rep, 
-														                        paciente_id: paciente_id 
-														                    };
-														                    
-														                    // Enviar la solicitud AJAX
-														                    $.ajax({
-														                        url: 'guarda_comentarios.php',
-														                        type: 'POST',
-														                        data: datastring,
-														                        cache: false,
-														                        success: function(response) {   
-														                            alert("Comentario guardado correctamente: " + response);
-														                            $('#descarga').show(); 
-														                        },
-														                        error: function() {
-														                            alert("Error al guardar los comentarios.");
-														                        }
-														                    });
-														                });
-														            });
-														        </script>
-														    </div>
-														</div>
-
-                      	
-							                                <hr>
-							                                <a <?php echo $style; ?> class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html.php?paciente_id=$paciente_id' role='button' >Descarga Reporte Doctor <i class='material-icons'>file_download</i></a>
-							                                <a <?php echo $style; ?> class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html_paciente.php?paciente_id=<?php echo $paciente_id; ?>' role='button' ><i class='material-icons'>assignment_ind</i> Descarga Reporte Paciente <i class='material-icons'>file_download</i></a>
-							                                </div>
-							                            </div>
-							                            <br>
-														<div class='row'>
-															<div class='col-md-6'><br>
-																<a  class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_tms.php?paciente_id=<?php echo $paciente_id; ?>' role='button' >Descarga Contrato y Condiciones TMS <i class='material-icons'>file_download</i></a>
-															</div>
-															<div class='col-md-6'><br>
-																<a  class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_tdcs.php?paciente_id=<?php echo $paciente_id; ?>' role='button' >Descarga Contrato y Condiciones TdCS <i class='material-icons'>file_download</i></a>
-															</div>
-														</div>	
-														<?php 
 													
-														switch ($estatus) {
-															case 'Activo':
-																$span = "bg-green";
-																break;
-															case 'Confirmado':
-																$span = "bg-light-green";
-																break;
-															case 'Eliminado':
-																$span = "bg-red";
-																break;
-															case 'Inactivo':
-																$span = "bg-red";
-																break;	
-															case 'No interezado':
-																$span = "bg-red";
-																break;
-															case 'No localizado':
-																$span = "bg-orange";
-																break;
-															case 'Pendiente':
-																$span = "bg-amber";
-																break;
-															case 'Seguimiento':
-																$span = "bg-yellow";
-																break;	
-															case 'Remisión':
-																$span = "bg-indigo";
-																break;																																																							
-														}
+											    //print_r($row);
+											    $dia = "<div  id='codigo_2'  class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+											    <hr><h1><b>No. ".$paciente_id." ".$paciente." ".$apaterno." ".$amaterno."<b></h1>";		                                	
+	                                			//<a class='btn bg-$body waves-effect' target='_blank' href='pdf_html.php?paciente_id=$paciente_id' role='button'>Descarga Reporte</a>
+												$dia .= "								
+					                            <button id='descarga_open' class='btn bg-$body waves-effect m-b-15' type='button' data-toggle='collapse' data-target='#collapseExamplex' aria-expanded='false'
+					                                    aria-controls='collapseExamplex'>
+					                                Descarga Reporte
+					                            </button>
+					                            <div class='collapse' id='collapseExamplex'>
+					                                <div class='well'>
+					                                	<h2><b>* Comentarios para el reporte:</b></h2><br>
+					                                	<textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'>$comentarios_reporte</textarea>
+					                                	<br><button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'>Guarda Comentarios</button>
+												         <script type='text/javascript'>
+											                $('#guarda_comentarios').click(function(){
+											                	var paciente_id = '$paciente_id'; 
+											                	var comentarios_reporte = $( '#comentarios_rep').val();
+											                    var datastring = 'comentarios_reporte='+comentarios_reporte+'&paciente_id='+paciente_id;
+											                    $.ajax({
+											                        url: 'guarda_comentarios.php',
+											                        type: 'POST',
+											                        data: datastring,
+											                        cache: false,
+											                        success:function(html){   
+											                        	//alert(html);  
+											                            $('#descarga').show(); 
+											                            
+											                        }
+											                	});
+											                });
+											            </script>                       	
+					                                <hr><a $style class='btn bg-$body waves-effect'  id='descarga' target='_blank' href='pdf_html.php?paciente_id=$paciente_id' role='button' >Descarga Reporte Doctor <i class='material-icons'>file_download</i></a>
+					                                <a $style class='btn bg-$body waves-effect'  id='descarga' target='_blank' href='pdf_html_paciente.php?paciente_id=$paciente_id' role='button' ><i class='material-icons'>assignment_ind</i> Descarga Reporte Paciente <i class='material-icons'>file_download</i></a>
+					                                </div>
+					                            </div>	";								
+												// echo "hola 1 $empresa_id<br>";
+												if ($empresa_id == 1) {
+												// echo "hola 2<br>";		
+													$dia.="												
+													<div class='row'>
+														<div class='col-md-6'><br>
+															<a  class='btn bg-$body waves-effect'  id='descarga' target='_blank' href='pdf_tms.php?paciente_id=$paciente_id' role='button' >Descarga Contrato y Condiciones TMS <i class='material-icons'>file_download</i></a>
+														</div>
+														<div class='col-md-6'><br>
+															<a  class='btn bg-$body waves-effect'  id='descarga' target='_blank' href='pdf_tdcs.php?paciente_id=$paciente_id' role='button' >Descarga Contrato y Condiciones TdCS <i class='material-icons'>file_download</i></a>
+														</div>
+													</div>	
+													";
 
+												}
+												// echo "hola 3<br>";
+											
+												switch ($estatus) {
+													case 'Activo':
+														$span = "bg-green";
+														break;
+													case 'Confirmado':
+														$span = "bg-light-green";
+														break;
+													case 'Eliminado':
+														$span = "bg-red";
+														break;
+													case 'Inactivo':
+														$span = "bg-red";
+														break;	
+													case 'No interezado':
+														$span = "bg-red";
+														break;
+													case 'No localizado':
+														$span = "bg-orange";
+														break;
+													case 'Pendiente':
+														$span = "bg-amber";
+														break;
+													case 'Seguimiento':
+														$span = "bg-yellow";
+														break;	
+													case 'Remisión':
+														$span = "bg-indigo";
+														break;																																																							
+												}
 												
-												$dia = "
-												<hr>
+												$dia.= "<hr>
+												
+												";
+												
+												
+												$dia.= "
 													<h3><b>Estatus del Paciente</b> </h3>
 													<h3><span class='label $span' >$estatus</span></h3> <hr>
-										            <button type='button' class='btn bg-$body waves-effect' data-toggle='modal' data-target='#estatuslModal'>Modifica Estatus</button>
-										            <!-- Small Size -->
-										            <div class='modal fade' id='estatuslModal' tabindex='-1' role='dialog'>
-										                <div class='modal-dialog modal-sm' role='document'>
-										                    <div class='modal-content'>
-										                        <div class='modal-header'>
-										                            <h4 class='modal-title' id='estatuslModalLabel'>Seleccione el Estatus</h4>
-										                        </div>
-										                        <div class='modal-body'>							
-																    <div class='form-group form-float'>
-																        <label for='estado'>Estado:</label>
-																        <select class='form-control show-tick' id='estatus_sel' name='estatus_sel' required>
-																            <option value=''>-- Seleccione un Estatus --</option>
-																            <option value='Activo' ".($estatus == "Activo" ? "selected" : "").">Activo</option>
-																            <option value='Confirmado' ".($estatus == "Confirmado" ? "selected" : "").">Confirmado</option>
-																            <option value='Eliminado' ".($estatus == "Eliminado" ? "selected" : "").">Eliminado</option>
-																            <option value='Inactivo' ".($estatus == "Inactivo" ? "selected" : "").">Inactivo</option>
-																            <option value='No interezado' ".($estatus == "No interezado" ? "selected" : "").">No interezado</option>
-																            <option value='No localizado' ".($estatus == "No localizado" ? "selected" : "").">No localizado</option>
-																            <option value='Pendiente' ".($estatus == "Pendiente" ? "selected" : "").">Pendiente</option>
-																            <option value='Seguimiento' ".($estatus == "Seguimiento" ? "selected" : "").">Seguimiento</option>
-																            <option value='Remisión' ".($estatus == "Remisión" ? "selected" : "").">Remisión</option>
-																        </select>
-																    </div>
-														            </div>
-										                        <div class='modal-footer'>
-										                            <button id='btn_estatus' type='button' class='btn btn-primary waves-effect'>GUARDAR</button>
-																	<script type='text/javascript'>
-																	    $(document).ready(function() {
-																	        $('#btn_estatus').click(function() {    
-																	            var estatus = $('#estatus_sel').val();
-																	            var paciente_id = '$paciente_id';
-																	            var datastring = 'estatus=' + estatus + '&paciente_id=' + paciente_id;
-																	
-																	            $.ajax({
-																	                url: 'procesar_seleccion.php',
-																	                type: 'POST',
-																	                data: datastring,
-																	                cache: false,
-																	                success: function(html) {
-																	                	//alert(html);   
-																	                    location.reload(); // Recargar la página tras la respuesta exitosa
-																	                },
-																	                error: function(xhr, status, error) {
-																	                    console.log('Error en la petición: ' + error);
-																	                }
-																	            });
-																	        });
-																	    });
-																	</script>                            
-										                            <button type='button' class='btn btn-danger waves-effect' data-dismiss='modal'>CERRAR</button>
-										                        </div>
-										                    </div>
-										                </div>
-										            </div>													
+            <button type='button' class='btn bg-$body waves-effect'data-toggle='modal' data-target='#estatuslModal'>Modifica Estatus</button>
+            <!-- Small Size -->
+            <div class='modal fade' id='estatuslModal' tabindex='-1' role='dialog'>
+                <div class='modal-dialog modal-sm' role='document'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h4 class='modal-title' id='estatuslModalLabel'>Seleccione el Estatus</h4>
+                        </div>
+                        <div class='modal-body'>							
+						    <div class='form-group form-float'>
+						        <label for='estado'>Estado:</label>
+						        <select class='form-control show-tick' id='estatus_sel' name='estatus_sel' required>
+						            <option value=''>-- Seleccione un Estatus --</option>
+						            <option value='Activo' ".($estatus == "Activo" ? "selected" : "").">Activo</option>
+						            <option value='Confirmado' ".($estatus == "Confirmado" ? "selected" : "").">Confirmado</option>
+						            <option value='Eliminado' ".($estatus == "Eliminado" ? "selected" : "").">Eliminado</option>
+						            <option value='Inactivo' ".($estatus == "Inactivo" ? "selected" : "").">Inactivo</option>
+						            <option value='No interezado' ".($estatus == "No interezado" ? "selected" : "").">No interezado</option>
+						            <option value='No localizado' ".($estatus == "No localizado" ? "selected" : "").">No localizado</option>
+						            <option value='Pendiente' ".($estatus == "Pendiente" ? "selected" : "").">Pendiente</option>
+						            <option value='Seguimiento' ".($estatus == "Seguimiento" ? "selected" : "").">Seguimiento</option>
+						            <option value='Remisión' ".($estatus == "Remisión" ? "selected" : "").">Remisión</option>
+						        </select>
+						    </div>
+				            </div>
+                        <div class='modal-footer'>
+                            <button id='btn_estatus' type='button' class='btn btn-primary waves-effect'>GUARDAR</button>
+							<script type='text/javascript'>
+							    $(document).ready(function() {
+							        $('#btn_estatus').click(function() {    
+							            var estatus = $('#estatus_sel').val();
+							            var paciente_id = '$paciente_id';
+							            var datastring = 'estatus=' + estatus + '&paciente_id=' + paciente_id;
+							
+							            $.ajax({
+							                url: 'procesar_seleccion.php',
+							                type: 'POST',
+							                data: datastring,
+							                cache: false,
+							                success: function(html) {
+							                	//alert(html);   
+							                    location.reload(); // Recargar la página tras la respuesta exitosa
+							                },
+							                error: function(xhr, status, error) {
+							                    console.log('Error en la petición: ' + error);
+							                }
+							            });
+							        });
+							    });
+							</script>                            
+                            <button type='button' class='btn btn-danger waves-effect' data-dismiss='modal'>CERRAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>													
 													";
 													
-												$dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
+$dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 										        <h2><b>Pagos Registrados</b></h2><br>";										        
 																																			
 												$dia .= "<table style='width: auto;' class='table table-bordered'>
@@ -780,25 +643,13 @@ extract($row);
 										    	while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 											        extract($row_encuestas);	
 												
-													// $sql_bases = "
-													// SELECT
-														// base_encuesta_$encuesta_id.base_id,
-														// base_encuesta_$encuesta_id.paciente_id,
-														// base_encuesta_$encuesta_id.usuario_id,
-														// base_encuesta_$encuesta_id.f_captura,
-														// base_encuesta_$encuesta_id.h_captura,";												
-// 												
-													$sql_basesxy = "
+													$sql_bases = "
 													SELECT
 														base_encuesta_$encuesta_id.base_id,
 														base_encuesta_$encuesta_id.paciente_id,
 														base_encuesta_$encuesta_id.usuario_id,
 														base_encuesta_$encuesta_id.f_captura,
-														base_encuesta_$encuesta_id.h_captura,
-														COALESCE(SUM(respuestas.valor), 0) AS total
-													FROM 
-													    base_encuesta_$encuesta_id LEFT JOIN respuestas ON respuestas.respuesta IN (";												
-												
+														base_encuesta_$encuesta_id.h_captura,";												
 																										
 													$sql_preguntas = "
 													SELECT
@@ -811,35 +662,21 @@ extract($row);
 														preguntas_encuestas 
 													WHERE
 														preguntas_encuestas.encuesta_id = $encuesta_id 
-														AND preguntas_encuestas.tipo NOT IN ('titulo','instrucciones')
-													ORDER BY preguntas_encuestas.pregunta_id ASC";
+														AND preguntas_encuestas.tipo NOT IN ('titulo','instrucciones')";
 													//$dia .= $sql_preguntas."<hr>";
-													$result_preguntas=ejecutar($sql_preguntas);
-
 													$cnt = 1;	
 													$sql_basesX = "";
-													
-													$cnt_preguntas = mysqli_num_rows($result_preguntas);
-													//echo $cnt_preguntas."<hr>";										     	 
+											     	$result_preguntas=ejecutar($sql_preguntas); 
 											    	while($row_preguntas = mysqli_fetch_array($result_preguntas)){
 												        extract($row_preguntas);			
-														
-														//echo $cnt."<br>";
-														if ($cnt == $cnt_preguntas) {
-															$sql_basesxy.="base_encuesta_$encuesta_id.respuesta_$pregunta_id ";
-														} else {
-															$sql_basesxy.="base_encuesta_$encuesta_id.respuesta_$pregunta_id,";
-														}
-														
-														
 																								
-														// $sql_basesX .= "
-														// ( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_$encuesta_id.respuesta_$pregunta_id and respuestas.encuesta_id = $encuesta_id )+";
-														// //echo $cnt." - ".$pregunta_id."<br>";
-														// if ( $cnt == 1) {
-															// //echo $cnt." - ".$pregunta_id."<br>";
-															// $wherex .= "AND base_encuesta_$encuesta_id.respuesta_$pregunta_id <>''";
-														// }
+														$sql_basesX .= "
+														( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_$encuesta_id.respuesta_$pregunta_id and respuestas.encuesta_id = $encuesta_id )+";
+														//echo $cnt." - ".$pregunta_id."<br>";
+														if ( $cnt == 1) {
+															//echo $cnt." - ".$pregunta_id."<br>";
+															$wherex .= "AND base_encuesta_$encuesta_id.respuesta_$pregunta_id <>''";
+														}
 														
 														$cnt++;
 													}
@@ -848,35 +685,18 @@ extract($row);
 													
 														$sql_basesX = substr($sql_basesX, 0, -1);
 
-														// $sql_bases .= "
-															// $sql_basesX as total
-														// FROM
-															// base_encuesta_$encuesta_id
-														// WHERE
-															// base_encuesta_$encuesta_id.paciente_id = $paciente_id 
-															// $wherex
-														// ORDER BY f_captura DESC";
+														$sql_bases .= "
+															$sql_basesX as total
+														FROM
+															base_encuesta_$encuesta_id
+														WHERE
+															base_encuesta_$encuesta_id.paciente_id = $paciente_id 
+															$wherex
+														ORDER BY f_captura DESC";
 
 														//echo $sql_bases."<hr>";
 														
-														$sql_basesxy.="
-														) 
-														    AND respuestas.encuesta_id = $encuesta_id
-														WHERE 
-														    base_encuesta_$encuesta_id.paciente_id = $paciente_id 
-														    $wherex
-														GROUP BY 
-														    base_encuesta_$encuesta_id.base_id, 
-														    base_encuesta_$encuesta_id.paciente_id, 
-														    base_encuesta_$encuesta_id.usuario_id, 
-														    base_encuesta_$encuesta_id.f_captura, 
-														    base_encuesta_$encuesta_id.h_captura
-														ORDER BY 
-														    base_encuesta_$encuesta_id.f_captura DESC";
-														
-														//echo $sql_basesxy."<hr>";
-														
-														$result_bases=ejecutar($sql_basesxy);
+														$result_bases=ejecutar($sql_bases);
 														//echo $result_bases." result_bases<br>";
 														$cnt_bases = mysqli_num_rows($result_bases);
 														//echo " Res".$cnt_bases."<br>";
@@ -1295,88 +1115,82 @@ extract($row);
 		                                	?>
 													                                	
 											<script>
-document.getElementById('botonCopiarx').addEventListener('click', function() {
-    var codigo = document.getElementById('codigo_2');
-    var rango = document.createRange();
-    rango.selectNode(codigo);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(rango);
-    var contenidoCopiado = codigo.innerText || codigo.textContent;
-    document.execCommand('copy');
-    window.getSelection().removeAllRanges();
-
-    $("#gpt").html('');
-    $('#loadx').show();
-    var paciente_id = "<?php echo $paciente_id; ?>";
-    var fecha = "<?php echo $hoy; ?>";
-    var requestData = { 
-        sistema: 'Recomendación del caso y del tratamiento...',
-        paciente_id: paciente_id,
-        accion: 'recomendacion',
-        fecha: fecha,
-        tipo: 'reporte',
-        contenido: contenidoCopiado
-    };
-
-    $.ajax({
-        url: 'chat_gpt.php',
-        type: 'POST',
-        data: requestData,
-        success: function(html) {
-            $("#gpt").html('<h1>Se genero correctamente el Informe de Recomendación</h1>'); 
-            $('#loadx').hide();
-			
-            // Actualizar el contenido del editor1 con la recomendación generada
-            CKEDITOR.instances.editor1.setData(html);
-            $('#remcom_btn').click();
-            $('#accordion_1x_info').show();
-        }
-    });
-});
-
+											    document.getElementById('botonCopiarx').addEventListener('click', function() {
+											        // Primero, copiamos la información al portapapeles
+											        var codigo = document.getElementById('codigo_2');
+											        var rango = document.createRange();
+											        rango.selectNode(codigo);
+											        window.getSelection().removeAllRanges(); // Elimina rangos existentes
+											        window.getSelection().addRange(rango); // Selecciona el texto del código
+											        var contenidoCopiado = codigo.innerText || codigo.textContent; // Almacena el contenido copiado en una variable
+											        document.execCommand('copy'); // Ejecuta el comando de copia
+											        window.getSelection().removeAllRanges(); // Elimina el rango seleccionado
+											        //alert('Información copiado al portapapeles'); // Opcional: muestra una alerta
+											
+											        // Luego, enviamos esa información al servidor
+											        $("#gpt").html(''); 
+											        $('#loadx').show();
+											        var paciente_id = "<?php echo $paciente_id; ?>";
+											        var fecha ="<?php echo $hoy; ?>";
+											        var requestData = { 
+											        	sistema: 'Recpomendacion del caso y del tratamiento con sugerencia de sesiones recomendando terapias que tienen que ser sobre TMS y tdcs',
+											            paciente_id: paciente_id,
+											            accion: 'recomendacion',
+											            fecha: fecha,
+											            tipo: 'reporte',
+											            contenido: contenidoCopiado // Añade la información copiada a los datos de la solicitud
+											        };
+											        $.ajax({
+											            url: 'chat_gpt.php',
+											            type: 'POST',
+											            data: requestData,
+											            success: function(html) {
+											                //alert("Indormacion comcluida");
+											                $("#gpt").html(html); 
+											                $('#loadx').hide();
+											            }
+											        });
+											    });
 											</script>
 											<script>
-document.getElementById('botonCopiary').addEventListener('click', function() {
-    $('#sesiones_open').click();
-    $('#descarga_open').click();
-    var codigo = document.getElementById('codigo');
-    var rango = document.createRange();
-    rango.selectNode(codigo);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(rango);
-    var contenidoCopiado = codigo.innerText || codigo.textContent;
-    document.execCommand('copy');
-    window.getSelection().removeAllRanges();
-
-    $("#gpt").html('');
-    $('#loadx').show();
-    var paciente_id = "<?php echo $paciente_id; ?>";
-    var fecha = "<?php echo $hoy; ?>";
-    var requestData = { 
-        sistema: 'Informe con resumen del caso y del tratamiento...',
-        paciente_id: paciente_id,
-        accion: 'informe',
-        fecha: fecha,
-        tipo: 'informe',
-        contenido: contenidoCopiado
-    };
-
-    $.ajax({
-        url: 'chat_gpt.php',
-        type: 'POST',
-        data: requestData,
-        success: function(html) {
-            $("#gpt").html('<h1>Se genero correctamente el Informe</h1>'); 
-            $('#loadx').hide();
-			
-            // Actualizar el contenido del editor2 con el informe generado
-            CKEDITOR.instances.editor2.setData(html);
-            $('#inf_btn').click();
-            $('#accordion_2x_info').show();
-        }
-    });
-});
-
+											    document.getElementById('botonCopiary').addEventListener('click', function() {
+											        // Primero, copiamos la información al portapapeles
+											        $('#sesiones_open').click();
+											        $('#descarga_open').click();
+											        var codigo = document.getElementById('codigo');
+											        var rango = document.createRange();
+											        rango.selectNode(codigo);
+											        window.getSelection().removeAllRanges(); // Elimina rangos existentes
+											        window.getSelection().addRange(rango); // Selecciona el texto del código
+											        var contenidoCopiado = codigo.innerText || codigo.textContent; // Almacena el contenido copiado en una variable
+											        document.execCommand('copy'); // Ejecuta el comando de copia
+											        window.getSelection().removeAllRanges(); // Elimina el rango seleccionado
+											        //alert('Información copiado al portapapeles'); // Opcional: muestra una alerta
+											
+											        // Luego, enviamos esa información al servidor
+											        $("#gpt").html(''); 
+											        $('#loadx').show();
+											        var paciente_id = "<?php echo $paciente_id; ?>";
+											        var fecha ="<?php echo $hoy; ?>";
+											        var requestData = { 
+											        	sistema: 'Informe con resumen del caso y del tratamiento con sugerencia para mantenimiento de sesiones recomendando de terapias que tienen que ser sobre TMS y tdcs',
+											            paciente_id: paciente_id,
+											            accion: 'informe',
+											            fecha: fecha,
+											            tipo: 'informe',
+											            contenido: contenidoCopiado // Añade la información copiada a los datos de la solicitud
+											        };
+											        $.ajax({
+											            url: 'chat_gpt.php',
+											            type: 'POST',
+											            data: requestData,
+											            success: function(html) {
+											                //alert("Indormacion comcluida");
+											                $("#gpt").html(html); 
+											                $('#loadx').hide();
+											            }
+											        });
+											    });
 											</script>
 			
 											<script>
@@ -1450,8 +1264,6 @@ document.getElementById('botonCopiary').addEventListener('click', function() {
 				</div>
 			</div>
     </section>
- 
- 
 <?php	include($ruta.'footer1.php');	?>
 
     <!-- Jquery DataTable Plugin Js -->
@@ -1479,18 +1291,5 @@ document.getElementById('botonCopiary').addEventListener('click', function() {
     <!-- Custom Js -->
     <script src="<?php echo $ruta; ?>js/pages/charts/jquery-knob.js"></script>  
     <script src="<?php echo $ruta; ?>js/pages/ui/tooltips-popovers.js"></script>
-    
-    
-    <!-- Jquery Knob Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/jquery-knob/jquery.knob.min.js"></script>
-
-    <!-- Ckeditor -->
-    <script src="<?php echo $ruta; ?>plugins/ckeditor/ckeditor.js"></script>       
-    
-    <!-- TinyMCE -->
-    <!-- <script src="<?php echo $ruta; ?>plugins/tinymce/tinymce.js"></script> -->
-
-
-    <!-- <script src="<?php echo $ruta; ?>js/pages/forms/editors.js"></script>         -->
           
 <?php	include($ruta.'footer2.php');	?>			

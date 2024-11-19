@@ -3,7 +3,7 @@
 include('../functions/funciones_mysql.php');
 include('../functions/email.php');
 include('../api/funciones_api.php');
-
+$ruta = "../";
 // Iniciar sesión para acceder a variables de sesión
 session_start();
 

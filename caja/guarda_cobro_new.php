@@ -18,10 +18,10 @@ $ruta = "../";
 extract($_SESSION);
 
 // ID de moneda para Bind ERP
-$CurrencyID = "b7e2c065-bd52-40ca-b508-3accdd538860"; 	
+$CurrencyID = "b7e2c065-bd52-40ca-b508-3accdd538860";
 
 extract($_POST);
-$ticket = mktime();	
+$ticket = mktime();
 // print_r($_POST);
 // echo "<hr>";
 
@@ -66,7 +66,10 @@ switch ($tipo) {
         }
         break;
     case 'Renta Consultorio':
+		
     case 'Terapia':
+
+		$tipo = $descripcion;
     case 'Otros':
         $PriceListID = "f7929bd7-a45b-4eef-b272-78bd36261754"; // Neuromodulacion		
         break;

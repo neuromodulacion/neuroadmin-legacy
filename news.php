@@ -1,15 +1,25 @@
 <?php
 include('functions/funciones_mysql.php');
-//session_start();
-error_reporting(7);
-iconv_set_encoding('internal_encoding', 'utf-8'); 
+// Inicia una nueva sesión o reanuda la existente
+session_start();
+
+// Configura la notificación de errores para mostrar todos los errores
+error_reporting(E_ALL);
+
+// Establece el conjunto de caracteres predeterminado como UTF-8
+ini_set('default_charset', 'UTF-8');
+
+// Configura la cabecera HTTP para que el contenido se interprete como HTML con codificación UTF-8
 header('Content-Type: text/html; charset=UTF-8');
+
+// Establece la zona horaria predeterminada para la aplicación
+// date_default_timezone_set('America/Monterrey'); // Opción comentada para Monterrey
 date_default_timezone_set('America/Monterrey');
+
+// Establece la configuración regional para las funciones de tiempo a español (España) con codificación UTF-8
 setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=mktime();
 
 $ruta="";
-$title = 'INICIO';
 
 extract($_SESSION);
 extract($_POST);

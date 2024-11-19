@@ -15301,3 +15301,458 @@ Stack trace:
 [09-Nov-2024 15:21:32 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 461
 [09-Nov-2024 15:21:32 America/Monterrey] PHP Notice:  Undefined variable: saldo in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 470
 [09-Nov-2024 15:21:32 America/Monterrey] PHP Notice:  Undefined index: usuario_id in /home/lamanad1/neuromodulaciongdl.com/footer1.php on line 82
+[11-Nov-2024 16:27:14 UTC] PHP Notice:  Undefined variable: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/administracion.php on line 21
+[11-Nov-2024 16:28:16 UTC] PHP Notice:  Undefined index: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 23
+[11-Nov-2024 16:28:29 UTC] PHP Notice:  Undefined index: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 23
+[11-Nov-2024 10:30:31 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[11-Nov-2024 16:31:58 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 3
+[11-Nov-2024 10:31:59 America/Monterrey] PHP Notice:  Undefined variable: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/movimientos.php on line 18
+[12-Nov-2024 18:23:28 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 3
+[12-Nov-2024 12:23:29 America/Monterrey] PHP Notice:  Undefined variable: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/movimientos.php on line 18
+[12-Nov-2024 17:59:14 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[12-Nov-2024 17:09:40 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_cobro.php on line 186
+[12-Nov-2024 17:11:38 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_cobro.php on line 186
+[12-Nov-2024 18:11:47 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[12-Nov-2024 18:14:14 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[12-Nov-2024 17:16:43 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_cobro.php on line 186
+[12-Nov-2024 19:01:38 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[12-Nov-2024 19:02:05 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[12-Nov-2024 18:41:25 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_cobro.php on line 186
+[12-Nov-2024 18:41:49 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_cobro.php on line 186
+[12-Nov-2024 18:42:54 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_cobro.php on line 186
+[13-Nov-2024 09:09:41 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_cobro.php on line 186
+[13-Nov-2024 18:30:18 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 3
+[13-Nov-2024 12:30:19 America/Monterrey] PHP Notice:  Undefined variable: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/movimientos.php on line 18
+[13-Nov-2024 12:35:23 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[13-Nov-2024 12:35:44 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[13-Nov-2024 18:46:09 UTC] PHP Notice:  Undefined variable: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/administracion.php on line 21
+[13-Nov-2024 18:46:48 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 3
+[13-Nov-2024 12:46:48 America/Monterrey] PHP Notice:  Undefined variable: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/movimientos.php on line 18
+[13-Nov-2024 16:35:56 America/Monterrey] PHP Notice:  Undefined variable: sesion in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 49
+[13-Nov-2024 16:35:56 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/uso.php on line 59
+[13-Nov-2024 16:35:56 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/uso.php on line 81
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 9
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 17
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: emp_nombre in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 59
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: empresa_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 73
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 76
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: nombre_corto in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 136
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 137
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 18
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 18
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 18
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 29
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 29
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 29
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 57
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 118
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 118
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 137
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 425
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 425
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 425
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 455
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 455
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 4
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 11
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 26
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 34
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 47
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 55
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 68
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 76
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 89
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 97
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 110
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 118
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 131
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 139
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 152
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 160
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 173
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 181
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 195
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 203
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 217
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 225
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 238
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 246
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 259
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 267
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 280
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 288
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 301
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 309
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 322
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 330
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 343
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 351
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 364
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 372
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 385
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 393
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 406
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 414
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 427
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 435
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 188
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 195
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 205
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 212
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 222
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 229
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 140
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 145
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 146
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: saldo in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 149
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 199
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 206
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 260
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 267
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 308
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 314
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 334
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: saldo in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 343
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 438
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 444
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 461
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined variable: saldo in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 470
+[13-Nov-2024 16:35:57 America/Monterrey] PHP Notice:  Undefined index: usuario_id in /home/lamanad1/neuromodulaciongdl.com/footer1.php on line 82
+[13-Nov-2024 23:57:24 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 3
+[13-Nov-2024 17:57:24 America/Monterrey] PHP Notice:  Undefined variable: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/movimientos.php on line 18
+[13-Nov-2024 23:57:43 UTC] PHP Notice:  Undefined index: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 23
+[13-Nov-2024 17:00:05 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/pdf_html.php on line 181
+[13-Nov-2024 17:02:48 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_cobro.php on line 186
+[13-Nov-2024 17:24:00 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/pdf_html.php on line 181
+[14-Nov-2024 00:24:47 UTC] PHP Notice:  Undefined index: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 23
+[13-Nov-2024 18:24:47 America/Monterrey] PHP Notice:  Undefined variable: Gtotal_pagos in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 642
+[13-Nov-2024 18:24:47 America/Monterrey] PHP Notice:  Undefined variable: Gtotal_cobros in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 643
+[13-Nov-2024 18:24:47 America/Monterrey] PHP Notice:  Undefined variable: Gtotal_cobros in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 644
+[13-Nov-2024 18:24:47 America/Monterrey] PHP Notice:  Undefined variable: Gtotal_pagos in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 644
+[14-Nov-2024 00:26:53 UTC] PHP Notice:  Undefined index: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 23
+[13-Nov-2024 18:26:53 America/Monterrey] PHP Notice:  Undefined variable: Gtotal_pagos in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 642
+[13-Nov-2024 18:26:53 America/Monterrey] PHP Notice:  Undefined variable: Gtotal_cobros in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 643
+[13-Nov-2024 18:26:53 America/Monterrey] PHP Notice:  Undefined variable: Gtotal_cobros in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 644
+[13-Nov-2024 18:26:53 America/Monterrey] PHP Notice:  Undefined variable: Gtotal_pagos in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 644
+[14-Nov-2024 00:26:58 UTC] PHP Notice:  Undefined index: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/balance_mes.php on line 23
+[14-Nov-2024 00:27:02 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 3
+[13-Nov-2024 18:27:03 America/Monterrey] PHP Notice:  Undefined variable: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/movimientos.php on line 18
+[13-Nov-2024 19:52:57 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[13-Nov-2024 19:53:48 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[14-Nov-2024 16:29:29 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[14-Nov-2024 16:39:46 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[14-Nov-2024 18:28:24 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 3
+[14-Nov-2024 12:28:25 America/Monterrey] PHP Notice:  Undefined variable: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/movimientos.php on line 18
+[14-Nov-2024 19:46:13 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[14-Nov-2024 19:46:15 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: sesion in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 49
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/uso.php on line 59
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/uso.php on line 81
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 9
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 17
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: emp_nombre in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 59
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: empresa_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 73
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 76
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: nombre_corto in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 136
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 137
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 18
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 18
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 18
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 29
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 29
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 29
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 57
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 118
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 118
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 137
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 425
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 425
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 425
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 455
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 455
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 4
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 11
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 26
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 34
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 47
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 55
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 68
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 76
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 89
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 97
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 110
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 118
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 131
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 139
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 152
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 160
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 173
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 181
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 195
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 203
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 217
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 225
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 238
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 246
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 259
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 267
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 280
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 288
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 301
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 309
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 322
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 330
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 343
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 351
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 364
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 372
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 385
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 393
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 406
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 414
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 427
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 435
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 188
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 195
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 205
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 212
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 222
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 229
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 70
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 92
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 124
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: emp_nombre in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 135
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 156
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 188
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: emp_nombre in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 199
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: empresa_id in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 238
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 241
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 259
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 261
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: empresa_id in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 299
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 301
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 454
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 454
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 528
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 536
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 627
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 635
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 643
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 651
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 659
+[14-Nov-2024 13:46:15 America/Monterrey] PHP Notice:  Undefined index: usuario_id in /home/lamanad1/neuromodulaciongdl.com/footer1.php on line 82
+[14-Nov-2024 19:47:32 UTC] PHP Warning:  Unterminated comment starting line 169 in /home/lamanad1/neuromodulaciongdl.com/caja/agrega_paciente.php on line 169
+[14-Nov-2024 19:47:53 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[14-Nov-2024 12:47:56 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/pdf_html.php on line 181
+[14-Nov-2024 12:47:56 America/Mazatlan] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/pdf_html.php on line 181
+[14-Nov-2024 20:56:16 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[14-Nov-2024 20:57:22 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[14-Nov-2024 19:37:07 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[14-Nov-2024 19:37:45 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[15-Nov-2024 01:37:50 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 01:41:53 UTC] PHP Notice:  Undefined variable: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/administracion.php on line 21
+[15-Nov-2024 01:43:24 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 3
+[14-Nov-2024 19:43:25 America/Monterrey] PHP Notice:  Undefined variable: fechaInput in /home/lamanad1/neuromodulaciongdl.com/caja/movimientos.php on line 18
+[15-Nov-2024 01:46:16 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 01:52:52 UTC] PHP Warning:  Unterminated comment starting line 169 in /home/lamanad1/neuromodulaciongdl.com/caja/agrega_paciente.php on line 169
+[15-Nov-2024 01:57:17 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 01:57:44 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 02:01:24 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 15:42:49 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 15:47:26 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 10:37:03 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[15-Nov-2024 16:44:41 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 16:44:49 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 18:10:12 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 18:11:11 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 19:40:22 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 14:20:34 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[15-Nov-2024 15:23:02 America/Mazatlan] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_retiro.php on line 22
+[15-Nov-2024 15:23:02 America/Mazatlan] PHP Notice:  Undefined variable: empresa_id in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_retiro.php on line 23
+[15-Nov-2024 15:23:02 America/Mazatlan] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_retiro.php on line 26
+[15-Nov-2024 15:23:02 America/Mazatlan] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/guarda_retiro.php on line 27
+[15-Nov-2024 16:23:05 America/Monterrey] PHP Notice:  Undefined variable: sesion in /home/lamanad1/neuromodulaciongdl.com/header1.php on line 49
+[15-Nov-2024 16:23:05 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/uso.php on line 59
+[15-Nov-2024 16:23:05 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/uso.php on line 81
+[15-Nov-2024 16:23:05 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 9
+[15-Nov-2024 16:23:05 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 17
+[15-Nov-2024 16:23:05 America/Monterrey] PHP Notice:  Undefined variable: emp_nombre in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 59
+[15-Nov-2024 16:23:05 America/Monterrey] PHP Notice:  Undefined variable: empresa_id in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 73
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 76
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: nombre_corto in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 136
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 137
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 18
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 18
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 18
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 29
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 29
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 29
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 57
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 98
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 118
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 118
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 137
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 149
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 185
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 266
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 311
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 359
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 425
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 425
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 425
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 455
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: funcion in /home/lamanad1/neuromodulaciongdl.com/functions/menus.php on line 455
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 4
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 11
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 26
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 34
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 47
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 55
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 68
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 76
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 89
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 97
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 110
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 118
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 131
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 139
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 152
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 160
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 173
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 181
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 195
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 203
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 217
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 225
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 238
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 246
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 259
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 267
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 280
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 288
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 301
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 309
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 322
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 330
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 343
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 351
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 364
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 372
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 385
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 393
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 406
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 414
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 427
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/functions/colores_sistema.php on line 435
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 188
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 195
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 205
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 212
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 222
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/header2.php on line 229
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 140
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 145
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 146
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: saldo in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 149
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 199
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 206
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 260
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 267
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 308
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 314
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 334
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: saldo in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 343
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 438
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 444
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: body in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 461
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined variable: saldo in /home/lamanad1/neuromodulaciongdl.com/caja/corte.php on line 470
+[15-Nov-2024 16:23:06 America/Monterrey] PHP Notice:  Undefined index: usuario_id in /home/lamanad1/neuromodulaciongdl.com/footer1.php on line 82
+[15-Nov-2024 17:24:19 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[15-Nov-2024 17:58:06 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[16-Nov-2024 00:23:16 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[16-Nov-2024 00:23:59 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[16-Nov-2024 00:24:44 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/lamanad1/neuromodulaciongdl.com/caja/cobro.php on line 723
+[15-Nov-2024 19:28:58 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[15-Nov-2024 21:03:56 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162
+[15-Nov-2024 21:07:36 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/lamanad1/neuromodulaciongdl.com/caja/pagos.php on line 162

@@ -52,6 +52,20 @@ if ($sesion != "On" || $sesion == "" || $_SESSION['usuario_id'] == '' || $empres
 
 // Incluye archivos PHP necesarios para la funcionalidad adicional
 include($ruta.'functions/funciones_mysql.php');
+include($ruta.'functions/conexion_mysqli.php');
+
+// Incluir el archivo de configuración y obtener las credenciales
+$configPath = $ruta.'../config.php';
+
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
+}
+
+$config = require $configPath;
+
+// Crear instancia de la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
 include($ruta.'functions/fotografia.php');
 include($ruta.'uso.php');
 

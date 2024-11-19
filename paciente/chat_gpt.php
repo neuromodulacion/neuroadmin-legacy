@@ -12,10 +12,13 @@ $mysqli = new Mysql(); // Instancia de la clase Mysql
 if (!isset($_POST['paciente_id']) || !isset($_POST['accion'])) {
     die("Error: Datos insuficientes.");
 }
-
-extract($_POST);
 extract($_SESSION);
+extract($_POST);
 
+$fecha = $_POST['fecha'];
+$sistema = $_POST['sistema'];
+$tipo = $_POST['tipo'];
+$contenido = $_POST['contenido'];
 $paciente_id = $_POST['paciente_id'];
 $accion = $_POST['accion'];
 
@@ -329,6 +332,8 @@ $datos = [
         ["role" => "user", "content" => $contenido]
     ]
 ];
+
+echo $promt."<hr>";
 
 // Inicializar sesión cURL
 $ch = curl_init($url);

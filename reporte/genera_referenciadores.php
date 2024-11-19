@@ -1,7 +1,4 @@
 <?php
-// Incluir funciones adicionales para la interacción con la base de datos
-include('../functions/funciones_mysql.php');
-
 // Iniciar la sesión del usuario
 session_start();
 
@@ -21,10 +18,11 @@ date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
 // Guardar la hora actual en la sesión
-$_SESSION['time'] = mktime();
+$_SESSION['time'] = time();
 
 // Definir la ruta base para acceder a otros archivos
 $ruta = "../";
+
 
 // Extraer todas las variables de sesión y POST para usarlas como variables simples
 extract($_SESSION);

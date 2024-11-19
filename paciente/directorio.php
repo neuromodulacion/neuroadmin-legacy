@@ -1,6 +1,8 @@
 <?php
 // Definir la ruta base para incluir archivos
 $ruta="../";
+// Título de la página
+$title = 'INICIO';
 
 // Extraer todas las variables de la sesión para usarlas directamente
 extract($_SESSION);
@@ -120,7 +122,7 @@ if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNIC
                                     ";
                                     // Mostrar la consulta SQL (opcional para depuración)
                                     //echo $sql_protocolo."<br>";
-                                    
+                                    //echo $sql_protocolo."<hr>";
 
                                     // Ejecutar la consulta y almacenar el resultado
                                     $result_protocolo = ejecutar($sql_protocolo); 
