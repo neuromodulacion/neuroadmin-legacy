@@ -7,17 +7,24 @@ $ruta = "../";
 // Iniciar sesión para acceder a variables de sesión
 session_start();
 
-// Configuración de errores y codificación
-error_reporting(7);
-iconv_set_encoding('internal_encoding', 'utf-8'); 
+// Establecer el nivel de notificación de errores
+error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
+
+// Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
+ini_set('default_charset', 'UTF-8');
+
+// Configurar la cabecera HTTP con codificación UTF-8
 header('Content-Type: text/html; charset=UTF-8');
 
-// Configurar la zona horaria y el locale para fechas en español
+// Configurar la zona horaria
 date_default_timezone_set('America/Monterrey');
+
+// Configurar la localización para manejar fechas y horas en español
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
-// Registrar el tiempo actual en la sesión
-$_SESSION['time'] = mktime();
+// Asignar el tiempo actual a la sesión en formato de timestamp
+$_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
+
 
 // Extraer variables de sesión y de $_POST para usarlas directamente
 extract($_SESSION);
@@ -27,13 +34,15 @@ extract($_POST);
 $email = validarSinEspacio($email);
 $celular = validarSinEspacio($celular);
 
+$hoy = date("Y-m-d");
+$ahora = date("H:i:00"); 
+$anio = date("Y");
+$mes_ahora = date("m");
+
 // Establecer la fecha y hora de captura
 $f_captura = date("Y-m-d");
 $h_captura = date("H:i:s"); 
 
-// Extraer mes y año de una variable en formato "YYYY-MM"
-$mes = substr($mes_ano, 5, 2);
-$ano = substr($mes_ano, 0, 4);
 
 // Consulta de actualización para modificar la información del paciente en la base de datos
 $update = "

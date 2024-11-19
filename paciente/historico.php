@@ -3,9 +3,8 @@ $ruta="../";
 
 include($ruta.'functions/session_manager.php');
 
-$_SESSION['time']=mktime();
+$_SESSION['time']=time();
 
-$title = 'INICIO';
 
 extract($_SESSION);
 //print_r($_SESSION);

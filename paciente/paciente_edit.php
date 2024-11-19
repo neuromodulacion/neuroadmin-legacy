@@ -1,31 +1,13 @@
 <?php
-
-session_start();
-error_reporting(7);
-iconv_set_encoding('internal_encoding', 'utf-8'); 
-header('Content-Type: text/html; charset=UTF-8');
-date_default_timezone_set('America/Monterrey');
-setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=mktime();
-extract($_SESSION);
-//print_r($_SESSION);
 $ruta="../";
-$title = 'Edita';
-
 
 $hoy = date("Y-m-d");
 $ahora = date("H:i:00"); 
 $anio = date("Y");
 $mes_ahora = date("m");
-$titulo ="Directorio"; 
+$titulo ="Edita"; 
 
-if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNICO') {
-	$class = "js-exportable";	
-	$where = "";
-}else{
-	$class = "";
-	if ($funcion == 'MEDICO'){$where = "AND pacientes.usuario_id = $usuario_id";}else{$where = "";}
-}
+
 
 include($ruta.'header1.php');
 //include($ruta.'header.php');
@@ -46,7 +28,13 @@ include($ruta.'header1.php');
     
 <?php
 include($ruta.'header2.php');
-//include($ruta.'header.php'); 
+if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNICO') {
+	$class = "js-exportable";	
+	$where = "";
+}else{
+	$class = "";
+	if ($funcion == 'MEDICO'){$where = "AND pacientes.usuario_id = $usuario_id";}else{$where = "";}
+}
 
 $sql ="
 SELECT														
@@ -74,7 +62,8 @@ SELECT
 	pacientes.observaciones, 
 	pacientes.notificaciones, 
 	pacientes.comentarios_reporte,
-	pacientes.tratamiento
+	pacientes.tratamiento,
+	pacientes.terapias
 FROM
 	pacientes
 	WHERE

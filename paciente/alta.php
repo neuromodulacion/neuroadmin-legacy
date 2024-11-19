@@ -2,8 +2,6 @@
 
 // Define la ruta base para las inclusiones de archivos y establece el título de la página
 $ruta = "../";
-$title = 'INICIO';
-
 // Inicializa variables con la fecha y hora actuales
 $hoy = date("Y-m-d");
 $ahora = date("H:i:00"); 

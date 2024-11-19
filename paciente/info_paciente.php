@@ -201,6 +201,8 @@ include('fun_paciente.php');
 		                                <div class="form-line">	                                	
 		                                	<?php //print_r($_GET); 
 		                                	// print_r($_SESSION);
+		                                	$origen = isset($origen) && !empty($origen) ? $origen : "";
+		                                	
 												if ($origen == 'agenda'   ) {
 													$sql ="
 													SELECT
@@ -596,6 +598,8 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 										     	$result_sem2=ejecutar($sql_sem2); 
 													$total_sesiones = 0;
 													$Gtotal = 0;
+													$sesiones = isset($sesiones) && !empty($sesiones) ? $sesiones : 0;
+													
 										    	while($row_sem2 = mysqli_fetch_array($result_sem2)){
 											        extract($row_sem2);	
 											       // print_r($row_sem2);											        
@@ -1019,12 +1023,36 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 																	<th>Umbral</th>
 																	<th>Observaciones</th>
 																</tr>";	
+												// Array de meses en español
+															$meses_espanol = [
+															    'Jan' => 'Ene',
+															    'Feb' => 'Feb',
+															    'Mar' => 'Mar',
+															    'Apr' => 'Abr',
+															    'May' => 'May',
+															    'Jun' => 'Jun',
+															    'Jul' => 'Jul',
+															    'Aug' => 'Ago',
+															    'Sep' => 'Sep',
+															    'Oct' => 'Oct',
+															    'Nov' => 'Nov',
+															    'Dec' => 'Dic'
+															];
+																															
+																
 												    while($row_sem2 = mysqli_fetch_array($result_sem2)){
 												        extract($row_sem2);	  
+
+															// Convertir la fecha
+															$date = new DateTime($f_captura);
+															$today = $date->format('d-M-Y');
+															
+															// Reemplazar el mes en inglés por español
+															$f_captura = strtr($today, $meses_espanol);
 												        
 												        	
 												        //echo "<h1>$funcion</h1>";
-												        $f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
+												        //$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
 												        
 												        if ($funcion == 'ADMINISTRADOR' || $funcion == 'SISTEMAS' || $funcion == 'TECNICO') {
 												        	

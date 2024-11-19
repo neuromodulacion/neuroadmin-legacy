@@ -6,7 +6,7 @@ iconv_set_encoding('internal_encoding', 'utf-8');
 header('Content-Type: text/html; charset=UTF-8');
 date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=mktime();
+$_SESSION['time']=time();
 
 //echo "<hr>$paciente_id hola<hr>";
 extract($_GET);
