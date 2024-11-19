@@ -28,7 +28,9 @@ include($ruta.'header1.php');
     <!-- Bootstrap  Css -->
     <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />   
 
-<?php  include($ruta.'header2.php'); ?>
+<?php  include($ruta.'header2.php'); 
+
+?>
 
     <section class="content">
         <div class="container-fluid">
@@ -43,7 +45,8 @@ include($ruta.'header1.php');
                     <div class="card">
                         <div style="height: 95%"  class="header">
                         	<h1 align="center">Protocolos</h1>
-                        	<?php if ($paciente_id =='') {?>
+                        	<?php //print_r($_SESSION);
+                        	 if ($paciente_id =='') {?>
 								<h3>Paciente</h3>
 								<div class="col-sm-10">
 							  		<select name="paciente_id" class='form-control show-tick' id="paciente_id"  required>
@@ -101,43 +104,7 @@ include($ruta.'header1.php');
 													<th>Sesiones Aplicadas</th>
 												</tr>";
                         	
-								 // $sql = "
-									// SELECT
-										// sesiones.protocolo_ter_id,
-										// sesiones.sesiones,
-										// sesiones.total_sesion,
-										// protocolo_terapia.prot_terapia,
-										// terapias.estatus,
-										// sesiones.sesion_id,
-										// sesiones.terapia_id,
-										// equipos.equipo 
-									// FROM
-										// pacientes
-										// INNER JOIN sesiones ON pacientes.paciente_id = sesiones.paciente_id
-										// INNER JOIN protocolo_terapia ON sesiones.protocolo_ter_id = protocolo_terapia.protocolo_ter_id
-										// INNER JOIN terapias ON sesiones.terapia_id = terapias.terapia_id 
-										// AND pacientes.paciente_id = terapias.paciente_id
-										// INNER JOIN equipos ON protocolo_terapia.equipo_id = equipos.equipo_id 
-									// WHERE
-										// pacientes.paciente_id = $paciente_id";                       	
-							        //echo $sql."<hr>"; 
-							        
-									// $sql = "
-										// SELECT
-											// historico_sesion.paciente_id,
-											// historico_sesion.protocolo_ter_id,
-											// count( protocolo_terapia.prot_terapia ) AS total_sesion,
-											// CONCAT( protocolo_terapia.prot_terapia, ' ', historico_sesion.anodo, ' ', historico_sesion.catodo ) AS prot_terapia,
-											// pacientes.estatus,
-											// equipos.equipo 
-										// FROM
-											// historico_sesion
-											// INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id
-											// INNER JOIN pacientes ON historico_sesion.paciente_id = pacientes.paciente_id
-											// INNER JOIN equipos ON protocolo_terapia.equipo_id = equipos.equipo_id 
-										// WHERE
-											// historico_sesion.paciente_id = $paciente_id 
-										// GROUP BY 1,2";	
+
 																        
 							    	$sql ="
 									SELECT
@@ -159,7 +126,9 @@ include($ruta.'header1.php');
 							        
 							        $result_protocolo=ejecutar($sql); 
 															$total_sesiones = 0;
-															$Gtotal = 0;					        
+															$Gtotal = 0;	
+									$sesiones = isset($sesiones) && !empty($sesiones) ? $sesiones : 0;															
+																			        
 							        while($row_protocolo = mysqli_fetch_array($result_protocolo)){
 							            extract($row_protocolo);
 							            //print_r($row_protocolo);  <td style='text-align: center'>$sesiones</td>
@@ -195,26 +164,32 @@ include($ruta.'header1.php');
 									metricas.paciente_id = $paciente_id
 							";		
 							$result_metrica=ejecutar($sql_metrica);
+							$cnt_metrica = mysqli_num_rows($result_metrica);
 							$row_metrica = mysqli_fetch_array($result_metrica);
-					        extract($row_metrica);	 
-					        //print_r($row_metrica)  						                              	
-                        	?>
-                        	<table class='table table-bordered table-striped table-hover dataTable '>
-                        		<tr>
-                        			<th style="text-align: center">X</th>
-                        			<th style="text-align: center">Y</th>
-                        			<th style="text-align: center">Umbral</th>
-                        			<th>Observaciones</th>
-                        		</tr>
-                        		<tr>
-                        			<td style="text-align: center"><?php echo $x; ?></td>
-                        			<td style="text-align: center"><?php echo $y; ?></td>
-                        			<td style="text-align: center"><?php echo $umbral; ?></td>
-                        			<td><?php echo $observaciones; ?></td>
-                        		</tr>
-                        	</table><hr>
+					        if ($cnt_metrica <> 0) {							
+					       		extract($row_metrica);	 
+					        	//print_r($row_metrica)  
 
-<?php					            
+					                              	
+                        	?>
+	                        	<table class='table table-bordered table-striped table-hover dataTable '>
+	                        		<tr>
+	                        			<th style="text-align: center">X</th>
+	                        			<th style="text-align: center">Y</th>
+	                        			<th style="text-align: center">Umbral</th>
+	                        			<th>Observaciones</th>
+	                        		</tr>
+	                        		<tr>
+	                        			<td style="text-align: center"><?php echo $x; ?></td>
+	                        			<td style="text-align: center"><?php echo $y; ?></td>
+	                        			<td style="text-align: center"><?php echo $umbral; ?></td>
+	                        			<td><?php echo $observaciones; ?></td>
+	                        		</tr>
+	                        	</table><hr>
+
+							<?php			
+								
+							}			            
 									$dia = "	        
 									<div class='panel-group' id='accordion_1' role='tablist' aria-multiselectable='true'>
                                         <div class='panel panel-col-$body'>
@@ -233,6 +208,9 @@ include($ruta.'header1.php');
 										admin.usuario_id,
 										admin.nombre,
 										pacientes.paciente_id,
+										pacientes.paciente,
+										pacientes.apaterno,
+										pacientes.amaterno,
 										historico_sesion.f_captura,
 										historico_sesion.h_captura,
 										historico_sesion.umbral,
@@ -267,9 +245,33 @@ include($ruta.'header1.php');
 														<th>Umbral</th>
 														<th>Observaciones</th>
 													</tr>";	
+													
+												// Array de meses en español
+															$meses_espanol = [
+															    'Jan' => 'Ene',
+															    'Feb' => 'Feb',
+															    'Mar' => 'Mar',
+															    'Apr' => 'Abr',
+															    'May' => 'May',
+															    'Jun' => 'Jun',
+															    'Jul' => 'Jul',
+															    'Aug' => 'Ago',
+															    'Sep' => 'Sep',
+															    'Oct' => 'Oct',
+															    'Nov' => 'Nov',
+															    'Dec' => 'Dic'
+															];															
 									    while($row_sem2 = mysqli_fetch_array($result_sem2)){
 									        extract($row_sem2);	  
-									        $f_captura = strftime("%e-%b-%y",strtotime($f_captura));
+									        
+															// Convertir la fecha
+															$date = new DateTime($f_captura);
+															$today = $date->format('d-M-Y');
+															
+															// Reemplazar el mes en inglés por español
+															$f_captura = strtr($today, $meses_espanol);
+												        									        
+									        //$f_captura = strftime("%e-%b-%y",strtotime($f_captura));
 									        $dia .= "<tr>
 														<th style='text-align: center'>$cnt_a</th>
 														<th>$nombre</th>
@@ -291,6 +293,15 @@ include($ruta.'header1.php');
 									";	   
 									
 									echo $dia;	
+									$sesion_id = isset($sesion_id) && !empty($sesion_id) ? $sesion_id : "";
+									$terapia_id = isset($terapia_id) && !empty($terapia_id) ? $terapia_id : "";
+									$sesion_id = isset($sesion_id) && !empty($sesion_id) ? $sesion_id : "";							
+									$prot_terapia = isset($prot_terapia) && !empty($prot_terapia) ? $prot_terapia : "";
+									$protocolo_ter_id = isset($protocolo_ter_id) && !empty($protocolo_ter_id) ? $protocolo_ter_id : "";
+									
+									$paciente = isset($paciente) && !empty($paciente) ? $paciente : "";	
+									$apaterno = isset($apaterno) && !empty($apaterno) ? $apaterno : "";	
+									$amaterno = isset($amaterno) && !empty($amaterno) ? $amaterno : "";	
 							?>
 							
 

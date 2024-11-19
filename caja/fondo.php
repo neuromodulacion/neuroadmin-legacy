@@ -1,20 +1,5 @@
 <?php
-
-session_start();
-error_reporting(7);
-iconv_set_encoding('internal_encoding', 'utf-8'); 
-header('Content-Type: text/html; charset=UTF-8');
-date_default_timezone_set('America/Monterrey');
-setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=mktime();
-
 $ruta="../";
-$title = 'BALANCE MENSUAL';
-
-extract($_SESSION);
-extract($_POST);
-extract($_GET);
-//print_r($_SESSION);
 
 $hoy = date("Y-m-d");
 $ahora = date("H:i:00"); 
@@ -24,11 +9,6 @@ $mes = strftime("%B");
 $dia = date("N");
 $semana = date("W");
 $titulo ="Retiros";
-
-if ($fechaInput =="") {
-	$fechaInput = $anio."-".$mes_ahora;
-}
-
 
 $mes_sel = date('m', strtotime($fechaInput));
 $anio_sel = date('Y', strtotime($fechaInput));
@@ -51,7 +31,14 @@ include($ruta.'header1.php');
     <!-- Bootstrap  Css -->
     <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />   
 
-<?php  include($ruta.'header2.php'); ?>
+<?php  include($ruta.'header2.php');
+
+if ($fechaInput =="") {
+	$fechaInput = $anio."-".$mes_ahora;
+}
+
+
+ ?>
 
     <section class="content">
         <div class="container-fluid">

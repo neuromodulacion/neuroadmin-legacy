@@ -3,26 +3,25 @@
 include('../functions/funciones_mysql.php');
 include('../api/funciones_api.php');
 
-// Inicia la sesión para mantener las variables de sesión a lo largo del script
 session_start();
 
-// Configura el nivel de reporte de errores, mostrando solo advertencias
-error_reporting(7);
+// Establecer el nivel de notificación de errores
+error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
 
-// Configura la codificación interna a UTF-8 para evitar problemas con caracteres especiales
-iconv_set_encoding('internal_encoding', 'utf-8');
+// Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
+ini_set('default_charset', 'UTF-8');
 
-// Establece la cabecera HTTP para que el contenido se interprete como HTML con codificación UTF-8
+// Configurar la cabecera HTTP con codificación UTF-8
 header('Content-Type: text/html; charset=UTF-8');
 
-// Configura la zona horaria predeterminada para la aplicación
+// Configurar la zona horaria
 date_default_timezone_set('America/Monterrey');
 
-// Establece la configuración regional para el manejo de fechas y tiempos en español (España)
+// Configurar la localización para manejar fechas y horas en español
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
-// Guarda el tiempo actual en la sesión
-$_SESSION['time'] = mktime();
+// Asignar el tiempo actual a la sesión en formato de timestamp
+$_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
 
 // Establece la ruta base para las inclusiones de archivos
 $ruta = "../";

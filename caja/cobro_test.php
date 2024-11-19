@@ -1,7 +1,6 @@
 <?php
 // Definir ruta base y variables iniciales
 $ruta = "../";
-$title = 'INICIO';
 $a = "";
 $ticket = "";
 

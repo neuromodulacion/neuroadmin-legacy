@@ -1,9 +1,9 @@
 <?php
-session_start();
+//session_start();
 
 $ruta="../";
 
-extract($_SESSION);
+//extract($_SESSION);
 
 function elementos($protocolo_ter_id){
 
