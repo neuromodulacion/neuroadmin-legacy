@@ -17,7 +17,7 @@ date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
 // Registrar el tiempo de la sesión actual
-$_SESSION['time'] = mktime();
+$_SESSION['time'] = time();
 
 // Extraer variables de sesión en el ámbito actual
 extract($_SESSION);

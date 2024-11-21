@@ -96,7 +96,7 @@ extract($_GET);
                 <div class="card">
                     <!-- Encabezado de la tarjeta que muestra el nombre de la empresa -->
                     <div style="height: 95%" class="header">
-                    	<?php print_r($row_medico)."<hr>".print_r($row_ubicacion); ?>
+                    	<?php //print_r($row_medico)."<hr>".print_r($row_ubicacion); ?>
 						<form id="wizard_with_validation">
 						    <!-- Campo oculto para usuario_id -->
 						    <input type="hidden" id="usuario_id" name="usuario_id" value="<?php echo $medico_id; ?>" />
@@ -131,7 +131,7 @@ extract($_GET);
 						        <div class="form-group form-float">
 						            <div class="form-line">
 						                <label class="form-label">Observaciones</label>
-						                <textarea id="observaciones" name="observaciones" class="form-control"><?php echo $observaciones_med; ?></textarea>
+						                <textarea id="observaciones_x" name="observaciones" class="form-control"><?php echo $observaciones_med; ?></textarea>
 						            </div>		                                                   	
 						        </div>
 						
@@ -221,7 +221,7 @@ extract($_GET);
                                             <div id="collapseOne_17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne_17">
                                                 <div class="panel-body">
                                                 	<div class="table-responsive">
-	                                                	<h1><?php echo $usuario_id_xd; ?></h1>
+	                                                	<h1><?php echo $usuario_idx." ".$nombrex; ?></h1>
 												        <!-- Tabla para mostrar los resultados de la consulta -->
 												        <table class="table table-bordered table-striped">
 												            <tr>
@@ -498,7 +498,7 @@ extract($_GET);
 	                                                <div class="panel-body">	                                        
 
 														<div class="table-responsive">
-		                                                	<h1><?php echo $usuario_id_xd; ?></h1>
+		                                                	<h1><?php echo $usuario_idx." ".$nombrex; ?></h1>
 													        <!-- Tabla para mostrar los resultados de la consulta -->
 													        <table class="table table-bordered table-striped">
 													            <tr>

@@ -229,7 +229,7 @@ include($ruta.'header2.php');
 												while($row_paciente = mysqli_fetch_array($result_paciente)){
 									            extract($row_paciente); ?>
 											    <!-- Opciones para seleccionar al médico -->
-											<option <?php if($usuario_idx == $usuario_idm){ echo "selected";} ?> value="<?php echo $usuario_idx; ?>" ><?php echo $nombre; ?></option>
+											<option <?php if($usuario_idx == $usuario_id){ echo "selected";} ?> value="<?php echo $usuario_idx; ?>" ><?php echo $nombre; ?></option>
 											<?php } ?>
 	                                    </select>  
 	                                    <label class="form-label">Medico Tratante*</label>               	

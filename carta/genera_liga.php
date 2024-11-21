@@ -21,7 +21,7 @@ date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
 // Guardar la hora actual en la sesión
-$_SESSION['time'] = mktime();
+$_SESSION['time'] = time();
 
 // Obtener el dominio actual del servidor
 $dominio = $_SERVER['HTTP_HOST'];

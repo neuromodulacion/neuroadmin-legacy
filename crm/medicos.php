@@ -1,17 +1,29 @@
 <?php
-// Incluir las funciones adicionales de la API
-include('../api/funciones_api.php');
+
+function limpiarEntrada($entrada, $tipo) {
+    $entrada = trim($entrada); // Elimina espacios al inicio y al final
+
+    if ($tipo === 'email') {
+        // Sanitiza como correo electrónico
+        return filter_var($entrada, FILTER_SANITIZE_EMAIL);
+    } elseif ($tipo === 'telefono') {
+        // Elimina todo excepto dígitos, '+' y '-'
+        return preg_replace('/[^\d\+\-]/', '', $entrada);
+    } else {
+        // Elimina todos los espacios como un caso general
+        return str_replace(' ', '', $entrada);
+    }
+}
+
+/* // Ejemplo de uso
+$correo = " usuario @ ejemplo . com ";
+$telefono = " +52 33 1234 5678 ";
+
+echo limpiarEntrada($correo, 'email');   // Resultado: "usuario@ejemplo.com"
+echo limpiarEntrada($telefono, 'telefono'); // Resultado: "+523312345678" */
+
 
 $ruta="../";  // Definir la ruta base para incluir archivos comunes
-
-// Definición de variables de fecha y hora actuales
-$hoy = date("Y-m-d");  // Fecha actual en formato año-mes-día
-$ahora = date("H:i:00"); // Hora actual en formato horas:minutos:segundos
-$anio = date("Y");  // Año actual
-$mes_ahora = date("m");  // Mes actual en formato numérico
-$mes = strftime("%B");  // Mes actual en formato textual
-$dia = date("N");  // Día de la semana (1 = Lunes, 7 = Domingo)
-$semana = date("W");  // Número de la semana en el año
 $titulo ="Directorio";  // Título de la página
 $genera = "";  // Variable auxiliar para manejo adicional si es necesario
 
@@ -91,7 +103,9 @@ include($ruta.'header2.php'); ?>
                                     extract($row_protocolo);
 
                                     // Validar el número de teléfono y asignar clase CSS según longitud
-                                    $telefono = validarSinEspacios($telefono);
+                                    //$telefono = validarSinEspacios($telefono);
+                                    $telefono = limpiarEntrada($telefono, 'telefono');
+
                                     $clase = (strlen($telefono) !== 10) ? "danger" : "success";
 
                                     // Asignar clase CSS según el estatus del médico

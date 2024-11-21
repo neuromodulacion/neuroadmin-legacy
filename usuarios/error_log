@@ -2666,3 +2666,5 @@ Stack trace:
 [07-Nov-2024 15:18:08 America/Monterrey] PHP Notice:  Undefined variable: empresa_id in /home/lamanad1/neuromodulaciongdl.com/usuarios/genera_invitacion.php on line 105
 [07-Nov-2024 15:18:08 America/Monterrey] PHP Notice:  Undefined variable: time in /home/lamanad1/neuromodulaciongdl.com/usuarios/genera_invitacion.php on line 106
 [07-Nov-2024 15:18:08 America/Monterrey] PHP Notice:  Undefined index: usuario_id in /home/lamanad1/neuromodulaciongdl.com/footer1.php on line 82
+[19-Nov-2024 20:47:22 America/Monterrey] PHP Notice:  Undefined variable: sesion in /home/neuromod/neuromodulaciongdl.com/header1.php on line 49
+[19-Nov-2024 20:47:22 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/neuromod/neuromodulaciongdl.com/uso.php on line 41
