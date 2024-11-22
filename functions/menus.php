@@ -27,7 +27,7 @@
         <!-- Elemento del menú: CRM (Visible para usuarios con función SISTEMAS, ADMINISTRADOR, o REPRESENTANTE) -->
         <!-- Este elemento del menú es accesible para los roles SISTEMAS, ADMINISTRADOR, o REPRESENTANTE y permite acceder a funcionalidades del CRM -->
         <?php if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'REPRESENTANTE') { ?>
-        <li <?php if ($ubicacion_url == 'crm/medicos.php' || $ubicacion_url == 'reporte/referenciadores.php' || $ubicacion_url == 'crm/alta_medico.php' || $ubicacion_url == 'crm/registro_contacto.php') { echo 'class="active"'; } ?>>
+        <li <?php if ($ubicacion_url == 'crm/medicos.php' || $ubicacion_url == 'reporte/referenciadores.php' || $ubicacion_url == 'crm/alta_medico.php' || $ubicacion_url == 'crm/registro_contacto.php' || $ubicacion_url == 'crm/contactos.php' || $ubicacion_url == 'crm/registro_visitas.php') { echo 'class="active"'; } ?>>
             <a href="javascript:void(0);" class="menu-toggle">
                 <i class="material-icons">supervisor_account</i>
                 <span>CRM</span>
@@ -60,7 +60,20 @@
                         <i class="material-icons">perm_identity</i>
                         <span>Registro Contacto</span>
                     </a>
-                </li>              
+                </li> 
+                
+                <li <?php if ($ubicacion_url == 'crm/contactos.php') { echo 'class="active"'; } ?>>
+                    <a href="<?php echo $ruta; ?>crm/contactos.php">
+                        <i class="material-icons">perm_identity</i>
+                        <span>Contacto</span>
+                    </a>
+                </li>
+                <li <?php if ($ubicacion_url == 'crm/registro_visitas.php') { echo 'class="active"'; } ?>>
+                    <a href="<?php echo $ruta; ?>crm/registro_visitas.php">
+                        <i class="material-icons">perm_identity</i>
+                        <span>Registro Visitas</span>
+                    </a>
+                </li>                                
             </ul>
         </li>
         <?php } ?>                     

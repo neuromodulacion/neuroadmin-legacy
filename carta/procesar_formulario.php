@@ -1,4 +1,6 @@
 <?php
+
+print_r($_POST);
 error_reporting(7);
 iconv_set_encoding('internal_encoding', 'utf-8'); 
 header('Content-Type: text/html; charset=UTF-8');
