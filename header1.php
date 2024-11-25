@@ -44,8 +44,6 @@ extract($_SESSION);
 extract($_POST);
 extract($_GET);
 
-
-
 // Definición de variables de fecha y hora actuales
 $hoy = date("Y-m-d");  // Fecha actual en formato año-mes-día
 $ahora = date("H:i:00"); // Hora actual en formato horas:minutos:segundos
@@ -92,8 +90,16 @@ if (!file_exists($configPath)) {
 
 $config = require $configPath;
 
-// Crear instancia de la clase Mysql
+// Crear una instancia de la clase Mysql
 $mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+// Crear una instancia de la clase Mysql
+$conexion = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+// Función auxiliar para sanitizar valores y evitar pasar null a htmlspecialchars()
+function sanitizarValor($valor) {
+    return htmlspecialchars($valor ?? '', ENT_QUOTES, 'UTF-8');
+}
 
 include($ruta.'functions/fotografia.php');
 include($ruta.'uso.php');
@@ -135,6 +141,5 @@ include($ruta.'uso.php');
     <!-- Estilos para animaciones CSS -->
     <link href="<?php echo $ruta; ?>plugins/animate-css/animate.css" rel="stylesheet" />
       
-     
       
 <!-- *************Tronco común ******************** -->  

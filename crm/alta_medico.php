@@ -30,7 +30,7 @@ include($ruta.'header2.php');
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div style="height: 95%"  class="header">
-                        	<h1 align="center">Alta de Medico Referenciador</h1>
+                        	<h1 align="center">Alta de Medico Posible Referenciador</h1>
 	                        <div class="body">
 	                            <form id="wizard_with_validation" method="POST" action="guarda_medico.php" >                            	
 	                               <h3>Nombre del Medico</h3>

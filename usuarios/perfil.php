@@ -2,18 +2,7 @@
 $ruta="../";
 $title = 'INICIO';
 
-extract($_SESSION);
-extract($_POST);
-extract($_GET);
-//print_r($_SESSION);
 
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
 $titulo ="Perfil";
 
 include($ruta.'header1.php');
@@ -191,7 +180,7 @@ include($ruta.'header2.php');
 									<?php // print_r($_SESSION); ?>
 								</div> 
 								<div class="col-md-6">
-									<div <?php $$displayx; ?> id="foto4" >
+									<div id="foto4" >
 										<h3>Logotipo Principal</h3>	 <!--  -->
 										<form id="uploadForm4" method="post" enctype="multipart/form-data">
 											<div class="row">
@@ -262,7 +251,7 @@ include($ruta.'header2.php');
 	                           		
 								</div>
 								<div class="col-md-6">
-									<div <?php $$displayx; ?> id="foto3" >
+									<div id="foto3" >
 										<h3>Logotipo Pestañas</h3>	 <!--  -->
 										<form id="uploadForm3" method="post" enctype="multipart/form-data">
 											<div class="row">
@@ -367,8 +356,9 @@ include($ruta.'header2.php');
 								        <div class="form-line">
 											<div role="tabpanel" class="tab-pane fade in active in active" id="skins">
 											    <select id="themeSelect" class="form-control">
-											        <option <?php if($body_principal == red){ echo "selected";} ?> value="red" selected>Red</option>
-											        <option value="pink">Pink</option>
+											        <option <?php if($body == "aldana"){ echo "selected";} ?> value="red" selected>Aldana</option>
+											        <option value="red">Red</option>
+													<option value="pink">Pink</option>
 											        <option value="purple">Purple</option>
 											        <option value="deep-purple">Deep Purple</option>
 											        <option value="indigo">Indigo</option>
