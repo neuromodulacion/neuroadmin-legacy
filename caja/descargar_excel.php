@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 extract($_SESSION);
 
 
-
 require '../vendor/autoload.php';
 include('../functions/funciones_mysql.php'); // Asegúrate de incluir el archivo donde está la función ejecutar()
 

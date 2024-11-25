@@ -762,9 +762,12 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 															// $tabla .= $sql_calificacion."<br>";	
 															//echo $sql_calificacion."<hr>";
 															$result_calificacion = ejecutar($sql_calificacion);	
+															$cnt_calificacion = mysqli_num_rows($result_calificacion);
+															$row_calificacion = mysqli_fetch_array($result_calificacion);
+															if ($cnt_calificacion <> 0) {
+																extract($row_calificacion);
+															}	
 															
-															$row_calificacion = mysqli_fetch_array($result_calificacion);	
-															extract($row_calificacion);
 															
 																if ($cnt_calificacion == 1) {
 																	$tot_ini = $total;

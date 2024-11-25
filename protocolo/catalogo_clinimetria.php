@@ -1,8 +1,6 @@
 <?php
 $ruta="../";
 
-extract($_SESSION);
-//print_r($_SESSION);
 $hoy = date("Y-m-d");
 $ahora = date("H:i:00"); 
 $anio = date("Y");
