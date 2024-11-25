@@ -1,7 +1,6 @@
 <?php
 // Definir ruta base y variables iniciales
 $ruta = "../";
-$title = 'INICIO';
 $a = "";
 $ticket = "";
 
@@ -68,7 +67,7 @@ include($ruta . 'header1.php');
                         <hr>
                         <div class="body">
                             <!-- Formulario principal para guardar cobro -->
-                            <form id="wizard_with_validation" method="POST" action="guarda_cobro_new.php">
+                            <form id="wizard_with_validation" method="POST" action="guarda_cobro.php">
                                 <h3>Tipo de cobro</h3>
                                 <fieldset>
                                     <div class="demo-radio-button">
@@ -257,7 +256,8 @@ include($ruta . 'header1.php');
                                                     costos_productos.producto, 
                                                     costos_productos.costos, 
                                                     costos_productos.sesiones,
-                                                    costos_productos.ID
+                                                    costos_productos.ID, 
+													costos_productos.descripcion
                                                 FROM
                                                     costos_productos
                                                 WHERE
@@ -265,7 +265,7 @@ include($ruta . 'header1.php');
                                             $result_costo = ejecutar($sql_costo);
                                             while ($row_costo = mysqli_fetch_array($result_costo)) {
                                                 extract($row_costo); ?>
-                                                <option value="<?php echo $costos_id; ?>|<?php echo $producto; ?>|<?php echo $costos; ?>|<?php echo $sesiones; ?>|<?php echo $ID; ?>"><?php echo $producto . " - $ " . number_format($costos); ?></option>
+                                                <option value="<?php echo $costos_id; ?>|<?php echo $producto; ?>|<?php echo $costos; ?>|<?php echo $sesiones; ?>|<?php echo $ID; ?>|<?php echo $descripcion; ?>"><?php echo $producto . " - $ " . number_format($costos); ?></option>
                                             <?php } ?>
                                         </select>
                                         <script>
@@ -279,6 +279,7 @@ include($ruta . 'header1.php');
                                                     $('#cantidad').val(sesiones);
                                                     $('#consulta').val(valores[1]);
                                                     $('#ID').val(valores[4]);
+                                                    $('#descripcion').val(valores[5]);
                                                 });
                                             });
                                         </script>
@@ -401,6 +402,7 @@ include($ruta . 'header1.php');
                                     <input style="height: 0px; width: 0px" type="text" id="consulta" name="consulta" value="" required />
                                     <input type="hidden" id="paciente_id" name="paciente_id" value="" required />
                                     <input type="hidden" name="ID" id="ID" value="" />
+                                    <input type="hidden" name="descripcion" id="descripcion" value="" />
                                     <!-- Sección para "Otros" -->
                                     <div id="otro" style="display: none" class="form-group form-float">
                                         <?php if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR') { ?>

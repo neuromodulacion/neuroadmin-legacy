@@ -1,10 +1,6 @@
 <?php
 // Definir la ruta base para incluir archivos
 $ruta="../";
-
-// Extraer todas las variables de la sesión para usarlas directamente
-extract($_SESSION);
-
 // Obtener la fecha actual en formato "YYYY-MM-DD"
 $hoy = date("Y-m-d");
 // Obtener la hora actual en formato "HH:MM:00"
@@ -72,27 +68,27 @@ if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNIC
                                             <!-- Columnas de la tabla -->
                                             <th style="display: none"></th>
                                             <th style="max-width: 10px">ID</th>
-                                            <th style="min-width: 35px">Fecha</th>
+                                            <th style="min-width: 40px">Fecha</th>
                                             <th style="min-width: 120px">Nombre</th>
                                             <th style="max-width: 15px">TMS</th> 
                                             <th style="max-width: 15px">tDCS</th>                                          
                                             <th style="min-width: 50px">Celular</th>
                                             <th style="min-width: 40px">Estatus</th>
-                                            <th style="min-width: 160px">Acción</th>
+                                            <th style="min-width: 220px">Acción</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>                                          
                                             <!-- Filtros o pie de tabla -->
                                             <th style="display: none"></th>
-                                            <th>ID</th>
-                                            <th>Fecha</th>
-                                            <th>Nombre</th>
-                                            <th>TMS</th>
-                                            <th>tDCS</th>
-                                            <th>Celular</th>
-                                            <th>Estatus</th>
-                                            <th>Acción</th>
+                                            <th style="max-width: 10px">ID</th>
+                                            <th style="min-width: 40px">Fecha</th>
+                                            <th style="min-width: 120px">Nombre</th>
+                                            <th style="max-width: 15px">TMS</th> 
+                                            <th style="max-width: 15px">tDCS</th>                                          
+                                            <th style="min-width: 50px">Celular</th>
+                                            <th style="min-width: 40px">Estatus</th>
+                                            <th style="min-width: 220px">Acción</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -120,7 +116,7 @@ if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNIC
                                     ";
                                     // Mostrar la consulta SQL (opcional para depuración)
                                     //echo $sql_protocolo."<br>";
-                                    
+                                    //echo $sql_protocolo."<hr>";
 
                                     // Ejecutar la consulta y almacenar el resultado
                                     $result_protocolo = ejecutar($sql_protocolo); 
@@ -141,8 +137,10 @@ if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNIC
 
                                     	//echo "<hr>Paciente: $paciente_id, Pago: $pago, cnt_pagos: $cnt_pagos, Fecha Captura: $f_captura, Sesiones: $total_sesion<br>";
                                     
-                                        // Convertir la fecha al formato deseado
-                                        $today = strftime('%d-%b-%Y', strtotime($f_captura));
+										// Convertir la fecha al formato deseado
+										$date = new DateTime($f_captura);
+										$today = $date->format('d-M-y');
+
                                         $terapias = $total_TMS + $total_tDCS;  // Calcular el total de terapias
 
                                         // Lógica para mostrar mensajes basados en el estado de pagos y terapias
@@ -222,7 +220,7 @@ if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNIC
                                         <tr>
                                             <td style="display: none"><?php echo $cnt; ?></td>
                                             <td><?php echo $paciente_id; ?></td>
-                                            <td><?php echo $today; ?><br><?php echo $f_captura; ?></td>
+                                            <td><?php echo $today; ?><br><?php // echo $f_captura; ?></td>
                                             <td>
                                                 <b><?php echo $paciente . " " . $apaterno . " " . $amaterno; ?></b>
                                                 <br>

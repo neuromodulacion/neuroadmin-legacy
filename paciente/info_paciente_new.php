@@ -14,36 +14,40 @@ $genera ="";
 
 include($ruta.'header1.php'); ?>
 
-<!-- JQuery DataTable Css -->
-<link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
-<script src="../morris.js-master/morris.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
-<script src="../morris.js-master/examples/lib/example.js"></script>
-<!--<script src="../morris.js-master/lib/example.js"></script>
-<link rel="stylesheet" href="../morris.js-master/examples/lib/example.css">-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
-<link rel="stylesheet" href="../morris.js-master/morris.css">
+	<!-- JQuery DataTable Css -->
+	<link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+	<script src="../morris.js-master/morris.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
+	<script src="../morris.js-master/examples/lib/example.js"></script>
+	<!--<script src="../morris.js-master/lib/example.js"></script>
+	<link rel="stylesheet" href="../morris.js-master/examples/lib/example.css">-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
+	<link rel="stylesheet" href="../morris.js-master/morris.css">
     <!-- Enlace al archivo CSS para el selector de opciones en Bootstrap -->
-    <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />   
-
+    <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />  
+        
     <!-- Custom Css -->
-    <!-- <link href="<?php echo $ruta; ?>css/style.css" rel="stylesheet"> -->
-
+    <link href="<?php echo $ruta; ?>css/style.css" rel="stylesheet">
+	<script>
+	    document.addEventListener('DOMContentLoaded', function() {
+	        CKEDITOR.replace('editor1');
+	        CKEDITOR.replace('editor2');
+	        CKEDITOR.replace('comentarios_rep');
+	    });
+	</script>
 	
 <?php
 include($ruta.'header2.php');
 include('calendario.php');
 include('fun_paciente.php');
 
-
-/*
 $sql = "
 SELECT
 	*
@@ -56,10 +60,10 @@ FROM
 $result=ejecutar($sql); 
 $row = mysqli_fetch_array($result);
 extract($row);
-
-//print_r($row);
- ?>
-    <section class="content">
+?>
+ 
+ 
+<section class="content">
         <div id="body" class="container-fluid">
             <div class="block-header">
                 <h2>PACIENTE</h2>
@@ -364,37 +368,67 @@ extract($row);
 															    </script>						                                    
 							                                </div>
 							                            </div>                              										                             											
-							                            <button id='descarga_open' class='btn bg-<?php echo $body; ?> waves-effect m-b-15' type='button' data-toggle='collapse' data-target='#collapseExamplex' aria-expanded='false'
-							                                    aria-controls='collapseExamplex'>
-							                                <i class='material-icons'>file_download</i>  Descarga Reporte
-							                            </button>
-							                            <div class='collapse' id='collapseExamplex'>
-							                                <div class='well'>
-							                                	<h2><b>* Comentarios para el reporte:</b></h2><br>
-							                                	<textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'>
-							                                		<?php echo $comentarios_reporte; ?>
-						                                		</textarea>
-							                                	<br><button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'>Guarda Comentarios</button>
-														         <script type='text/javascript'>
-													                $('#guarda_comentarios').click(function(){
-													                	alert('test');
-													                	var paciente_id = '<?php echo $paciente_id; ?>'; 
-													                	var comentarios_reporte = CKEDITOR.instances.comentarios_rep.getData(); // Obtener contenido de editor1
-													                    var datastring = 'comentarios_reporte='+comentarios_reporte+'&paciente_id='+paciente_id;
-													                    alert(datastring); 
-													                    $.ajax({
-													                        url: 'guarda_comentarios.php',
-													                        type: 'POST',
-													                        data: datastring,
-													                        cache: false,
-													                        success:function(html){   
-													                        	alert(html);  
-													                            $('#descarga').show(); 
-													                            
-													                        }
-													                	});
-													                });
-													            </script>                       	
+														<button id='descarga_open' class='btn bg-<?php echo $body; ?> waves-effect m-b-15' type='button' data-toggle='collapse' data-target='#collapseExamplex' aria-expanded='false' aria-controls='collapseExamplex'>
+														    <i class='material-icons'>file_download</i>  Descarga Reporte
+														</button>
+														
+														<div class='collapse' id='collapseExamplex'>
+														    <div class='well'>
+														        <h2><b>* Comentarios para el reporte:</b></h2><br>
+														        <textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'>
+														            <?php echo $comentarios_reporte; ?>
+														        </textarea>
+														        <br>
+														        <button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'>Guarda Comentarios</button>
+														
+														        <script type='text/javascript'>
+														            // Asegúrate de que CKEditor esté listo antes de inicializar el editor
+														            $(document).ready(function() {
+														                // Inicializar CKEditor para comentarios_rep
+														                if (typeof CKEDITOR !== 'undefined') {
+														                    CKEDITOR.replace('comentarios_rep');
+														                } else {
+														                    console.error("CKEditor no está disponible.");
+														                }
+														
+														                $('#guarda_comentarios').click(function() {
+														                    var paciente_id = '<?php echo $paciente_id; ?>';
+														
+														                    // Verificar si CKEditor está activo y obtener el valor de comentarios_rep
+														                    var comentarios_rep;
+														                    if (CKEDITOR.instances.comentarios_rep) {
+														                        comentarios_rep = CKEDITOR.instances.comentarios_rep.getData();
+														                    } else {
+														                        comentarios_rep = $('#comentarios_rep').val(); // Fallback en caso de que CKEditor no esté disponible
+														                    }
+														
+														                    // Preparar los datos en un objeto JSON para AJAX
+														                    var datastring = { 
+														                        comentarios_reporte: comentarios_rep, 
+														                        paciente_id: paciente_id 
+														                    };
+														                    
+														                    // Enviar la solicitud AJAX
+														                    $.ajax({
+														                        url: 'guarda_comentarios.php',
+														                        type: 'POST',
+														                        data: datastring,
+														                        cache: false,
+														                        success: function(response) {   
+														                            alert("Comentario guardado correctamente: " + response);
+														                            $('#descarga').show(); 
+														                        },
+														                        error: function() {
+														                            alert("Error al guardar los comentarios.");
+														                        }
+														                    });
+														                });
+														            });
+														        </script>
+														    </div>
+														</div>
+
+                      	
 							                                <hr>
 							                                <a <?php echo $style; ?> class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html.php?paciente_id=$paciente_id' role='button' >Descarga Reporte Doctor <i class='material-icons'>file_download</i></a>
 							                                <a <?php echo $style; ?> class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html_paciente.php?paciente_id=<?php echo $paciente_id; ?>' role='button' ><i class='material-icons'>assignment_ind</i> Descarga Reporte Paciente <i class='material-icons'>file_download</i></a>
@@ -692,7 +726,7 @@ extract($row);
 														INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id
 														INNER JOIN pacientes ON historico_sesion.paciente_id = pacientes.paciente_id 
 													WHERE
-														historico_sesion.paciente_id = $paciente_id 
+														historico_sesion.paciente_id = $paciente_id s
 													GROUP BY
 														1,2";
 													//echo "$sql_sem2 <br>";
@@ -840,7 +874,7 @@ extract($row);
 														ORDER BY 
 														    base_encuesta_$encuesta_id.f_captura DESC";
 														
-														//echo $sql_basesxy."<hr>";
+														echo $sql_basesxy."<hr>";
 														
 														$result_bases=ejecutar($sql_basesxy);
 														//echo $result_bases." result_bases<br>";
@@ -1144,7 +1178,7 @@ extract($row);
 													ON 
 														historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id
 												WHERE
-													historico_sesion.paciente_id = $paciente_id
+													historico_sesion.paciente_id = $paciente_id and historico_sesion.empresa_id = $empresa_id
 												ORDER BY f_captura asc, h_captura asc"; 
 										        
 										      // echo $sql_table."<hr>";
@@ -1416,14 +1450,9 @@ document.getElementById('botonCopiary').addEventListener('click', function() {
 				</div>
 			</div>
     </section>
-<?php */	include($ruta.'footer1.php');	?>
-	<script>
-	    document.addEventListener('DOMContentLoaded', function() {
-	        CKEDITOR.replace('editor1');
-	        CKEDITOR.replace('editor2');
-	        CKEDITOR.replace('comentarios_rep');
-	    });
-	</script>
+ 
+ 
+<?php	include($ruta.'footer1.php');	?>
 
     <!-- Jquery DataTable Plugin Js -->
     <script src="<?php echo $ruta; ?>plugins/jquery-datatable/jquery.dataTables.js"></script>
@@ -1451,16 +1480,17 @@ document.getElementById('botonCopiary').addEventListener('click', function() {
     <script src="<?php echo $ruta; ?>js/pages/charts/jquery-knob.js"></script>  
     <script src="<?php echo $ruta; ?>js/pages/ui/tooltips-popovers.js"></script>
     
+    
+    <!-- Jquery Knob Plugin Js -->
+    <script src="<?php echo $ruta; ?>plugins/jquery-knob/jquery.knob.min.js"></script>
 
-    <!-- <!-- Ckeditor -->
+    <!-- Ckeditor -->
     <script src="<?php echo $ruta; ?>plugins/ckeditor/ckeditor.js"></script>       
     
-
     <!-- TinyMCE -->
-    <script src="<?php echo $ruta; ?>plugins/tinymce/tinymce.js"></script>
+    <!-- <script src="<?php echo $ruta; ?>plugins/tinymce/tinymce.js"></script> -->
 
 
-    <script src="<?php echo $ruta; ?>js/pages/forms/editors.js"></script>     -->
-    
-       
+    <!-- <script src="<?php echo $ruta; ?>js/pages/forms/editors.js"></script>         -->
+          
 <?php	include($ruta.'footer2.php');	?>			

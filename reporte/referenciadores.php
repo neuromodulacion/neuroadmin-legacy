@@ -1,7 +1,7 @@
 <?php
 $ruta="../";
-$titulo ="Reporte";
-
+$titulo ="Reporte"; 
+ 
 $hoy = date("Y-m-d");
 $ahora = date("H:i:00"); 
 $anio = date("Y");

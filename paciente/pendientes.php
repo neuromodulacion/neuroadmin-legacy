@@ -1,16 +1,5 @@
 <?php
-session_start();
-error_reporting(7);
-iconv_set_encoding('internal_encoding', 'utf-8'); 
-header('Content-Type: text/html; charset=UTF-8');
-date_default_timezone_set('America/Mazatlan');
-setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=mktime();
-//extract($_SESSION);
-//print_r($_SESSION);
-
 $ruta="../";
-$title = 'INICIO';
 
 $hoy = date("Y-m-d");
 $ahora = date("H:i:00"); 

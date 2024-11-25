@@ -6,12 +6,24 @@ include('../api/funciones_api.php');  // Funciones adicionales de la API
 
 // Inicia la sesión y configura la codificación y zona horaria
 session_start();
-error_reporting(7);  // Nivel de reporte de errores
-iconv_set_encoding('internal_encoding', 'utf-8');  // Establece la codificación interna a UTF-8
-header('Content-Type: text/html; charset=UTF-8');  // Establece el tipo de contenido a UTF-8
-date_default_timezone_set('America/Mazatlan');  // Establece la zona horaria
-setlocale(LC_TIME, 'es_ES.UTF-8');  // Establece la localización a español
-$_SESSION['time'] = mktime();  // Guarda la hora actual en la sesión
+
+// Establecer el nivel de notificación de errores
+error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
+
+// Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
+ini_set('default_charset', 'UTF-8');
+
+// Configurar la cabecera HTTP con codificación UTF-8
+header('Content-Type: text/html; charset=UTF-8');
+
+// Configurar la zona horaria
+date_default_timezone_set('America/Monterrey');
+
+// Configurar la localización para manejar fechas y horas en español
+setlocale(LC_TIME, 'es_ES.UTF-8');
+
+// Asignar el tiempo actual a la sesión en formato de timestamp
+$_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
 
 // Define la ruta base y extrae los datos de la sesión y el formulario POST
 $ruta = "../";

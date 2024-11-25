@@ -3,21 +3,42 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Definir la ruta al archivo de configuración
+$configPath = '../config.php';
+
+// Verificar si el archivo de configuración existe
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
+}
+
+// Incluir el archivo de configuración y obtener las credenciales
+$config = require $configPath;
+
 // Incluir la clase de conexión
 include("functions/conexion_mysqli.php");
 
 // Iniciar la sesión
 session_start();
 
+// Inicializar la variable $conexion
+$conexion = null;
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Instanciar la conexión a la base de datos
-    $conexion = new Mysql();
+    // Instanciar la conexión a la base de datos con las credenciales del archivo de configuración
+    try {
+        $conexion = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+    } catch (Exception $e) {
+        die('Error al conectar a la base de datos. Por favor, inténtelo más tarde.');
+    }
 
     // Obtener y sanitizar los datos de entrada
     $user = trim($_POST['username']);
     $pwd = trim($_POST['password']);
 
-    // Consulta SQL para validar usuario y contraseña
+    // Filtrar y sanitizar la entrada del nombre de usuario
+    $user = filter_var($user, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    // Consulta SQL para obtener el usuario por nombre de usuario
     $sql_access = "
         SELECT DISTINCT
             admin.usuario_id,
@@ -45,52 +66,79 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             INNER JOIN herramientas_sistema ON admin.usuario_id = herramientas_sistema.usuario_id
             INNER JOIN empresas ON admin.empresa_id = empresas.empresa_id 
         WHERE
-            admin.usuario = ? 
-            AND admin.pwd = ?
+            admin.usuario = ?
     ";
 
     // Ejecutar la consulta con parámetros preparados
-    $resultado = $conexion->consulta($sql_access, [$user, $pwd]);
+    $resultado = $conexion->consulta($sql_access, [$user]);
 
     // Verificar si se encontró un usuario que coincida
     if ($resultado['numFilas'] > 0) {
         // Obtener el primer registro del resultado
         $cnt = $resultado['resultado'][0];
 
-        // Configurar las variables de sesión
-        $_SESSION['sesion'] = "On";
-        $_SESSION['time'] = time();
-        $_SESSION['usuario_id'] = $cnt['usuario_id'];
-        $_SESSION['nombre'] = $cnt['nombre'];
-        $_SESSION['usuario'] = $cnt['usuario'];
-        $_SESSION['pwd'] = $cnt['pwd'];
-        $_SESSION['acceso'] = $cnt['acceso'];
-        $_SESSION['funcion'] = $cnt['funcion'];
-        $_SESSION['saldo'] = $cnt['saldo'];
-        $_SESSION['observaciones'] = $cnt['observaciones'];
-        $_SESSION['perfil_id'] = $cnt['perfil_id'];
-        $_SESSION['foto'] = $cnt['foto'];
-        $_SESSION['nombre_corto'] = $cnt['nombre_corto'];
-        $_SESSION['body'] = $cnt['body'];
-        $_SESSION['notificaciones'] = $cnt['notificaciones'];
-        $_SESSION['estatus'] = $cnt['estatus'];
-        $_SESSION['mktime'] = time();
-        $_SESSION['empresa_id'] = $cnt['empresa_id'];
-        $_SESSION['emp_nombre'] = $cnt['emp_nombre'];
-        $_SESSION['icono'] = $cnt['icono'];
-        $_SESSION['logo'] = $cnt['logo'];
-        $_SESSION['web'] = $cnt['web'];
-        $_SESSION['body_principal'] = $cnt['body_principal'];
+        // Verificar si la contraseña en la base de datos es un hash o texto plano
+        if (password_verify($pwd, $cnt['pwd'])) {
+            // La contraseña es correcta y está hashada
 
-        // Actualizar el estado del usuario a "Activo"
-        $query_update = "UPDATE admin SET actividad = 'Activo' WHERE usuario_id = ?";
-        $result_UPDATE = $conexion->consulta_simple($query_update, [$cnt['usuario_id']]);
+            // Continuar con el inicio de sesión
+        } elseif ($pwd === $cnt['pwd']) {
+            // La contraseña es correcta pero no está hashada
 
-        // Redirigir al menú principal
-        header("Location: menu.php");
-        exit();
+            // Hash la contraseña y actualízala en la base de datos
+            $hashed_password = password_hash($pwd, PASSWORD_DEFAULT);
+            $update_query = "UPDATE admin SET pwd = ? WHERE usuario_id = ?";
+            $conexion->consulta_simple($update_query, [$hashed_password, $cnt['usuario_id']]);
+
+            // Actualizar el valor de 'pwd' en $cnt con el hash nuevo
+            $cnt['pwd'] = $hashed_password;
+
+            // Continuar con el inicio de sesión
+        } else {
+            // Contraseña incorrecta
+            $mensaje_error = "Usuario o contraseña incorrectos. Por favor, inténtelo de nuevo.";
+        }
+
+        // Si la contraseña es correcta, proceder con el inicio de sesión
+        if (!isset($mensaje_error)) {
+            // Regenerar el ID de sesión para prevenir ataques de fijación de sesión
+            session_regenerate_id(true);
+
+            // Configurar las variables de sesión
+            $_SESSION['sesion'] = "On";
+            $_SESSION['time'] = time();
+            $_SESSION['usuario_id'] = $cnt['usuario_id'];
+            $_SESSION['nombre'] = $cnt['nombre'];
+            $_SESSION['usuario'] = $cnt['usuario'];
+            // No almacenar la contraseña en la sesión por razones de seguridad
+            $_SESSION['acceso'] = $cnt['acceso'];
+            $_SESSION['funcion'] = $cnt['funcion'];
+            $_SESSION['saldo'] = $cnt['saldo'];
+            $_SESSION['observaciones'] = $cnt['observaciones'];
+            $_SESSION['perfil_id'] = $cnt['perfil_id'];
+            $_SESSION['foto'] = $cnt['foto'];
+            $_SESSION['nombre_corto'] = $cnt['nombre_corto'];
+            $_SESSION['body'] = $cnt['body'];
+            $_SESSION['notificaciones'] = $cnt['notificaciones'];
+            $_SESSION['estatus'] = $cnt['estatus'];
+            $_SESSION['mktime'] = time();
+            $_SESSION['empresa_id'] = $cnt['empresa_id'];
+            $_SESSION['emp_nombre'] = $cnt['emp_nombre'];
+            $_SESSION['icono'] = $cnt['icono'];
+            $_SESSION['logo'] = $cnt['logo'];
+            $_SESSION['web'] = $cnt['web'];
+            $_SESSION['body_principal'] = $cnt['body_principal'];
+
+            // Actualizar el estado del usuario a "Activo"
+            $query_update = "UPDATE admin SET actividad = 'Activo' WHERE usuario_id = ?";
+            $conexion->consulta_simple($query_update, [$cnt['usuario_id']]);
+
+            // Redirigir al menú principal
+            header("Location: menu.php");
+            exit();
+        }
     } else {
-        // Si las credenciales son incorrectas, muestra un mensaje de error
+        // Usuario no encontrado
         $mensaje_error = "Usuario o contraseña incorrectos. Por favor, inténtelo de nuevo.";
     }
 } else {
@@ -121,13 +169,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
         <div class="card">
             <div class="body">
-                <form action="inicio.html" method="post">
-                    <div class="msg">Error de inicio de sesión</div>
-                    <div class="alert alert-danger">
-                        <?= $mensaje_error ?>
-                    </div>
-                    <button class="btn btn-block bg-pink waves-effect" type="submit">Volver</button>
-                </form>
+                <?php if (isset($mensaje_error)): ?>
+                    <form action="inicio.html" method="post">
+                        <div class="msg">Error de inicio de sesión</div>
+                        <div class="alert alert-danger">
+                            <?= htmlspecialchars($mensaje_error, ENT_QUOTES, 'UTF-8') ?>
+                        </div>
+                        <button class="btn btn-block bg-pink waves-effect" type="submit">Volver</button>
+                    </form>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -137,4 +187,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <script src="plugins/bootstrap/js/bootstrap.js"></script>
     <script src="plugins/node-waves/waves.js"></script>
 </body>
-</html>	
+</html>

@@ -87,7 +87,6 @@ http://www.tooplate.com/view/2098-health
 <body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v17.0" nonce="7r0oY8qs"></script>
-
      <!-- PRE LOADER -->
      <section class="preloader">
           <div class="spinner">
@@ -96,8 +95,6 @@ http://www.tooplate.com/view/2098-health
                
           </div>
      </section>
-
-
      <!-- HEADER -->
      <header>
           <div class="container">
@@ -136,24 +133,24 @@ http://www.tooplate.com/view/2098-health
                <!-- MENU LINKS -->
                <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                         <li><a href="index.php#top" class="smoothScroll">Inicio</a></li>
-                         <li><a href="index.php#about" class="smoothScroll">Acerca de</a></li>
-                         <li><a href="index.php#team" class="smoothScroll">Doctores</a></li>
+                         <li><a href="#top" class="smoothScroll">Inicio</a></li>
+                         <li><a href="#about" class="smoothScroll">Acerca de</a></li>
+                         <li><a href="#team" class="smoothScroll">Doctores</a></li>
 						  <li role="presentation" class="dropdown">
 						    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 						      Noticias<span class="caret"></span>
 						    </a>
-                    <ul class="dropdown-menu">
-                        <?php
-                        while ($row = mysqli_fetch_assoc($result_art)) {
-                            echo '<li><a href="news.php?articulo_id=' . htmlspecialchars($row['articulo_idx']) . '">' . htmlspecialchars($row['descripcionx']) . '</a></li>';
-                        }
-                        ?>
-                    </ul>
+		                    <ul class="dropdown-menu">
+		                        <?php
+		                        while ($row = mysqli_fetch_assoc($result_art)) {
+		                            echo '<li><a href="news.php?articulo_id=' . htmlspecialchars($row['articulo_idx']) . '">' . htmlspecialchars($row['descripcionx']) . '</a></li>';
+		                        }
+		                        ?>
+		                    </ul>
 						  </li>
-                         <li><a href="index.php#google-map" class="smoothScroll">Contacto</a></li>
+                         <li><a href="#google-map" class="smoothScroll">Contacto</a></li>
                          <li class="appointment-btn"><a style="background: #0096AA"  href="#appointment">Solicita una cita</a></li>
-                         <li class="appointment-btn"><a style="background: #BBBABA"  href="../inicio.html">Ingreso Medico</a></li>
+                         <li class="appointment-btn"><a style="background: #BBBABA"  href="inicio.html">Ingreso Medico</a></li>
                     </ul>
                </div>
 
@@ -164,39 +161,37 @@ http://www.tooplate.com/view/2098-health
      <section id="home" class="slider" data-stellar-background-ratio="0.5">
           <div class="container">
                <div class="row">
+                     <div class="owl-carousel owl-theme">
+                          <div class="item item-first">
+                               <div class="caption">
+                                    <div class="col-md-offset-1 col-md-10">
+                                         <h3>"Descubre el presente y futuro de la terapia por neuromodulación en nuestro centro de tratamiento avanzado"</h3>
+                                         <h1>Neuromodulación GDL</h1>
+                                         <a style="background: #0096AA" href="#team" class="section-btn btn btn-default smoothScroll">Conozca a nuestros médicos</a>
+                                    </div>
+                               </div>
+                          </div>
 
-                         <div class="owl-carousel owl-theme">
-                              <div class="item item-first">
-                                   <div class="caption">
-                                        <div class="col-md-offset-1 col-md-10">
-                                             <h3>"Descubre el presente y futuro de la terapia por neuromodulación en nuestro centro de tratamiento avanzado"</h3>
-                                             <h1>Neuromodulación GDL</h1>
-                                             <a style="background: #0096AA" href="#team" class="section-btn btn btn-default smoothScroll">Conozca a nuestros médicos</a>
-                                        </div>
-                                   </div>
-                              </div>
+                          <div class="item item-second">
+                               <div class="caption">
+                                    <div class="col-md-offset-1 col-md-10">
+                                         <h3>"Le damos la bienvenida a los tratamientos de vanguardia en neuromodulación: Terapia con Corriente directa y Magnética Transcraneal"</h3>
+                                         <h1>Acercamos la Innovación en Tratamientos para la Salud Mental</h1>
+                                         <a style="background: #0096AA" href="#about" class="section-btn btn btn-default btn-gray smoothScroll">Más acerca de nosotros</a>
+                                    </div>
+                               </div>
+                          </div>
 
-                              <div class="item item-second">
-                                   <div class="caption">
-                                        <div class="col-md-offset-1 col-md-10">
-                                             <h3>"Le damos la bienvenida a los tratamientos de vanguardia en neuromodulación: Terapia con Corriente directa y Magnética Transcraneal"</h3>
-                                             <h1>Acercamos la Innovación en Tratamientos para la Salud Mental</h1>
-                                             <a style="background: #0096AA" href="#about" class="section-btn btn btn-default btn-gray smoothScroll">Más acerca de nosotros</a>
-                                        </div>
-                                   </div>
-                              </div>
-
-                              <div class="item item-third">
-                                   <div class="caption">
-                                        <div class="col-md-offset-1 col-md-10">
-                                             <h3>"Donde Ciencia y Tecnología Se Unen para Mejorar tu Bienestar Mental"</h3>
-                                             <h1>Tus beneficios de salud</h1>
-                                             <a style="background: #0096AA" href="#news" class="section-btn btn btn-default btn-blue smoothScroll">Leer historias</a>
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
-
+                          <div class="item item-third">
+                               <div class="caption">
+                                    <div class="col-md-offset-1 col-md-10">
+                                         <h3>"Donde Ciencia y Tecnología Se Unen para Mejorar tu Bienestar Mental"</h3>
+                                         <h1>Tus beneficios de salud</h1>
+                                         <a style="background: #0096AA" href="#news" class="section-btn btn btn-default btn-blue smoothScroll">Leer historias</a>
+                                    </div>
+                               </div>
+                          </div>
+                     </div>
                </div>
           </div>
      </section>
@@ -206,25 +201,24 @@ http://www.tooplate.com/view/2098-health
      <section id="about">
           <div class="container">
                <div class="row">
-
                     <div class="col-md-6 col-sm-6">
                          <div class="about-info">
                               <h2 class="wow fadeInUp" data-wow-delay="0.6s"><i style="color: #0096AA" class="fa fa-user-md"></i> Bienvenidos a Neuromodulaci&oacute;n Gdl</h2>
                               <div class="wow fadeInUp" data-wow-delay="0.8s">
                                    <p>"En nuestro centro, buscamos ofrecer las terapias por neuromodulación más actualizadas y con mejor evidencia científica, como lo son la Estimulación Transcraneal con Corriente Directa, y Estimulación Magnética Transcraneal, que sean accesibles para las personas en quienes estén indicadas”
-Nuestros equipos cuentan con la aprobación Nacional de COFEPRIS, así como agendas de regulación internacional. Las tecnologías de vanguardia y nuestro equipo de profesionales en salud mental, están aquí para ayudarte a mejorar tu bienestar y tu calidad de vida.</p>
-<b><h3>¿Cómo funciona nuestro servicio?</h3></b><br>
-	<p>Neuromodulación GDL opera de manera similar a una farmacia. Es decir, nosotros recibimos la prescripción y referencia por parte de médicos que han determinado que la persona requiere de alguna terapia por neuromodulación. De tal forma que la indicación y seguimiento clínico, seguirá siendo de la o el médico que recomendó neuromodulación, y nuestro equipo le contactará para explicar detalles del procedimiento, calendarizar el número de sesiones que están prescritas, aplicar la técnica de neuromodulación indicada, y reportar los resutados de sus avances a la o el médico que le recomendó.
-</p>
-<b><h3>Quiero recibir Neuromodulación, pero no tengo médico que me asesore</h3></b><br>
-	<p>En Neuromodulación GDL, tenemos alianza con Ágape – Unidad Médica de Atención Universal y Especializada, contando con un grupo de especialistas en salud mental que mediante una consulta médica programada pueden revisar su caso particular, establecer diagnóstico y opciones de tratamiento adecuados. Si junto a la o el médico, determinan los objetivos terapéuticos, indicaciones y contraindicaciones de Neuromodulación, éste le registrará su referencia para que nuestro Staff pueda calendarizar las sesiones prescritas.
-</p>
-
-<b><h3>¿Qué es la Neuromodulación?</h3></b><br>
-	<p>Es una modalidad de tratamiento que utiliza dispositivos médicos, con tecnología electromagnética, capaz de modificar las funciones eléctricas del cerebro, localizadas en las diferentes áreas de la corteza, sin necesidad ingresar agentes al cuerpo, sin producir dolor, ni requerir sedación para ser aplicadas. A esto también se le conoce como estimulación cerebral no invasiva (NIBS, por sus siglas en inglés).</p>
-
-<p>Se podría pensar que se trata de tratamientos novedosos, sin embargo existen más de 30 años de investigación y aplicación clínica de estas técnicas de intervención, siendo la Estimulación Magnética Transcraneal (TMS), y la Estimulación Transcraneal por Corriente Directa (tDCS), las que han demostrado con sólida evidencia científica, su utilidad en diferentes condiciones de salud como la depresión, ansiedad, migraña, fibromialgia, trastorno obsesivo compulsivo, y una creciente evidencia de su aplicación en adicciones, estrés postraumático, epilepsia y autismo.
-</p>
+									Nuestros equipos cuentan con la aprobación Nacional de COFEPRIS, así como agendas de regulación internacional. Las tecnologías de vanguardia y nuestro equipo de profesionales en salud mental, están aquí para ayudarte a mejorar tu bienestar y tu calidad de vida.</p>
+									<b><h3>¿Cómo funciona nuestro servicio?</h3></b><br>
+										<p>Neuromodulación GDL opera de manera similar a una farmacia. Es decir, nosotros recibimos la prescripción y referencia por parte de médicos que han determinado que la persona requiere de alguna terapia por neuromodulación. De tal forma que la indicación y seguimiento clínico, seguirá siendo de la o el médico que recomendó neuromodulación, y nuestro equipo le contactará para explicar detalles del procedimiento, calendarizar el número de sesiones que están prescritas, aplicar la técnica de neuromodulación indicada, y reportar los resutados de sus avances a la o el médico que le recomendó.
+									</p>
+									<b><h3>Quiero recibir Neuromodulación, pero no tengo médico que me asesore</h3></b><br>
+										<p>En Neuromodulación GDL, tenemos alianza con Ágape – Unidad Médica de Atención Universal y Especializada, contando con un grupo de especialistas en salud mental que mediante una consulta médica programada pueden revisar su caso particular, establecer diagnóstico y opciones de tratamiento adecuados. Si junto a la o el médico, determinan los objetivos terapéuticos, indicaciones y contraindicaciones de Neuromodulación, éste le registrará su referencia para que nuestro Staff pueda calendarizar las sesiones prescritas.
+									</p>
+									
+									<b><h3>¿Qué es la Neuromodulación?</h3></b><br>
+										<p>Es una modalidad de tratamiento que utiliza dispositivos médicos, con tecnología electromagnética, capaz de modificar las funciones eléctricas del cerebro, localizadas en las diferentes áreas de la corteza, sin necesidad ingresar agentes al cuerpo, sin producir dolor, ni requerir sedación para ser aplicadas. A esto también se le conoce como estimulación cerebral no invasiva (NIBS, por sus siglas en inglés).</p>
+									
+									<p>Se podría pensar que se trata de tratamientos novedosos, sin embargo existen más de 30 años de investigación y aplicación clínica de estas técnicas de intervención, siendo la Estimulación Magnética Transcraneal (TMS), y la Estimulación Transcraneal por Corriente Directa (tDCS), las que han demostrado con sólida evidencia científica, su utilidad en diferentes condiciones de salud como la depresión, ansiedad, migraña, fibromialgia, trastorno obsesivo compulsivo, y una creciente evidencia de su aplicación en adicciones, estrés postraumático, epilepsia y autismo.
+									</p>
                               </div>
                               <figure class="profile wow fadeInUp" data-wow-delay="1s">
                                    <img src="images/author-image.jpg" class="img-responsive" alt="">
@@ -234,13 +228,10 @@ Nuestros equipos cuentan con la aprobación Nacional de COFEPRIS, así como agen
                                    </figcaption>
                               </figure>
                          </div>
-                    </div>
-                    
+                    </div>                   
                </div>
           </div>
      </section>
-
-
      <!-- TEAM -->
      <section id="team" data-stellar-background-ratio="1">
           <div class="container">
@@ -257,81 +248,70 @@ Nuestros equipos cuentan con la aprobación Nacional de COFEPRIS, así como agen
                     <div class="col-md-4 col-sm-6">
                          <div class="team-thumb wow fadeInUp" data-wow-delay="0.2s">
                               <img src="images/team-image1.jpg" class="img-responsive" alt="">
-
-                                   <div class="team-info">
-                                        <h3>Dr. Alejandro Aldana</h3>
-                                        <p>Psiquiatra</p>
-                                        <!-- <p>Director General</p> -->
-                                        <div class="team-contact-info">
-                                             <p><i class="fa fa-phone"></i> 33 3470 2176</p>
-                                             <p><i class="fa fa-envelope-o"></i> <a href="mailto:dr.alejandro.aldana@neuromodulacion.com.mx?subject=Solicito%20Informacion%20de%20Neuromodulacion&body=Favor%20de%20enviar%20Informacion">dr.alejandro.aldana@neuromodulacion.com.mx</a></p>
-                                        </div>
-                                        <ul class="social-icon">
-                                             <li><a href="#" class="fa fa-linkedin-square"></a></li>
-                                             <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                        </ul>
-                                   </div>
-
+                               <div class="team-info">
+                                    <h3>Dr. Alejandro Aldana</h3>
+                                    <p>Psiquiatra</p>
+                                    <!-- <p>Director General</p> -->
+                                    <div class="team-contact-info">
+                                         <p><i class="fa fa-phone"></i> 33 3470 2176</p>
+                                         <p><i class="fa fa-envelope-o"></i> <a href="mailto:dr.alejandro.aldana@neuromodulacion.com.mx?subject=Solicito%20Informacion%20de%20Neuromodulacion&body=Favor%20de%20enviar%20Informacion">dr.alejandro.aldana@neuromodulacion.com.mx</a></p>
+                                    </div>
+                                    <ul class="social-icon">
+                                         <li><a href="#" class="fa fa-linkedin-square"></a></li>
+                                         <li><a href="#" class="fa fa-envelope-o"></a></li>
+                                    </ul>
+                               </div>
                          </div>
                     </div>
-
                     <div class="col-md-4 col-sm-6">
                          <div class="team-thumb wow fadeInUp" data-wow-delay="0.4s">
-                              <img src="images/team-image2.jpg" class="img-responsive" alt="">
-
-                                   <div class="team-info">
-                                        <h3>Dra. Maritza Flores</h3>                                  
-                                        <p>	
-               								Médico de Enlace del Centro de Neuromodulación GDL.<hr>
-											Médico Cirujano por la Universidad Autónoma de Guadalajara (UAG).<hr>
-											Certificada por la American Heart Association (AHA), Basic Life Support 2019 y 2023.<hr> 
-											Miembro de la mesa directiva de la Sociedad Investigadora Estudiantil (SIE) 2018-2021.<hr> 
-											Miembro de la mesa directiva de la Sociedad DISE (Doctors Interested in Surgical Education) 2019-2020
-										</p>
-                                        <!-- <div class="team-contact-info">
-                                             <p><i class="fa fa-phone"></i> 010-070-0170</p>
-                                             <p><i class="fa fa-envelope-o"></i> <a href="#">pregnancy@company.com</a></p>
-                                        </div>
-                                        <ul class="social-icon">
-                                             <li><a href="#" class="fa fa-facebook-square"></a></li>
-                                             <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                             <li><a href="#" class="fa fa-flickr"></a></li>
-                                        </ul> -->
-                                   </div>
-
-
+	                          <img src="images/team-image2.jpg" class="img-responsive" alt="">
+	                           <div class="team-info">
+	                                <h3>Dra. Maritza Flores</h3>                                  
+	                                <p>	
+	       								Médico de Enlace del Centro de Neuromodulación GDL.<hr>
+										Médico Cirujano por la Universidad Autónoma de Guadalajara (UAG).<hr>
+										Certificada por la American Heart Association (AHA), Basic Life Support 2019 y 2023.<hr> 
+										Miembro de la mesa directiva de la Sociedad Investigadora Estudiantil (SIE) 2018-2021.<hr> 
+										Miembro de la mesa directiva de la Sociedad DISE (Doctors Interested in Surgical Education) 2019-2020
+									</p>
+	                                <!-- <div class="team-contact-info">
+	                                     <p><i class="fa fa-phone"></i> 010-070-0170</p>
+	                                     <p><i class="fa fa-envelope-o"></i> <a href="#">pregnancy@company.com</a></p>
+	                                </div>
+	                                <ul class="social-icon">
+	                                     <li><a href="#" class="fa fa-facebook-square"></a></li>
+	                                     <li><a href="#" class="fa fa-envelope-o"></a></li>
+	                                     <li><a href="#" class="fa fa-flickr"></a></li>
+	                                </ul> -->
+	                           </div>
                          </div>
                     </div>
 
                     <div class="col-md-4 col-sm-6">
                          <div class="team-thumb wow fadeInUp" data-wow-delay="0.6s">
                               <img src="images/team-image3.jpg" class="img-responsive" alt="">
+                              <div class="team-info">
+                                    <h3>Dra. Andrea Guillen</h3>
+                                    <p>	
+           								Médico de Enlace del Centro de Neuromodulación GDL.<hr>
+										Médico, cirujano y partero por la Universidad Autónoma de Guadalajara (UAG).<hr>
+										Profesora titular del área de Medicina Interna I en la Facultad de Medicina, UAG, asignatura de Neumología.<hr> 
+										Miembro de la mesa directiva de la Sociedad Investigadora Estudiantil (SIE) 2018-2021.<hr> 
+										Miembro del Colegio Médico Joseph Lister.<hr>
+									</p>
 
-                                   <div class="team-info">
-                                        <h3>Dra. Andrea Guillen</h3>
-                                        <p>	
-               								Médico de Enlace del Centro de Neuromodulación GDL.<hr>
-											Médico, cirujano y partero por la Universidad Autónoma de Guadalajara (UAG).<hr>
-											Profesora titular del área de Medicina Interna I en la Facultad de Medicina, UAG, asignatura de Neumología.<hr> 
-											Miembro de la mesa directiva de la Sociedad Investigadora Estudiantil (SIE) 2018-2021.<hr> 
-											Miembro del Colegio Médico Joseph Lister.<hr>
-										</p>
-
-                                        <!-- <div class="team-contact-info">
-                                             <p><i class="fa fa-phone"></i> 010-040-0140</p>
-                                             <p><i class="fa fa-envelope-o"></i> <a href="#">cardio@company.com</a></p>
-                                        </div>
-                                        <ul class="social-icon">
-                                             <li><a href="#" class="fa fa-twitter"></a></li>
-                                             <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                        </ul> -->
-                                   </div>
-
+                                    <!-- <div class="team-contact-info">
+                                         <p><i class="fa fa-phone"></i> 010-040-0140</p>
+                                         <p><i class="fa fa-envelope-o"></i> <a href="#">cardio@company.com</a></p>
+                                    </div>
+                                    <ul class="social-icon">
+                                         <li><a href="#" class="fa fa-twitter"></a></li>
+                                         <li><a href="#" class="fa fa-envelope-o"></a></li>
+                                    </ul> -->
+                              </div>
                          </div>
                     </div> 
-                    
-
-                     
                     <div class="col-md-4 col-sm-6">
                          <div class="team-thumb wow fadeInUp" data-wow-delay="0.6s">
                               <img src="images/team-image5.jpg" class="img-responsive" alt="">
@@ -360,29 +340,29 @@ Nuestros equipos cuentan con la aprobación Nacional de COFEPRIS, así como agen
                          <div class="team-thumb wow fadeInUp" data-wow-delay="0.6s">
                               <img src="images/team-image4.jpg" class="img-responsive" alt="">
 
-                                   <div class="team-info">
-                                        <h3>Dra. Elizabeth Gutiérrez</h3>
-                                        <p>	
-               								Médico de Enlace del Centro de Neuromodulación GDL.<hr>
-               								Médico cirujano y partero por la Universidad de Guadalajara (UDG).<hr>
-											Testimonio de desempeño "Sobresaliente” por el Centro Nacional de Evaluación para la Educación Superior A.C. (CENEVAL) 2022.<hr>
-											Acreditada por la Asociación Americana del Corazón e ILCOR para el soporte vital en emergencias cardiovasculares en 2020.<hr>
-											<!-- Acreditada por la Asociación Americana del Corazón e Internacional Liasion Committee on Resuscitation (ILCOR) para el soporte vital en emergencias Cardiovasculares 2020<hr> -->
-											Certificada por el marco Común Europeo de Referencia para las lenguas B1 (2021)<hr>
-											Gestora de la salud en el sistema de educación media superior (UDG) 2015<hr>
-											<!-- Médico Cirujano por la Universidad Autónoma de Guadalajara (UAG).<hr>
-											Capacitación de simulación nivel instructor en la Universidad Autónoma de Guadalajara 2023.<hr> 
-											Certificado por la American Heart Association (AHA), Basic Life Support 2023. -->
-										</p>
-                                        <!-- <div class="team-contact-info">
-                                             <p><i class="fa fa-phone"></i> 010-040-0140</p>
-                                             <p><i class="fa fa-envelope-o"></i> <a href="#">cardio@company.com</a></p>
-                                        </div>
-                                        <ul class="social-icon">
-                                             <li><a href="#" class="fa fa-twitter"></a></li>
-                                             <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                        </ul> -->
-                                   </div>
+                               <div class="team-info">
+                                    <h3>Dra. Elizabeth Gutiérrez</h3>
+                                    <p>	
+           								Médico de Enlace del Centro de Neuromodulación GDL.<hr>
+           								Médico cirujano y partero por la Universidad de Guadalajara (UDG).<hr>
+										Testimonio de desempeño "Sobresaliente” por el Centro Nacional de Evaluación para la Educación Superior A.C. (CENEVAL) 2022.<hr>
+										Acreditada por la Asociación Americana del Corazón e ILCOR para el soporte vital en emergencias cardiovasculares en 2020.<hr>
+										<!-- Acreditada por la Asociación Americana del Corazón e Internacional Liasion Committee on Resuscitation (ILCOR) para el soporte vital en emergencias Cardiovasculares 2020<hr> -->
+										Certificada por el marco Común Europeo de Referencia para las lenguas B1 (2021)<hr>
+										Gestora de la salud en el sistema de educación media superior (UDG) 2015<hr>
+										<!-- Médico Cirujano por la Universidad Autónoma de Guadalajara (UAG).<hr>
+										Capacitación de simulación nivel instructor en la Universidad Autónoma de Guadalajara 2023.<hr> 
+										Certificado por la American Heart Association (AHA), Basic Life Support 2023. -->
+									</p>
+                                    <!-- <div class="team-contact-info">
+                                         <p><i class="fa fa-phone"></i> 010-040-0140</p>
+                                         <p><i class="fa fa-envelope-o"></i> <a href="#">cardio@company.com</a></p>
+                                    </div>
+                                    <ul class="social-icon">
+                                         <li><a href="#" class="fa fa-twitter"></a></li>
+                                         <li><a href="#" class="fa fa-envelope-o"></a></li>
+                                    </ul> -->
+                               </div>
 
                          </div>
                     </div>                                        

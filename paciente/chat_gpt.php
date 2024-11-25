@@ -1,9 +1,24 @@
 <?php
 session_start();
-error_reporting(E_ALL);
+
+// Establecer el nivel de notificación de errores
+error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
+
+// Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
+ini_set('default_charset', 'UTF-8');
+
+// Configurar la cabecera HTTP con codificación UTF-8
 header('Content-Type: text/html; charset=UTF-8');
+
+// Configurar la zona horaria
 date_default_timezone_set('America/Monterrey');
+
+// Configurar la localización para manejar fechas y horas en español
 setlocale(LC_TIME, 'es_ES.UTF-8');
+
+// Asignar el tiempo actual a la sesión en formato de timestamp
+$_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
+
 
 include('../functions/conexion_mysqli.php'); // Asegurarnos de que esta ruta sea correcta
 $mysqli = new Mysql(); // Instancia de la clase Mysql
@@ -12,10 +27,13 @@ $mysqli = new Mysql(); // Instancia de la clase Mysql
 if (!isset($_POST['paciente_id']) || !isset($_POST['accion'])) {
     die("Error: Datos insuficientes.");
 }
-
-extract($_POST);
 extract($_SESSION);
+extract($_POST);
 
+$fecha = $_POST['fecha'];
+$sistema = $_POST['sistema'];
+$tipo = $_POST['tipo'];
+$contenido = $_POST['contenido'];
 $paciente_id = $_POST['paciente_id'];
 $accion = $_POST['accion'];
 
@@ -329,6 +347,8 @@ $datos = [
         ["role" => "user", "content" => $contenido]
     ]
 ];
+
+echo $promt."<hr>";
 
 // Inicializar sesión cURL
 $ch = curl_init($url);

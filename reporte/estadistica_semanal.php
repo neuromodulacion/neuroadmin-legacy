@@ -1,18 +1,5 @@
-<?php session_start();
-error_reporting(7);
-iconv_set_encoding('internal_encoding', 'utf-8');
-header('Content-Type: text/html; charset=UTF-8');
-date_default_timezone_set('America/Monterrey');
-setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time'] = mktime();
-
-$ruta = "../";
-$title = 'INICIO';
-
-extract($_SESSION);
-//print_r($_SESSION);
-extract($_POST);
-
+<?php 
+$ruta = "../";  
 $titulo = "Reporte";
 
 $hoy = date("Y-m-d");
@@ -23,6 +10,48 @@ $mes = strftime("%B");
 $dia = date("N");
 $semana = date("W");
 
+include ($ruta . 'header1.php');
+?>
+	<link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+	
+	<!-- Bootstrap Material Datetime Picker Css -->
+	<link href="<?php echo $ruta; ?>plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+	
+	<!-- Bootstrap DatePicker Css -->
+	<link href="<?php echo $ruta; ?>plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+	
+	<!-- Wait Me Css -->
+	<link href="<?php echo $ruta; ?>plugins/waitme/waitMe.css" rel="stylesheet" />
+	
+	<!-- Bootstrap  Css -->
+	<link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+	<script src="../morris.js-master/morris.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
+	<script src="../morris.js-master/examples/lib/example.js"></script>
+	<!--<script src="../morris.js-master/lib/example.js"></script>
+	<link rel="stylesheet" href="../morris.js-master/examples/lib/example.css">-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
+	<link rel="stylesheet" href="../morris.js-master/morris.css">
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<style type="text/css">
+		${demo.css}
+	</style>
+
+	<script src="../highcharts/js/highcharts.js"></script>
+	<script src="../highcharts/js/highcharts-more.js"></script>
+	<script src="../highcharts/js/modules/exporting.js"></script>
+
+<?php
+include ($ruta . 'header2.php');
+
 if ($fechaInput == "") {
 	$fechaInput = $anio . "-" . $mes_ahora;
 	$mes_sel = $mes_ahora;
@@ -31,52 +60,6 @@ if ($fechaInput == "") {
 	$mes_sel = date('m', strtotime($fechaInput));
 	$anio_sel = date('Y', strtotime($fechaInput));
 }
-
-
-
-include ($ruta . 'header1.php');
-?>
-<link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-
-<!-- Bootstrap Material Datetime Picker Css -->
-<link href="<?php echo $ruta; ?>plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
-
-<!-- Bootstrap DatePicker Css -->
-<link href="<?php echo $ruta; ?>plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
-
-<!-- Wait Me Css -->
-<link href="<?php echo $ruta; ?>plugins/waitme/waitMe.css" rel="stylesheet" />
-
-<!-- Bootstrap  Css -->
-<link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
-<script src="../morris.js-master/morris.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
-<script src="../morris.js-master/examples/lib/example.js"></script>
-<!--<script src="../morris.js-master/lib/example.js"></script>
-<link rel="stylesheet" href="../morris.js-master/examples/lib/example.css">-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
-<link rel="stylesheet" href="../morris.js-master/morris.css">
-
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<style type="text/css">
-			${demo.css}
-		</style>
-
-<script src="../highcharts/js/highcharts.js"></script>
-<script src="../highcharts/js/highcharts-more.js"></script>
-<script src="../highcharts/js/modules/exporting.js"></script>
-
-
-
-<?php
-include ($ruta . 'header2.php');
 //print_r($_SESSION);
 ?>
 

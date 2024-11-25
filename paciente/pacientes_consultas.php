@@ -9,20 +9,6 @@ $anio = date("Y");
 $mes_ahora = date("m");
 $titulo = "Directorio"; // Título de la página
 
-// Establece condiciones para filtrar la lista de pacientes dependiendo del rol del usuario
-if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNICO' || $funcion == 'COORDINADOR') {
-    $class = "js-exportable";    
-    $where = "AND pacientes.empresa_id=$empresa_id "; // Filtra por empresa para ciertos roles
-} else {
-    $class = "js-basic-example";
-    if ($funcion == 'MEDICO') {
-        // Filtra por empresa y usuario para el rol de médico
-        $where = " AND pacientes.empresa_id=$empresa_id AND pacientes.usuario_id = $usuario_id";
-    } else {
-        $where = "";
-    }
-}
-
 // Función para verificar si $id_bind es null
 function verificar_id_bind($id_bind) {
     // Retorna "no" si $id_bind es null, de lo contrario retorna "ok"
@@ -38,6 +24,21 @@ include($ruta.'header1.php');
 <?php
 // Incluye el segundo archivo de cabecera
 include($ruta.'header2.php');
+	
+	// Establece condiciones para filtrar la lista de pacientes dependiendo del rol del usuario
+	if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNICO' || $funcion == 'COORDINADOR') {
+	    $class = "js-exportable";    
+	    $where = "AND pacientes.empresa_id=$empresa_id "; // Filtra por empresa para ciertos roles
+	} else {
+	    $class = "js-basic-example";
+	    if ($funcion == 'MEDICO') {
+	        // Filtra por empresa y usuario para el rol de médico
+	        $where = " AND pacientes.empresa_id=$empresa_id AND pacientes.usuario_id = $usuario_id";
+	    } else {
+	        $where = "";
+	    }
+	}
+
 ?>
 
 <section class="content">

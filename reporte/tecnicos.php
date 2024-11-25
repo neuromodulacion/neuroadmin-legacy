@@ -1,20 +1,31 @@
 <?php
+// Iniciar la sesión del usuario
 session_start();
-error_reporting(E_ALL);
-ini_set('default_charset', 'UTF-8');
-//iconv_set_encoding('internal_encoding', 'utf-8'); funcion en desuso
-header('Content-Type: text/html; charset=UTF-8');
-//date_default_timezone_set('America/Monterrey');
-date_default_timezone_set('America/Mazatlan');
-setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=time();
 
-$ruta="../";
-$title = 'INICIO';
+// Configurar el nivel de reporte de errores (7 muestra errores y advertencias)
+error_reporting(7);
+
+// Establecer la codificación interna a UTF-8 para las funciones de conversión de cadenas
+iconv_set_encoding('internal_encoding', 'utf-8');
+
+// Enviar cabecera HTTP para especificar que el contenido es HTML con codificación UTF-8
+header('Content-Type: text/html; charset=UTF-8');
+
+// Establecer la zona horaria predeterminada
+date_default_timezone_set('America/Monterrey');
+
+// Configurar la localización en español para fechas y horas
+setlocale(LC_TIME, 'es_ES.UTF-8');
+
+// Guardar la hora actual en la sesión
+$_SESSION['time'] = time();
+
+// Definir la ruta base para acceder a otros archivos
+$ruta = "../";
+
 
 extract($_SESSION);
 extract($_POST);
-
 
 $titulo ="Reporte";
 
