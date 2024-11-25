@@ -27,7 +27,7 @@
         <!-- Elemento del menú: CRM (Visible para usuarios con función SISTEMAS, ADMINISTRADOR, o REPRESENTANTE) -->
         <!-- Este elemento del menú es accesible para los roles SISTEMAS, ADMINISTRADOR, o REPRESENTANTE y permite acceder a funcionalidades del CRM -->
         <?php if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'REPRESENTANTE') { ?>
-        <li <?php if ($ubicacion_url == 'crm/medicos.php' || $ubicacion_url == 'reporte/referenciadores.php' || $ubicacion_url == 'crm/alta_medico.php' || $ubicacion_url == 'crm/registro_contacto.php' || $ubicacion_url == 'crm/contactos.php' || $ubicacion_url == 'crm/registro_visitas.php') { echo 'class="active"'; } ?>>
+        <li <?php if ($ubicacion_url == 'crm/medicos.php' || $ubicacion_url == 'reporte/referenciadores.php' || $ubicacion_url == 'crm/alta_medico.php' || $ubicacion_url == 'crm/registro_contacto.php' || $ubicacion_url == 'crm/contactos.php' || $ubicacion_url == 'crm/registro_visitas.php' || $ubicacion_url == 'crm/posible_referenciador.php') { echo 'class="active"'; } ?>>
             <a href="javascript:void(0);" class="menu-toggle">
                 <i class="material-icons">supervisor_account</i>
                 <span>CRM</span>
@@ -35,45 +35,68 @@
             <ul class="ml-menu">
                 <!-- Submenú: Reporte de Referenciadores -->
                 <!-- Este submenú muestra un reporte de referenciadores -->
-                <li <?php if ($ubicacion_url == 'reporte/referenciadores.php') { echo 'class="active"'; } ?>>
-                    <a href="<?php echo $ruta; ?>reporte/referenciadores.php">
-                        <i class="material-icons">assessment</i>
-                        <span>Reporte de Referenciadores</span>
+
+                <li <?php if ($ubicacion_url == 'caja/balance_mes.php' || $ubicacion_url == 'caja/balance_mes.php?us='.$emp_nombre) { echo 'class="active"'; } ?>>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">person</i>
+                        <span>Médico Referenciador</span>
                     </a>
+                    <ul class="ml-menu">
+                        <li <?php if ($ubicacion_url == 'reporte/referenciadores.php') { echo 'class="active"'; } ?>>
+                            <a href="<?php echo $ruta; ?>reporte/referenciadores.php">
+                                <i class="material-icons">assignment</i>
+                                <span>Reporte de Referenciadores</span>
+                            </a>
+                        </li>
+                        <!-- Este submenú muestra la lista de médicos registrados en el CRM -->
+                        <li <?php if ($ubicacion_url == 'crm/medicos.php') { echo 'class="active"'; } ?>>
+                            <a href="<?php echo $ruta; ?>crm/medicos.php">
+                                <i class="material-icons">person</i>
+                                <span>Medico Referenciador</span>
+                            </a>
+                        </li>
+                        <li <?php if ($ubicacion_url == 'crm/registro_visitas.php') { echo 'class="active"'; } ?>>
+                            <a href="<?php echo $ruta; ?>crm/registro_visitas.php">
+                                <i class="material-icons">assignment</i>
+                                <span>Reporte Visitas Referenciador</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <!-- Submenú: Médicos -->
-                <!-- Este submenú muestra la lista de médicos registrados en el CRM -->
-                <li <?php if ($ubicacion_url == 'crm/medicos.php') { echo 'class="active"'; } ?>>
-                    <a href="<?php echo $ruta; ?>crm/medicos.php">
-                        <i class="material-icons">perm_identity</i>
-                        <span>Medicos</span>
+                <li <?php if ($ubicacion_url == 'caja/balance_mes.php' || $ubicacion_url == 'caja/balance_mes.php?us='.$emp_nombre) { echo 'class="active"'; } ?>>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">record_voice_over</i>
+                        <span>Posible Referenciador</span>
                     </a>
-                </li>
-                <li <?php if ($ubicacion_url == 'crm/alta_medico.php') { echo 'class="active"'; } ?>>
-                    <a href="<?php echo $ruta; ?>crm/alta_medico.php">
-                        <i class="material-icons">perm_identity</i>
-                        <span>Alta Medicos</span>
-                    </a>
-                </li>  
-                <li <?php if ($ubicacion_url == 'crm/registro_contacto.php') { echo 'class="active"'; } ?>>
-                    <a href="<?php echo $ruta; ?>crm/registro_contacto.php">
-                        <i class="material-icons">perm_identity</i>
-                        <span>Registro Contacto</span>
-                    </a>
-                </li> 
-                
-                <li <?php if ($ubicacion_url == 'crm/contactos.php') { echo 'class="active"'; } ?>>
-                    <a href="<?php echo $ruta; ?>crm/contactos.php">
-                        <i class="material-icons">perm_identity</i>
-                        <span>Contacto</span>
-                    </a>
-                </li>
-                <li <?php if ($ubicacion_url == 'crm/registro_visitas.php') { echo 'class="active"'; } ?>>
-                    <a href="<?php echo $ruta; ?>crm/registro_visitas.php">
-                        <i class="material-icons">perm_identity</i>
-                        <span>Registro Visitas</span>
-                    </a>
-                </li>                                
+                    <ul class="ml-menu">
+                        <li <?php if ($ubicacion_url == 'crm/alta_medico.php') { echo 'class="active"'; } ?>>
+                            <a href="<?php echo $ruta; ?>crm/alta_medico.php">
+                                <i class="material-icons">person_add</i>
+                                <span>Alta Posible Referenciador</span>
+                            </a>
+                        </li> 
+                        <li <?php if ($ubicacion_url == 'crm/posible_referenciador.php') { echo 'class="active"'; } ?>>
+                            <a href="<?php echo $ruta; ?>crm/posible_referenciador.php">
+                                <i class="material-icons">perm_identity</i>
+                                <span>Posible Referenciador</span>
+                            </a>
+                        </li> 
+                        <!-- Submenú: Médicos -->
+                        <li <?php if ($ubicacion_url == 'crm/registro_contacto.php') { echo 'class="active"'; } ?>>
+                            <a href="<?php echo $ruta; ?>crm/registro_contacto.php">
+                                <i class="material-icons">assignment_add</i>
+                                <span>Registro Contacto</span>
+                            </a>
+                        </li> 
+                        
+                        <li <?php if ($ubicacion_url == 'crm/contactos.php') { echo 'class="active"'; } ?>>
+                            <a href="<?php echo $ruta; ?>crm/contactos.php">
+                                <i class="material-icons">assignment</i>
+                                <span>Reporte Contacto</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>            
             </ul>
         </li>
         <?php } ?>                     

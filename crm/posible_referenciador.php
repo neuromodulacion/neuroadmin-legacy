@@ -49,7 +49,7 @@ include($ruta . 'header2.php');
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div style="height: 95%" class="header">
-                        <h1 align="center">Directorio Médico</h1>
+                        <h1 align="center">Directorio Posible Médico Referenciador</h1>
                         <div class="table-responsive">
                             <!-- Tabla que muestra el directorio médico con opciones de exportación -->
                             <table class="table table-bordered table-striped table-hover dataTable js-exportable">
@@ -59,7 +59,6 @@ include($ruta . 'header2.php');
                                         <th style="text-align: center">Nombre</th>
                                         <th style="text-align: center">Correo</th>
                                         <th style="text-align: center">Teléfono</th>
-                                        <th style="text-align: center">Pacientes</th>
                                         <th style="text-align: center">Estatus</th>
                                         <th style="text-align: center">Datos</th>
                                     </tr>
@@ -70,7 +69,6 @@ include($ruta . 'header2.php');
                                         <th style="text-align: center">Nombre</th>
                                         <th style="text-align: center">Correo</th>
                                         <th style="text-align: center">Teléfono</th>
-                                        <th style="text-align: center">Pacientes</th>
                                         <th style="text-align: center">Estatus</th>
                                         <th style="text-align: center">Datos</th>
                                     </tr>
@@ -83,19 +81,17 @@ include($ruta . 'header2.php');
                                 // Consulta segura utilizando sentencias preparadas
                                 $query = "
                                     SELECT
-                                        admin.usuario_id AS usuario_idx,
-                                        admin.nombre AS nombrex,
-                                        admin.usuario AS usuariox,
-                                        admin.funcion AS funcionx,
-                                        admin.observaciones,
-                                        admin.estatus AS estatusx,
-                                        admin.telefono,
-                                        (SELECT COUNT(*) FROM pacientes WHERE pacientes.usuario_id = admin.usuario_id) AS pacientes
+                                        admin_tem.medico_id AS usuario_idx,
+                                        admin_tem.nombre AS nombrex,
+                                        admin_tem.usuario AS usuariox,
+                                        admin_tem.funcion AS funcionx,
+                                        admin_tem.observaciones,
+                                        admin_tem.estatus AS estatusx,
+                                        admin_tem.telefono
                                     FROM
-                                        admin 
+                                        admin_tem 
                                     WHERE
-                                        admin.empresa_id = ?
-                                        AND (admin.funcion = 'MEDICO' OR usuario_id = 11)
+                                        admin_tem.empresa_id = ?
                                 ";
 
                                 // Parámetros de la consulta
@@ -115,7 +111,6 @@ include($ruta . 'header2.php');
                                         $observaciones = sanitizarValor($row_protocolo['observaciones']);
                                         $estatusx = sanitizarValor($row_protocolo['estatusx']);
                                         $telefono = limpiarEntrada($row_protocolo['telefono'] ?? '', 'telefono');
-                                        $pacientes = (int) ($row_protocolo['pacientes'] ?? 0);
 
                                         // Validar número de teléfono
                                         $clase = (preg_match('/^\+?\d{10,15}$/', $telefono)) ? "success" : "danger";
@@ -160,12 +155,21 @@ include($ruta . 'header2.php');
                                                     </a>
                                                 <?php endif; ?>
                                             </td>
-                                            <td style="text-align: center;"><?php echo $pacientes; ?></td>
                                             <td style="text-align: center;" class="<?php echo $clasex; ?>"><?php echo $estatusx; ?></td>
                                             <td style="text-align: center;">
-                                                <a class="btn btn-info btn-sm waves-effect" href="<?php echo htmlspecialchars($ruta . 'crm/info_usuario.php?usuario_idx=' . $usuario_idx, ENT_QUOTES, 'UTF-8'); ?>">
-                                                    <i class="material-icons">assignment</i> <b>Datos</b>
-                                                </a>
+                                                <div style="width: 95%;" class="row">
+                                                    <div class="col-md-6">
+                                                        <a class="btn btn-info btn-sm waves-effect" href="<?php // echo htmlspecialchars($ruta . 'crm/info_usuario.php?usuario_idx=' . $usuario_idx, ENT_QUOTES, 'UTF-8'); ?>">
+                                                            <i class="material-icons">assignment</i> <b>Transferir</b>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <a class="btn btn-danger btn-sm waves-effect" href="<?php // echo htmlspecialchars($ruta . 'crm/info_usuario.php?usuario_idx=' . $usuario_idx, ENT_QUOTES, 'UTF-8'); ?>">
+                                                            <i class="material-icons">assignment</i> <b>Descartar</b>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                
                                             </td>
                                         </tr>
                                 <?php

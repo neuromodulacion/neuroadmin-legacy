@@ -5,22 +5,25 @@ session_start();
 // Configuración para mostrar todos los errores
 error_reporting(E_ALL);
 
-// Configuración de la codificación interna y la cabecera de contenido
-iconv_set_encoding('internal_encoding', 'utf-8'); 
-header('Content-Type: text/html; charset=UTF-8');
-
 // Configurar la zona horaria y el locale para fechas en español
 date_default_timezone_set('America/Monterrey');
+// Nota: setlocale puede no funcionar en algunos sistemas operativos si el locale no está instalado
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
 // Registrar el tiempo de la sesión actual
 $_SESSION['time'] = time();
 
-// Extraer variables de sesión en el ámbito actual
-extract($_SESSION);
+// Obtener variables de sesión de forma segura
+$empresa_id = isset($_SESSION['empresa_id']) ? intval($_SESSION['empresa_id']) : 0;
+$usuario_id = isset($_SESSION['usuario_id']) ? intval($_SESSION['usuario_id']) : 0;
 
 $ruta = "../";
 include($ruta . 'functions/conexion_mysqli.php');
+
+// Función auxiliar para sanitizar valores y evitar pasar null a funciones que esperan string
+function sanitizarValor($valor) {
+    return htmlspecialchars($valor ?? '', ENT_QUOTES, 'UTF-8');
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Ruta del archivo de configuración
@@ -37,19 +40,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conexion = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
 
     // Capturar los datos del formulario y sanitizar
-    $nombre = trim(filter_var($_POST['nombre'], FILTER_SANITIZE_STRING));
-    $usuario = trim(filter_var($_POST['usuario'], FILTER_SANITIZE_EMAIL));
-    $celular = trim(filter_var($_POST['celular'], FILTER_SANITIZE_STRING));
-    $domicilio = trim(filter_var($_POST['domicilio'], FILTER_SANITIZE_STRING));
-    $horarios = trim(filter_var($_POST['horarios'], FILTER_SANITIZE_STRING));
-    $especialidad = trim(filter_var($_POST['observaciones'], FILTER_SANITIZE_STRING));
+    $nombre = isset($_POST['nombre']) ? sanitizarValor(trim($_POST['nombre'])) : '';
+    $usuario = isset($_POST['usuario']) ? sanitizarValor(trim($_POST['usuario'])) : '';
+    $celular = isset($_POST['celular']) ? sanitizarValor(trim($_POST['celular'])) : '';
+    $domicilio = isset($_POST['domicilio']) ? sanitizarValor(trim($_POST['domicilio'])) : '';
+    $horarios = isset($_POST['horarios']) ? sanitizarValor(trim($_POST['horarios'])) : '';
+    $observaciones = isset($_POST['observaciones']) ? sanitizarValor(trim($_POST['observaciones'])) : '';
+    $especialidad = isset($_POST['especialidad']) ? sanitizarValor(trim($_POST['especialidad'])) : '';
+
+    // Validar campos requeridos
+    if (empty($nombre) || empty($usuario) || empty($celular)) {
+        die('Nombre, correo electrónico y celular son campos obligatorios.');
+    }
+
+    // Validar correo electrónico
+    if (!filter_var($usuario, FILTER_VALIDATE_EMAIL)) {
+        die('Correo electrónico inválido.');
+    }
+
+    // Definir otras variables
     $funcion = 'MEDICO';
     $f_alta = date("Y-m-d");
     $h_alta = date("H:i:s");
     $estatus = 'ACTIVO';
-    $empresa_id = intval($_SESSION['empresa_id']);
-    $usuario_id = intval($_SESSION['usuario_id']);
-    $observaciones = trim(filter_var($_POST['especialidad'], FILTER_SANITIZE_STRING));
     $organizacion = ''; // Campo vacío por defecto
     $id_bind = ''; // Campo vacío por defecto
 
@@ -57,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Consulta para insertar los datos
         $query = "
             INSERT INTO admin_tem (
-                usuario_id,nombre, usuario, organizacion, observaciones, horarios, 
+                usuario_id, nombre, usuario, organizacion, observaciones, horarios, 
                 funcion, f_alta, h_alta, estatus, telefono, empresa_id, 
                 id_bind, especialidad, domicilio
             ) VALUES (
@@ -73,11 +86,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         // Redirigir con mensaje de éxito
-        header("Location: alta_medico.php?status=success");
+        header("Location: posible_referenciador.php?status=success");
         exit();
     } catch (Exception $e) {
         // Manejar errores
-        echo "Error al guardar los datos: " . $e->getMessage();
+        error_log($e->getMessage()); // Registrar el error en el log
+        echo "Error al guardar los datos. Por favor, inténtelo de nuevo más tarde.";
     }
 } else {
     // Si no se accede mediante POST

@@ -42,103 +42,40 @@ include($ruta.'header1.php');
                         	 if ($paciente_id ==0) {?>
 								<h3>Paciente</h3>
 								<div class="col-sm-10">
-								<select name="paciente_id" class="form-control show-tick" id="paciente_id" required>
-									<option value="" <?php echo isset($paciente_id) && ($paciente_id === 0 || $paciente_id === '0') ? "selected" : ""; ?>>
-										Seleccionar Paciente
-									</option>
+                                    <select name="paciente_id" class="form-control show-tick" id="paciente_id" required>
+                                        <option value="" <?php echo isset($paciente_id) && ($paciente_id === 0 || $paciente_id === '0') ? "selected" : ""; ?>>
+                                            Seleccionar Paciente
+                                        </option>
 
-									<?php
-									// Asegurarse de que $empresa_id esté definido
-									$empresa_id = $empresa_id ?? 0; // Valor predeterminado si no está definido
+                                        <?php
+                                        // Consulta segura para obtener los pacientes
+                                        $sql_paciente = "
+                                            SELECT 
+                                                paciente_id, 
+                                                CONCAT(paciente, ' ', apaterno, ' ', amaterno) AS pacientex, 
+                                                tratamiento 
+                                            FROM pacientes 
+                                            WHERE estatus NOT IN ('No interezado', 'Seguimiento', 'Eliminado') 
+                                            ORDER BY pacientex ASC";
+                                        
+                                        $result_paciente = $mysql->consulta($sql_paciente);
 
-									// Consulta segura para obtener los pacientes
-									$sql_paciente = "
-										SELECT 
-											paciente_id, 
-											CONCAT(paciente, ' ', apaterno, ' ', amaterno) AS pacientex, 
-											tratamiento 
-										FROM pacientes 
-										WHERE 
-											estatus NOT IN ('No interezado', 'Seguimiento', 'Eliminado') 
-											AND empresa_id = ? 
-										ORDER BY pacientex ASC";
+                                        if ($result_paciente['numFilas'] > 0) {
+                                            foreach ($result_paciente['resultado'] as $row) {
+                                                // Decodificar el valor de pacientex con utf8_decode
+                                                $pacientex_decoded = mb_convert_encoding($row['pacientex'], 'ISO-8859-1', 'UTF-8');
 
-									// Ejecutar la consulta con el ID de la empresa como parámetro
-									$params = [$empresa_id];
-									$result_paciente = $mysql->consulta($sql_paciente, $params);
-
-									if ($result_paciente['numFilas'] > 0) {
-										foreach ($result_paciente['resultado'] as $row) {
-											// Decodificar el valor de pacientex con mb_convert_encoding
-											$pacientex_decoded = mb_convert_encoding($row['pacientex'], 'ISO-8859-1', 'UTF-8');
-
-											$selected = isset($paciente_id) && $row['paciente_id'] == $paciente_id ? "selected" : "";
-											echo "<option value='{$row['paciente_id']}' $selected>{$row['paciente_id']}.- {$pacientex_decoded}</option>";
-										}
-									} else {
-										echo "<option value='' disabled>No hay pacientes disponibles</option>";
-									}
-									?>
-								</select>
-								<script>
-									$(document).ready(function () {
-										// Manejar el evento change del select paciente_id
-										$('#paciente_id').change(function () {
-											var paciente_id = $(this).val(); // Obtener el valor seleccionado
-											$('#load').show(); // Mostrar el cargador
-											// Validar que paciente_id no esté vacío
-											if (paciente_id !== '') {
-												// Enviar el paciente_id por AJAX a trae_protocolo.php
-												$.ajax({
-													url: 'trae_protocolo.php', // Archivo PHP que procesará la solicitud
-													type: 'POST',
-													data: { paciente_id: paciente_id }, // Enviar el paciente_id
-													success: function (response) {
-														// Cargar el contenido devuelto en el div con id="contenido"
-														$('#contenido2').html(response);
-														$('#load').hide();
-													},
-													error: function (xhr, status, error) {
-														// Manejo de errores en la solicitud AJAX
-														console.error('Error en la solicitud AJAX:', error);
-														alert('Ocurrió un error al cargar el protocolo. Por favor, inténtelo de nuevo.');
-													}
-												});
-											} else {
-												// Si el paciente_id está vacío, limpiar el contenido
-												$('#contenido2').html('');
-												$('#load').hide();
-											}
-										});
-									});
-								</script>
-
+                                                $selected = isset($paciente_id) && $row['paciente_id'] == $paciente_id ? "selected" : "";
+                                                echo "<option value='{$row['paciente_id']}' $selected>{$row['paciente_id']}.- {$pacientex_decoded}</option>";
+                                            }
+                                        } else {
+                                            echo "<option value='' disabled>No hay pacientes disponibles</option>";
+                                        }
+                                        ?>
+                                    </select>
 								</div> <hr>  
-								<div id="contenido2"></div>
-								<?php
-							
-									$sesion_id = isset($sesion_id) && !empty($sesion_id) ? $sesion_id : "";
-									$terapia_id = isset($terapia_id) && !empty($terapia_id) ? $terapia_id : "";
-									$sesion_id = isset($sesion_id) && !empty($sesion_id) ? $sesion_id : "";							
-									$prot_terapia = isset($prot_terapia) && !empty($prot_terapia) ? $prot_terapia : "";
-									$protocolo_ter_id = isset($protocolo_ter_id) && !empty($protocolo_ter_id) ? $protocolo_ter_id : "";
-									
-									$paciente = isset($paciente) && !empty($paciente) ? $paciente : "";	
-									$apaterno = isset($apaterno) && !empty($apaterno) ? $apaterno : "";	
-									$amaterno = isset($amaterno) && !empty($amaterno) ? $amaterno : "";	
-
-									$protocolo_ter_id = $protocolo_ter_id ?? ''; // Inicializar con valor vacío si no está definido
-									$prot_terapia = $prot_terapia ?? '';
-									$sesion_id = $sesion_id ?? '';
-									$terapia_id = $terapia_id ?? '';
-									$Gtotal = $Gtotal ?? 0;
-									$paciente = ($paciente ?? '') . ' ' . ($apaterno ?? '') . ' ' . ($amaterno ?? '');	
-									?>							
-
-									<?php
-									}else{ ?>
-
-
+								<?php }else{ ?>
+									<input type="hidden" id="paciente_id" name="paciente_id" value="<?php echo $paciente_id; ?>"/>
 								<?php  
 
                                         // Consulta segura para obtener datos del paciente
@@ -154,8 +91,9 @@ include($ruta.'header1.php');
 
                                         if ($result_paciente['numFilas'] > 0) {
                                             $row_paciente = $result_paciente['resultado'][0]; // Obtener la primera fila del resultado
-											$paciente = mb_convert_encoding($row_paciente['paciente'] ?? 'Paciente no encontrado', 'ISO-8859-1', 'UTF-8');
-											$tratamiento = mb_convert_encoding($row_paciente['tratamiento'] ?? 'N/A', 'ISO-8859-1', 'UTF-8');
+                                            $paciente = mb_convert_encoding($row_paciente['paciente'], 'ISO-8859-1', 'UTF-8');
+                                            $tratamiento = mb_convert_encoding($row_paciente['tratamiento'], 'ISO-8859-1', 'UTF-8');
+
                                             // Generar la URL del paciente
                                             $rutax = $ruta . 'paciente/info_paciente.php?paciente_id=' . $paciente_id;
                                         } else {
@@ -395,19 +333,10 @@ include($ruta.'header1.php');
                                                 </div>
                                             </div>";
                                         
-                                        echo $dia; 
-										?>
-										<input type="hidden" id="paciente_id" name="paciente_id" value="<?php echo $paciente_id; ?>"/>
-										<input type="hidden" id="protocolo_ter_id" name="protocolo_ter_id" value="<?php echo htmlspecialchars($protocolo_ter_id ?? '', ENT_QUOTES, 'UTF-8'); ?>"/>
-										<input type="hidden" id="prot_terapia" name="prot_terapia" value="<?php echo htmlspecialchars($prot_terapia ?? '', ENT_QUOTES, 'UTF-8'); ?>"/>
-										<input type="hidden" id="sesion_id" name="sesion_id" value="<?php echo htmlspecialchars($sesion_id ?? '', ENT_QUOTES, 'UTF-8'); ?>"/>
-										<input type="hidden" id="terapia_id" name="terapia_id" value="<?php echo htmlspecialchars($terapia_id ?? '', ENT_QUOTES, 'UTF-8'); ?>"/>
-										<input type="hidden" id="Gtotal" name="Gtotal" value="<?php echo htmlspecialchars($Gtotal ?? 0, ENT_QUOTES, 'UTF-8'); ?>"/>
-										<input type="hidden" id="paciente" name="paciente" value="<?php echo htmlspecialchars(($paciente ?? '') . ' ' . ($apaterno ?? '') . ' ' . ($amaterno ?? ''), ENT_QUOTES, 'UTF-8'); ?>"/>
-										<?php
-                                    } 
-
-									
+                                        echo $dia;
+                                   
+                                    
+                                    }
 							?>
 							
                             <hr>
@@ -416,17 +345,15 @@ include($ruta.'header1.php');
                                 $(document).ready(function () {
                                     $('#ini_protocolo').click(function () {
                                         // Valores dinámicos generados por PHP
-										// Obtener valores directamente desde los inputs ocultos
-										var protocolo_ter_id = $('#protocolo_ter_id').val();
-										var prot_terapia = $('#prot_terapia').val();
-										var sesion_id = $('#sesion_id').val();
-										var terapia_id = $('#terapia_id').val();
-										var Gtotal = parseInt($('#Gtotal').val()) || 0;
-										var total_sesion = Gtotal+1;
-										var paciente = $('#paciente').val();
+                                        var protocolo_ter_id = '<?php echo addslashes($protocolo_ter_id); ?>';
+                                        var prot_terapia = '<?php echo addslashes(trim($prot_terapia)); ?>';
+                                        var sesion_id = '<?php echo addslashes($sesion_id); ?>';
+                                        var terapia_id = '<?php echo addslashes($terapia_id); ?>';
+                                        var total_sesion = '<?php echo $Gtotal + 1; ?>';
+                                        var paciente = '<?php echo addslashes($paciente . ' ' . $apaterno . ' ' . $amaterno); ?>';
 
-										// Obtener el ID del paciente del campo de formulario
-										var paciente_id = $('#paciente_id').val();										
+                                        // Obtener el ID del paciente del campo de formulario
+                                        var paciente_id = $('#paciente_id').val();
 
                                         // Validación: Verificar que paciente_id no sea vacío o 0
                                         if (paciente_id && paciente_id !== 0) {
@@ -442,6 +369,7 @@ include($ruta.'header1.php');
                                                 total_sesion: total_sesion,
                                                 paciente: paciente
                                             };
+
                                             // Llamada AJAX
                                             $.ajax({
                                                 url: 'test_captura_protocolo.php',
