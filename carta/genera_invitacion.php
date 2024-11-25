@@ -1,14 +1,4 @@
 <?php
-
-// Obtener la fecha y hora actuales para uso en el script
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B"); // Nombre del mes en español
-$dia = date("N"); // Día de la semana (1-7, donde 1 es lunes)
-$semana = date("W"); // Número de la semana del año
-
 $titulo = "Directorio"; // Título de la página
 $genera = ""; // Variable para posibles usos adicionales
 

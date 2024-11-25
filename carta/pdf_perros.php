@@ -1,11 +1,24 @@
 <?php
 session_start();
-error_reporting(7);
-iconv_set_encoding('internal_encoding', 'utf-8'); 
+
+// Establecer el nivel de notificación de errores
+error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
+
+// Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
+ini_set('default_charset', 'UTF-8');
+
+// Configurar la cabecera HTTP con codificación UTF-8
 header('Content-Type: text/html; charset=UTF-8');
+
+// Configurar la zona horaria
 date_default_timezone_set('America/Monterrey');
+
+// Configurar la localización para manejar fechas y horas en español
 setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=mktime();
+
+// Asignar el tiempo actual a la sesión en formato de timestamp
+$_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
+
 extract($_SESSION);
 //echo "<hr>$paciente_id hola<hr>";
 extract($_GET);
@@ -62,19 +75,50 @@ $version = rand(1, 6);
 $anios = obtener_edad_segun_fecha($fecha_nacimiento);
 
 
+// Array de meses en español (completo)
+$meses_espanol = [
+    'January' => 'Enero',
+    'February' => 'Febrero',
+    'March' => 'Marzo',
+    'April' => 'Abril',
+    'May' => 'Mayo',
+    'June' => 'Junio',
+    'July' => 'Julio',
+    'August' => 'Agosto',
+    'September' => 'Septiembre',
+    'October' => 'Octubre',
+    'November' => 'Noviembre',
+    'December' => 'Diciembre'
+];
+
+
+$date = new DateTime($fecha_nacimiento);
+$today = $date->format('d-F-Y');
+
+// Reemplazar el mes en inglés por español
+$today = strtr($today, $meses_espanol);
+
+// Agregar texto adicional
+$nacimiento = "nacido el " . $today;
+
+//echo $nacimiento;
+
+
 switch ($sexo) {
 	case 'Masculino':
 		if ($anios <= 15) { $sexo = "el niño "; } 
 		elseif ($anios >= 16 && $anios <= 21) { $sexo = "el joven ";} 
 		elseif ($anios >= 22) { $sexo = "el Sr. ";}
-		$nacimiento = " nacido el ".strftime("%e de %B del %Y",strtotime($fecha_nacimiento));
+		//$nacimiento = " nacido el ".strftime("%e de %B del %Y",strtotime($fecha_nacimiento));
+		$nacimiento = "nacido el " . $today;
 		break;
 		
 	case 'Femenino':
 		if ($anios <= 15) { $sexo = "la niña "; } 
 		elseif ($anios >= 16 && $anios <= 21) { $sexo = "la Srta. ";} 
 		elseif ($anios >= 22) { $sexo = "la Sra. ";}
-		$nacimiento = " nacida el ".strftime("%e de %B del %Y",strtotime($fecha_nacimiento));		
+		//$nacimiento = " nacida el ".strftime("%e de %B del %Y",strtotime($fecha_nacimiento));
+		$nacimiento = "nacida el " . $today;		
 		break;
 }
 
@@ -92,7 +136,7 @@ if ($esterilizado == "Si") {
 } 
 
 $mascota = $nombre_mascota.$esterilizado." de ".$edad_perro." años";
-
+$mascota = $nombre_mascota;
 $version =1;
 
 switch ($version) {
@@ -143,7 +187,7 @@ switch ($version) {
         break;
 }
 
-echo $resultado;
+//echo $resultado;
 
 
 $cuerpo_pdf = "
@@ -180,7 +224,7 @@ $cuerpo_pdf = "
 				
 			</td>
 			<td align='left'  style='background: #fff; width: 40%; padding-top: 300px'>
-				<img style='width: auto; height: 150px;' src='../images/firma.png' alt='grafica'>
+				<!--<img style='width: auto; height: 150px;' src='../images/firma.png' alt='grafica'>-->
 			</td>			
 		</tr>
 		<tr>
@@ -207,7 +251,7 @@ Universidad del Valle de México - Maestro en Educación con Orientación en Inn
 
  
 
- 
+// echo $cuerpo_pdf;
 // //Require composer autoload
 require_once __DIR__ . '/../vendor/autoload.php';
 

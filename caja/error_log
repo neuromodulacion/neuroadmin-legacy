@@ -1,0 +1,70 @@
+[19-Nov-2024 22:46:33 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/neuromod/neuromodulaciongdl.com/caja/cobro.php on line 723
+[19-Nov-2024 16:47:36 America/Monterrey] PHP Deprecated:  mktime(): You should be using the time() function instead in /home/neuromod/neuromodulaciongdl.com/caja/busca_paciente.php on line 34
+[19-Nov-2024 16:47:36 America/Monterrey] PHP Notice:  Undefined variable: medico in /home/neuromod/neuromodulaciongdl.com/caja/busca_paciente.php on line 358
+[19-Nov-2024 16:47:36 America/Monterrey] PHP Notice:  Undefined variable: medico in /home/neuromod/neuromodulaciongdl.com/caja/busca_paciente.php on line 406
+[19-Nov-2024 16:47:36 America/Monterrey] PHP Notice:  Undefined variable: paciente_cons_id in /home/neuromod/neuromodulaciongdl.com/caja/busca_paciente.php on line 470
+[19-Nov-2024 16:47:36 America/Monterrey] PHP Notice:  Undefined variable: paciente_cons_id in /home/neuromod/neuromodulaciongdl.com/caja/busca_paciente.php on line 471
+[19-Nov-2024 16:47:36 America/Monterrey] PHP Notice:  Undefined variable: paciente_cons_id in /home/neuromod/neuromodulaciongdl.com/caja/busca_paciente.php on line 472
+[19-Nov-2024 16:47:36 America/Monterrey] PHP Notice:  Undefined variable: paciente_cons_id in /home/neuromod/neuromodulaciongdl.com/caja/busca_paciente.php on line 483
+[19-Nov-2024 16:47:36 America/Monterrey] PHP Notice:  Undefined variable: doctor in /home/neuromod/neuromodulaciongdl.com/caja/busca_paciente.php on line 550
+[19-Nov-2024 16:48:05 America/Monterrey] PHP Deprecated:  mktime(): You should be using the time() function instead in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 34
+[19-Nov-2024 16:48:05 America/Monterrey] PHP Notice:  Undefined variable: protocolo_ter_id in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 37
+[19-Nov-2024 16:48:05 America/Monterrey] PHP Notice:  Undefined variable: protocolo_ter_id1 in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 38
+[19-Nov-2024 16:48:05 America/Monterrey] PHP Notice:  Undefined variable: otros in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 131
+[19-Nov-2024 16:48:05 America/Monterrey] PHP Notice:  Undefined variable: protocolo in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 133
+[19-Nov-2024 22:48:05 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/neuromod/neuromodulaciongdl.com/caja/cobro.php on line 723
+[19-Nov-2024 22:59:17 UTC] PHP Notice:  session_start(): A session had already been started - ignoring in /home/neuromod/neuromodulaciongdl.com/header1.php on line 3
+[19-Nov-2024 16:59:17 America/Monterrey] PHP Notice:  Undefined variable: fechaInput in /home/neuromod/neuromodulaciongdl.com/caja/movimientos.php on line 18
+[20-Nov-2024 01:07:37 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/neuromod/neuromodulaciongdl.com/caja/cobro.php on line 723
+[19-Nov-2024 19:07:49 America/Monterrey] PHP Deprecated:  mktime(): You should be using the time() function instead in /home/neuromod/neuromodulaciongdl.com/caja/busca_paciente.php on line 34
+[19-Nov-2024 19:07:49 America/Monterrey] PHP Notice:  Undefined variable: doctor in /home/neuromod/neuromodulaciongdl.com/caja/busca_paciente.php on line 550
+[20-Nov-2024 01:09:04 UTC] PHP Warning:  Unterminated comment starting line 169 in /home/neuromod/neuromodulaciongdl.com/caja/agrega_paciente.php on line 169
+[19-Nov-2024 19:09:04 America/Monterrey] PHP Deprecated:  mktime(): You should be using the time() function instead in /home/neuromod/neuromodulaciongdl.com/caja/agrega_paciente.php on line 35
+[19-Nov-2024 19:09:09 America/Monterrey] PHP Notice:  Undefined variable: Phone in /home/neuromod/neuromodulaciongdl.com/api/funciones_api.php on line 1123
+[19-Nov-2024 19:09:09 America/Monterrey] PHP Notice:  Undefined variable: NextContactDate in /home/neuromod/neuromodulaciongdl.com/api/funciones_api.php on line 1124
+[19-Nov-2024 19:09:09 America/Monterrey] PHP Notice:  Undefined variable: LocationID in /home/neuromod/neuromodulaciongdl.com/api/funciones_api.php on line 1125
+[19-Nov-2024 19:09:09 America/Monterrey] PHP Notice:  Object of class mysqli_result could not be converted to int in /home/neuromod/neuromodulaciongdl.com/api/funciones_api.php on line 290
+[19-Nov-2024 19:09:09 America/Monterrey] PHP Notice:  Undefined variable: tipo_c in /home/neuromod/neuromodulaciongdl.com/caja/agrega_paciente.php on line 123
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Deprecated:  mktime(): You should be using the time() function instead in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 34
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: protocolo_ter_id in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 37
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: protocolo_ter_id1 in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 38
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: paciente_id in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 48
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: otros in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 131
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: protocolo in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 133
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: rfc in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 161
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: rfc in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 162
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: cRazonSocial in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 166
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: aRegimen in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 168
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: email_address in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 169
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: cNombreCalle in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 170
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: cNumeroExterior in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 171
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: cNumeroInterior in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 172
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: cCodigoPostal in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 173
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: cColonia in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 174
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: cCiudad in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 175
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: cEstado in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 176
+[19-Nov-2024 19:12:18 America/Monterrey] PHP Notice:  Undefined variable: cPais in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 177
+[20-Nov-2024 01:12:19 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/neuromod/neuromodulaciongdl.com/caja/cobro.php on line 723
+[19-Nov-2024 19:12:21 America/Monterrey] PHP Notice:  Undefined variable: paciente_id in /home/neuromod/neuromodulaciongdl.com/caja/pdf_html.php on line 46
+[19-Nov-2024 19:12:21 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/neuromod/neuromodulaciongdl.com/caja/pdf_html.php on line 193
+[19-Nov-2024 19:12:21 America/Monterrey] PHP Notice:  Trying to access array offset on value of type null in /home/neuromod/neuromodulaciongdl.com/caja/pdf_html.php on line 195
+[19-Nov-2024 19:12:21 America/Monterrey] PHP Notice:  Undefined variable: f_nacimiento in /home/neuromod/neuromodulaciongdl.com/caja/pdf_html.php on line 197
+[19-Nov-2024 19:12:21 America/Monterrey] PHP Notice:  Undefined variable: pacientes in /home/neuromod/neuromodulaciongdl.com/caja/pdf_html.php on line 259
+[19-Nov-2024 19:12:21 America/Monterrey] PHP Notice:  Undefined variable: paciente_id in /home/neuromod/neuromodulaciongdl.com/caja/pdf_html.php on line 46
+[19-Nov-2024 19:12:21 America/Monterrey] PHP Warning:  extract() expects parameter 1 to be array, null given in /home/neuromod/neuromodulaciongdl.com/caja/pdf_html.php on line 193
+[19-Nov-2024 19:12:21 America/Monterrey] PHP Notice:  Trying to access array offset on value of type null in /home/neuromod/neuromodulaciongdl.com/caja/pdf_html.php on line 195
+[19-Nov-2024 19:12:21 America/Monterrey] PHP Notice:  Undefined variable: f_nacimiento in /home/neuromod/neuromodulaciongdl.com/caja/pdf_html.php on line 197
+[19-Nov-2024 19:12:21 America/Monterrey] PHP Notice:  Undefined variable: pacientes in /home/neuromod/neuromodulaciongdl.com/caja/pdf_html.php on line 259
+[19-Nov-2024 19:13:43 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/neuromod/neuromodulaciongdl.com/caja/pagos.php on line 150
+[19-Nov-2024 19:14:08 America/Monterrey] PHP Notice:  Undefined variable: costos in /home/neuromod/neuromodulaciongdl.com/caja/pagos.php on line 150
+[20-Nov-2024 01:34:13 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/neuromod/neuromodulaciongdl.com/caja/cobro.php on line 723
+[19-Nov-2024 19:34:26 America/Monterrey] PHP Deprecated:  mktime(): You should be using the time() function instead in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 34
+[19-Nov-2024 19:34:26 America/Monterrey] PHP Notice:  Undefined variable: protocolo_ter_id in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 37
+[19-Nov-2024 19:34:26 America/Monterrey] PHP Notice:  Undefined variable: protocolo_ter_id1 in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 38
+[19-Nov-2024 19:34:26 America/Monterrey] PHP Notice:  Undefined variable: paciente_id in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 48
+[19-Nov-2024 19:34:26 America/Monterrey] PHP Notice:  Undefined variable: paciente_consulta in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 124
+[19-Nov-2024 19:34:26 America/Monterrey] PHP Notice:  Undefined variable: otros in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 131
+[19-Nov-2024 19:34:26 America/Monterrey] PHP Notice:  Undefined variable: protocolo in /home/neuromod/neuromodulaciongdl.com/caja/guarda_cobro.php on line 133
+[20-Nov-2024 01:34:26 UTC] PHP Warning:  Unterminated comment starting line 723 in /home/neuromod/neuromodulaciongdl.com/caja/cobro.php on line 723
+[19-Nov-2024 19:34:33 America/Monterrey] PHP Notice:  Undefined variable: fechaInput in /home/neuromod/neuromodulaciongdl.com/caja/corte.php on line 38
+[19-Nov-2024 19:34:33 America/Monterrey] PHP Notice:  session_start(): A session had already been started - ignoring in /home/neuromod/neuromodulaciongdl.com/header1.php on line 3

@@ -1,55 +1,7 @@
 <?php
 $ruta="../";
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-//$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
-$titulo ="Alta de Medico o Usuario";
-
-include($ruta.'header1.php');
-
-	switch ($funcion) {
-		case 'SISTEMAS':
-			$where = "";
-			break;
-		
-		case 'ADMINISTRADOR':
-			$where = "";
-			break;
-		
-		case 'COORDINADOR':
-			$where = "
-				WHERE
-					funciones.funcion in('MEDICO','TECNICO')
-						";
-			break;
-		
-		case 'COORDINADOR ADMIN':
-			$where = "
-				WHERE
-					funciones.funcion in('MEDICO','TECNICO', 'COORDINADOR', 'REPRESENTANTE','RECEPCION')
-						";
-			break;
-		
-		case 'TECNICO':
-			$where = "
-				WHERE
-					funciones.funcion in('MEDICO')
-						";
-			break;
-		
-		case 'REPRESENTANTE':
-			$where = "
-				WHERE
-					funciones.funcion in('MEDICO')
-						";
-			break;
-														
-	}
+$titulo ="Alta de Referenciador";
+include($ruta.'header1.php'); 
 ?>
     <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
     
@@ -71,17 +23,16 @@ include($ruta.'header2.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>ALTA DE USUARIOS</h2>
-            </div>
-            
+            </div>          
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div style="height: 95%"  class="header">
-                        	<h1 align="center">Alta de Medico o Usuario</h1>
+                        	<h1 align="center">Alta de Medico Referenciador</h1>
 	                        <div class="body">
-	                            <form id="wizard_with_validation" method="POST" action="guarda_alta.php" >                            	
+	                            <form id="wizard_with_validation" method="POST" action="guarda_medico.php" >                            	
 	                               <h3>Nombre del Medico</h3>
 	                                <fieldset>
 	                                    <div class="form-group form-float">
@@ -92,8 +43,8 @@ include($ruta.'header2.php');
 	                                    </div>
 	                                    <div class="form-group form-float">
 	                                        <div class="form-line">
-	                                            <input type="email" id="usuario"  name="usuario" class="form-control" required>
-	                                            <label class="form-label">Correo Electronico*</label>
+	                                            <input type="email" id="usuario"  name="usuario" class="form-control" >
+	                                            <label class="form-label">Correo Electronico</label>
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group form-float">
@@ -102,33 +53,34 @@ include($ruta.'header2.php');
 	                                            <label max="10" class="form-label">Celular*</label>
 	                                        </div>
 	                                    </div>
+	                                    <div class="form-group form-float">
+	                                        <div class="form-line">
+                                                <textarea id="domicilio" name="domicilio" class="form-control" ></textarea>
+	                                            <label max="10" class="form-label">Domicilio</label>
+	                                        </div>
+	                                    </div> 
+	                                    <div class="form-group form-float">
+	                                        <div class="form-line">
+	                                            <input type="text" id="horarios" name="horarios" class="form-control" required>
+	                                            <label max="10" class="form-label">Horarios</label>
+	                                        </div>
+	                                    </div>    
+	                                    <div class="form-group form-float">
+	                                        <div class="form-line">
+	                                            <input type="text" id="especialidad" name="especialidad" class="form-control" required>
+	                                            <label max="10" class="form-label">Especialidad</label>
+	                                        </div>
+	                                    </div>                                                                                                                   
 		                                <div class="form-group form-float">
-                                        	<select id="funcion" name="funcion" class="form-control show-tick">
-
-												 	<?php
-														$sql_funciones = "
-															SELECT
-																funciones.funcion as funciony 
-															FROM
-																funciones 
-															$where
-															ORDER BY
-																1 ASC							
-													        ";
-													        $result_funciones=ejecutar($sql_funciones); 
-													            //echo $cnt."<br>";  
-													            //echo "<br>";    
-													            $cnt=1;
-													            $total = 0;
-													            $ter="";
-													        while($row_funciones = mysqli_fetch_array($result_funciones)){
-													            extract($row_funciones); ?>
-                                    														 
-												  <option value="<?php echo $funciony; ?>" ><?php echo $funciony; ?></option>
-											<?php } ?>	
-											</select>
+                                        <input type="tel" id="funcion" name="funcion" class="form-control" value="MEDICO" readonly>
 		                                    <label class="form-label">Tipo de Usuario</label>               	
-		                                </div>	                                    	                                    
+		                                </div>	
+	                                    <div class="form-group form-float">
+	                                        <div class="form-line">
+                                                <textarea id="observaciones" name="observaciones" class="form-control" ></textarea>
+	                                            <label max="10" class="form-label">Observaciones</label>
+	                                        </div>
+	                                    </div>                                                                            	                                    
                                     </fieldset>
 	                                <hr>                               
 	                                <div class="row clearfix demo-button-sizes">
