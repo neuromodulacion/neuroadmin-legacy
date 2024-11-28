@@ -72,14 +72,17 @@ $list = substr($list, 0, -1);
 		$preguntasx = "";
         $cnt=0;
 		
-	$preguntas .= "
-		<input  name='preg_$pregunta_id' type='hidden' id='list' name='list' value='$list' required />
-		<input  name='preg_$pregunta_id' type='hidden' id='encuestas' name='encuestas' value='$encuestas' required />"; 	
+//	$preguntas .= "
+//		<input  name='preg_$pregunta_id' type='hidden' id='list' name='list' value='$list' required />
+//		<input  name='preg_$pregunta_id' type='hidden' id='encuestas' name='encuestas' value='$encuestas' required />"; 	
 		
     while($row_sem1 = mysqli_fetch_array($result_sem1)){
         extract($row_sem1);
 		//print_r($row_sem1);
 		//echo "<hr>";
+
+
+
 		$cnt++;
 		//echo $tipo."<hr>";	
 		switch ($tipo) {

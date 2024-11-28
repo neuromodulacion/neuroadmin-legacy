@@ -1,14 +1,5 @@
 <?php
-
 $ruta="../";
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
 $titulo ="Paciente";
 $genera ="";
 
@@ -699,7 +690,9 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 														ORDER BY f_captura DESC";
 
 														//echo $sql_bases."<hr>";
+
 														
+
 														$result_bases=ejecutar($sql_bases);
 														//echo $result_bases." result_bases<br>";
 														$cnt_bases = mysqli_num_rows($result_bases);
@@ -724,7 +717,20 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 															$cnt_calificacion = 1;	
 													    	while($row_bases = mysqli_fetch_array($result_bases)){
 														        extract($row_bases);
-															
+
+																if ($total === null) {
+																	$total = 0;
+																	$tabla ="													
+																	<table class='table table-bordered'>
+																		<tr>
+																			<td>$f_captura</td>
+																			<th colspan='3'>Clinimetria con error</th>
+																		</tr>";
+																}else{
+
+																
+																
+
 															$color = "";
 
 																if ($encuesta_id == 11 && $cnt == $cnt_bases) {
@@ -796,6 +802,7 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 																$datos .= "
 																{'y': '$f_captura', '$encuesta': $total},";
 																$cnt_calificacion ++;
+																}
 															}													
 															$tabla .="</table>";
 															
