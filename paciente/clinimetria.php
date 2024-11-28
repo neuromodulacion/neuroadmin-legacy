@@ -1,43 +1,14 @@
 <?php
-session_start();
-
-// Establecer el nivel de notificación de errores
-error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
-
-// Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
-ini_set('default_charset', 'UTF-8');
-
-// Configurar la cabecera HTTP con codificación UTF-8
-header('Content-Type: text/html; charset=UTF-8');
-
-// Configurar la zona horaria
-date_default_timezone_set('America/Monterrey');
-
-// Configurar la localización para manejar fechas y horas en español
-setlocale(LC_TIME, 'es_ES.UTF-8');
-
-// Asignar el tiempo actual a la sesión en formato de timestamp
-$_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
-
 
 $ruta="../";
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
 $titulo ="Clinimetria";
 $genera ="";
 
-// $paciente_id = "101";
-// $encuesta_id = "1"; 
-// $base_id = "264";
-
 include($ruta.'header1.php'); 
-include($ruta.'fun_clinimetria.php'); 
+include('fun_clinimetria.php'); 
+
+$encuesta = $encuesta ?? ''; // Valor predeterminado si no está definido
+$descripcion = $descripcion ?? ''; // Valor predeterminado si no está definido
 
 ?>
 
@@ -68,21 +39,42 @@ include('fun_paciente.php');
             <div class="block-header">
                 <h2>CLINIMETRIA</h2>
                 
-                <?php
-                
-				$sql ="
-				SELECT														
-					*
-				FROM
-					pacientes
-					WHERE
-						pacientes.paciente_id = $paciente_id";
-					//echo $sql;	
-				    $result=ejecutar($sql); 
-				    $row = mysqli_fetch_array($result);
-				    extract($row);                
-            
-                ?>
+				<?php
+				// Validar que $paciente_id esté definido y sea un número entero
+				if (!isset($paciente_id) || !is_numeric($paciente_id)) {
+					die('ID de paciente inválido.');
+				}
+
+				// Consulta preparada segura
+				$sql = "
+					SELECT 
+						paciente_id,
+						paciente,
+						apaterno,
+						amaterno 
+					FROM 
+						pacientes 
+					WHERE 
+						paciente_id = ?
+				";
+
+				// Usando la clase Mysql personalizada
+				$resultado = $mysql->consulta($sql, [$paciente_id]);
+
+				if ($resultado['numFilas'] > 0) {
+					// Extraer la primera fila del resultado
+					$row = $resultado['resultado'][0];
+
+					// Asignar cada campo a una variable
+					$paciente_id = $row['paciente_id'];
+					$paciente = $row['paciente'];
+					$apaterno = $row['apaterno'];
+					$amaterno = $row['amaterno'];
+				} else {
+					die('Paciente no encontrado.');
+				}
+				?>
+
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
@@ -245,9 +237,9 @@ include('fun_paciente.php');
 										$preguntasx = "";
 								        $cnt=0;
 		
-										$preguntas .= "
-											<input  name='preg_$pregunta_id' type='hidden' id='list' name='list' value='$list' required />
-											<input  name='preg_$pregunta_id' type='hidden' id='encuestas' name='encuestas' value='$encuestas' required />"; 	
+									//	$preguntas .= "
+									//		<input  name='preg_$pregunta_id' type='hidden' id='list' name='list' value='$list' required />
+									//		<input  name='preg_$pregunta_id' type='hidden' id='encuestas' name='encuestas' value='$encuestas' required />"; 	
 										
 								    while($row_sem1 = mysqli_fetch_array($result_sem1)){
 								        extract($row_sem1);
@@ -391,7 +383,7 @@ include('fun_paciente.php');
 								                    	<h4>$numero.- $pregunta</h4><br>								
 								                        <div class='form-group form-float'>
 								                           
-								                            <input class='form-control' name='pregunta_$pregunta_id' type='text' id='pregunta_$pregunta_id' placeholder='$pregunta' value='' />
+								                            <input class='form-control' name='pregunta_$pregunta_id' type='text' id='pregunta_$pregunta_id' placeholder='$pregunta'   value='".$$respuestax."'disabled />
 								                             
 								                    	</div> 
 								                	</div>";				
@@ -400,7 +392,7 @@ include('fun_paciente.php');
 											$preguntas .= "<hr>			
 								                <div class='form-group form-float'>
 								                    <div class='form-line'>
-								                        <textarea class='form-control' id='observaciones$pregunta_id' name='observaciones$pregunta_id' rows='3' required></textarea>
+								                        <textarea class='form-control' id='observaciones$pregunta_id' name='observaciones$pregunta_id' rows='3' required>".$$respuestax."</textarea>
 								                        <label class='form-label'>Observaciones</label>
 								                    </div>
 								                </div>";
@@ -411,7 +403,7 @@ include('fun_paciente.php');
 								                    <div>
 								                    	<h4>$numero.- $pregunta</h4><br>								
 								                        <div class='form-group form-float'>
-								                            <input class='form-control' name='pregunta_$pregunta_id' type='date' id='pregunta_$pregunta_id' placeholder='$pregunta'  value='' />
+								                            <input class='form-control' name='pregunta_$pregunta_id' type='date' id='pregunta_$pregunta_id' placeholder='$pregunta'  value='".$$respuestax."'disabled />
 								                             
 								                    	</div> 
 								                	</div>";				
@@ -421,7 +413,7 @@ include('fun_paciente.php');
 								                    <div>
 								                    	<h4>$numero.- $pregunta</h4><br>								
 								                        <div class='form-group form-float'>
-								                            <input class='form-control' name='pregunta_$pregunta_id' type='number' id='pregunta_$pregunta_id' placeholder='$pregunta'  value='' />
+								                            <input class='form-control' name='pregunta_$pregunta_id' type='number' id='pregunta_$pregunta_id' placeholder='$pregunta'  value='".$$respuestax."'disabled />
 								                             
 								                    	</div> 
 								                	</div>";				

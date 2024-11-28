@@ -519,7 +519,7 @@ function esMultiploDe10o15($numero) {
 				        });
 				        if (emptyFields.length > 0) {
 				            emptyFields.each(function() {
-				            	alert('Test 3 '+emptyFields.length);
+				            	//alert('Test 3 '+emptyFields.length);
 				            	
 						      var fieldName = emptyFields.first().attr('name');
 						      var fieldLabel = $('label[for="' + fieldName + '"]').text();

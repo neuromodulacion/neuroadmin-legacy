@@ -24,7 +24,7 @@ include($ruta.'header1.php');
 include($ruta.'header2.php');
 
 // Condicional para definir la clase y los criterios de filtro en base a la función del usuario
-if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNICO' || $funcion == 'COORDINADOR') {
+if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNICO' || $funcion == 'COORDINADOR'  || $funcion == 'REPRESENTANTE') {
     // Si el usuario es uno de los mencionados, se permite la exportación de la tabla
     $class = "js-exportable";  
     // Filtro por empresa

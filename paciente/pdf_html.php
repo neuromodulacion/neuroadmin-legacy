@@ -1,24 +1,14 @@
+
+
 <?php
+
 session_start();
-
-// Establecer el nivel de notificación de errores
-error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
-
-// Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
-ini_set('default_charset', 'UTF-8');
-
-// Configurar la cabecera HTTP con codificación UTF-8
+error_reporting(7);
+iconv_set_encoding('internal_encoding', 'utf-8'); 
 header('Content-Type: text/html; charset=UTF-8');
-
-// Configurar la zona horaria
 date_default_timezone_set('America/Monterrey');
-
-// Configurar la localización para manejar fechas y horas en español
 setlocale(LC_TIME, 'es_ES.UTF-8');
-
-// Asignar el tiempo actual a la sesión en formato de timestamp
-$_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
-
+$_SESSION['time']=time();
 extract($_SESSION);
 //echo "<hr>$paciente_id hola<hr>";
 extract($_GET);
@@ -43,35 +33,6 @@ function tildes($palabra) {
 return $palabra;
 }
 
-/**
- * Procesa una fecha en diferentes formatos y la devuelve en el formato deseado.
- *
- * @param string $fecha La fecha a procesar.
- * @param string $formatoSalida El formato de salida deseado (por defecto 'Y-m-d').
- * @return string La fecha formateada o un mensaje de error si no se puede procesar.
- */
-function procesarFecha($fecha, $formatoSalida = 'Y-m-d') {
-    try {
-        if (preg_match('/\d{4}-\d{2}-\d{2}/', $fecha)) {
-            // Formato ISO (YYYY-MM-DD)
-            $dateObject = new DateTime($fecha);
-        } elseif (preg_match('/\d{1,2} de [a-zA-Z]+ de \d{4}/', $fecha)) {
-            // Formato en español (1 de julio de 2024)
-            $dateObject = DateTime::createFromFormat('j \d\e F \d\e Y', $fecha);
-            if (!$dateObject) {
-                throw new Exception("Error al interpretar la fecha: $fecha");
-            }
-        } else {
-            throw new Exception("Formato desconocido: $fecha");
-        }
-
-        // Devuelve la fecha en el formato deseado
-        return $dateObject->format($formatoSalida);
-    } catch (Exception $e) {
-        // Devuelve un mensaje de error o un valor predeterminado
-        return "Fecha inválida: " . $e->getMessage();
-    }
-}
 
 
 //$paciente_id = 26;
@@ -227,23 +188,8 @@ WHERE efectos_adversos.historico_id = historico_sesion.historico_id) AS adversos
        $observaciones = tildes($observaciones);
        //$observaciones =  utf8_decode($observaciones);		
        
-		// Define el formato de la fecha en español que esperas
-		$formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
-
-		// Conversión de fecha
-		$dateString = $f_captura; // La cadena que contiene "1 de julio de 2024"
-		try {
-			$dateObject = DateTime::createFromFormat('j \d\e F \d\e Y', $dateString);
-			if ($dateObject) {
-				$f_captura = $dateObject->format('Y-m-d'); // Formato estándar para usar posteriormente
-			} else {
-				throw new Exception("Error al formatear la fecha: $dateString");
-			}
-		} catch (Exception $e) {
-			// Manejo de errores si no se puede parsear la fecha
-			echo "Error al interpretar la fecha: " . $e->getMessage();
-		}	
-
+       //$f_captura = date('d-m-y', strtotime($f_captura)) ;
+       $f_captura = strftime("%e-%b-%y",strtotime($f_captura));
        if ($siglas == "TMS") {
            $tipo = $protocolo;
        }else{
@@ -284,37 +230,11 @@ FROM
         extract($row_sem2);	
        // print_r($row_sem2);
        $observaciones = tildes($observaciones);
-       //$observaciones =  utf8_decode($observaciones);		    
-
-		// Define el formato de la fecha en español que esperas
-		$formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
-
-		// Conversión de fecha
-		$dateString = $f_captura; // La cadena que contiene "1 de julio de 2024"
-		try {
-			$dateObject = DateTime::createFromFormat('j \d\e F \d\e Y', $dateString);
-			if ($dateObject) {
-				$f_captura = $dateObject->format('Y-m-d'); // Formato estándar para usar posteriormente
-			} else {
-				throw new Exception("Error al formatear la fecha: $dateString");
-			}
-		} catch (Exception $e) {
-			// Manejo de errores si no se puede parsear la fecha
-			echo "Error al interpretar la fecha: " . $e->getMessage();
-		}
-
-		try {
-			$dateObject = DateTime::createFromFormat('j \d\e F \d\e Y', $dateString);
-			if ($dateObject) {
-				$f_captura = $dateObject->format('Y-m-d'); // Formato estándar para usar posteriormente
-			} else {
-				throw new Exception("Error al formatear la fecha: $dateString");
-			}
-		} catch (Exception $e) {
-			// Manejo de errores si no se puede parsear la fecha
-			echo "Error al interpretar la fecha: " . $e->getMessage();
-		}
-     
+       //$observaciones =  utf8_decode($observaciones);		
+       
+       //$f_captura = date('d-m-y', strtotime($f_captura)) ;
+       $f_captura = strftime("%e-%b-%y",strtotime($f_captura));
+       
        									        
 	   $cuerpo_pdf .= " $adversos_id - $adverso,";
   		  
@@ -445,16 +365,9 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 								
 									if ($cnt_calificacion == 1) {
 										$tot_ini = $total;
-									}     
-									
-									$f_ini = procesarFecha($f_ini);
-
-									// Asegúrate de verificar la salida
-									if (strpos($f_ini, 'Fecha inválida') === 0) {
-										echo $f_ini; // Muestra el error para depurar
-										$f_ini = 'Fecha no disponible'; // Valor predeterminado
 									}
-
+									$f_ini = strftime("%e-%b-%Y",strtotime($f_captura));
+									
 									$tabla .="
 									<tr>
 										<td>$f_ini</td>
