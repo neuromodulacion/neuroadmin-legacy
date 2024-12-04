@@ -17,7 +17,7 @@ date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
 // Obtener la marca de tiempo actual
-$time = mktime();
+$time = time();
 
 // Ruta base para incluir archivos y recursos
 $ruta = "../";
@@ -104,6 +104,7 @@ include($ruta.'functions/header_temp.php');
 
 <!-- Inicio del contenido principal de la página -->
 <div style="height: auto" class="header">
+	<img src="<?php echo $ruta.$logo; ?>" alt="Descripción de la imagen" width="150" height="auto">
 	<h1 align="center">Alta de Usuario</h1>
 	<?php
 	// Verificar si la invitación ha caducado o si ya ha sido usada en caso de ser de uso único

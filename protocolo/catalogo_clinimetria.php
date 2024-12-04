@@ -21,8 +21,7 @@ include($ruta.'header2.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>ESTATUS PROTOCOLOS</h2>
-                <?php echo $ubicacion_url."<br>"; 
-                //echo $ruta."proyecto_medico/menu.php"?>
+                <?php echo $ubicacion_url."<br>"; ?>
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
@@ -67,6 +66,7 @@ include($ruta.'header2.php');
 								            $cnt=1;
 								            $total = 0;
 								            $ter="";
+                                            $class = "";
 								        while($row_protocolo = mysqli_fetch_array($result_protocolo)){
 								            extract($row_protocolo);
                                     		

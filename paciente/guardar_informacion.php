@@ -3,8 +3,10 @@ include('../functions/funciones_mysql.php'); // Asegurarnos de que esta ruta sea
 
 // Obtener los datos enviados por POST
 $paciente_id = $_POST['paciente_id'];
-$recomendacion_gpt = utf8_decode($_POST['recomendacion_gpt']);
-$informe_gpt = utf8_decode($_POST['informe_gpt']);
+
+$recomendacion_gpt = htmlspecialchars(trim($_POST['recomendacion_gpt']), ENT_QUOTES, 'UTF-8');
+$informe_gpt = htmlspecialchars(trim($_POST['informe_gpt']), ENT_QUOTES, 'UTF-8');
+
 
 // Verificar que los datos están definidos y no están vacíos
 if (isset($paciente_id) && !empty($paciente_id)) {

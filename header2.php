@@ -10,7 +10,7 @@
 
     <!-- Page Loader (Cargador de Página) -->
     <!-- Este código genera un cargador de página mientras la página se carga completamente -->
-    <!--
+   <!-- 
     <div class="page-loader-wrapper">
         <div class="loader">
             <div class="preloader">
@@ -23,10 +23,11 @@
                     </div>
                 </div>
             </div>
-            <p>Espere por favor, cargando...</p>
+            <h2>Espere por favor, cargando...</h2>
+            <h4>Esto podría tomar unos segundos dependiendo del contenido.</h4>
         </div>
     </div>
-    -->
+-->
     <!-- #END# Page Loader -->
 
     <!-- Overlay For Sidebars (Superposición para las barras laterales) -->
@@ -65,7 +66,7 @@
                     // Consulta SQL para obtener el número de pacientes pendientes
 					$sql_protocolo = "
 					SELECT
-						*
+						paciente_id
 					FROM
 						pacientes
 					WHERE
@@ -128,7 +129,7 @@
                 <div class="info-container"><br>
                     <!-- Muestra el nombre y el correo electrónico del usuario -->
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white"><?php echo "<b>".$nombre_corto."</b>"; ?></div>
-                    <div class="email"  style="color: white"><?php echo "<b>".$usuario."</b>"; ?></div>
+                    <div class="email"  style="color: white"><?php echo "<b>".$usuario."<br>".$funcion."</b>"; ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
@@ -144,13 +145,13 @@
             <!-- #User Info -->
 
             <!-- Inclusión del menú de navegación dinámico -->
-            <?php include($ruta.'functions/menus.php'); ?>
+            <?php include($ruta.'functions/menu_test.php'); ?>
 
             <!-- Footer (Pie de página) -->
             <!-- Información de copyright y versión del sistema -->
             <div class="legal">
                 <div class="copyright">
-                    &copy; 2023 - 2024 <a href="javascript:void(0);">AdminNeuromodulación</a>.
+                    &copy; <?php echo $anio ?> <a href="javascript:void(0);">AdminNeuromodulación</a>.
                 </div>
                 <div class="version">
                     <b>Version: </b> 2.0.0

@@ -46,6 +46,7 @@ include($ruta.'header2.php'); ?>
         <div class="container-fluid">
             <div class="block-header">
                 <h2>INICIO</h2>
+                <?php echo $ubicacion_url."<br>"; ?>
             </div>
 			<!-- Contenido principal de la página -->
             <div class="row clearfix">
@@ -56,14 +57,26 @@ include($ruta.'header2.php'); ?>
                         	<h1 align="center"><?php echo $emp_nombre; ?></h1>
                             <!-- Botones de acceso rápido para el directorio y alta de pacientes -->
                             <div class="icon-and-text-button-demo">
-                                <a href="<?php echo $ruta; ?>paciente/directorio.php" type="button" class="btn bg-<?php echo $body; ?> waves-effect">
-                                    <i class="material-icons">person</i>
-	                        		<span>Pacientes</span>
-                                </a>
-                                <a href="<?php echo $ruta; ?>paciente/alta.php" type="button" class="btn bg-<?php echo $body; ?> waves-effect">
-                                    <i class="material-icons">person_add</i>
-	                                <span>Alta Paciente</span>
-                                </a>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a href="<?php echo $ruta; ?>paciente/directorio.php" type="button" class="btn bg-<?php echo $body; ?> waves-effect">
+                                        <i class="material-icons">person</i>
+                                        <span>Pacientes</span>
+                                    </a>
+                                    <a href="<?php echo $ruta; ?>paciente/alta.php" type="button" class="btn bg-<?php echo $body; ?> waves-effect">
+                                        <i class="material-icons">person_add</i>
+                                        <span>Alta Paciente</span>
+                                    </a>
+                                </div>
+                                <div style="text-align: center;" class="col-md-4">
+                                    <b>Sucursal <?php echo $nombre_sucursal; ?></b>
+                                </div>
+                                <div class="col-md-4">
+
+                                </div>
+                            </div>
+
+                                
                             </div>
                             <hr>
                             <!-- Imagen decorativa del menú principal -->

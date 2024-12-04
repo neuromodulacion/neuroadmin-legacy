@@ -1,14 +1,5 @@
 <?php
-
 $ruta="../";
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
 $titulo ="Paciente";
 $genera ="";
 
@@ -67,6 +58,7 @@ extract($row);
         <div id="body" class="container-fluid">
             <div class="block-header">
                 <h2>PACIENTE</h2>
+				<?php echo $ubicacion_url."<br>"; ?>
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->

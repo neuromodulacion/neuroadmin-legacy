@@ -17,28 +17,35 @@ $_SESSION['time'] = time();
 $empresa_id = isset($_SESSION['empresa_id']) ? intval($_SESSION['empresa_id']) : 0;
 $usuario_id = isset($_SESSION['usuario_id']) ? intval($_SESSION['usuario_id']) : 0;
 
+// Ruta para incluir archivos necesarios
 $ruta = "../";
+include($ruta . 'functions/funciones_mysql.php');
 include($ruta . 'functions/conexion_mysqli.php');
 
-// Función auxiliar para sanitizar valores y evitar pasar null a funciones que esperan string
+// Ruta del archivo de configuración
+$configPath = $ruta . '../config.php';
+
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
+}
+
+// Obtener la configuración
+$config = require $configPath;
+
+// Crear una instancia de la clase Mysql
+try {
+    $conexion = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+    //echo "Conexión establecida correctamente.";
+} catch (Exception $e) {
+    die("Error en la conexión: " . $e->getMessage());
+}
+
+// Función auxiliar para sanitizar valores y evitar pasar null a htmlspecialchars()
 function sanitizarValor($valor) {
     return htmlspecialchars($valor ?? '', ENT_QUOTES, 'UTF-8');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Ruta del archivo de configuración
-    $configPath = $ruta . '../config.php';
-
-    if (!file_exists($configPath)) {
-        die('Archivo de configuración no encontrado.');
-    }
-
-    // Obtener la configuración
-    $config = require $configPath;
-
-    // Crear conexión
-    $conexion = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
-
     // Capturar los datos del formulario y sanitizar
     $nombre = isset($_POST['nombre']) ? sanitizarValor(trim($_POST['nombre'])) : '';
     $usuario = isset($_POST['usuario']) ? sanitizarValor(trim($_POST['usuario'])) : '';
@@ -62,40 +69,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $funcion = 'MEDICO';
     $f_alta = date("Y-m-d");
     $h_alta = date("H:i:s");
-    $estatus = 'ACTIVO';
+    $estatus = 'Activo';
     $organizacion = ''; // Campo vacío por defecto
     $id_bind = ''; // Campo vacío por defecto
 
     try {
+        
+        // Verificar si el usuario ya existe en la tabla
+        $verificaQuery = "SELECT COUNT(*) AS total FROM admin_tem WHERE usuario = ?";
+        $resultadoVerifica = $conexion->consulta($verificaQuery, [$usuario]);
+
+        if ($resultadoVerifica['resultado'][0]['total'] > 0) {
+            $mensaje = "El usuario con el correo '$usuario' ya existe.";
+            $accion = 'Error';
+            include 'mensaje.php';
+            exit();
+        }
+
         // Consulta para insertar los datos
         $query = "
             INSERT INTO admin_tem (
-                usuario_id, nombre, usuario, organizacion, observaciones, horarios, 
+                usuario_id, nombre, usuario, observaciones, horarios, 
                 funcion, f_alta, h_alta, estatus, telefono, empresa_id, 
-                id_bind, especialidad, domicilio
+                especialidad, domicilio
             ) VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
             )
         ";
+    /*echo $query."<hr>".$usuario_id."<br>".$nombre."<br>".$usuario."<br>".$observaciones."<br>".$horarios,
+    $funcion."<br>".$f_alta."<br>".$h_alta."<br>".$estatus."<br>".$celular."<br>".$empresa_id,
+    $id_bind."<br>".$especialidad."<br>".$domicilio;*/
+
 
         // Ejecutar la consulta
-        $conexion->consulta_simple($query, [
-            $usuario_id, $nombre, $usuario, $organizacion, $observaciones, $horarios,
+        $resultado = $conexion->consulta_simple($query, [
+            $usuario_id, $nombre, $usuario,  $observaciones, $horarios,
             $funcion, $f_alta, $h_alta, $estatus, $celular, $empresa_id,
-            $id_bind, $especialidad, $domicilio
+            $especialidad, $domicilio
         ]);
-
-        // Redirigir con mensaje de éxito
-        header("Location: posible_referenciador.php?status=success");
+    
+        if (!$resultado) {
+            throw new Exception("Error en la consulta SQL. Consulta: $query");
+        }
+    
+        $mensaje = "Consulta ejecutada correctamente.";
+        $accion = "Exito";
+        include 'mensaje.php';
         exit();
     } catch (Exception $e) {
-        // Manejar errores
-        error_log($e->getMessage()); // Registrar el error en el log
-        echo "Error al guardar los datos. Por favor, inténtelo de nuevo más tarde.";
+        // Manejar errores y registrar detalles
+        $errorMsg = $e->getMessage();
+        error_log("Error al guardar los datos: $errorMsg");
+        error_log("Detalles de la consulta: " . json_encode([
+            'usuario_id' => $usuario_id,
+            'nombre' => $nombre,
+            'usuario' => $usuario,
+            'organizacion' => $organizacion,
+            'observaciones' => $observaciones,
+            'horarios' => $horarios,
+            'funcion' => $funcion,
+            'f_alta' => $f_alta,
+            'h_alta' => $h_alta,
+            'estatus' => $estatus,
+            'telefono' => $celular,
+            'empresa_id' => $empresa_id,
+            'id_bind' => $id_bind,
+            'especialidad' => $especialidad,
+            'domicilio' => $domicilio,
+        ]));
+    
+        $mensaje = "Error al guardar los datos. Por favor, inténtelo de nuevo más tarde.";
+        $accion = "Error";
+        include 'mensaje.php';
+        exit();
     }
+    
 } else {
     // Si no se accede mediante POST
-    header("Location: alta_medico.php?status=error");
+    $mensaje = "Método de solicitud no permitido.";
+    $accion = "Error";
+    include 'mensaje.php';
     exit();
 }
 ?>
+  

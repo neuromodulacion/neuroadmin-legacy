@@ -92,10 +92,12 @@ include($ruta . 'header2.php');
                                         admin_tem 
                                     WHERE
                                         admin_tem.empresa_id = ?
+                                        and admin_tem.estatus <> ?
+                                        and admin_tem.estatus <> ?
                                 ";
 
                                 // Parámetros de la consulta
-                                $params = [ $empresa_id ];
+                                $params = [ $empresa_id,'transferido','desactivado' ];
 
                                 // Ejecutar la consulta
                                 $resultado = $mysql->consulta($query, $params);
@@ -142,7 +144,7 @@ include($ruta . 'header2.php');
                                         $whatsapp_url = 'https://api.whatsapp.com/send?phone=52' . $telefono . '&text=' . urlencode($whatsapp_message);
                                 ?>
                                         <!-- Fila de datos de cada médico -->
-                                        <tr>
+                                        <tr id="tr_<?php echo $usuario_idx; ?>">
                                             <td style="color: black; text-align: center;"><?php echo $usuario_idx; ?></td>
                                             <td><?php echo $nombrex; ?></td>
                                             <td><?php echo $usuariox; ?></td>
@@ -159,17 +161,16 @@ include($ruta . 'header2.php');
                                             <td style="text-align: center;">
                                                 <div style="width: 95%;" class="row">
                                                     <div class="col-md-6">
-                                                        <a class="btn btn-info btn-sm waves-effect" href="<?php // echo htmlspecialchars($ruta . 'crm/info_usuario.php?usuario_idx=' . $usuario_idx, ENT_QUOTES, 'UTF-8'); ?>">
+                                                        <button class="btn btn-info btn-sm waves-effect transferir" data-id="<?php echo $usuario_idx; ?>">
                                                             <i class="material-icons">assignment</i> <b>Transferir</b>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <a class="btn btn-danger btn-sm waves-effect" href="<?php // echo htmlspecialchars($ruta . 'crm/info_usuario.php?usuario_idx=' . $usuario_idx, ENT_QUOTES, 'UTF-8'); ?>">
+                                                        <button class="btn btn-danger btn-sm waves-effect descartar" data-id="<?php echo $usuario_idx; ?>">
                                                             <i class="material-icons">assignment</i> <b>Descartar</b>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                
                                             </td>
                                         </tr>
                                 <?php
@@ -196,6 +197,66 @@ include($ruta . 'header2.php');
 // Incluir las secciones de pie de página y scripts adicionales
 include($ruta . 'footer1.php'); 
 ?>
+<script>
+$(document).ready(function() {
+    // Evento para el botón "Transferir"
+    $(".transferir").on("click", function() {
+        let usuarioIdx = $(this).data("id"); // Obtener el usuario_idx del botón
+
+        // Confirmar la acción
+        if (!confirm("¿Está seguro de transferir este usuario?")) {
+            return;
+        }
+
+        // Enviar la solicitud AJAX al archivo PHP
+        $.ajax({
+            url: "transferir_medico.php", // Archivo que procesa la transferencia
+            type: "POST",
+            data: { usuario_idx: usuarioIdx }, // Enviar el ID del usuario
+            success: function(response) {
+                // Manejo de respuesta exitosa
+                alert(response); // Mostrar el mensaje del servidor
+                location.reload(); // Recargar la página para actualizar el estado
+            },
+            error: function(xhr, status, error) {
+                // Manejo de errores
+                alert("Ocurrió un error al intentar transferir el usuario. Por favor, inténtelo nuevamente.");
+            }
+        });
+    });
+});
+</script>
+<script>
+$(document).ready(function() {
+    // Evento para el botón "Descartar"
+    $(".descartar").on("click", function() {
+        let usuarioIdx = $(this).data("id"); // Obtener el usuario_idx del botón
+
+        // Mostrar mensaje de confirmación
+        if (confirm("¿Está seguro de que desea descartar este usuario?")) {
+            // Si el usuario confirma, procede con la solicitud AJAX
+            $.ajax({
+                url: "descartar_medico.php", // Archivo que procesa la acción de descartar
+                type: "POST",
+                data: { usuario_idx: usuarioIdx }, // Enviar el ID del usuario
+                success: function(response) {
+                    // Manejo de respuesta exitosa
+                    alert(response); // Mostrar el mensaje del servidor
+                    $("#tr_" + usuarioIdx).remove(); // Eliminar la fila de la tabla
+                },
+                error: function(xhr, status, error) {
+                    // Manejo de errores
+                    alert("Ocurrió un error al intentar descartar el usuario. Por favor, inténtelo nuevamente.");
+                }
+            });
+        } else {
+            // Si el usuario cancela, muestra un mensaje opcional
+            alert("Acción cancelada. El usuario no fue descartado.");
+        }
+    });
+});
+</script>
+
 
 <!-- Scripts necesarios para DataTables y exportación de datos -->
 <script src="<?php echo $ruta; ?>plugins/jquery-datatable/jquery.dataTables.js"></script>

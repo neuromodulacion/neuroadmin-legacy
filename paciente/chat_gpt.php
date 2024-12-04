@@ -1,11 +1,15 @@
 <?php
 session_start();
-
+$ruta = "../";
 // Establecer el nivel de notificación de errores
 error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
 
 // Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
 ini_set('default_charset', 'UTF-8');
+
+// Configurar un archivo de log
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/error.log'); // Define la ruta del archivo de log
 
 // Configurar la cabecera HTTP con codificación UTF-8
 header('Content-Type: text/html; charset=UTF-8');
@@ -20,13 +24,27 @@ setlocale(LC_TIME, 'es_ES.UTF-8');
 $_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
 
 
-include('../functions/conexion_mysqli.php'); // Asegurarnos de que esta ruta sea correcta
-$mysqli = new Mysql(); // Instancia de la clase Mysql
+include($ruta.'functions/conexion_mysqli.php');
 
+// Incluir el archivo de configuración y obtener las credenciales
+$configPath = $ruta.'../config.php';
+
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
+}
+
+$config = require $configPath;
+
+// Crear una instancia de la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+// Crear una instancia de la clase Mysql
+$conexion = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
 // Verificar el ID del paciente y la acción
 if (!isset($_POST['paciente_id']) || !isset($_POST['accion'])) {
     die("Error: Datos insuficientes.");
 }
+
 extract($_SESSION);
 extract($_POST);
 
@@ -40,54 +58,54 @@ $accion = $_POST['accion'];
 // Obtener datos del paciente
 $sql = "
 SELECT
-	pacientes.paciente_id, 
-	pacientes.usuario_id, 
-	pacientes.paciente, 
-	pacientes.apaterno, 
-	pacientes.amaterno, 
-	pacientes.email, 
-	pacientes.celular, 
-	pacientes.f_nacimiento, 
-	pacientes.sexo, 
-	pacientes.contacto, 
-	pacientes.parentesco, 
-	pacientes.tel1, 
-	pacientes.tel2, 
-	pacientes.resumen_caso, 
-	pacientes.diagnostico, 
-	pacientes.diagnostico2, 
-	pacientes.diagnostico3, 
-	pacientes.medicamentos, 
-	pacientes.terapias, 
-	pacientes.f_captura, 
-	pacientes.h_captura, 
-	pacientes.estatus, 
-	pacientes.observaciones, 
-	pacientes.notificaciones, 
-	pacientes.comentarios_reporte, 
-	pacientes.tratamiento,
-	pacientes.recomendacion_gpt,
-	pacientes.informe_gpt
+    pacientes.paciente_id, 
+    pacientes.usuario_id, 
+    pacientes.paciente, 
+    pacientes.apaterno, 
+    pacientes.amaterno, 
+    pacientes.email, 
+    pacientes.celular, 
+    pacientes.f_nacimiento, 
+    pacientes.sexo, 
+    pacientes.contacto, 
+    pacientes.parentesco, 
+    pacientes.tel1, 
+    pacientes.tel2, 
+    pacientes.resumen_caso, 
+    pacientes.diagnostico, 
+    pacientes.diagnostico2, 
+    pacientes.diagnostico3, 
+    pacientes.medicamentos, 
+    pacientes.terapias, 
+    pacientes.f_captura, 
+    pacientes.h_captura, 
+    pacientes.estatus, 
+    pacientes.observaciones, 
+    pacientes.notificaciones, 
+    pacientes.comentarios_reporte, 
+    pacientes.tratamiento,
+    pacientes.recomendacion_gpt,
+    pacientes.informe_gpt
 FROM
     pacientes
 WHERE
     paciente_id = ?";
 
+// Usar el método `consulta` para obtener resultados
+$resultado = $conexion->consulta($sql, [$paciente_id]);
 
-$resultado = $mysqli->consulta_simple($sql, [$paciente_id]);
-
-// Validar existencia del paciente
-if (empty($resultado)) {
-    die("Error: Paciente no encontrado.<hr>".$sql."<hr>".$paciente_id);
+// Validar si se encontraron resultados
+if ($resultado['numFilas'] === 0) {
+    die("Error: Paciente no encontrado.");
 }
 
 // Extraer los datos del paciente
-$row = $resultado[0];
+$row = $resultado['resultado'][0];
 extract($row);
-	
-
+//print_r($row);
 // Configurar el prompt de acuerdo con la acción solicitada
 $hoy = date("d-m-Y");
+
 
 
 // Generar el contenido de acuerdo a la acción
@@ -257,6 +275,9 @@ switch ($accion) {
         $campoGuardar = 'informe_gpt';
         break;
 
+	case 'comentarios_reporte':
+		
+		break;	
     default:
         die("Error: Acción no válida.");
 }
@@ -309,11 +330,7 @@ Entrega el contenido en la estructura visual adecuada, utilizando etiquetas espe
 
 Utiliza una estructura consistente con el ejemplo visual proporcionado:
 
-
-<div class="container">
 	'.$contenido_2.'
-</div>
-
 
 # Salida Esperada
 
@@ -348,7 +365,7 @@ $datos = [
     ]
 ];
 
-echo $promt."<hr>";
+//echo $promt."<hr>";
 
 // Inicializar sesión cURL
 $ch = curl_init($url);
@@ -375,8 +392,8 @@ $responseObj = json_decode($respuesta, true);
 $assistantMessage = $responseObj['choices'][0]['message']['content'] ?? '';
 
 // Procesar la respuesta de la API y eliminar etiquetas indeseadas
-$assistantMessage = preg_replace('/<\/?(html|body)>/', '', $assistantMessage);
-
+//$assistantMessage = preg_replace('/<\/?(html|body)>/', '', $assistantMessage);
+$assistantMessage = str_replace(['<html>', '</html>', '<body>', '</body>'], '', $assistantMessage);
 
 // Verificar el tamaño de la respuesta y el contenido
 if (empty($assistantMessage)) {
@@ -386,16 +403,27 @@ if (strlen($assistantMessage) > 65535) {
     die("Error: La respuesta es demasiado larga para el campo TEXT. Intenta reducir el contenido.");
 }
 
-// Guardar la respuesta en la base de datos en el campo correspondiente
-$sqlActualizar = "UPDATE pacientes SET $campoGuardar = ? WHERE paciente_id = ?";
-$filasAfectadas = $mysqli->actualizar($sqlActualizar, [$assistantMessage, $paciente_id]);
+/// Validar el campo a actualizar
+$camposPermitidos = ['recomendacion_gpt', 'informe_gpt', 'comentarios_reporte']; // Lista de campos válidos
+if (!in_array($campoGuardar, $camposPermitidos)) {
+    die("Error: Campo no permitido.");
+}
 
-// Confirmar la actualización y mostrar el mensaje generado
+// Construir la consulta de actualización
+$sqlActualizar = "UPDATE pacientes SET $campoGuardar = ? WHERE paciente_id = ?";
+//echo "<hr>".$sqlActualizar;
+// Ejecutar la consulta utilizando el método `actualizar`
+$filasAfectadas = $mysql->actualizar($sqlActualizar, [$assistantMessage, $paciente_id]);
+
+// Verificar si la actualización fue exitosa
 if ($filasAfectadas > 0) {
     echo $assistantMessage;
+} elseif ($filasAfectadas === 0) {
+    echo "No se realizaron cambios. Verifica si los datos son correctos.";
 } else {
-    echo "Error al guardar la respuesta en la base de datos.<hr>SQL: $sqlActualizar<br>Contenido: <pre>" . htmlspecialchars($assistantMessage) . "</pre>";
+    echo "Error al actualizar el registro.";
 }
+
 
 
 ?>

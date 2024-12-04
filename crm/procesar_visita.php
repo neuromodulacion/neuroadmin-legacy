@@ -19,6 +19,7 @@ date_default_timezone_set('America/Monterrey');
 // Establece la configuración regional para las funciones de tiempo a español (España) con codificación UTF-8
 setlocale(LC_TIME, 'es_ES.UTF-8');
 $usuario_id = $_SESSION['usuario_id'];
+$empresa_id = $_SESSION['empresa_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recibir y limpiar datos del formulario
@@ -33,9 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$p_visita = $_POST['p_visita'];
 
     // Construir la consulta SQL para insertar los datos
-    $sql = "INSERT INTO registro_visitas (medico_id, fecha, hora, duracion, objetivo, resultados, observaciones,usuario_id) 
-            VALUES ('$medico_id', '$fecha', '$hora', '$duracion', '$objetivo', '$resultados', '$observaciones','$usuario_id')";
-
+    $sql = "INSERT INTO registro_visitas (medico_id, fecha, hora, duracion, objetivo, resultados, observaciones,usuario_id,p_visita,f_visita,empresa_id) 
+            VALUES ('$medico_id', '$fecha', '$hora', '$duracion', '$objetivo', '$resultados', '$observaciones',$usuario_id,'$p_visita','$f_visita',$empresa_id)";
+echo $sql;
     // Ejecutar la consulta usando la función ejecutar
     $resultado = ejecutar($sql);
 
