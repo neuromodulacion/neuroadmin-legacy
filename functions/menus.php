@@ -37,31 +37,31 @@
                 <!-- Este submenú muestra un reporte de referenciadores -->
 
                 <li class="<?php echo in_array($ubicacion_url, ['reporte/referenciadores.php', 'crm/medicos.php', 'crm/registro_visitas.php']) ? 'active' : ''; ?>">
-    <a href="javascript:void(0);" class="menu-toggle">
-        <i class="material-icons">person</i>
-        <span>Médico Referenciador</span>
-    </a>
-    <ul class="ml-menu">
-        <li class="<?php echo $ubicacion_url === 'reporte/referenciadores.php' ? 'active' : ''; ?>">
-            <a href="<?php echo htmlspecialchars($ruta . 'reporte/referenciadores.php', ENT_QUOTES, 'UTF-8'); ?>">
-                <i class="material-icons">assignment</i>
-                <span>Reporte de Referenciadores</span>
-            </a>
-        </li>
-        <li class="<?php echo $ubicacion_url === 'crm/medicos.php' ? 'active' : ''; ?>">
-            <a href="<?php echo htmlspecialchars($ruta . 'crm/medicos.php', ENT_QUOTES, 'UTF-8'); ?>">
-                <i class="material-icons">person</i>
-                <span>Medico Referenciador</span>
-            </a>
-        </li>
-        <li class="<?php echo $ubicacion_url === 'crm/registro_visitas.php' ? 'active' : ''; ?>">
-            <a href="<?php echo htmlspecialchars($ruta . 'crm/registro_visitas.php', ENT_QUOTES, 'UTF-8'); ?>">
-                <i class="material-icons">assignment</i>
-                <span>Reporte Visitas Referenciador</span>
-            </a>
-        </li>
-    </ul>
-</li>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">person</i>
+                        <span>Médico Referenciador</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li class="<?php echo $ubicacion_url === 'reporte/referenciadores.php' ? 'active' : ''; ?>">
+                            <a href="<?php echo htmlspecialchars($ruta . 'reporte/referenciadores.php', ENT_QUOTES, 'UTF-8'); ?>">
+                                <i class="material-icons">assignment</i>
+                                <span>Reporte de Referenciadores</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo $ubicacion_url === 'crm/medicos.php' ? 'active' : ''; ?>">
+                            <a href="<?php echo htmlspecialchars($ruta . 'crm/medicos.php', ENT_QUOTES, 'UTF-8'); ?>">
+                                <i class="material-icons">person</i>
+                                <span>Medico Referenciador</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo $ubicacion_url === 'crm/registro_visitas.php' ? 'active' : ''; ?>">
+                            <a href="<?php echo htmlspecialchars($ruta . 'crm/registro_visitas.php', ENT_QUOTES, 'UTF-8'); ?>">
+                                <i class="material-icons">assignment</i>
+                                <span>Reporte Visitas Referenciador</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <li <?php if ($ubicacion_url == 'crm/alta_medico.php' || $ubicacion_url == 'crm/alta_medico.php') { echo 'class="active"'; } ?>>
                     <a href="javascript:void(0);" class="menu-toggle">

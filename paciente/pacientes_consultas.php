@@ -45,92 +45,116 @@ include($ruta.'header2.php');
     <div class="container-fluid">
         <div class="block-header">
             <h2>DIRECTORIO</h2> <!-- Título de la sección -->
+            <?php echo $ubicacion_url."<br>"; ?> 
         </div>
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div style="height: 95%" class="header">
-                        <h1 align="center">Directorio Pacientes</h1>                            
+                        <h1 align="center">Directorio Pacientes</h1>                           
                         <div class="body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover dataTable <?php echo $class; ?>">
-                                    <thead>
-                                        <tr>
-                                            <th style="display: none;"></th>
-                                            <th style="max-width: 10px">ID</th>
-                                            <th style="max-width: 10px">ID Bind</th>
-                                            <th style="min-width: 140px">Nombre</th>                                        
-                                            <th style="min-width: 45px">Celular</th>
-                                            <th style="min-width: 100px">Email</th>
-                                            <th style="min-width: 80px">Medico</th>
-                                            <th style="min-width: 20px">Bind</th>
-                                            <th style="min-width: 20px">Accion</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>                                          
-                                            <th style="display: none;"></th>
-                                            <th>ID</th>
-                                            <th>ID Bind</th>
-                                            <th>Nombre</th>                                            
-                                            <th>Celular</th>
-                                            <th>Email</th>
-                                            <th>Medico</th>
-                                            <th>Bind</th>
-                                            <th>Accion</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    <?php
-                                    // Consulta SQL para obtener la lista de pacientes, incluyendo la información de Bind
-                                    $sql_protocolo = "
-									SELECT
-										paciente_consultorio.paciente_cons_id,
-										pacientes_bind.Number, 
-										paciente_consultorio.paciente_id, 
-										paciente_consultorio.paciente, 
-										paciente_consultorio.apaterno, 
-										paciente_consultorio.amaterno, 
-										paciente_consultorio.celular, 
-										paciente_consultorio.email, 
-										paciente_consultorio.empresa_id, 
-										paciente_consultorio.id_bind, 
-										paciente_consultorio.f_alta, 
-										paciente_consultorio.medico
-									FROM
-										paciente_consultorio
-										INNER JOIN
-										pacientes_bind
-										ON 
-											paciente_consultorio.id_bind = pacientes_bind.ID
-									ORDER BY
-										paciente_consultorio.paciente ASC, 
-										paciente_consultorio.apaterno ASC                          
-                                        ";
-                                    $result_protocolo=ejecutar($sql_protocolo); 
-                                    $cnt = 0; // Contador de filas
-                                    while($row_protocolo = mysqli_fetch_array($result_protocolo)){
-                                        extract($row_protocolo); // Extrae las variables del resultado de la consulta
-                                        $cnt++;
-                                        $today = strftime('%d-%b-%Y', strtotime($f_alta)); // Formatea la fecha de alta
-                                    ?>    
-                                        <tr>
-                                            <td style="display: none;"><?php echo $cnt; ?></td>
-                                            <td><?php echo $paciente_cons_id; ?></td>
-                                            <td><?php echo $Number; ?></td>
-                                            <td><b><?php echo $paciente." ".$apaterno." ".$amaterno; ?></b></td>
-                                            <td><?php echo $celular; ?></td>
-                                            <td><?php echo $email; ?></td>
-                                            <td><?php echo $medico; ?></td>    
-                                            <td><?php echo verificar_id_bind($id_bind); ?></td>    
-                                            <td>
-                                                <!-- Botón de edición comentado; se puede habilitar si es necesario -->
-                                                <!-- <button type="button" class="btn btn-info waves-effect m-r-20 edit-btn" data-paciente-id="<?php echo $paciente_cons_id; ?>"><i class="material-icons">edit</i> <b>Edit</b></button> -->
-                                            </td>                                              
-                                        </tr>
-                                     <?php } ?>     
-                                    </tbody>
-                                </table>
+                            <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover dataTable <?php echo htmlspecialchars($class); ?>">
+        <thead>
+            <tr>
+                <th style="display: none;"></th>
+                <th style="max-width: 10px">ID</th>
+                <th style="max-width: 10px">ID Bind</th>
+                <th style="min-width: 140px">Nombre</th>
+                <th style="min-width: 45px">Celular</th>
+                <th style="min-width: 100px">Email</th>
+                <th style="min-width: 80px">Medico</th>
+                <th style="min-width: 20px">Bind</th>
+                <th style="min-width: 20px">Accion</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th style="display: none;"></th>
+                <th>ID</th>
+                <th>ID Bind</th>
+                <th>Nombre</th>
+                <th>Celular</th>
+                <th>Email</th>
+                <th>Medico</th>
+                <th>Bind</th>
+                <th>Accion</th>
+            </tr>
+        </tfoot>
+        <tbody>
+        <?php
+
+        // Consulta SQL utilizando parámetros seguros
+        $query = "
+            SELECT
+                paciente_consultorio.paciente_cons_id,
+                pacientes_bind.Number, 
+                paciente_consultorio.paciente_id, 
+                paciente_consultorio.paciente, 
+                paciente_consultorio.apaterno, 
+                paciente_consultorio.amaterno, 
+                paciente_consultorio.celular, 
+                paciente_consultorio.email, 
+                paciente_consultorio.empresa_id, 
+                paciente_consultorio.id_bind, 
+                paciente_consultorio.f_alta, 
+                paciente_consultorio.medico
+            FROM
+                paciente_consultorio
+                INNER JOIN pacientes_bind ON paciente_consultorio.id_bind = pacientes_bind.ID
+            WHERE
+                paciente_consultorio.empresa_id = ?
+            ORDER BY
+                paciente_consultorio.paciente ASC, 
+                paciente_consultorio.apaterno ASC
+        ";
+
+        // Ejecutar consulta con parámetros
+        $params = [$empresa_id];
+        $resultado = $mysql->consulta($query, $params);
+
+        if ($resultado['numFilas'] > 0) {
+            $cnt = 0;
+            foreach ($resultado['resultado'] as $fila) {
+                $cnt++;
+
+                // Formatear fecha
+                $f_alta = $fila['f_alta'];
+                $today = DateTime::createFromFormat('Y-m-d', $f_alta)->format('d-M-Y');
+        ?>
+                <tr>
+                    <td style="display: none;"><?php echo htmlspecialchars($cnt); ?></td>
+                    <td><?php echo htmlspecialchars($fila['paciente_cons_id']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['Number']); ?></td>
+                    <td>
+                        <b>
+                            <?php echo htmlspecialchars(
+                                $fila['paciente'] . " " . $fila['apaterno'] . " " . $fila['amaterno']
+                            ); ?>
+                        </b>
+                    </td>
+                    <td><?php echo htmlspecialchars($fila['celular']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['email']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['medico']); ?></td>
+                    <td><?php echo htmlspecialchars(verificar_id_bind($fila['id_bind'])); ?></td>
+                    <td>
+                        <!-- Botón de edición comentado; habilitar si es necesario -->
+                        <!-- <button type="button" class="btn btn-info waves-effect m-r-20 edit-btn" data-paciente-id="<?php echo $fila['paciente_cons_id']; ?>"><i class="material-icons">edit</i> <b>Edit</b></button> -->
+                    </td>
+                </tr>
+        <?php
+            }
+        } else {
+            echo "<tr><td colspan='9'>No se encontraron resultados.</td></tr>";
+        }
+
+        $mysql->desconectarse();
+        ?>
+        </tbody>
+    </table>
+</div>
+
                             </div>
                         </div>
                     </div>

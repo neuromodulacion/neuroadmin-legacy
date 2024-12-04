@@ -1,5 +1,5 @@
 <?php
-// Iniciar la sesión del usuario
+// Iniciar la sesión del usuario 
 session_start();
 
 // Configurar el nivel de reporte de errores (7 muestra errores y advertencias)
@@ -23,7 +23,29 @@ $_SESSION['time'] = time();
 // Definir la ruta base para acceder a otros archivos
 $ruta = "../";
 
+// Incluye archivos PHP necesarios para la funcionalidad adicional
+include($ruta.'functions/funciones_mysql.php');
+include($ruta.'functions/conexion_mysqli.php');
 
+// Incluir el archivo de configuración y obtener las credenciales
+$configPath = $ruta.'../config.php';
+
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
+}
+
+$config = require $configPath;
+
+// Crear una instancia de la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+// Crear una instancia de la clase Mysql
+$conexion = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+// Función auxiliar para sanitizar valores y evitar pasar null a htmlspecialchars()
+function sanitizarValor($valor) {
+    return htmlspecialchars($valor ?? '', ENT_QUOTES, 'UTF-8');
+}
 // Extraer todas las variables de sesión y POST para usarlas como variables simples
 extract($_SESSION);
 extract($_POST);

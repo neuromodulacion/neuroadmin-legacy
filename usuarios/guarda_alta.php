@@ -38,7 +38,7 @@ use PHPMailer\PHPMailer\Exception;
 
 // Función para generar una contraseña aleatoria
 function generateRandomPassword($length = 10) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ*-+?%$#';
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ*-+%#';
     $password = '';
 
     for ($i = 0; $i < $length; $i++) {

@@ -1,17 +1,7 @@
 <?php
 
-// Obtener la fecha y hora actuales para uso en el script
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B"); // Nombre del mes en español
-$dia = date("N"); // Día de la semana (1-7, donde 1 es lunes)
-$semana = date("W"); // Número de la semana del año
-
 $titulo = "Directorio"; // Título de la página
 $genera = ""; // Variable para posibles usos adicionales
-
 $ruta = "../"; // Ruta base para incluir archivos y recursos
 
 // Incluir el primer encabezado (header1.php)
@@ -73,6 +63,7 @@ include($ruta.'header2.php');
     <div class="container-fluid">
         <div class="block-header">
             <h2>INVITACIÓN USUARIOS</h2>
+            <?php echo $ubicacion_url."<br>"; ?>
         </div>
 
         <!-- Contenedor principal del formulario para generar invitaciones a usuarios -->
@@ -92,13 +83,14 @@ include($ruta.'header2.php');
                                     <select id="funcion" name="funcion" class="form-control show-tick">
 								 	<?php
 									$sql_funciones = "
-										SELECT
-											funciones.funcion as funciony 
-										FROM
-											funciones 
+                                        SELECT
+                                            funciones.funciones_id,
+                                            funciones.funcion as funciony
+                                        FROM
+                                            funciones
 										$where
 										ORDER BY
-											1 ASC							
+											2 ASC							
 								        ";
 								        $result_funciones=ejecutar($sql_funciones); 
 								            //echo $cnt."<br>";  

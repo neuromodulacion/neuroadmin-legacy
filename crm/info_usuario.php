@@ -151,6 +151,7 @@ if ($result_ubicacion['numFilas'] > 0) {
     <div class="container-fluid">
         <div class="block-header">
             <h2>DATOS MÉDICO</h2>
+            <?php echo $ubicacion_url."<br>"; ?>
         </div>
         <!-- Contenido principal de la página -->
         <div class="row clearfix">
@@ -268,8 +269,538 @@ if ($result_ubicacion['numFilas'] > 0) {
 
                         <!-- Aquí continúa el resto del código, incluyendo los paneles de pacientes, visitas, etc., aplicando las mismas mejoras -->
 
-                        <!-- Por motivos de espacio, no se incluye todo el código de los paneles adicionales, pero asegúrate de aplicar el mismo enfoque de sanitización en todas las variables que puedan ser null -->
+                        <div >
+                            <div class="row clearfix">
+                                <div class="col-xs-12 ol-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-group" id="accordion_17" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-col-pink">
+                                            <div class="panel-heading" role="tab" id="headingOne_17">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" data-parent="#accordion_17" href="#collapseOne_17" aria-expanded="true" aria-controls="collapseOne_17">
+                                                        <i class="material-icons">account_circle</i> Pacientes
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne_17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne_17">
+                                                <div class="panel-body">
+                                                	<div class="table-responsive">
+	                                                	<h1><?php echo $usuario_idx." ".$nombrex; ?></h1>
+												        <!-- Tabla para mostrar los resultados de la consulta -->
+												        <table class="table table-bordered table-striped">
+												            <tr>
+												                <th style="text-align: center">No.</th>
+												                <th style="text-align: center">Meses Inicio</th>
+												                <th style="text-align: center">Paciente</th>
+												                <th style="text-align: center">Estatus</th>
+												                <th style="text-align: center">Sesiones</th>
+												                <th style="text-align: center">TMS</th>
+												                <th style="text-align: center">tDCS</th>
+												                <th style="text-align: center">Datos</th>
+												            </tr>
+												        
+												        <?php
+												        // Consulta SQL para obtener los datos de los pacientes y las terapias
+												        $sql = "
+															SELECT
+															    p.paciente_id,
+															    p.paciente,
+															    p.apaterno,
+															    p.amaterno,
+															    p.estatus,
+															    (SELECT MIN(f_captura) FROM historico_sesion WHERE paciente_id = p.paciente_id) AS f_ini,
+															    TIMESTAMPDIFF(MONTH, (SELECT MIN(f_captura) FROM historico_sesion WHERE paciente_id = p.paciente_id), CURDATE()) AS meses_desde_inicio,
+															    (SELECT COUNT(*) FROM historico_sesion WHERE paciente_id = p.paciente_id) AS sesiones,
+															    (SELECT COUNT(*) 
+															     FROM historico_sesion hs
+															     INNER JOIN protocolo_terapia pt ON hs.protocolo_ter_id = pt.protocolo_ter_id
+															     WHERE hs.paciente_id = p.paciente_id AND pt.terapia = 'TMS') AS TMS,
+															    (SELECT COUNT(*) 
+															     FROM historico_sesion hs
+															     INNER JOIN protocolo_terapia pt ON hs.protocolo_ter_id = pt.protocolo_ter_id
+															     WHERE hs.paciente_id = p.paciente_id AND pt.terapia = 'tDCS') AS tDCS,
+															    a.nombre AS medico
+															FROM
+															    pacientes p
+															INNER JOIN admin a ON p.usuario_id = a.usuario_id
+															WHERE
+															    a.empresa_id = $empresa_id 
+															    AND a.usuario_id = $medico_id
+															ORDER BY
+															    f_ini DESC, paciente_id ASC												        
+															";
+												        // echo $sql;   
+												        // Mostrar la consulta SQL (para depuración)
+												        //echo $sql."<hr>";  
+												
+												        // Ejecutar la consulta
+												        $result = ejecutar($sql); 
+												
+												        // Obtener el número de filas resultantes
+												        $cnt = mysqli_num_rows($result);
+												
+												        // Verificar si hay resultados
+												        if ($cnt != 0) {
+												            // Mostrar cada fila de los resultados
+												            while($row = mysqli_fetch_array($result)){
+												                extract($row);  // Extraer las variables de la fila actual
+												                
+																	
+																		switch ($estatus) {
+																			case 'Activo':
+																				$span = "bg-green";
+																				break;
+																			case 'Confirmado':
+																				$span = "bg-light-green";
+																				break;
+																			case 'Eliminado':
+																				$span = "bg-red";
+																				break;
+																			case 'Inactivo':
+																				$span = "bg-red";
+																				break;	
+																			case 'No interesado':
+																				$span = "bg-red";
+																				break;
+																			case 'No localizado':
+																				$span = "bg-orange";
+																				break;
+																			case 'Pendiente':
+																				$span = "bg-amber";
+																				break;
+																			case 'Seguimiento':
+																				$span = "bg-yellow";
+																				break;	
+																			case 'Remisión':
+																				$span = "bg-indigo";
+																				break;	
+																		}						                
+												                ?>
+												                <tr>
+												                    <td style="text-align: center"><?php echo $paciente_id; ?></td>
+												                    <td style="text-align: center"><?php echo $meses_desde_inicio; ?></td>
+												                    <td><?php echo $paciente." ".$apaterno." ".$amaterno; ?></td>
+												                    <td class="<?php echo $span; ?>" style="text-align: center"><?php echo $estatus; ?></td>
+												                    <td style="text-align: center"><?php echo $sesiones; ?></td>
+												                    <td style="text-align: center"><?php echo $TMS; ?></td>
+												                    <td style="text-align: center"><?php echo $tDCS; ?></td>
+												                    <td>
+												                        <!-- Botón para ver más información del paciente -->
+												                        <a target="_blank" class="btn bg-blue waves-effect" href="<?php echo $ruta; ?>paciente/info_paciente.php?paciente_id=<?php echo $paciente_id; ?>">
+												                            <i class="material-icons">chat</i> <B>Datos</B>
+												                        </a>
+												                    </td>               
+												                </tr>
+												                <?php
+												            }
+												        } else { 
+												            // Si no hay registros, mostrar un mensaje
+												            ?>
+												            <tr>
+												                <td style="text-align: center" colspan="5"><h1></h1><b>No hay registros</b></td>
+												            </tr>
+												            <?php 
+												        }
+												        ?>
+												        </table>                                                	
+                                                	</div>	
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-col-blue">
+                                            <div class="panel-heading" role="tab" id="headingTwo_17">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_17" href="#collapseTwo_17" aria-expanded="false"
+                                                       aria-controls="collapseTwo_17">
+                                                        <i class="material-icons">place</i> Registro de Visitas
+                                                        
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseTwo_17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo_17">
+                                                <div class="panel-body">
+                                                	
+													<form id="visitaForm">
+													    <!-- Usuario ID (oculto, asumiendo que se obtiene de la sesión o selección previa) -->
+													    <input type="hidden" id="usuario_idy" name="usuario_id" value="<?php echo $medico_id; ?>">
+													
+													    <!-- Detalles de la visita -->
+													    <h3>Detalles de la Visita</h3>
+													
+													    <!-- Fecha de la reunión -->
+													    <div class="form-group form-float">
+													        <div class="form-line">
+													            <input type="date" id="fecha" name="fecha" class="form-control" value="<?php echo $hoy; ?>" required>
+													            <label class="form-label">Fecha*</label>
+													        </div>
+													    </div>
+													
+													    <!-- Hora de la reunión -->
+													    <div class="form-group form-float">
+													        <div class="form-line">
+													            <input type="time" id="hora" name="hora" value="<?php echo $ahora; ?>" class="form-control" required>
+													            <label class="form-label">Hora*</label>
+													        </div>
+													    </div>
+													
+													    <!-- Duración de la reunión -->
+													    <div class="form-group form-float">
+													        <div class="form-line">
+													            <input type="number" id="duracion" name="duracion" class="form-control" required>
+													            <label class="form-label">Duración (minutos)*</label>
+													        </div>
+													    </div>
+													
+													    <!-- Objetivos de la visita -->
+													    <h3>Objetivos de la Visita</h3>
+													    <div class="form-group form-float">
+													        <div class="form-line">
+													            <textarea id="objetivo" name="objetivo" class="form-control" rows="3" required></textarea>
+													            <label class="form-label">Objetivo de la Visita*</label>
+													        </div>
+													    </div>
+													
+													    <!-- Resultados obtenidos -->
+													    <h3>Resultados Obtenidos</h3>
+													    <div class="form-group form-float">
+													        <div class="form-line">
+													            <textarea id="resultados" name="resultados" class="form-control" rows="3" required></textarea>
+													            <label class="form-label">Resultados Obtenidos*</label>
+													        </div>
+													    </div>
+													
+													    <!-- Observaciones -->
+													    <h3>Observaciones</h3>
+													    <div class="form-group form-float">
+													        <div class="form-line">
+													            <textarea id="observaciones" name="observaciones" class="form-control" rows="3"></textarea>
+													            <label class="form-label">Observaciones</label>
+													        </div>
+													    </div>
+													    
+												    
+													    
+							                            <h2 class="card-inside-title">Programacion de proxima visita</h2>
+							                            <div class="demo-switch">
+							                                <div class="switch">
+							                                    <label>NO<input id="prog_visitas" name="prog_visitas" type="checkbox" checked><span class="lever switch-col-<?php echo $body; ?>"></span>SI</label>
+							                                </div>
+							                            </div>
+							
+												        <script type='text/javascript'>
+												            $('#prog_visitas').click(function(){
+															    if ($("#prog_visitas").prop("checked")) {
+															      $('#visitas').show();
+															      $('#p_visita').val('SI');
+															    } else {
+															      $('#visitas').hide();
+															      $('#p_visita').val('NO');
+															    }	                    
+												            });
+												        </script> 	 
+	 													<input type="hidden" id="p_visita" name="p_visita" value="SI" />
+				                       					<div id="visitas">
+														    <!-- Resultados obtenidos -->
+														    <h3>Proxima visita</h3>
+														    <div class="form-group form-float">
+														        <div class="form-line">
+														            <input type="date" id="f_visita" name="f_visita" class="form-control" value="<?php echo $hoy; ?>" required>
+														            <label class="form-label">Proxima visita</label>
+														        </div>
+														    </div>                       						
+				                       					</div>
+														<hr>
+														
+														    <!-- Botón de Enviar con AJAX -->
+														    <button type="button" id="submitVisitaBtn" class="btn btn-primary mt-3">Guardar Visita</button>
+														</form>
+														
+														<!-- Script para manejar el envío de datos mediante AJAX -->
+														<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+														<script>
+															// Función AJAX para enviar los datos del formulario sin recargar la página
+															$('#submitVisitaBtn').on('click', function() {
+																let formData = {
+																	usuario_id: $('#usuario_idy').val(),
+																	fecha: $('#fecha').val(),
+																	hora: $('#hora').val(),
+																	duracion: $('#duracion').val(),
+																	objetivo: $('#objetivo').val(),
+																	resultados: $('#resultados').val(),
+																	observaciones: $('#observaciones').val(),
+																	f_visita: $('#f_visita').val(),
+																	p_visita: $('#p_visita').val()
+																};
 
+																$.ajax({
+																	url: 'procesar_visita.php', // Archivo donde se procesará la información
+																	type: 'POST',
+																	data: formData,
+																	success: function(response) {
+																		alert("Datos de la visita guardados con éxito.");
+																		location.reload(); // Recargar la página después del alert
+																	},
+																	error: function() {
+																		alert("Error al guardar los datos de la visita.");
+																		location.reload(); // Recargar la página también en caso de error
+																	}
+																});
+															});
+														</script>
+	                                                </div>
+	                                            </div>
+	                                        </div>                                                                         
+	                                        <div class="panel panel-col-cyan">
+	                                            <div class="panel-heading" role="tab" id="headingFive_17">
+	                                                <h4 class="panel-title">
+	                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_17" href="#collapseFive_17_17" aria-expanded="false"
+	                                                       aria-controls="collapseFive_17_17">
+	                                                        <i class="material-icons">pin_drop</i> Visitas
+	                                                        
+	                                                    </a>
+	                                                </h4>
+	                                            </div>
+	                                            <div id="collapseFive_17_17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive_17">
+	                                                <div class="panel-body">	                                        
+
+														<div class="table-responsive">
+		                                                	<h1><?php echo $usuario_idx." ".$nombrex; ?></h1>
+													        <!-- Tabla para mostrar los resultados de la consulta -->
+													        <table class="table table-bordered table-striped">
+													            <tr>
+													                <th style="text-align: center">No.</th>
+													                <th style="text-align: center">Fecha</th>  
+													                <th style="text-align: center">Duracion</th>
+													                <th style="text-align: center">Objetivo</th>
+													                <th style="text-align: center">Resultados</th>
+													                <th style="text-align: center">Observaciones</th>
+													                <th style="text-align: center">Representate</th>
+													                <th style="text-align: center">Proxima Visita</th>
+													            </tr>
+													        
+												        		<?php
+															        // Consulta SQL para obtener los datos de los pacientes y las terapias
+															        $sql = "
+																		SELECT
+																			registro_visitas.visita_id,
+																			registro_visitas.medico_id,
+																			registro_visitas.fecha,
+																			registro_visitas.hora,
+																			registro_visitas.duracion,
+																			registro_visitas.objetivo,
+																			registro_visitas.resultados,
+																			registro_visitas.observaciones,
+																			registro_visitas.usuario_id,
+																			registro_visitas.pagado,
+																			registro_visitas.p_visita,
+																			registro_visitas.f_visita,
+																			admin.nombre as nom_representante
+																		FROM
+																			registro_visitas
+																			INNER JOIN admin ON registro_visitas.usuario_id = admin.usuario_id
+																		WHERE	
+																		    registro_visitas.medico_id = $medico_id									        
+																		";
+															        // echo $sql;   
+															        // Mostrar la consulta SQL (para depuración)
+															        //echo $sql."<hr>";  
+															
+															        // Ejecutar la consulta
+															        $result = ejecutar($sql); 
+															
+															        // Obtener el número de filas resultantes
+															        $cnt = mysqli_num_rows($result);
+															
+															        // Verificar si hay resultados
+															        if ($cnt != 0) {
+															            // Mostrar cada fila de los resultados
+															            while($row = mysqli_fetch_array($result)){
+															                extract($row);  // Extraer las variables de la fila actual	
+															                if ($p_visita == 'SI') {
+																				$f_visita = $f_visita;
+																			} else {
+																				$f_visita = '';
+																			}
+																														                					                
+															                ?>
+															                <tr>
+															                    <td style="text-align: center"><?php echo $visita_id; ?></td>
+															                    <td style="text-align: center"><?php echo $fecha; ?></td>  
+															                    <td style="text-align: center"><?php echo $duracion; ?></td>
+															                    <td style="text-align: center"><?php echo $objetivo; ?></td>
+															                    <td style="text-align: center"><?php echo $resultados; ?></td>
+															                    <td style="text-align: center"><?php echo $observaciones; ?></td>
+															                    <td style="text-align: center"><?php echo $nom_representante; ?></td> 
+															                    <td style="text-align: center"><?php echo $f_visita; ?></td>             
+															                </tr>
+															                <?php
+															            }
+															        } else { 
+															            // Si no hay registros, mostrar un mensaje
+															            ?>
+															            <tr>
+															                <td style="text-align: center" colspan="5"><h1></h1><b>No hay registros</b></td>
+															            </tr>
+															            <?php 
+															        }
+														        ?>
+													        </table>                                                	
+                                                		</div>	
+	                                                </div>
+	                                            </div>
+	                                        </div>	                                        
+	                                        <div class="panel panel-col-teal">
+	                                            <div class="panel-heading" role="tab" id="headingThree_17">
+	                                                <h4 class="panel-title">
+	                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_17" href="#collapseThree_17" aria-expanded="false"
+	                                                       aria-controls="collapseThree_17">
+	                                                        <i class="material-icons">folder_shared</i> Cortesias
+	                                                        
+	                                                    </a>
+	                                                </h4>
+	                                            </div>
+	                                            <div id="collapseThree_17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree_17">
+	                                                <div class="panel-body">
+	                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+	                                                    non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+	                                                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+	                                                    single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
+	                                                    helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+	                                                    Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+	                                                    raw denim aesthetic synth nesciunt you probably haven't heard of them
+	                                                    accusamus labore sustainable VHS.
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                        <div class="panel panel-col-orange">
+	                                            <div class="panel-heading" role="tab" id="headingFour_17">
+	                                                <h4 class="panel-title">
+	                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_17" href="#collapseFour_17" aria-expanded="false"
+	                                                       aria-controls="collapseFour_17">
+	                                                        <i class="material-icons">person_pin</i> Ubicación de Medico
+	                                                    </a>
+	                                                </h4>
+	                                            </div>
+	                                            <div id="collapseFour_17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour_17">
+	                                                <div class="panel-body">
+
+														<form id="geoForm">
+														    <!-- Usuario ID (oculto, asumiendo que se obtiene de la sesión o selección previa) -->
+														     <input type="hidden" id="usuario_idz" name="usuario_id" value="<?php echo $medico_id; ?>">
+														    <!-- Campo Domicilio -->
+														    <div class="form-group form-float">
+														        <div class="form-line">
+														            <input type="text" id="domicilio" name="domicilio" class="form-control" value="<?php echo $domicilio; ?>" required>
+														            <label class="form-label">Domicilio*</label>
+														        </div>
+														    </div>
+														
+														    <!-- Campo Latitud (solo lectura) -->
+														    <div class="form-group form-float">
+														        <div class="form-line">
+														            <input type="text" id="latitud" name="latitud" class="form-control" value="<?php echo $latitud; ?>" required readonly>
+														            <label class="form-label">Latitud*</label>
+														        </div>
+														    </div>
+														
+														    <!-- Campo Longitud (solo lectura) -->
+														    <div class="form-group form-float">
+														        <div class="form-line">
+														            <input type="text" id="longitud" name="longitud" class="form-control" value="<?php echo $longitud; ?>" required readonly>
+														            <label class="form-label">Longitud*</label>
+														        </div>
+														    </div>
+														
+														    <!-- Botón para obtener la ubicación -->
+														    <button type="button" id="getLocation" class="btn btn-info waves-effect"><i class="material-icons">my_location</i> Obtener Ubicación</button>
+															<hr>
+														    <!-- Campo Teléfono -->
+														    <div class="form-group form-float">
+														        <div class="form-line">
+														            <input type="text" id="telefono" name="telefono" class="form-control" value="<?php echo $telefono; ?>" required>
+														            <label class="form-label">Teléfono*</label>
+														        </div>
+														    </div>
+														
+														    <!-- Campo Extensión -->
+														    <div class="form-group form-float">
+														        <div class="form-line">
+														            <input type="text" id="extension" name="extension" class="form-control" value="<?php echo $extension; ?>">
+														            <label class="form-label">Extensión</label>
+														        </div>
+														    </div>
+														
+														    <!-- Campo Observaciones -->
+														    <div class="form-group form-float">
+														        <div class="form-line">
+														            <textarea id="observaciones" name="observaciones" class="form-control" rows="3" value="<?php echo $observaciones; ?>"></textarea>
+														            <label class="form-label">Observaciones</label>
+														        </div>
+														    </div>
+														
+														    <!-- Botón de Enviar con AJAX -->
+														    <button type="button" id="submitBtn" class="btn btn-primary mt-3">Guardar</button>
+														</form>
+														
+														<!-- Script para obtener la geolocalización y enviar los datos con AJAX -->
+														<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+														<script>
+														    // Función para obtener la ubicación y asignarla a los campos de latitud y longitud
+														    $('#getLocation').on('click', function() {
+														        if (navigator.geolocation) {
+														            navigator.geolocation.getCurrentPosition((position) => {
+														                let lat = position.coords.latitude;
+														                let lon = position.coords.longitude;
+														
+														                // Asignar valores a los campos de latitud y longitud
+														                $('#latitud').val(lat);
+														                $('#longitud').val(lon);
+														                alert('Ubicación obtenida: Latitud ' + lat + ', Longitud ' + lon);
+														            }, () => {
+														                alert('No se pudo obtener la ubicación.');
+														            });
+														                     
+														        } else {
+														            alert("La geolocalización no es compatible con este navegador.");
+														        }
+														    });
+														
+														    // Función AJAX para enviar los datos del formulario sin recargar la página
+														    $('#submitBtn').on('click', function() {
+														        let formData = {
+														            usuario_id: $('#usuario_idz').val(),
+														            domicilio: $('#domicilio').val(),
+														            latitud: $('#latitud').val(),
+														            longitud: $('#longitud').val(),
+														            telefono: $('#telefono').val(),
+														            extension: $('#extension').val(),
+														            observaciones: $('#observaciones').val()
+														        };
+														
+														        $.ajax({
+														            url: 'procesar_formulario.php', // Archivo donde se procesará la información
+														            type: 'POST',
+														            data: formData,
+														            success: function(response) {
+														                alert("Datos guardados con éxito.");
+																		location.reload(); // Recargar la página después del alert
+														            },
+														            error: function() {
+														                alert("Error al guardar los datos.");
+																		location.reload(); // Recargar la página después del alert
+														            }
+														        });
+														    });
+														</script>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+                                                	
+						<!-- Contenido de la pagina -->
+ 
                     </div>
                 </div>
             </div>

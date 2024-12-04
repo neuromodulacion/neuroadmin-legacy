@@ -7,7 +7,7 @@ iconv_set_encoding('internal_encoding', 'utf-8');
 header('Content-Type: text/html; charset=UTF-8');
 date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
-$time = mktime();
+$time = time();
 
 $ruta = "../";
 
@@ -48,11 +48,11 @@ extract($row_protocolo);
 // echo "<br>mes ".$mes."<br>";
 //echo "<hr>";
 $sql = "SELECT
-			* 
+			admin.usuario 
 		FROM
 			admin
 		WHERE
-			usuario ='$usuario'"; 
+			admin.usuario ='$usuario'"; 
 //echo $sql."<hr>";			
 $result_insert = ejecutar($sql);
 $cnt = mysqli_num_rows($result_insert);
@@ -69,7 +69,7 @@ if ($cnt >= 1) {
 $datos_codificados = base64_encode("usuario_id=$usuario_id&vigencia=$fecha_expiracion&empresa_id=$empresa_id&funcion=$funcion&time=$time&uso=$uso");
 
 // URL base
-$url_base = "https://neuromodulacion.com.mx/usuarios/invitacion.php";
+$url_base = "https://neuromodulaciongdl.com/usuarios/invitacion.php";
 
 // Construir la URL completa
 $enlace_invitacion = "$url_base?datos=$datos_codificados";	
@@ -95,6 +95,18 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 
 }else{ 
 
+	$sql = "
+		SELECT
+			funciones.funciones_id
+		FROM
+			funciones
+		WHERE 
+			funciones.funcion = '$funcion'"; 
+	$result_insert = ejecutar($sql);
+	$row1 = mysqli_fetch_array($result_insert);
+	extract($row1);
+	//echo "<hr>";
+
 	$f_alta = date("Y-m-d");
 	$h_alta = date("H:i:s"); 
 	$insert1 ="
@@ -104,6 +116,7 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 				usuario,
 				pwd,
 				acceso,
+				funciones_id,
 				funcion,
 				telefono,
 				saldo,
@@ -118,6 +131,7 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 				'$usuario',
 				'$password_c',
 				'0',
+				$funciones_id,
 				'$funcion',
 				'$celular',
 				'0',
@@ -149,7 +163,7 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 		VALUE
 			(
 				'$usuario_id',
-				'teal',
+				'$body_principal',
 				'Si'
 			) ";
 	    //  echo $insert1."<hr>";

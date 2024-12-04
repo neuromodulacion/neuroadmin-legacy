@@ -340,11 +340,15 @@ switch ($tipo) {
 		$insert_c ="INSERT IGNORE INTO base_protocolo_$protocolo_ter_id 
 			( base_protocolo_$protocolo_ter_id.paciente_id,
 			  base_protocolo_$protocolo_ter_id.usuario_id,
+			  base_protocolo_$protocolo_ter_id.historico_id,
+			  base_protocolo_$protocolo_ter_id.empresa_id,
 			  base_protocolo_$protocolo_ter_id.f_captura,
 			  base_protocolo_$protocolo_ter_id.h_captura,";
 		$insert_v ="values
 			( $paciente_id,
 			  $usuario_id,
+			  $historico_id,
+			  $empresa_id,
 			  '$f_captura',
 			  '$h_captura',";	
 			$cnt =1;	 
@@ -833,11 +837,15 @@ switch ($tipo) {
 					$insert_c ="INSERT IGNORE INTO base_encuesta_$valor 
 						( base_encuesta_$valor.paciente_id,
 						  base_encuesta_$valor.usuario_id,
+						  base_encuesta_$valor.historico_id,
+						  base_encuesta_$valor.empresa_id,
 						  base_encuesta_$valor.f_captura,
 						  base_encuesta_$valor.h_captura,";
 					$insert_v ="values
 						( $paciente_id,
 						  $usuario_id,
+						  $historico_id,
+						  $empresa_id,
 						  '$f_captura',
 						  '$h_captura',";	
 						$cnt =1;	 

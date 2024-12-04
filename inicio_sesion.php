@@ -41,30 +41,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Consulta SQL para obtener el usuario por nombre de usuario
     $sql_access = "
         SELECT DISTINCT
-            admin.usuario_id,
-            admin.nombre,
-            admin.usuario,
-            admin.pwd,
-            admin.acceso,
-            admin.funcion,
-            admin.saldo,
-            admin.observaciones,
-            admin.estatus,
-            herramientas_sistema.perfil_id,
-            herramientas_sistema.foto,
-            herramientas_sistema.nombre_corto,
-            herramientas_sistema.body,
-            herramientas_sistema.notificaciones,
-            empresas.empresa_id,
-            empresas.emp_nombre,
-            empresas.icono,
-            empresas.logo,
-            empresas.web,
-            empresas.body_principal 
+            admin.usuario_id, 
+            admin.nombre, 
+            admin.usuario, 
+            admin.pwd, 
+            admin.acceso, 
+            admin.funcion, 
+            admin.saldo, 
+            admin.observaciones, 
+            admin.estatus, 
+            herramientas_sistema.perfil_id, 
+            herramientas_sistema.foto, 
+            herramientas_sistema.nombre_corto, 
+            herramientas_sistema.body, 
+            herramientas_sistema.notificaciones, 
+            empresas.empresa_id, 
+            empresas.emp_nombre, 
+            empresas.icono, 
+            empresas.logo, 
+            empresas.web, 
+            empresas.body_principal, 
+            sucursales.nombre_sucursal
         FROM
             admin
-            INNER JOIN herramientas_sistema ON admin.usuario_id = herramientas_sistema.usuario_id
-            INNER JOIN empresas ON admin.empresa_id = empresas.empresa_id 
+            INNER JOIN
+            herramientas_sistema
+            ON 
+                admin.usuario_id = herramientas_sistema.usuario_id
+            INNER JOIN
+            empresas
+            ON 
+                admin.empresa_id = empresas.empresa_id
+            INNER JOIN
+            sucursales
+            ON 
+                admin.sucursal_id = sucursales.sucursal_id
         WHERE
             admin.usuario = ?
     ";
@@ -128,7 +139,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['logo'] = $cnt['logo'];
             $_SESSION['web'] = $cnt['web'];
             $_SESSION['body_principal'] = $cnt['body_principal'];
-
+            $_SESSION['nombre_sucursal'] = $cnt['nombre_sucursal'];
+            
             // Actualizar el estado del usuario a "Activo"
             $query_update = "UPDATE admin SET actividad = 'Activo' WHERE usuario_id = ?";
             $conexion->consulta_simple($query_update, [$cnt['usuario_id']]);

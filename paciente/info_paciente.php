@@ -5,34 +5,60 @@ $genera ="";
 
 include($ruta.'header1.php'); ?>
 
-<!-- JQuery DataTable Css -->
-<link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
-<script src="../morris.js-master/morris.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
-<script src="../morris.js-master/examples/lib/example.js"></script>
-<!--<script src="../morris.js-master/lib/example.js"></script>
-<link rel="stylesheet" href="../morris.js-master/examples/lib/example.css">-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
-<link rel="stylesheet" href="../morris.js-master/morris.css">
+	<!-- JQuery DataTable Css -->
+	<link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+	<script src="../morris.js-master/morris.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
+	<script src="../morris.js-master/examples/lib/example.js"></script>
+	<!--<script src="../morris.js-master/lib/example.js"></script>
+	<link rel="stylesheet" href="../morris.js-master/examples/lib/example.css">-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
+	<link rel="stylesheet" href="../morris.js-master/morris.css">
     <!-- Enlace al archivo CSS para el selector de opciones en Bootstrap -->
-    <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />   
+    <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />  
+        
+    <!-- Custom Css -->
+    <link href="<?php echo $ruta; ?>css/style.css" rel="stylesheet">
+	<script>
+	    document.addEventListener('DOMContentLoaded', function() {
+	        CKEDITOR.replace('editor1');
+	        CKEDITOR.replace('editor2');
+	        CKEDITOR.replace('comentarios_rep');
+	    });
+	</script> 
 	
 <?php
 include($ruta.'header2.php');
 include('calendario.php');
 include('fun_paciente.php');
+$sql = "
+SELECT
+	*
+FROM
+	pacientes
+	WHERE
+	pacientes.paciente_id = $paciente_id";
+			
+// echo $sql."<hr>";	
+$result=ejecutar($sql); 
+$row = mysqli_fetch_array($result);
+extract($row);
+
+//$recomendacion_gpt = htmlspecialchars(trim($recomendacion_gpt), ENT_QUOTES, 'UTF-8');
+//$informe_gpt = htmlspecialchars(trim($informe_gpt), ENT_QUOTES, 'UTF-8');
  ?>
     <section class="content">
         <div id="body" class="container-fluid">
             <div class="block-header">
                 <h2>PACIENTE</h2>
+				<?php echo $ubicacion_url."<br>"; ?>
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
@@ -40,16 +66,141 @@ include('fun_paciente.php');
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div style="height: 95%"  class="header">
-
-							<button id="botonCopiar">Copiar Informe</button>
-							<button id="botonCopiar2">Copiar Datos</button>
-														
-							<button id="botonCopiarx">Recomendacion GPT</button>
-							<button id="botonCopiary">Informe GPT</button>
-							
+							<div class="row clearfix">
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+									<button id="botonCopiar2" class="btn btn-primary btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Copia solo los datos del paciente"><i class="material-icons">content_copy</i>  Copiar Datos</button>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+									<button id="botonCopiar" class="btn btn-primary btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Copia todos los datos del informe"><i class="material-icons">content_copy</i>  Copiar Informe</button>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">														
+									<button id="botonCopiarx" class="btn bg-<?php echo $body; ?> btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Genera una recomendación apartir de los datos del paciente"><i class="material-icons">send</i>  Recomendacion GPT</button>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+									<button id="botonCopiary" class="btn bg-<?php echo $body; ?> btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Genera un informe apartir de los datos, clinimetrias y sesiones"><i class="material-icons">send</i>  Informe GPT</button>
+								</div>
+							</div>
 							<hr>
  							<div style="background: #eee; padding: 10px" >
- 							<div id="gpt"></div>
+ 							<div id="gpt" style="display: flex; justify-content: center; align-items: center;  text-align: center; background-color: #f4f4f4;">
+
+							</div>
+	 	                        <div style="display: none" align="center" id="loadx">
+	                                <div class="preloader pl-size-xl">
+	                                    <div class="spinner-layer">
+		                                   <div class="spinner-layer pl-teal">
+		                                        <div class="circle-clipper left">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                        <div class="circle-clipper right">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                    </div>
+	                                    </div>
+	                                </div>
+	                                <h3>Procesando la información...</h3>
+									<h5>La generación de la información puede tardar unos minutos.</h5>
+		                        </div> 
+	                        </div>
+	                        <hr>  
+							<div class="card" style="background: #eee; padding: 10px" >								
+								<div class="panel-group" id="accordion_1_info" role="tablist" aria-multiselectable="true">
+								    <?php
+								    // Validación de contenido en recomendación e informe
+								    if (!empty($recomendacion_gpt)) { 
+								        $style = ''; 
+								        $mensj = ''; 
+								    } else {
+								        $style = 'style="display: none"'; 
+								        $mensj = '<h5>No hay recomendación disponible para este paciente; necesita generarla en caso de que lo necesite.</h5>';
+								    } 
+									
+								    // Validación de contenido en recomendación e informe
+								    if (!empty($informe_gpt)) { 
+								        $style1 = ''; 
+								        $mensj = ''; 
+								    } else {
+								        $style1 = 'style="display: none"'; 
+								        $mensj = '<h5>No hay reporte disponible para este paciente; necesita generarla en caso de que lo necesite.</h5>';
+								    } 	
+								    ?>
+								
+								    <!-- Panel para la Recomendación -->
+								    <div <?php echo $style; ?> class="panel panel-primary" id="accordion_1x_info">
+								        <div class="panel-heading" role="tab" id="headingOne_1_info">
+								            <h4 class="panel-title">
+								                <a id="recomendacion_btn" role="button" data-toggle="collapse" data-parent="#accordion_1_info" href="#collapseOne_1_info" aria-expanded="true" aria-controls="collapseOne_1_info">
+								                    Recomendación
+								                </a>
+								            </h4>
+								        </div>
+								        <div id="collapseOne_1_info" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne_1_info">
+								            <div class="panel-body card" style="max-width: 100%; margin: 0 auto; padding: 20px;">
+												<textarea id="editor1"><?php echo $recomendacion_gpt; ?></textarea>
+								            </div>
+								        </div>
+								    </div>
+								    <!-- Panel para el Informe -->
+								    <?php if ($funcion !== 'MEDICO') { ?>
+							        <div <?php echo $style1; ?> class="panel panel-primary" id="accordion_2x_info">
+							            <div class="panel-heading" role="tab" id="headingTwo_1_info">
+							                <h4 class="panel-title">
+							                    <a id="informe_btn" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1_info" href="#collapseTwo_1_info" aria-expanded="false" aria-controls="collapseTwo_1_info">
+							                        Informe
+							                    </a>
+							                </h4>
+							            </div>
+							            <div id="collapseTwo_1_info" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo_1_info">
+							                <div class="panel-body" style="width: 100%; margin: 0 auto; padding: 20px; overflow: auto; overflow-wrap: break-word;">
+											<textarea id="editor2"><?php echo $informe_gpt; ?></textarea>
+
+							                </div>
+							            </div>
+							        </div>
+								    <?php } ?>
+								</div>
+
+ 								<?php if ($funcion !== 'MEDICO' ) {?>                           
+                        		<button id="guardarCambios" class="btn btn-success">Guardar Cambios</button>
+								<?php } ?>  
+								<script>
+									document.getElementById('guardarCambios').addEventListener('click', function() {
+									    var paciente_id = '<?php echo $paciente_id; ?>'; // ID del paciente
+									    var recomendacion_gpt = CKEDITOR.instances.editor1.getData(); // Obtener contenido de editor1
+									    var informe_gpt = CKEDITOR.instances.editor2.getData(); // Obtener contenido de editor2
+									
+									    $.ajax({
+									        url: 'guardar_informacion.php', // Archivo PHP que guardará los cambios
+									        type: 'POST',
+									        data: { 
+									            paciente_id: paciente_id,
+									            recomendacion_gpt: recomendacion_gpt,
+									            informe_gpt: informe_gpt
+									        },
+									        success: function(response) {
+									            var data = JSON.parse(response);
+									            if (data.success) {
+									                alert('Información guardada correctamente.');
+									            } else {
+									                alert('No se pudo guardar la información.');
+									            }
+									        },
+									        error: function() {
+									            alert('Error al conectar con el servidor.');
+									        }
+									    });
+									});
+								</script>
+    						
+	 							<!-- <div class="container" id="recomendacion_gpt"><h1>Recomendación</h1><?php echo utf8_encode($recomendacion_gpt); ?></div>	
+	 							<hr>
+	 							<div class="container" id="informe_gpt"><h1>Informe</h1><?php echo utf8_encode($informe_gpt); ?></div> -->	
+	 							<div id="gpt">
+								    <!-- Mostrar mensaje si no hay recomendación -->
+								    <?php if (empty($recomendacion_gpt)) {
+								        echo $mensj;
+								    } ?>
+	 							</div>
 
 	 	                        <div style="display: none" align="center" id="loadx">
 	                                <div class="preloader pl-size-xl">
@@ -67,8 +218,10 @@ include('fun_paciente.php');
 	                                <h3>Procesando la información...</h3>			                        	
 		                        </div> 
 	                        </div>
-	                        <hr>  
-								                                            	
+	                        <hr>  							
+							
+
+<!-------------------------------------------------------------------------------------------->							
                         	<h1 align="center">Paciente</h1>
                              	<div class="row">
                              		<div id="codigo" align="left" class="col-xs-12">
@@ -1153,82 +1306,88 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 		                                	?>
 													                                	
 											<script>
-											    document.getElementById('botonCopiarx').addEventListener('click', function() {
-											        // Primero, copiamos la información al portapapeles
-											        var codigo = document.getElementById('codigo_2');
-											        var rango = document.createRange();
-											        rango.selectNode(codigo);
-											        window.getSelection().removeAllRanges(); // Elimina rangos existentes
-											        window.getSelection().addRange(rango); // Selecciona el texto del código
-											        var contenidoCopiado = codigo.innerText || codigo.textContent; // Almacena el contenido copiado en una variable
-											        document.execCommand('copy'); // Ejecuta el comando de copia
-											        window.getSelection().removeAllRanges(); // Elimina el rango seleccionado
-											        //alert('Información copiado al portapapeles'); // Opcional: muestra una alerta
-											
-											        // Luego, enviamos esa información al servidor
-											        $("#gpt").html(''); 
-											        $('#loadx').show();
-											        var paciente_id = "<?php echo $paciente_id; ?>";
-											        var fecha ="<?php echo $hoy; ?>";
-											        var requestData = { 
-											        	sistema: 'Recpomendacion del caso y del tratamiento con sugerencia de sesiones recomendando terapias que tienen que ser sobre TMS y tdcs',
-											            paciente_id: paciente_id,
-											            accion: 'recomendacion',
-											            fecha: fecha,
-											            tipo: 'reporte',
-											            contenido: contenidoCopiado // Añade la información copiada a los datos de la solicitud
-											        };
-											        $.ajax({
-											            url: 'chat_gpt.php',
-											            type: 'POST',
-											            data: requestData,
-											            success: function(html) {
-											                //alert("Indormacion comcluida");
-											                $("#gpt").html(html); 
-											                $('#loadx').hide();
-											            }
-											        });
-											    });
+												document.getElementById('botonCopiarx').addEventListener('click', function() {
+													var codigo = document.getElementById('codigo_2');
+													var rango = document.createRange();
+													rango.selectNode(codigo);
+													window.getSelection().removeAllRanges();
+													window.getSelection().addRange(rango);
+													var contenidoCopiado = codigo.innerText || codigo.textContent;
+													document.execCommand('copy');
+													window.getSelection().removeAllRanges();
+
+													$("#gpt").html('');
+													$('#loadx').show();
+													var paciente_id = "<?php echo $paciente_id; ?>";
+													var fecha = "<?php echo $hoy; ?>";
+													var requestData = { 
+														sistema: 'Recomendación del caso y del tratamiento...',
+														paciente_id: paciente_id,
+														accion: 'recomendacion',
+														fecha: fecha,
+														tipo: 'reporte',
+														contenido: contenidoCopiado
+													};
+
+													$.ajax({
+														url: 'chat_gpt.php',
+														type: 'POST',
+														data: requestData,
+														success: function(html) {
+															$("#gpt").html('<h1>El Informe de Recomendación se generó correctamente</h1><br><h4>Se recomienda revisar, modificar y/o corregir la información según sea necesario, incluir el protocolo a aplicar y GUARDAR los cambios.</h4>'); 
+															$('#loadx').hide();
+															
+															// Actualizar el contenido del editor1 con la recomendación generada
+															CKEDITOR.instances.editor1.setData(html);
+															$('#recomendacion_btn').click();
+															$('#accordion_1x_info').show();
+														}
+													});
+												});
+
 											</script>
 											<script>
-											    document.getElementById('botonCopiary').addEventListener('click', function() {
-											        // Primero, copiamos la información al portapapeles
-											        $('#sesiones_open').click();
-											        $('#descarga_open').click();
-											        var codigo = document.getElementById('codigo');
-											        var rango = document.createRange();
-											        rango.selectNode(codigo);
-											        window.getSelection().removeAllRanges(); // Elimina rangos existentes
-											        window.getSelection().addRange(rango); // Selecciona el texto del código
-											        var contenidoCopiado = codigo.innerText || codigo.textContent; // Almacena el contenido copiado en una variable
-											        document.execCommand('copy'); // Ejecuta el comando de copia
-											        window.getSelection().removeAllRanges(); // Elimina el rango seleccionado
-											        //alert('Información copiado al portapapeles'); // Opcional: muestra una alerta
-											
-											        // Luego, enviamos esa información al servidor
-											        $("#gpt").html(''); 
-											        $('#loadx').show();
-											        var paciente_id = "<?php echo $paciente_id; ?>";
-											        var fecha ="<?php echo $hoy; ?>";
-											        var requestData = { 
-											        	sistema: 'Informe con resumen del caso y del tratamiento con sugerencia para mantenimiento de sesiones recomendando de terapias que tienen que ser sobre TMS y tdcs',
-											            paciente_id: paciente_id,
-											            accion: 'informe',
-											            fecha: fecha,
-											            tipo: 'informe',
-											            contenido: contenidoCopiado // Añade la información copiada a los datos de la solicitud
-											        };
-											        $.ajax({
-											            url: 'chat_gpt.php',
-											            type: 'POST',
-											            data: requestData,
-											            success: function(html) {
-											                //alert("Indormacion comcluida");
-											                $("#gpt").html(html); 
-											                $('#loadx').hide();
-											            }
-											        });
-											    });
+												document.getElementById('botonCopiary').addEventListener('click', function() {
+													$('#sesiones_open').click();
+													$('#descarga_open').click();
+													var codigo = document.getElementById('codigo');
+													var rango = document.createRange();
+													rango.selectNode(codigo);
+													window.getSelection().removeAllRanges();
+													window.getSelection().addRange(rango);
+													var contenidoCopiado = codigo.innerText || codigo.textContent;
+													document.execCommand('copy');
+													window.getSelection().removeAllRanges();
+
+													$("#gpt").html('');
+													$('#loadx').show();
+													var paciente_id = "<?php echo $paciente_id; ?>";
+													var fecha = "<?php echo $hoy; ?>";
+													var requestData = { 
+														sistema: 'Informe con resumen del caso y del tratamiento...',
+														paciente_id: paciente_id,
+														accion: 'informe',
+														fecha: fecha,
+														tipo: 'informe',
+														contenido: contenidoCopiado
+													};
+
+													$.ajax({
+														url: 'chat_gpt.php',
+														type: 'POST',
+														data: requestData,
+														success: function(html) {
+															$("#gpt").html('<h1>Informe Generado Correctamente</h1><br><h4>Por favor, revise, modifique y/o corrija la información según sea necesario, del protocolo y las clinimetrías aplicadas. No olvide GUARDAR los cambios.</h4>'); 
+															$('#loadx').hide();
+															
+															// Actualizar el contenido del editor2 con el informe generado
+															CKEDITOR.instances.editor2.setData(html);
+															$('#informe_btn').click();
+															$('#accordion_2x_info').show();
+														}
+													});
+												});
+
 											</script>
 			
 											<script>
@@ -1293,7 +1452,7 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 										      });
 										    });  
 										  });
-										</script> 										                                                                                              
+										</script> 											                                                                                              
                                 	</div>
 								</div>
 							</div>
@@ -1304,30 +1463,43 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
     </section>
 <?php	include($ruta.'footer1.php');	?>
 
-    <!-- Jquery DataTable Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/jquery-datatable/jquery.dataTables.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+	<!-- Jquery DataTable Plugin Js -->
+	<script src="<?php echo $ruta; ?>plugins/jquery-datatable/jquery.dataTables.js"></script>
+	<script src="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+	<script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+	<script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+	<script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+	<script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+	<script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+	<script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+	<script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
-    <script src="<?php echo $ruta; ?>js/pages/tables/jquery-datatable.js"></script>
+	<script src="<?php echo $ruta; ?>js/pages/tables/jquery-datatable.js"></script>
 
-    <!-- Autosize Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/autosize/autosize.js"></script>
+	<!-- Autosize Plugin Js -->
+	<script src="<?php echo $ruta; ?>plugins/autosize/autosize.js"></script>
 
-    <!-- Moment Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/momentjs/moment.js"></script>
-    
-    <!-- Jquery Knob Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/jquery-knob/jquery.knob.min.js"></script>
+	<!-- Moment Plugin Js -->
+	<script src="<?php echo $ruta; ?>plugins/momentjs/moment.js"></script>
 
-    <!-- Custom Js -->
-    <script src="<?php echo $ruta; ?>js/pages/charts/jquery-knob.js"></script>  
-    <script src="<?php echo $ruta; ?>js/pages/ui/tooltips-popovers.js"></script>
-          
+	<!-- Jquery Knob Plugin Js -->
+	<script src="<?php echo $ruta; ?>plugins/jquery-knob/jquery.knob.min.js"></script>
+
+	<!-- Custom Js -->
+	<script src="<?php echo $ruta; ?>js/pages/charts/jquery-knob.js"></script>  
+	<script src="<?php echo $ruta; ?>js/pages/ui/tooltips-popovers.js"></script>
+
+
+	<!-- Jquery Knob Plugin Js -->
+	<script src="<?php echo $ruta; ?>plugins/jquery-knob/jquery.knob.min.js"></script>
+
+	<!-- Ckeditor -->
+	<script src="<?php echo $ruta; ?>plugins/ckeditor/ckeditor.js"></script>       
+
+	<!-- TinyMCE -->
+	<!-- <script src="<?php echo $ruta; ?>plugins/tinymce/tinymce.js"></script> -->
+
+
+	<!-- <script src="<?php echo $ruta; ?>js/pages/forms/editors.js"></script>         -->
+		
 <?php	include($ruta.'footer2.php');	?>			
