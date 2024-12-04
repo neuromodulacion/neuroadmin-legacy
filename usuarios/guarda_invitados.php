@@ -75,20 +75,26 @@ $url_base = "https://neuromodulaciongdl.com/usuarios/invitacion.php";
 $enlace_invitacion = "$url_base?datos=$datos_codificados";	
 	?>
 	<!--  ----------------------------------- INICIA -------------------------------------------  -->
-    <div align="center" class="five-zero-zero-container">
-        <div><h1>Ya capturado anteriormente</h1></div>
-        <div><h2>Usuario registrado</h2></div>
-        <div align="center"> 
-			<div style="width: 90% ;!important;" align="left" >
-				<h2><?php echo $mensaje; ?></h2>
-			        	Registro: <?php echo $usuario_id; ?><br>
-			        	Nombre: <?php echo $nombre; ?><br>
-			        	Correo Electronico: <?php echo $usuario; ?><br>
-			        	Telefono: <?php echo $celular; ?><br><br>			        	 
-				<a href="recupera.php" class="btn bg-green btn-lg waves-effect">RECUPERAR CONTRASEÑA</a>     	      	
-	    	</div>        		
-        </div>
-    </div>
+	<section class="user-registered">
+		<div class="five-zero-zero-container" style="text-align: center;">
+			<div>
+				<h1>Ya capturado anteriormente</h1>
+			</div>
+			<div>
+				<h2>Usuario registrado</h2>
+			</div>
+			<div style="margin: 0 auto; max-width: 600px; text-align: left;">
+				<h3><?php echo htmlspecialchars($mensaje ?? 'Usuario ya registrado.', ENT_QUOTES, 'UTF-8'); ?></h3>
+				<p><strong>Registro:</strong> <?php echo htmlspecialchars($usuario_id ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
+				<p><strong>Nombre:</strong> <?php echo htmlspecialchars($nombre ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
+				<p><strong>Correo Electrónico:</strong> <?php echo htmlspecialchars($usuario ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
+				<p><strong>Teléfono:</strong> <?php echo htmlspecialchars($celular ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
+				<br>
+				<a href="recupera.php" class="btn bg-green btn-lg waves-effect">RECUPERAR CONTRASEÑA</a>
+			</div>
+		</div>
+	</section>
+
 	<!--  ----------------------------------- TERMINA -------------------------------------------  -->
 <?php	
 	include($ruta.'functions/footer_temp.php');	
@@ -217,22 +223,26 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 	include($ruta.'functions/header_temp.php');
 	?>            
 		<!--  ----------------------------------- INICIA -------------------------------------------  -->
-	    <div align="center" class="five-zero-zero-container">
-	        <div> <h1>Exito</h1></div>
-	        <div> <h2>Se guardo correctamente la información</h2></div>
-	        <div align="center"> 
-				<div style="width: 90% ;!important;" align="left" >
-					<h2><?php echo $mensaje; ?></h2>
-				        	Registro: <?php echo $usuario_id; ?><br>
-				        	Nombre: <?php echo $nombre; ?><br>
-				        	Correo Electronico: <?php echo $usuario; ?><br>
-				        	Telefono: <?php echo $celular; ?><br><br>			        	 
-					<a href="<?php echo $ruta; ?>inicio.html" class="btn bg-green btn-lg waves-effect">CONTINUAR</a> 
-					<?php echo $mail."<hr>";  
-					//echo "$usuario, $asunto, $cuerpo, $nombre, $empresa_id";?>   	      	
-		    	</div>         		
-	        </div>
-	    </div>
+		<section class="success-message">
+			<div class="five-zero-zero-container" style="text-align: center;">
+				<div>
+					<h1>Éxito</h1>
+				</div>
+				<div>
+					<h2>Se guardó correctamente la información</h2>
+				</div>
+				<div style="margin: 0 auto; max-width: 600px; text-align: left;">
+					<h3><?php echo htmlspecialchars($mensaje ?? 'Operación completada exitosamente.', ENT_QUOTES, 'UTF-8'); ?></h3>
+					<p><strong>Registro:</strong> <?php echo htmlspecialchars($usuario_id ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
+					<p><strong>Nombre:</strong> <?php echo htmlspecialchars($nombre ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
+					<p><strong>Correo Electrónico:</strong> <?php echo htmlspecialchars($usuario ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
+					<p><strong>Teléfono:</strong> <?php echo htmlspecialchars($celular ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
+					<p><?php echo htmlspecialchars($mail ?? 'No se proporcionó información adicional.', ENT_QUOTES, 'UTF-8'); ?></p>
+					<a href="<?php echo htmlspecialchars($ruta ?? '#', ENT_QUOTES, 'UTF-8'); ?>inicio.html" class="btn bg-green btn-lg waves-effect">CONTINUAR</a>
+				</div>
+			</div>
+		</section>
+
 		<!--  ----------------------------------- TERMINA -------------------------------------------  -->
 	<?php 
 	include($ruta.'functions/footer_temp.php');
