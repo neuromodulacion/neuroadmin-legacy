@@ -314,6 +314,4 @@ $h_captura = date("H:i:s");
 return $preguntasx;
 }
 
-function encuesta($paciente_id){		
-	return $preguntasx;
-}
+
