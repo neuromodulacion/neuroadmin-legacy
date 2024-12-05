@@ -128,7 +128,7 @@
                 </div>
                 <div class="info-container"><br>
                     <!-- Muestra el nombre y el correo electrónico del usuario -->
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white"><?php echo "<b>".$nombre_corto."</b>"; ?></div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white"><?php echo "<b>".$nombre."</b>"; ?></div>
                     <div class="email"  style="color: white"><?php echo "<b>".$usuario."<br>".$funcion."</b>"; ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>

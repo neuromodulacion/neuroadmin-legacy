@@ -119,9 +119,20 @@ include($ruta.'header2.php');
             foreach ($resultado['resultado'] as $fila) {
                 $cnt++;
 
-                // Formatear fecha
-                $f_alta = $fila['f_alta'];
-                $today = DateTime::createFromFormat('Y-m-d', $f_alta)->format('d-M-Y');
+                if (!empty($fila['f_alta'])) {
+                    // Intenta formatear la fecha si no está vacía
+                    $f_alta = DateTime::createFromFormat('Y-m-d', $fila['f_alta']);
+                    if ($f_alta) {
+                        // Si la conversión es exitosa, aplica el formato deseado
+                        $today = $f_alta->format('d-M-Y');
+                    } else {
+                        // Si falla la conversión, define un valor predeterminado
+                        $today = 'Fecha inválida';
+                    }
+                } else {
+                    // Define un valor predeterminado si la fecha está vacía o nula
+                    $today = 'Sin fecha';
+                }
         ?>
                 <tr>
                     <td style="display: none;"><?php echo htmlspecialchars($cnt); ?></td>

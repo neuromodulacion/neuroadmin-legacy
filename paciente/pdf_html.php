@@ -14,7 +14,20 @@ extract($_SESSION);
 extract($_GET);
 extract($_POST);
 
-
+$meses_espanol = [
+	'Jan' => 'Ene',
+	'Feb' => 'Feb',
+	'Mar' => 'Mar',
+	'Apr' => 'Abr',
+	'May' => 'May',
+	'Jun' => 'Jun',
+	'Jul' => 'Jul',
+	'Aug' => 'Ago',
+	'Sep' => 'Sep',
+	'Oct' => 'Oct',
+	'Nov' => 'Nov',
+	'Dec' => 'Dic',
+];
 
 include('../functions/funciones_mysql.php');
 
@@ -366,11 +379,18 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 									if ($cnt_calificacion == 1) {
 										$tot_ini = $total;
 									}
-									$f_ini = strftime("%e-%b-%Y",strtotime($f_captura));
+
+									if (isset($f_ini)) {
+										$f_ini_formateado = (new DateTime($f_ini))->format('d-M-Y');
+										$f_ini_formateado = strtr($f_ini_formateado, $meses_espanol);
+									} else {
+										$f_ini_formateado = "";
+									}
+									
 									
 									$tabla .="
 									<tr>
-										<td>$f_ini</td>
+										<td>$f_ini_formateado</td>
 										<td style='text-align: center'>$total</td>
 										<td style='background-color: $color'>$valor</td>
 									</tr>
@@ -392,7 +412,8 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 								$n_grf = "enc_".$encuesta_id."_pac_".$paciente_id;
 								
 								$grafica = "image/imagen_$n_grf.png";
-						
+								
+
 						$cuerpo_pdf .=	$tabla."
 						<h4>Se obtuvo $respuesta del $resultado_final% con respecto a la lectura inicial</h4>
 						</td>
@@ -440,9 +461,10 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 ";
 
 // echo $cuerpo_pdf;
+$cuerpo_pdf = mb_convert_encoding($cuerpo_pdf, 'UTF-8', 'auto');
  
 
- 
+
 // //Require composer autoload
 require_once __DIR__ . '/../vendor/autoload.php';
 

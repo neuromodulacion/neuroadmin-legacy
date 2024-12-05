@@ -3,13 +3,13 @@
     <ul class="list">
         <!-- Encabezado del menú -->
         <li class="header">Menú de Navegación</li>
-        <!-- Elemento del menú: Inicio -->
+        <!-- Elemento del menú: Inicio 
         <li <?php if ($ubicacion_url == $ruta.'menu.php') { echo 'class="active"'; } ?>>
             <a href="<?php echo $ruta; ?>menu.php">
                 <i class="material-icons">home</i>
                 <span>Inicio</span>
             </a>
-        </li>
+        </li>-->
         <?php
         try {
             // Primera consulta
@@ -22,12 +22,7 @@
                     menus.ruta_menu,
                     menus.tipo_m,
                     menus.autorizacion,
-                    paquetes.nombre_paquete,
-                    empresas.empresa_id,
-                    empresas.emp_nombre,
-                    admin.nombre,
-                    admin.funcion_id,
-                    admin.funcion 
+                    admin.funcion_id
                 FROM
                     menus
                     INNER JOIN paquete_modulo ON menus.modulo_id = paquete_modulo.modulo_id
@@ -37,6 +32,7 @@
                 WHERE
                     admin.usuario_id = ? 
                     AND FIND_IN_SET(admin.funcion_id, menus.autorizacion) > 0
+                    ORDER BY 1 ASC
             ";
             //  echo $query1;                 
             // Ejecutar la primera consulta
@@ -69,77 +65,73 @@
                             <?php
                             break;
                         case 'principal':
+
+                            // Consulta para obtener las rutas adicionales con tipo 'liga'
+                            $query_rutas_adicionales = "
+                                SELECT
+                                    submenus.ruta_submenu
+                                FROM
+                                    submenus
+                                WHERE
+                                    submenus.tipo_s = 'liga'
+                                    AND submenus.menu_id = ?
+                            ";
+                            $params_rutas_adicionales = [$menu_id];
+                            $resultado_rutas_adicionales = $mysql->consulta($query_rutas_adicionales, $params_rutas_adicionales);
+                            
+                            // Extraer rutas adicionales de la consulta
+                            $rutas_adicionales = array_column($resultado_rutas_adicionales['resultado'] ?? [], 'ruta_submenu');
+                            
+                            // Consulta dinámica para submenús con autorización
+                            $query2 = "
+                                SELECT
+                                    submenus.ruta_submenu,
+                                    submenus.nombre_s,
+                                    submenus.iconos
+                                FROM
+                                    submenus
+                                WHERE
+                                    submenus.menu_id = ?
+                                    AND submenus.autorizacion LIKE ?
+                            ";
+                            $funcion = '%' . $fila1['funcion_id'] . '%';
+                            $params2 = [$menu_id, $funcion];
+                            $resultado2 = $mysql->consulta($query2, $params2);
+                            
+                            // Agregar rutas de submenús al arreglo
+                            $rutas_dinamicas = array_column($resultado2['resultado'] ?? [], 'ruta_submenu');
+                            
+                            // Combinar las rutas adicionales y las dinámicas
+                            $rutas_activas = array_merge($rutas_adicionales, $rutas_dinamicas);
+                            
+                            // Determinar si la URL actual está activa
+                            $es_activo = in_array($ubicacion_url, $rutas_activas);
                             ?>
-                            <li <?php if ($ubicacion_url == 'paciente/alta.php' || $ubicacion_url == 'paciente/pendientes.php' || $ubicacion_url == 'paciente/solicitud.php'  || $ubicacion_url == 'paciente/seguimientos.php' || $ubicacion_url == 'paciente/directorio.php' || $ubicacion_url == 'paciente/historico.php' || $ubicacion_url == 'agenda/agenda.php' || $ubicacion_url == 'carta/cartas_generadas.php' || $funcion == 'COORDINADOR' || $ubicacion_url == 'carta/genera_invitacion.php' || $ubicacion_url == 'paciente/pacientes_consultas.php') { echo 'class="active"'; } ?>>
-                            <a href="javascript:void(0);" class="menu-toggle">
-                                <?php echo $icono_menu; ?>
-                                <span><?php echo $nombre_m; ?></span>
-                            </a>
+                            <li <?php echo $es_activo ? 'class="active"' : ''; ?>>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <?php echo $icono_menu; ?>
+                                    <span><?php echo $nombre_m; ?></span>
+                                </a>
                                 <ul class="ml-menu">
                                     <?php
-                                        // Segunda consulta
-                                        $query2 = "
-                                        SELECT
-                                            submenus.sub_menu_id, 
-                                            submenus.menu_id, 
-                                            submenus.nombre_s, 
-                                            submenus.ruta_submenu, 
-                                            submenus.tipo_s, 
-                                            submenus.autorizacion, 
-                                            submenus.tema_id, 
-                                            submenus.iconos
-                                        FROM
-                                            submenus
-                                        WHERE
-                                            submenus.menu_id = ?
-                                            AND submenus.autorizacion LIKE ?;
-                                    ";
-                                    $funcion = '%'.$funcion_id.'%';
-                                    
-                                    // Ejecutar la segunda consulta con parámetros
-                                    $params2 = [$menu_id, $funcion];
-                                    $resultado2 = $mysql->consulta($query2, $params2);
-
-                                    if ($resultado2['numFilas'] > 0) {
-                                    // echo "Resultados de la segunda consulta para menu_id={$menu_id}:\n";
-                                        foreach ($resultado2['resultado'] as $fila2) {
-                                            // Obtener menu_id para la segunda consulta
-                                            $tipo_s = $fila2['tipo_s'];
-                                            $nombre_s = $fila2['nombre_s'];
-                                            $iconos = $fila2['iconos'];
-                                            $ruta_submenu = $fila2['ruta_submenu'];
-                                            switch ($tipo_s) {
-                                                case 'liga':
-                                                    ?>
-                                                    <li <?php if ($ubicacion_url == $ruta_submenu) { echo 'class="active"'; } ?>>
-                                                        <a href="<?php echo $ruta.$ruta_submenu; ?>">
-                                                            <?php echo $iconos; ?>
-                                                            <span><?php echo $nombre_s; ?></span>
-                                                        </a>
-                                                    </li>
-                                                <?php 
-                                                    break;
-                                                
-                                                    case 'etiqueta':
-                                                        ?>
-                                                        <li <?php if ($ubicacion_url == $ruta_submenu) { echo 'class="active"'; } ?>>
-                                                            <a href="#" >
-                                                                <!--<?php echo $iconos; ?>-->
-                                                                <span><b><?php echo $nombre_s; ?></b></span>
-                                                            </a disabled>
-                                                        </li>
-                                                        
-                                                    <?php 
-                                                        break;
-                                            }
-   
-                                        }
-                                    } else {
-                                        echo "No se encontraron resultados en la segunda consulta para menu_id={$menu_id}.\n";
+                                    // Generar submenús dinámicamente
+                                    foreach ($resultado2['resultado'] ?? [] as $fila2) {
+                                        $ruta_submenu = $fila2['ruta_submenu'];
+                                        $nombre_s = $fila2['nombre_s'];
+                                        $iconos = $fila2['iconos'];
+                                        ?>
+                                        <li <?php echo ($ubicacion_url == $ruta_submenu) ? 'class="active"' : ''; ?>>
+                                            <a href="<?php echo $ruta . $ruta_submenu; ?>">
+                                                <?php echo $iconos; ?>
+                                                <span><?php echo $nombre_s; ?></span>
+                                            </a>
+                                        </li>
+                                        <?php
                                     }
                                     ?>
                                 </ul>
                             </li>
+                            
                             <?php 
                             break;
                     }

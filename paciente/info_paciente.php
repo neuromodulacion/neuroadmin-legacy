@@ -3,6 +3,21 @@ $ruta="../";
 $titulo ="Paciente";
 $genera ="";
 
+$meses_espanol = [
+	'Jan' => 'Ene',
+	'Feb' => 'Feb',
+	'Mar' => 'Mar',
+	'Apr' => 'Abr',
+	'May' => 'May',
+	'Jun' => 'Jun',
+	'Jul' => 'Jul',
+	'Aug' => 'Ago',
+	'Sep' => 'Sep',
+	'Oct' => 'Oct',
+	'Nov' => 'Nov',
+	'Dec' => 'Dic',
+];	
+
 include($ruta.'header1.php'); ?>
 
 	<!-- JQuery DataTable Css -->
@@ -51,8 +66,6 @@ $result=ejecutar($sql);
 $row = mysqli_fetch_array($result);
 extract($row);
 
-//$recomendacion_gpt = htmlspecialchars(trim($recomendacion_gpt), ENT_QUOTES, 'UTF-8');
-//$informe_gpt = htmlspecialchars(trim($informe_gpt), ENT_QUOTES, 'UTF-8');
  ?>
     <section class="content">
         <div id="body" class="container-fluid">
@@ -67,42 +80,51 @@ extract($row);
                     <div class="card">
                         <div style="height: 95%"  class="header">
 							<div class="row clearfix">
-								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-									<button id="botonCopiar2" class="btn btn-primary btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Copia solo los datos del paciente"><i class="material-icons">content_copy</i>  Copiar Datos</button>
-								</div>
-								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-									<button id="botonCopiar" class="btn btn-primary btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Copia todos los datos del informe"><i class="material-icons">content_copy</i>  Copiar Informe</button>
-								</div>
-								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">														
-									<button id="botonCopiarx" class="btn bg-<?php echo $body; ?> btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Genera una recomendación apartir de los datos del paciente"><i class="material-icons">send</i>  Recomendacion GPT</button>
-								</div>
-								<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-									<button id="botonCopiary" class="btn bg-<?php echo $body; ?> btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Genera un informe apartir de los datos, clinimetrias y sesiones"><i class="material-icons">send</i>  Informe GPT</button>
-								</div>
+								<?php if ($funcion_id == 1) { ?>
+									<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+										<button id="botonCopiar2" class="btn btn-primary btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Copia solo los datos del paciente"><i class="material-icons">content_copy</i>  Copiar Datos</button>
+									</div>
+									<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+										<button id="botonCopiar" class="btn btn-primary btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Copia todos los datos del informe"><i class="material-icons">content_copy</i>  Copiar Informe</button>
+									</div>
+								<?php }
+								if ($acceso_ia == 'si') { ?>
+									<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">														
+										<button id="botonCopiarx" class="btn bg-<?php echo $body; ?> btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Genera una recomendación apartir de los datos del paciente"><i class="material-icons">send</i>  Recomendacion GPT</button>
+									</div>
+									<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+										<button id="botonCopiary" class="btn bg-<?php echo $body; ?> btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Genera un informe apartir de los datos, clinimetrias y sesiones"><i class="material-icons">send</i>  Informe GPT</button>
+									</div>
+								<?php } ?>
 							</div>
+							<h1 style="text-align: center" >Paciente</h1>
+							<h2 style="text-align: center" ><b>No. <?php echo $paciente_id." ".$paciente." ".$apaterno." ".$amaterno; ?><b></h2>
 							<hr>
- 							<div style="background: #eee; padding: 10px" >
- 							<div id="gpt" style="display: flex; justify-content: center; align-items: center;  text-align: center; background-color: #f4f4f4;">
-
-							</div>
-	 	                        <div style="display: none" align="center" id="loadx">
-	                                <div class="preloader pl-size-xl">
-	                                    <div class="spinner-layer">
-		                                   <div class="spinner-layer pl-teal">
-		                                        <div class="circle-clipper left">
-		                                            <div class="circle"></div>
-		                                        </div>
-		                                        <div class="circle-clipper right">
-		                                            <div class="circle"></div>
-		                                        </div>
-		                                    </div>
-	                                    </div>
-	                                </div>
-	                                <h3>Procesando la información...</h3>
+							<!-- Acceso a inteligencia artificial -->
+							<?php if ($acceso_ia == 'si') { ?>
+ 							<div  id="gpt_reporte" style="background: #eee; padding: 5px; display:none" >
+							 	<hr>
+								<div id="gpt" style="display: flex; justify-content: center; align-items: center;  text-align: center; background-color: #f4f4f4;"></div>
+								<div style="display:none; text-align: center" id="loadx">
+									<div class="preloader pl-size-xl">
+										<div class="spinner-layer">
+										<div class="spinner-layer pl-teal">
+												<div class="circle-clipper left">
+													<div class="circle"></div>
+												</div>
+												<div class="circle-clipper right">
+													<div class="circle"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<h3>Procesando la información...</h3>
 									<h5>La generación de la información puede tardar unos minutos.</h5>
-		                        </div> 
-	                        </div>
-	                        <hr>  
+								</div> 
+								<hr>
+							</div>
+	                        <br>
+  
 							<div class="card" style="background: #eee; padding: 10px" >								
 								<div class="panel-group" id="accordion_1_info" role="tablist" aria-multiselectable="true">
 								    <?php
@@ -112,17 +134,19 @@ extract($row);
 								        $mensj = ''; 
 								    } else {
 								        $style = 'style="display: none"'; 
-								        $mensj = '<h5>No hay recomendación disponible para este paciente; necesita generarla en caso de que lo necesite.</h5>';
-								    } 
+								        $mensj = '<h5>No hay recomendación disponible para este paciente, necesita generarla en caso de que lo necesite.</h5>';
+										echo $mensj;
+									} 
 									
 								    // Validación de contenido en recomendación e informe
 								    if (!empty($informe_gpt)) { 
 								        $style1 = ''; 
-								        $mensj = ''; 
+								        $mensj1 = ''; 
 								    } else {
 								        $style1 = 'style="display: none"'; 
-								        $mensj = '<h5>No hay reporte disponible para este paciente; necesita generarla en caso de que lo necesite.</h5>';
-								    } 	
+								        $mensj1 = '<h5>No hay reporte disponible para este paciente, necesita generarla en caso de que lo necesite.</h5>';
+										echo $mensj1;
+									} 	
 								    ?>
 								
 								    <!-- Panel para la Recomendación -->
@@ -157,7 +181,7 @@ extract($row);
 							                </div>
 							            </div>
 							        </div>
-								    <?php } ?>
+									<?php } ?>
 								</div>
 
  								<?php if ($funcion !== 'MEDICO' ) {?>                           
@@ -191,157 +215,173 @@ extract($row);
 									    });
 									});
 								</script>
-    						
-	 							<!-- <div class="container" id="recomendacion_gpt"><h1>Recomendación</h1><?php echo utf8_encode($recomendacion_gpt); ?></div>	
-	 							<hr>
-	 							<div class="container" id="informe_gpt"><h1>Informe</h1><?php echo utf8_encode($informe_gpt); ?></div> -->	
-	 							<div id="gpt">
-								    <!-- Mostrar mensaje si no hay recomendación -->
-								    <?php if (empty($recomendacion_gpt)) {
-								        echo $mensj;
-								    } ?>
-	 							</div>
-
-	 	                        <div style="display: none" align="center" id="loadx">
-	                                <div class="preloader pl-size-xl">
-	                                    <div class="spinner-layer">
-		                                   <div class="spinner-layer pl-teal">
-		                                        <div class="circle-clipper left">
-		                                            <div class="circle"></div>
-		                                        </div>
-		                                        <div class="circle-clipper right">
-		                                            <div class="circle"></div>
-		                                        </div>
-		                                    </div>
-	                                    </div>
-	                                </div>
-	                                <h3>Procesando la información...</h3>			                        	
-		                        </div> 
-	                        </div>
-	                        <hr>  							
-							
-
-<!-------------------------------------------------------------------------------------------->							
-                        	<h1 align="center">Paciente</h1>
-                             	<div class="row">
-                             		<div id="codigo" align="left" class="col-xs-12">
-                             			<hr>
-                             			<div class="caption">
-                             				
-
-                            <button class="btn bg-cyan waves-effect m-b-15" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
-                                    aria-controls="collapseExample"><i class="material-icons">system_update_alt</i> 
-                                CARGAR DOCUMENTOS
-                            </button>
-                            <div class="collapse" id="collapseExample">
-                                <div class="well">
-                          				
-								<?php
-								
-								// Definir el directorio del paciente
-								$directory = "uploads/archivos/paciente_" . $paciente_id;
-								
-								// Verificar si el directorio existe y listar los archivos
-								$fileList = [];
-								if (is_dir($directory)) {
-								    $files = scandir($directory);
-								    foreach ($files as $file) {
-								        if ($file !== '.' && $file !== '..') {
-								            $filePath = "$directory/$file";
-								            $fileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
-								            $fileTypeLabel = in_array($fileType, ['jpg', 'jpeg', 'png', 'gif']) ? 'Imagen' : ($fileType === 'pdf' ? 'PDF' : 'Otro');
-								            if ($fileTypeLabel !== 'Otro') { // Ignorar archivos no soportados
-								                $fileList[] = [
-								                    'name' => $file,
-								                    'type' => $fileTypeLabel,
-								                    'path' => $filePath
-								                ];
-								            }
-								        }
-								    }
-								}
-								?>
-								
-								    <h3>Subir Archivos</h3>
-								    <p>Es para subir contratos en PDF, JPG o PNG, máximo 3 MB</p>
-								    <form id="uploadForm_zz" enctype="multipart/form-data">
-								        <input type="hidden" name="paciente_id" value="<?php echo $paciente_id; ?>">
-								        <p><input class="btn btn-primary" type="file" name="file" id="file_zz"></p> 
-								        <p><input class="btn btn-default" type="button" value="Subir Archivo" id="btnUpload_zz"></p>
-								    </form>
-								
-								    <div id="status_zz"></div>
-								    
-								    <div class="file-list">
-								        <h3>Archivos del Paciente</h3>
-								        <ul id="fileList">
-								            <?php foreach ($fileList as $file): ?>
-								                <li>
-								                    <strong><?php echo htmlspecialchars($file['name']); ?></strong>
-								                    (<?php echo $file['type']; ?>) - 
-								                    <a href="<?php echo htmlspecialchars($file['path']); ?>" target="_blank">Ver archivo</a>
-								                </li>
-								            <?php endforeach; ?>
-								        </ul>
-								    </div>
-								
-								    <script>
-								        $(document).ready(function() {
-								            $("#btnUpload_zz").click(function() {
-								                var fileInput = $('#file_zz')[0];
-								                var filePath = fileInput.value;
-								                var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.pdf)$/i;
-								                var paciente_id = '<?php echo $paciente_id; ?>';
-								                $('#status_zz').html("Cargando...");
-								
-								                if (!allowedExtensions.exec(filePath)) {
-								                    alert('Por favor sube archivos con las extensiones .jpeg/.jpg/.png/.gif/.pdf solamente.');
-								                    fileInput.value = '';
-								                    return false;
-								                }
-								
-								                if (fileInput.files[0].size > 3 * 1024 * 1024) {
-								                    alert('El archivo es demasiado grande. Tamaño máximo permitido: 3 MB.');
-								                    fileInput.value = '';
-								                    return false;
-								                }
-								
-								                var formData = new FormData($("#uploadForm_zz")[0]);
-								                $("#btnUpload_zz").prop('disabled', true);
-								
-								                $.ajax({
-								                    url: 'upload.php',
-								                    type: 'POST',
-								                    data: formData,
-								                    contentType: false,
-								                    processData: false,
-								                    success: function(response) {
-								                        var data = JSON.parse(response);
-								                        if (data.error) {
-								                            $('#status_zz').html(data.error);
-								                        } else {
-								                            $('#status_zz').html('Archivo subido correctamente.');
-								                            $("#fileList").append(
-								                                "<li><strong>" + data.name + "</strong> (" + data.type + ") - " +
-								                                "<a href='" + data.path + "' target='_blank'>Ver archivo</a></li>"
-								                            );
-								                            $('#file_zz').val('');
-								                        }
-								                        $("#btnUpload_zz").prop('disabled', false);
-								                    },
-								                    error: function() {
-								                        $('#status_zz').html('Ocurrió un error al subir el archivo.');
-								                        $("#btnUpload_zz").prop('disabled', false);
-								                    }
-								                });
-								            });
-								        });
-								    </script>
-                                    
-                                </div>
-                            </div>                              				
-                             				
-
+	                        </div>							
+							<?php } ?>							
+<!-------------------------------------------------------------------------------------------->							              	
+							<div class="row">
+								<div id="codigo" align="left" class="col-xs-12">
+									<div class="caption">
+										<div class="row">
+											<div class="col-md-6">
+												<button class="btn bg-cyan waves-effect m-b-15" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+														aria-controls="collapseExample">
+													<i class="material-icons">file_upload</i> 
+													CARGAR DOCUMENTOS
+												</button>	 
+											</div>
+											<div class="col-md-6">
+												<button id='descarga_open' class='btn bg-<?php echo $body; ?> waves-effect m-b-15' type='button' data-toggle='collapse' data-target='#collapseExamplex' aria-expanded='false'
+					                                    aria-controls='collapseExamplex'>
+													<i class="material-icons">file_download</i>
+					                                Descarga Reporte
+					                            </button>
+											</div>
+											<div class="col-md-12">
+												<div class="collapse" id="collapseExample">
+													<div class="well">	
+														<?php
+														// Definir el directorio del paciente
+														$directory = "uploads/archivos/paciente_" . $paciente_id;
+														
+														// Verificar si el directorio existe y listar los archivos
+														$fileList = [];
+														if (is_dir($directory)) {
+															$files = scandir($directory);
+															foreach ($files as $file) {
+																if ($file !== '.' && $file !== '..') {
+																	$filePath = "$directory/$file";
+																	$fileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+																	$fileTypeLabel = in_array($fileType, ['jpg', 'jpeg', 'png', 'gif']) ? 'Imagen' : ($fileType === 'pdf' ? 'PDF' : 'Otro');
+																	if ($fileTypeLabel !== 'Otro') { // Ignorar archivos no soportados
+																		$fileList[] = [
+																			'name' => $file,
+																			'type' => $fileTypeLabel,
+																			'path' => $filePath
+																		];
+																	}
+																}
+															}
+														}
+														?>
+													
+														<h3>Subir Archivos</h3>
+														<p>Es para subir contratos en PDF, JPG o PNG, máximo 3 MB</p>
+														<form id="uploadForm_zz" enctype="multipart/form-data">
+															<input type="hidden" name="paciente_id" value="<?php echo $paciente_id; ?>">
+															<p><input class="btn btn-primary" type="file" name="file" id="file_zz"></p> 
+															<p><input class="btn btn-default" type="button" value="Subir Archivo" id="btnUpload_zz"></p>
+														</form>
+													
+														<div id="status_zz"></div>
+														
+														<div class="file-list">
+															<h3>Archivos del Paciente</h3>
+															<ul id="fileList">
+																<?php foreach ($fileList as $file): ?>
+																	<li>
+																		<strong><?php echo htmlspecialchars($file['name']); ?></strong>
+																		(<?php echo $file['type']; ?>) - 
+																		<a href="<?php echo htmlspecialchars($file['path']); ?>" target="_blank">Ver archivo</a>
+																	</li>
+																<?php endforeach; ?>
+															</ul>
+														</div>
+													
+														<script>
+															$(document).ready(function() {
+																$("#btnUpload_zz").click(function() {
+																	var fileInput = $('#file_zz')[0];
+																	var filePath = fileInput.value;
+																	var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.pdf)$/i;
+																	var paciente_id = '<?php echo $paciente_id; ?>';
+																	$('#status_zz').html("Cargando...");
+													
+																	if (!allowedExtensions.exec(filePath)) {
+																		alert('Por favor sube archivos con las extensiones .jpeg/.jpg/.png/.gif/.pdf solamente.');
+																		fileInput.value = '';
+																		return false;
+																	}
+													
+																	if (fileInput.files[0].size > 3 * 1024 * 1024) {
+																		alert('El archivo es demasiado grande. Tamaño máximo permitido: 3 MB.');
+																		fileInput.value = '';
+																		return false;
+																	}
+													
+																	var formData = new FormData($("#uploadForm_zz")[0]);
+																	$("#btnUpload_zz").prop('disabled', true);
+													
+																	$.ajax({
+																		url: 'upload.php',
+																		type: 'POST',
+																		data: formData,
+																		contentType: false,
+																		processData: false,
+																		success: function(response) {
+																			var data = JSON.parse(response);
+																			if (data.error) {
+																				$('#status_zz').html(data.error);
+																			} else {
+																				$('#status_zz').html('Archivo subido correctamente.');
+																				$("#fileList").append(
+																					"<li><strong>" + data.name + "</strong> (" + data.type + ") - " +
+																					"<a href='" + data.path + "' target='_blank'>Ver archivo</a></li>"
+																				);
+																				$('#file_zz').val('');
+																			}
+																			$("#btnUpload_zz").prop('disabled', false);
+																		},
+																		error: function() {
+																			$('#status_zz').html('Ocurrió un error al subir el archivo.');
+																			$("#btnUpload_zz").prop('disabled', false);
+																		}
+																	});
+																});
+															});
+														</script>
+													</div>
+												</div>  
+											</div>
+											<div class="col-md-12">
+												<div class='collapse' id='collapseExamplex'>
+					                                <div class='well'>
+					                                	<h2><b>* Comentarios para el reporte:</b></h2><br>
+					                                	<textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'><?php echo $comentarios_reporte; ?></textarea>
+					                                	<br><button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'><i class='material-icons'>person</i> Guarda Comentarios</button>
+												         <script type='text/javascript'>
+											                $('#guarda_comentarios').click(function(){
+											                	var paciente_id = '<?php echo $paciente_id ?>'; 
+											                	var comentarios_reporte = $( '#comentarios_rep').val();
+											                    var datastring = 'comentarios_reporte='+comentarios_reporte+'&paciente_id='+paciente_id;
+											                    $.ajax({
+											                        url: 'guarda_comentarios.php',
+											                        type: 'POST',
+											                        data: datastring,
+											                        cache: false,
+											                        success:function(html){   
+											                        	//alert(html);  
+											                            $('#descarga').show(); 
+											                            
+											                        }
+											                	});
+											                });
+											            </script>                       	
+														<hr>
+														<a $style class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html.php?paciente_id=$paciente_id' role='button' >
+															Descarga Reporte Doctor 
+															<i class='material-icons'>person</i>
+															<i class='material-icons'>file_download</i>
+														</a>
+														<a $style class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html_paciente.php?paciente_id=$paciente_id' role='button' >
+															Descarga Reporte Paciente 
+															<i class='material-icons'>assignment_ind</i>
+															<i class='material-icons'>file_download</i>
+														</a>
+					                                </div>
+					                            </div>	
+											</div>
+										</div>                           				                         				
+										<hr>
 		                                <div class="form-line">	                                	
 		                                	<?php //print_r($_GET); 
 		                                	// print_r($_SESSION);
@@ -366,7 +406,9 @@ extract($row);
 													    $row = mysqli_fetch_array($result);
 													    extract($row);		
 														
-														$f_ini = strftime("%e-%b-%Y",strtotime($f_ini));
+														$f_ini = (new DateTime($f_ini))->format('d-M-Y');
+                                                		$f_ini = strtr($f_ini, $meses_espanol); // Reemplazar meses en español                                 
+												        
 																										
 														$dia .="<hr><h2><b>Cita</b></h2><br>
 														Fecha: $f_ini<br>
@@ -396,59 +438,22 @@ extract($row);
 												} else {
 													$style ='';
 												}
-												
-													
+	
 											    //print_r($row);
 											    $dia = "<div  id='codigo_2'  class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-											    <hr><h1><b>No. ".$paciente_id." ".$paciente." ".$apaterno." ".$amaterno."<b></h1>";		                                	
-	                                			//<a class='btn bg-$body waves-effect' target='_blank' href='pdf_html.php?paciente_id=$paciente_id' role='button'>Descarga Reporte</a>
-												$dia .= "								
-					                            <button id='descarga_open' class='btn bg-$body waves-effect m-b-15' type='button' data-toggle='collapse' data-target='#collapseExamplex' aria-expanded='false'
-					                                    aria-controls='collapseExamplex'>
-					                                Descarga Reporte
-					                            </button>
-					                            <div class='collapse' id='collapseExamplex'>
-					                                <div class='well'>
-					                                	<h2><b>* Comentarios para el reporte:</b></h2><br>
-					                                	<textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'>$comentarios_reporte</textarea>
-					                                	<br><button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'>Guarda Comentarios</button>
-												         <script type='text/javascript'>
-											                $('#guarda_comentarios').click(function(){
-											                	var paciente_id = '$paciente_id'; 
-											                	var comentarios_reporte = $( '#comentarios_rep').val();
-											                    var datastring = 'comentarios_reporte='+comentarios_reporte+'&paciente_id='+paciente_id;
-											                    $.ajax({
-											                        url: 'guarda_comentarios.php',
-											                        type: 'POST',
-											                        data: datastring,
-											                        cache: false,
-											                        success:function(html){   
-											                        	//alert(html);  
-											                            $('#descarga').show(); 
-											                            
-											                        }
-											                	});
-											                });
-											            </script>                       	
-					                                <hr><a $style class='btn bg-$body waves-effect'  id='descarga' target='_blank' href='pdf_html.php?paciente_id=$paciente_id' role='button' >Descarga Reporte Doctor <i class='material-icons'>file_download</i></a>
-					                                <a $style class='btn bg-$body waves-effect'  id='descarga' target='_blank' href='pdf_html_paciente.php?paciente_id=$paciente_id' role='button' ><i class='material-icons'>assignment_ind</i> Descarga Reporte Paciente <i class='material-icons'>file_download</i></a>
-					                                </div>
-					                            </div>	";								
-												// echo "hola 1 $empresa_id<br>";
-												if ($empresa_id == 1) {
-												// echo "hola 2<br>";		
-													$dia.="												
+											    ";		                                	
+
+												if ($paquete_id == 12) { ?>
 													<div class='row'>
 														<div class='col-md-6'><br>
-															<a  class='btn bg-$body waves-effect'  id='descarga' target='_blank' href='pdf_tms.php?paciente_id=$paciente_id' role='button' >Descarga Contrato y Condiciones TMS <i class='material-icons'>file_download</i></a>
+															<a  class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_tms.php?paciente_id=$paciente_id' role='button' >Descarga Contrato y Condiciones TMS <i class='material-icons'>file_download</i></a>
 														</div>
 														<div class='col-md-6'><br>
-															<a  class='btn bg-$body waves-effect'  id='descarga' target='_blank' href='pdf_tdcs.php?paciente_id=$paciente_id' role='button' >Descarga Contrato y Condiciones TdCS <i class='material-icons'>file_download</i></a>
+															<a  class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_tdcs.php?paciente_id=$paciente_id' role='button' >Descarga Contrato y Condiciones TdCS <i class='material-icons'>file_download</i></a>
 														</div>
-													</div>	
-													";
+													</div><hr>	
+												<?php }
 
-												}
 												// echo "hola 3<br>";
 											
 												switch ($estatus) {
@@ -484,139 +489,172 @@ extract($row);
 												$dia.= "<hr>
 												
 												";
+												?>
+											<div class="row">
+												<div class="col-md-4"><h3><b>Estatus del Paciente</b> </h3></div>
+												<div class="col-md-4"><h3><span class='label <?php echo $span; ?>' ><?php echo $estatus; ?></span></h3></div>
+												<div class="col-md-4">
+												<button type='button' class='btn bg-<?php echo $body; ?> waves-effect'data-toggle='modal' data-target='#estatuslModal'>
+													<i class='material-icons'>mode_edit</i>	Modifica Estatus
+												</button>
+												</div>
+											</div>	
+            								
+											<!-- Small Size -->
+											<div class='modal fade' id='estatuslModal' tabindex='-1' role='dialog'>
+												<div class='modal-dialog modal-sm' role='document'>
+													<div class='modal-content'>
+														<div class='modal-header'>
+															<h4 class='modal-title' id='estatuslModalLabel'>Seleccione el Estatus</h4>
+														</div>
+														<div class='modal-body'>							
+															<div class='form-group form-float'>
+																<label for='estado'>Estado:</label>
+																<select class='form-control show-tick' id='estatus_sel' name='estatus_sel' required>
+																	<option value=''>-- Seleccione un Estatus --</option>
+																	<option value='Activo' <?php echo ($estatus == "Activo" ? "selected" : "") ?>>Activo</option>
+																	<option value='Confirmado' <?php echo ($estatus == "Confirmado" ? "selected" : "") ?>>Confirmado</option>
+																	<option value='Eliminado' <?php echo ($estatus == "Eliminado" ? "selected" : "") ?>>Eliminado</option>
+																	<option value='Inactivo' <?php echo ($estatus == "Inactivo" ? "selected" : "") ?>>Inactivo</option>
+																	<option value='No interezado' <?php echo ($estatus == "No interezado" ? "selected" : "") ?>>No interezado</option>
+																	<option value='No localizado' <?php echo ($estatus == "No localizado" ? "selected" : "") ?>>No localizado</option>
+																	<option value='Pendiente' <?php echo ($estatus == "Pendiente" ? "selected" : "") ?>>Pendiente</option>
+																	<option value='Seguimiento' <?php echo ($estatus == "Seguimiento" ? "selected" : "") ?>>Seguimiento</option>
+																	<option value='Remisión' <?php echo ($estatus == "Remisión" ? "selected" : "") ?>>Remisión</option>
+																</select>
+															</div>
+															</div>
+														<div class='modal-footer'>
+															<button id='btn_estatus' type='button' class='btn btn-primary waves-effect'>GUARDAR</button>
+															<script type='text/javascript'>
+																$(document).ready(function() {
+																	$('#btn_estatus').click(function() {    
+																		var estatus = $('#estatus_sel').val();
+																		var paciente_id = '<?php echo $paciente_id; ?>';
+																		var datastring = 'estatus=' + estatus + '&paciente_id=' + paciente_id;
+															
+																		$.ajax({
+																			url: 'procesar_seleccion.php',
+																			type: 'POST',
+																			data: datastring,
+																			cache: false,
+																			success: function(html) {
+																				//alert(html);   
+																				location.reload(); // Recargar la página tras la respuesta exitosa
+																			},
+																			error: function(xhr, status, error) {
+																				console.log('Error en la petición: ' + error);
+																			}
+																		});
+																	});
+																});
+															</script>                            
+															<button type='button' class='btn btn-danger waves-effect' data-dismiss='modal'>CERRAR</button>
+														</div>
+													</div>
+												</div>
+											</div>
 												
+											<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+												<!-- Espaciado superior -->
+												<br>
+												<!-- Título principal de la sección -->
+												<h2><b>Pagos Registrados</b></h2>
+												<br>
 												
-												$dia.= "
-													<h3><b>Estatus del Paciente</b> </h3>
-													<h3><span class='label $span' >$estatus</span></h3> <hr>
-            <button type='button' class='btn bg-$body waves-effect'data-toggle='modal' data-target='#estatuslModal'>Modifica Estatus</button>
-            <!-- Small Size -->
-            <div class='modal fade' id='estatuslModal' tabindex='-1' role='dialog'>
-                <div class='modal-dialog modal-sm' role='document'>
-                    <div class='modal-content'>
-                        <div class='modal-header'>
-                            <h4 class='modal-title' id='estatuslModalLabel'>Seleccione el Estatus</h4>
-                        </div>
-                        <div class='modal-body'>							
-						    <div class='form-group form-float'>
-						        <label for='estado'>Estado:</label>
-						        <select class='form-control show-tick' id='estatus_sel' name='estatus_sel' required>
-						            <option value=''>-- Seleccione un Estatus --</option>
-						            <option value='Activo' ".($estatus == "Activo" ? "selected" : "").">Activo</option>
-						            <option value='Confirmado' ".($estatus == "Confirmado" ? "selected" : "").">Confirmado</option>
-						            <option value='Eliminado' ".($estatus == "Eliminado" ? "selected" : "").">Eliminado</option>
-						            <option value='Inactivo' ".($estatus == "Inactivo" ? "selected" : "").">Inactivo</option>
-						            <option value='No interezado' ".($estatus == "No interezado" ? "selected" : "").">No interezado</option>
-						            <option value='No localizado' ".($estatus == "No localizado" ? "selected" : "").">No localizado</option>
-						            <option value='Pendiente' ".($estatus == "Pendiente" ? "selected" : "").">Pendiente</option>
-						            <option value='Seguimiento' ".($estatus == "Seguimiento" ? "selected" : "").">Seguimiento</option>
-						            <option value='Remisión' ".($estatus == "Remisión" ? "selected" : "").">Remisión</option>
-						        </select>
-						    </div>
-				            </div>
-                        <div class='modal-footer'>
-                            <button id='btn_estatus' type='button' class='btn btn-primary waves-effect'>GUARDAR</button>
-							<script type='text/javascript'>
-							    $(document).ready(function() {
-							        $('#btn_estatus').click(function() {    
-							            var estatus = $('#estatus_sel').val();
-							            var paciente_id = '$paciente_id';
-							            var datastring = 'estatus=' + estatus + '&paciente_id=' + paciente_id;
-							
-							            $.ajax({
-							                url: 'procesar_seleccion.php',
-							                type: 'POST',
-							                data: datastring,
-							                cache: false,
-							                success: function(html) {
-							                	//alert(html);   
-							                    location.reload(); // Recargar la página tras la respuesta exitosa
-							                },
-							                error: function(xhr, status, error) {
-							                    console.log('Error en la petición: ' + error);
-							                }
-							            });
-							        });
-							    });
-							</script>                            
-                            <button type='button' class='btn btn-danger waves-effect' data-dismiss='modal'>CERRAR</button>
-                        </div>
-                    </div>
-                </div>
-            </div>													
-													";
-													
-$dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
-										        <h2><b>Pagos Registrados</b></h2><br>";										        
-																																			
-												$dia .= "<table style='width: auto;' class='table table-bordered'>
-															<tr>												   				
-												   				<th style='width: 20%;'>Ticket</th>
-												   				<th style='width: 45%;'>Consulta</th>
-												   				<th style='width:  15%;text-align: center' >Fecha</th>
-												   				<th style='width:  10%;text-align: center' >Sesiones</th>
-												   				<th style='width:  10%;text-align: center'>Importe</th>									   				
-															</tr>";
-																							
-// 												    
-												    
-											    	$sql_sem2 ="
+												<!-- Tabla para mostrar los pagos registrados -->
+												<table style='width: auto;' class='table table-bordered'>
+													<!-- Encabezado de la tabla -->
+													<tr>
+														<th style='width: 20%;'>Ticket</th>
+														<th style='width: 40%;'>Consulta</th>
+														<th style='width: 15%; text-align: center;'>Fecha</th>
+														<th style='width: 10%; text-align: center;'>Sesiones</th>
+														<th style='width: 15%; text-align: center;'>Importe</th>
+													</tr>
+
+													<?php
+													// Consulta para obtener los pagos registrados
+													$sql_sem2 = "
 														SELECT
-															cobros.doctor,
+															cobros.ticket,
 															cobros.consulta,
 															cobros.f_pago,
-															cobros.importe,
 															cobros.f_captura,
-															cobros.otros,
 															cobros.cantidad,
-															cobros.ticket,
-															cobros.usuario_id,
-															admin.nombre as nom_cob
+															cobros.importe,
+															admin.nombre AS nom_cob
 														FROM
 															cobros
-															INNER JOIN admin ON cobros.usuario_id = admin.usuario_id 
+														INNER JOIN
+															admin ON cobros.usuario_id = admin.usuario_id
 														WHERE
-															cobros.paciente_id = $paciente_id
-															AND cobros.tipo = 'Terapia'
-															AND cobros.empresa_id = $empresa_id";
-													// echo "$sql_sem2 <br>";
-										     	$result_sem2=ejecutar($sql_sem2); 
+															cobros.paciente_id = ?
+															AND cobros.tipo = ?
+															AND cobros.empresa_id = ?";
+
+													// Parámetros para la consulta
+													$parametros = [
+														$paciente_id, // ID del paciente
+														'Terapia',    // Tipo de cobro
+														$empresa_id   // ID de la empresa
+													];
+
+													// Ejecuta la consulta con la función consulta()
+													$result_sem2 = $conexion->consulta($sql_sem2, $parametros);
+
+													// Inicializa acumuladores para totales
 													$total_sesiones = 0;
 													$Gtotal = 0;
-													$cnt = mysqli_num_rows($result_sem2);
-												if ($cnt == 0) {
-													   	$dia .= "<tr>									   				
-													   				<td colspan='5' style='text-align: center'><b>No hay registros</b></td>
-																</tr>"; 													
 
-													
-													
+													// Verifica si hay resultados
+													if ($result_sem2['numFilas'] === 0) {
+														// Si no hay registros, muestra un mensaje en la tabla
+														echo "<tr>
+																<td colspan='5' style='text-align: center'><b>No hay registros</b></td>
+															</tr>";
+													} else {
+														// Recorre los resultados y construye la tabla
+														foreach ($result_sem2['resultado'] as $row) {
+															// Sanitiza los valores antes de imprimirlos
+															$ticket = htmlspecialchars($row['ticket'], ENT_QUOTES, 'UTF-8');
+															$consulta = htmlspecialchars($row['consulta'], ENT_QUOTES, 'UTF-8');
+															$f_pago = htmlspecialchars($row['f_pago'], ENT_QUOTES, 'UTF-8');
+															$f_captura = htmlspecialchars($row['f_captura'], ENT_QUOTES, 'UTF-8');
+															$cantidad = (int)$row['cantidad'];
+															$importe = (float)$row['importe'];
+															$nom_cob = htmlspecialchars($row['nom_cob'], ENT_QUOTES, 'UTF-8');
 
-												} else {
-											    	while($row_sem2 = mysqli_fetch_array($result_sem2)){
-												        extract($row_sem2);	
-												       // print_r($row_sem2);											        
-													   	$dia .= "<tr>									   				
-													   				<td>$ticket<br>Cobro:<br>$nom_cob</td>
-													   				<td>$consulta - $f_pago</td>
-													   				<td style='text-align: center'>$f_captura</td>
-													   				<td style='text-align: center'>$cantidad</td>
-													   				<td style='text-align: center'>$ ".number_format($importe)."</td>
-													   				
-																</tr>";   
-														  
-												        $total_sesiones = $total_sesiones+$cantidad;
-												        $Gtotal = $Gtotal+$importe;
-											        }	
-												}
-											   	$dia .= "<tr>									   				
-											   				<th colspan='2'>Total</th>											   				
-											   				<th style='text-align: center'>$total_sesiones</th>
-											   				<th style='text-align: center'>$ ".number_format($Gtotal)."</th>   				
-														</tr>"; 										        
-										        										        
-										        $dia .= "</table></div><hr>";														
-													
+															// Imprime la fila en la tabla
+															echo "<tr>
+																	<td>$ticket<br>Cobro:<br>$nom_cob</td>
+																	<td>$consulta - $f_pago</td>
+																	<td style='text-align: center;'>$f_captura</td>
+																	<td style='text-align: center;'>$cantidad</td>
+																	<td style='text-align: center;'>$ " . number_format($importe, 2) . "</td>
+																</tr>";
+
+															// Acumula los totales
+															$total_sesiones += $cantidad;
+															$Gtotal += $importe;
+														}
+													}
+													?>
+
+													<!-- Imprime la fila con los totales -->
+													<tr>
+														<th colspan='3'>Total</th>
+														<th style='text-align: center;'><?php echo $total_sesiones; ?></th>
+														<th style='text-align: center;'><?php echo "$ " . number_format($Gtotal, 2); ?></th>
+													</tr>
+
+
+												</table>
+											</div>
+
+											<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+												<?php														
+							/***************************************************************** */						
 												$edad = obtener_edad_segun_fecha($f_nacimiento);																									
 												$dia .= "<hr>
 													<h3><b>Información del Paciente</b></h3>
@@ -1103,10 +1141,10 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 															$f_estatus = "Pendiente";
 															$class = "class='success'";
 														}
-														
-														
-														
-												        $f_ini = strftime("%e-%b-%Y",strtotime($f_ini));
+
+													
+														$f_ini = (new DateTime($f_ini))->format('d-M-Y');
+                                                		$f_ini = strtr($f_ini, $meses_espanol); // Reemplazar meses en español                                 
 												        
 												        $dia .= "<tr>
 																	<th>$f_ini</th>
@@ -1316,8 +1354,11 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 													document.execCommand('copy');
 													window.getSelection().removeAllRanges();
 
+													$('#gpt_reporte').show();
 													$("#gpt").html('');
 													$('#loadx').show();
+													
+													
 													var paciente_id = "<?php echo $paciente_id; ?>";
 													var fecha = "<?php echo $hoy; ?>";
 													var requestData = { 
@@ -1359,8 +1400,10 @@ $dia .= "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'><br>
 													document.execCommand('copy');
 													window.getSelection().removeAllRanges();
 
+													$('#gpt_reporte').show();
 													$("#gpt").html('');
 													$('#loadx').show();
+
 													var paciente_id = "<?php echo $paciente_id; ?>";
 													var fecha = "<?php echo $hoy; ?>";
 													var requestData = { 
