@@ -60,7 +60,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             empresas.icono, 
             empresas.logo, 
             empresas.web, 
+            empresas.acceso_ia,
+            empresas.bind,
             empresas.body_principal, 
+            empresas.paquete_id,
             sucursales.nombre_sucursal
         FROM
             admin
@@ -140,7 +143,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['web'] = $cnt['web'];
             $_SESSION['body_principal'] = $cnt['body_principal'];
             $_SESSION['nombre_sucursal'] = $cnt['nombre_sucursal'];
-            
+            $_SESSION['bind'] = $cnt['bind'];
+            $_SESSION['acceso_ia'] = $cnt['acceso_ia'];
+            $_SESSION['paquete_id'] = $cnt['paquete_id'];
+
             // Actualizar el estado del usuario a "Activo"
             $query_update = "UPDATE admin SET actividad = 'Activo' WHERE usuario_id = ?";
             $conexion->consulta_simple($query_update, [$cnt['usuario_id']]);

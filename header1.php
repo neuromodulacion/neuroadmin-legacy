@@ -125,7 +125,7 @@ include($ruta.'uso.php');
     <!-- <script src="<?php echo $ruta; ?>js/jquery-3.3.1.min.js"></script>  -->    
     
     <!-- Favicon de la página -->
-    <link rel="icon" href="<?php echo $ruta; ?>images/logo_aldana_tc.png" type="image/png">
+    <link rel="icon" href="<?php echo $ruta.$icono; ?>" type="image/png">
     <!--<link rel="icon" href="<?php echo $ruta; ?>images/logo_aldana_tc.png" type="image/x-icon">-->
 
     <!-- Google Fonts para tipografía personalizada -->
