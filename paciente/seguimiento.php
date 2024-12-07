@@ -1,15 +1,24 @@
 <?php
 $ruta="../";
-
-extract($_SESSION);
-//print_r($_SESSION);
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
 $titulo ="Directorio"; 
 
 include($ruta.'header1.php');
+
+if (in_array((string)$funcion_id, ['1', '5', '6', '8'], true)) {
+	$class = "js-exportable";	
+	$where = "AND pacientes.empresa_id = $empresa_id ";
+	$app ="min-width: 320px";
+}else{
+	$class = "";
+	
+	if (in_array((string)$funcion_id, ['4'], true)) {
+		$app ="min-width: 100px";
+		$where = "AND pacientes.empresa_id = $empresa_id AND pacientes.usuario_id = $usuario_id";
+	}else{
+		$app ="min-width: 100px";
+		$where = "AND pacientes.empresa_id = $empresa_id ";}
+}
+
 //include($ruta.'header.php');
 ?>
     <!-- JQuery DataTable Css -->
@@ -23,8 +32,7 @@ include($ruta.'header2.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>SEGUIMIENTO PACIENTES</h2>
-                 <?php //echo $ubicacion_url."<br>"; 
-                // //echo $ruta."proyecto_medico/menu.php"?>
+                <?php echo $ubicacion_url."<br>"; ?>
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
@@ -39,7 +47,7 @@ include($ruta.'header2.php');
                     <div class="card">
                         <div class="header">
                             <h2>
-                                SEGUIMIENTO PACIENTES
+                                SEGUIMIENTO PACIENTES xxx
                             </h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
@@ -87,6 +95,7 @@ include($ruta.'header2.php');
 											pacientes
 										WHERE
 											estatus='Activo'
+                                            $where
 								        ";
 								        $result_protocolo=ejecutar($sql_protocolo); 
 								            //echo $cnt."<br>";  

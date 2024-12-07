@@ -1,35 +1,11 @@
 <?php
-// Iniciar la sesión del usuario
-session_start();
-
-// Configurar el nivel de reporte de errores (7 muestra errores y advertencias)
-error_reporting(7);
-
-// Establecer la codificación interna a UTF-8 para las funciones de conversión de cadenas
-iconv_set_encoding('internal_encoding', 'utf-8');
-
-// Enviar cabecera HTTP para especificar que el contenido es HTML con codificación UTF-8
-header('Content-Type: text/html; charset=UTF-8');
-
-// Establecer la zona horaria predeterminada
-date_default_timezone_set('America/Monterrey');
-
-// Configurar la localización en español para fechas y horas
-setlocale(LC_TIME, 'es_ES.UTF-8');
-
-// Guardar la hora actual en la sesión
-$_SESSION['time'] = time();
-
-// Definir la ruta base para acceder a otros archivos
 $ruta = "../";
-
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
 $titulo ="Protocolos";
 
+include($ruta.'header1.php');
+
+$mes_nav = $_POST['mes_nav'] ?? '';
+$anio_nav = $_POST['anio_nav'] ?? '';
 
 if ($mes_nav =='') {
 	$mes_nav = $mes_ahora;
@@ -39,15 +15,13 @@ if ($anio_nav =='') {
 	$anio_nav = $anio;
 }
 //include($ruta.'header.php'); 
-if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR') {
+if ($funcion_id == 1 || $funcion_id == 5) {
 	$class = "js-exportable";	
 	$where = "";
 }else{
 	$class = "";
-	if ($funcion == 'MEDICO'){$where = "AND pacientes.usuario_id = $usuario_id";}else{$where = "";}
+	if ($funcion_id == 4 ){$where = "AND pacientes.usuario_id = $usuario_id";}else{$where = "";}
 }
-
-include($ruta.'header1.php');
 ?>
     <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
     
@@ -86,8 +60,7 @@ include($ruta.'header2.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>REPORTE DE PROTOCOLOS</h2>
-                <?php echo $ubicacion_url."<br>"; 
-                //echo $ruta."proyecto_medico/menu.php"?>
+                <?php echo $ubicacion_url;?>
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
@@ -200,7 +173,15 @@ include($ruta.'header2.php');
 							        extract($row_sem);	
 									//print_r($row_sem);
 									$fechax = $fecha;							
-							        $fecha = strftime("%e",strtotime($fecha));
+							        //$fecha = strftime("%e",strtotime($fecha));
+									try {
+										$date = new DateTime($fecha);
+										$fecha = $date->format('d-M-Y'); // Formato similar a '%d-%b-%Y'
+									} catch (Exception $e) {
+										$fecha = "Fecha no válida";
+										error_log("Error al procesar la fecha: " . $e->getMessage());
+									}
+
 							        $th .= "<th style='background: #FFF'>$fecha</th>";
 									
 									if ($cnt == $cnt1) {

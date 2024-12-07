@@ -1,10 +1,5 @@
 <?php
 $ruta="../";
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
 $titulo ="Pacientes Pendientes"; 
 
 
@@ -12,14 +7,19 @@ include($ruta.'header1.php');
 //include($ruta.'header.php');
 include('calendario.php');
 include('fun_paciente.php');
-if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' ||  $funcion == 'COORDINADOR') {
+
+if (in_array((string)$funcion_id, ['1', '5', '6', '8'], true)) {
 	$class = "js-exportable";	
 	$where = "AND pacientes.empresa_id = $empresa_id ";
+	$app ="min-width: 320px";
 }else{
 	$class = "";
 	
-	if ($funcion == 'MEDICO'){$where = "AND pacientes.empresa_id = $empresa_id AND pacientes.usuario_id = $usuario_id";
+	if (in_array((string)$funcion_id, ['4'], true)) {
+		$app ="min-width: 100px";
+		$where = "AND pacientes.empresa_id = $empresa_id AND pacientes.usuario_id = $usuario_id";
 	}else{
+		$app ="min-width: 100px";
 		$where = "AND pacientes.empresa_id = $empresa_id ";}
 }
 
@@ -35,9 +35,7 @@ include($ruta.'header2.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>PACIENTES</h2>
-                 <?php //print_r($_SESSION);
-                 //echo $ubicacion_url."<br>"; 
-                // //echo $ruta."proyecto_medico/menu.php"?>
+				<?php echo $ubicacion_url."<br>"; ?>
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
@@ -68,7 +66,7 @@ include($ruta.'header2.php');
 				                            </ul> -->
 				                        </div>
 				                        <div class="body">
-				                            <div class="table-responsive">
+				                            <div class="table-responsive"> 
 				                                <table class="table table-bordered table-striped table-hover dataTable <?php echo $class; ?>">
 				                                    <thead>
 				                                        <tr>
@@ -78,7 +76,7 @@ include($ruta.'header2.php');
 				                                            <th style="min-width: 200px">Medico</th>
 				                                            <th style="min-width: 100px">Celular</th>
 				                                            <th>Estatus</th>
-				                                            <th style="min-width: 320px">Accion</th>
+				                                            <th style="<?php echo $app; ?>">Accion</th>
 				                                        </tr>
 				                                    </thead>
 				                                    <tfoot>
@@ -97,10 +95,18 @@ include($ruta.'header2.php');
 				                                    
 													$sql_protocolo = "
 														SELECT
-															pacientes.*,
 															admin.nombre AS medico,
 															estatus_paciente.color,
-															estatus_paciente.rgb 
+															estatus_paciente.rgb,
+															pacientes.paciente_id,
+															pacientes.paciente,
+															pacientes.apaterno,
+															pacientes.amaterno,
+															pacientes.celular,
+															pacientes.f_nacimiento,
+															pacientes.tel1,
+															pacientes.tel2,
+															pacientes.tratamiento 
 														FROM
 															pacientes
 															INNER JOIN admin ON pacientes.usuario_id = admin.usuario_id
@@ -117,8 +123,15 @@ include($ruta.'header2.php');
 												            $total = 0;
 												            $ter="";
 												        while($row_protocolo = mysqli_fetch_array($result_protocolo)){
-												            extract($row_protocolo);
-				                                    			$today = strftime( '%d-%b-%Y', strtotime( $f_captura) );
+												            extract($row_protocolo);																
+																try {
+																	$date = new DateTime($f_captura);
+																	$today = $date->format('d-M-Y'); // Formato similar a '%d-%b-%Y'
+																} catch (Exception $e) {
+																	$today = "Fecha no válida";
+																	error_log("Error al procesar la fecha: " . $e->getMessage());
+																}
+
                                     							$edad = obtener_edad_segun_fecha($f_nacimiento);
 					                                    		if ($class == 'bg-yellow') {
 																	$class = "class='$class' style='color: black !important;'";
@@ -134,23 +147,22 @@ include($ruta.'header2.php');
 				                                            <td><?php echo $celular."<br>".$tel1."<br>".$tel2; ?></td>
 				                                            <td style="background: grey; color: #FFFFFF"><b><?php echo $estatus; ?></b></td>
 				                                            <td>
-				                                            	<?php if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNICO' || $funcion == 'COORDINADOR') { ?>
-				
-														         <a class="btn bg-cyan waves-effect" href="<?php echo $ruta; ?>agenda/agenda.php<?php echo "?paciente_id=$paciente_id&paciente=$paciente&apaterno=$apaterno&amaterno=$amaterno"; ?>">
-														             <i class="material-icons">call_missed_outgoing</i> <B>Agenda</B>
-														         </a>
-														         <a class="btn bg-teal waves-effect"  target="_blank" href="https://api.whatsapp.com/send?phone=52<?php echo $celular; ?>&text=Buen día  <?php echo $paciente." ".$apaterno." ".$amaterno; ?> 
-														         	recibímos una solicitud para una Terapia Electromagnetica Transcraneal Atte. <?php echo $nombre; ?> de Neuro Modulacion Gdl">
-														             <img align="left" border="0" src="<?php echo $ruta; ?>images/WhatsApp.png"  style="width: 25px;  " >
-														         </a>
-														         <a class="btn bg-blue waves-effect" href="<?php echo $ruta; ?>paciente/registro_contacto.php<?php echo "?paciente_id=$paciente_id&paciente=$paciente&apaterno=$apaterno&amaterno=$amaterno"; ?>">
-														             <i class="material-icons">assignment</i> <B>Registro</B>
-														         </a>
+																<?php if (in_array((string)$funcion_id, ['1', '5', '2', '6', '8'], true)) { ?>
+
+																	<a class="btn bg-cyan waves-effect" href="<?php echo $ruta; ?>agenda/agenda.php<?php echo "?paciente_id=$paciente_id&paciente=$paciente&apaterno=$apaterno&amaterno=$amaterno"; ?>">
+																		<i class="material-icons">call_missed_outgoing</i> <B>Agenda</B>
+																	</a>
+																	<a class="btn bg-teal waves-effect"  target="_blank" href="https://api.whatsapp.com/send?phone=52<?php echo $celular; ?>&text=Buen día  <?php echo $paciente." ".$apaterno." ".$amaterno; ?> 
+																		recibímos una solicitud para una Terapia Electromagnetica Transcraneal Atte. <?php echo $nombre; ?> de Neuro Modulacion Gdl">
+																		<img align="left" border="0" src="<?php echo $ruta; ?>images/WhatsApp.png"  style="width: 25px;  " >
+																	</a>
+																	<a class="btn bg-blue waves-effect" href="<?php echo $ruta; ?>paciente/registro_contacto.php<?php echo "?paciente_id=$paciente_id&paciente=$paciente&apaterno=$apaterno&amaterno=$amaterno"; ?>">
+																		<i class="material-icons">assignment</i> <B>Registro</B>
+																	</a>
 														         <?php } ?>										         
 														         <a class="btn bg-blue waves-effect" href="<?php echo $ruta; ?>paciente/info_paciente.php?paciente_id=<?php echo $paciente_id; ?>">
 														             <i class="material-icons">chat</i> <B>Datos</B>
 														         </a> 
-				
 				                                            </td>
 				                                        </tr>
 				                                     <?php } ?>   

@@ -367,14 +367,14 @@ extract($row);
 											                });
 											            </script>                       	
 														<hr>
-														<a $style class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html.php?paciente_id=$paciente_id' role='button' >
+														<a $style class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html.php?paciente_id=<?php echo $paciente_id; ?>' role='button' >
 															Descarga Reporte Doctor 
-															<i class='material-icons'>person</i>
+															<i class='material-icons'>person</i> 
 															<i class='material-icons'>file_download</i>
 														</a>
-														<a $style class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html_paciente.php?paciente_id=$paciente_id' role='button' >
+														<a $style class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html_paciente.php?paciente_id=<?php echo $paciente_id; ?>' role='button' >
 															Descarga Reporte Paciente 
-															<i class='material-icons'>assignment_ind</i>
+															<i class='material-icons'>assignment_ind</i> 
 															<i class='material-icons'>file_download</i>
 														</a>
 					                                </div>
@@ -446,10 +446,10 @@ extract($row);
 												if ($paquete_id == 12) { ?>
 													<div class='row'>
 														<div class='col-md-6'><br>
-															<a  class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_tms.php?paciente_id=$paciente_id' role='button' >Descarga Contrato y Condiciones TMS <i class='material-icons'>file_download</i></a>
+															<a  class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_tms.php?paciente_id=<?php echo $paciente_id; ?>' role='button' >Descarga Contrato y Condiciones TMS <i class='material-icons'>file_download</i></a>
 														</div>
 														<div class='col-md-6'><br>
-															<a  class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_tdcs.php?paciente_id=$paciente_id' role='button' >Descarga Contrato y Condiciones TdCS <i class='material-icons'>file_download</i></a>
+															<a  class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_tdcs.php?paciente_id=<?php echo $paciente_id; ?>' role='button' >Descarga Contrato y Condiciones TdCS <i class='material-icons'>file_download</i></a>
 														</div>
 													</div><hr>	
 												<?php }
@@ -618,7 +618,16 @@ extract($row);
 														foreach ($result_sem2['resultado'] as $row) {
 															// Sanitiza los valores antes de imprimirlos
 															$ticket = htmlspecialchars($row['ticket'], ENT_QUOTES, 'UTF-8');
-															$consulta = htmlspecialchars($row['consulta'], ENT_QUOTES, 'UTF-8');
+															
+															//$consulta = mb_convert_encoding($row['consulta'], 'UTF-8', 'ISO-8859-1');
+															//$consulta = mb_convert_encoding($row['consulta'], 'ISO-8859-1', 'UTF-8');
+															if (mb_check_encoding($row['consulta'], 'UTF-8')) {
+																$consulta = mb_convert_encoding($row['consulta'], 'ISO-8859-1', 'UTF-8');
+															} else {
+																$consulta = $row['consulta']; // Ya está en ISO-8859-1 o en una codificación diferente
+															}
+															
+															//$consulta = utf8_encode($row['consulta']);
 															$f_pago = htmlspecialchars($row['f_pago'], ENT_QUOTES, 'UTF-8');
 															$f_captura = htmlspecialchars($row['f_captura'], ENT_QUOTES, 'UTF-8');
 															$cantidad = (int)$row['cantidad'];
