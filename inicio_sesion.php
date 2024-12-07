@@ -47,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             admin.pwd, 
             admin.acceso, 
             admin.funcion, 
+            admin.funcion_id,
             admin.saldo, 
             admin.observaciones, 
             admin.estatus, 
@@ -127,6 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // No almacenar la contraseña en la sesión por razones de seguridad
             $_SESSION['acceso'] = $cnt['acceso'];
             $_SESSION['funcion'] = $cnt['funcion'];
+            $_SESSION['funcion_id'] = $cnt['funcion_id'];
             $_SESSION['saldo'] = $cnt['saldo'];
             $_SESSION['observaciones'] = $cnt['observaciones'];
             $_SESSION['perfil_id'] = $cnt['perfil_id'];

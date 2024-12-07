@@ -29,8 +29,7 @@ include($ruta.'header2.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>INICIO</h2>
-                <!-- <?php echo $ubicacion_url; 
-                echo "<br> $ruta.'/proyecto_medico/menu.php'"?> -->
+                <?php echo $ubicacion_url."<br>"; ?>
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
@@ -80,7 +79,7 @@ ORDER BY
                     while($row = mysqli_fetch_array($result_sql)) {
                     	extract($row);
                     	
-                    	if ($funcion == 'SISTEMAS') {
+                    	if ($funcion_id == 1) {
 							$disabled = '';
 						} else {
 							$disabled = 'style="display: none"';

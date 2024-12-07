@@ -86,7 +86,7 @@ include($ruta.'header2.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>REPORTE DE TÉCNICOS</h2>
-
+				<?php echo $ubicacion_url;?>
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
@@ -211,7 +211,7 @@ include($ruta.'header2.php');
 											$class =" style='background: #FFF'";
 											$class_tx = "default";
 										}
-										 
+										
 										//$td .= "<td $class>".$$fechay."xx</td>";
 
 										$script_tx = "
@@ -223,7 +223,7 @@ include($ruta.'header2.php');
 							                	var tipo_consulta = 'diaria';
 												var medico = '".$nombre."'
 							                    var datastring = 'fecha='+fecha+'&tipo_consulta='+tipo_consulta+'&usuario_idx='+usuario_idx+'&medico='+medico;
-							                    //alert(datastring);
+							                    alert(datastring);
 												$('#contenido_modal').html('');
 							                    $.ajax({
 							                        url: 'genera_tecnicos.php',
@@ -231,7 +231,7 @@ include($ruta.'header2.php');
 							                        data: datastring,
 							                        cache: false,
 							                        success:function(html){   
-							                        	//alert(html);  
+							                        	alert(html);  
 							                            $('#contenido_modal').html(html);
 							                            $('#modal_grafica').click(); 
 							                            

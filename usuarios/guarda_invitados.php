@@ -39,7 +39,7 @@ $sql_protocolo = "
 		empresas.empresa_id = $empresa_id 									
     ";
 	
-//echo $sql_protocolo;
+echo $sql_protocolo."<hr>";
 $result_protocolo=ejecutar($sql_protocolo); 
 
 $row_protocolo = mysqli_fetch_array($result_protocolo);
@@ -48,7 +48,8 @@ extract($row_protocolo);
 // echo "<br>mes ".$mes."<br>";
 //echo "<hr>";
 $sql = "SELECT
-			admin.usuario 
+			admin.usuario,
+			admin.usuario_id as usuario_idx 
 		FROM
 			admin
 		WHERE
@@ -85,7 +86,7 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 			</div>
 			<div style="margin: 0 auto; max-width: 600px; text-align: left;">
 				<h3><?php echo htmlspecialchars($mensaje ?? 'Usuario ya registrado.', ENT_QUOTES, 'UTF-8'); ?></h3>
-				<p><strong>Registro:</strong> <?php echo htmlspecialchars($usuario_id ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
+				<p><strong>Registro:</strong> <?php echo htmlspecialchars($usuario_idx ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
 				<p><strong>Nombre:</strong> <?php echo htmlspecialchars($nombre ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
 				<p><strong>Correo Electrónico:</strong> <?php echo htmlspecialchars($usuario ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
 				<p><strong>Teléfono:</strong> <?php echo htmlspecialchars($celular ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
@@ -108,6 +109,8 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 			funciones
 		WHERE 
 			funciones.funcion = '$funcion'"; 
+			
+		//echo $sql."<hr>";	
 	$result_insert = ejecutar($sql);
 	$row1 = mysqli_fetch_array($result_insert);
 	extract($row1);
@@ -122,14 +125,15 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 				usuario,
 				pwd,
 				acceso,
-				funciones_id,
+				funcion_id,
 				funcion,
 				telefono,
 				saldo,
 				f_alta,
 				h_alta ,
 				estatus,
-				empresa_id
+				empresa_id,
+				sucursal_id
 			) 
 		VALUE
 			(
@@ -144,7 +148,8 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 				'$f_alta',
 				'$h_alta',
 				'Pendiente',
-				$empresa_id
+				$empresa_id.
+				$sucursal_id
 			) ";
     //echo $insert1."<hr>";
 	$result_insert = ejecutar($insert1);
@@ -154,6 +159,7 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 				max(usuario_id)  as usuario_id 
 			FROM
 				admin"; 
+				
 	$result_insert = ejecutar($sql);
 	$row1 = mysqli_fetch_array($result_insert);
 	extract($row1);
@@ -172,7 +178,7 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 				'$body_principal',
 				'Si'
 			) ";
-	    //  echo $insert1."<hr>";
+	      //echo $insert1."<hr>";
 	$result_insert = ejecutar($insert1);
 	// print_r($row1);
 
@@ -184,7 +190,7 @@ $enlace_invitacion = "$url_base?datos=$datos_codificados";
 		WHERE
 			invitaciones.time = $timex";
 			
-		    // echo $update."<hr>";
+		     //echo $update."<hr>";
 		$result_insert = ejecutar($update);
 
 	$destinatario = $usuario; 

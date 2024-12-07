@@ -84,10 +84,11 @@ $sql_protocolo = "
 		empresas.body_principal,
 		empresas.icono,
 		empresas.logo,
-		empresas.web 
+		empresas.web,
+		admin.sucursal_id 
 	FROM
 		admin
-		INNER JOIN empresas ON admin.empresa_id = empresas.empresa_id
+		INNER JOIN empresas ON admin.empresa_id = empresas.empresa_id 
 	WHERE
 		admin.usuario_id = $usuario_id";
 
@@ -122,7 +123,7 @@ include($ruta.'functions/header_temp.php');
 	        	<input type="hidden" name="usuario_id" id="usuario_id" value="<?php echo $usuario_id; ?>"/>
 	        	<input type="hidden" name="timex" id="time" value="<?php echo $timex; ?>"/> 
 	        	<input type="hidden" name="uso" id="uso" value="<?php echo $uso; ?>"/>    
-	        	                        	
+	        	<input type="hidden" name="sucursal_id" id="sucursal_id" value="<?php echo $sucursal_id; ?>"/>                        	
 	            <!-- Campo para ingresar el nombre del nuevo usuario -->
 	            <h3>NOMBRE DE <?php echo $funcion; ?></h3>
 	            <fieldset>

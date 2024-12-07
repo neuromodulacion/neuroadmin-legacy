@@ -1,24 +1,23 @@
 <?php //seguimientos.php
 $ruta="../";
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
 $titulo ="Pacientes Pendientes"; 
 
 include($ruta.'header1.php');
-//include($ruta.'header.php');
 include('calendario.php');
 include('fun_paciente.php');
-if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'COORDINADOR') {
+
+if (in_array((string)$funcion_id, ['1', '5', '6', '8'], true)) {
 	$class = "js-exportable";	
 	$where = "AND pacientes.empresa_id = $empresa_id ";
+	$app ="min-width: 320px";
 }else{
 	$class = "";
 	
-	if ($funcion == 'MEDICO'){$where = "AND pacientes.empresa_id = $empresa_id AND pacientes.usuario_id = $usuario_id";
+	if (in_array((string)$funcion_id, ['4'], true)) {
+		$app ="min-width: 100px";
+		$where = "AND pacientes.empresa_id = $empresa_id AND pacientes.usuario_id = $usuario_id";
 	}else{
+		$app ="min-width: 100px";
 		$where = "AND pacientes.empresa_id = $empresa_id ";}
 }
 
@@ -34,9 +33,7 @@ include($ruta.'header2.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>PACIENTES</h2>
-                 <?php //print_r($_SESSION);
-                 //echo $ubicacion_url."<br>"; 
-                // //echo $ruta."proyecto_medico/menu.php"?>
+				<?php echo $ubicacion_url."<br>"; ?>
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
@@ -75,7 +72,7 @@ include($ruta.'header2.php');
 				                                            <th style="min-width: 65px">Fecha</th>
 				                                            <th style="min-width: 150px">Nombre</th>
 				                                            <th style="min-width: 200px">Medico</th>
-				                                            <th>Celular</th>
+				                                            <th style="min-width: 100px">Celular</th>
 				                                            <th>Estatus</th>
 				                                            <th style="min-width: 450px">Accion</th>
 				                                        </tr>
@@ -117,7 +114,20 @@ include($ruta.'header2.php');
 												            $ter="";
 												        while($row_protocolo = mysqli_fetch_array($result_protocolo)){
 												            extract($row_protocolo);
-				                                    			$today = strftime( '%d-%b-%Y', strtotime( $f_captura) );
+																try {
+																	$date = new DateTime($f_captura);
+																	$today = $date->format('d-M-Y'); // Formato similar a '%d-%b-%Y'
+																} catch (Exception $e) {
+																	$today = "Fecha no válida";
+																	error_log("Error al procesar la fecha: " . $e->getMessage());
+																}
+
+																$edad = obtener_edad_segun_fecha($f_nacimiento);
+																if ($class == 'bg-yellow') {
+																	$class = "class='$class' style='color: black !important;'";
+																} else {
+																	$class = "class='$class'";
+																}
                                     							$edad = obtener_edad_segun_fecha($f_nacimiento);
 
 				                                    ?>	
@@ -129,7 +139,6 @@ include($ruta.'header2.php');
 				                                            <td><?php echo $celular; ?></td>
 				                                            <td  style="background: yellow; "><b><?php echo $estatus; ?></b></td>
 				                                            <td>
-				                                            	
 																 <button id="seguimientos_<?php echo $paciente_id; ?>" type="button" class="btn btn-default waves-effect" ><i class="material-icons">assignment</i> <b>Seguimientos</b></button>
 																	<script type='text/javascript'>
 														                $('#seguimientos_<?php echo $paciente_id; ?>').click(function(){
@@ -149,45 +158,45 @@ include($ruta.'header2.php');
 														                	});
 														                });
 														            </script> 
-														         <a class="btn bg-cyan waves-effect" href="<?php echo $ruta; ?>agenda/agenda.php<?php echo "?paciente_id=$paciente_id&paciente=$paciente&apaterno=$apaterno&amaterno=$amaterno"; ?>">
-														             <i class="material-icons">call_missed_outgoing</i> <B>Agenda</B>
-														         </a>
-														         <a class="btn bg-teal waves-effect"  target="_blank" href="https://api.whatsapp.com/send?phone=52<?php echo $celular; ?>&text=Buen día  <?php echo $paciente." ".$apaterno." ".$amaterno; ?> 
-														         	recibímos una solicitud para una Terapia Electromagnetica Transcraneal Atte. <?php echo $nombre; ?> de Neuro Modulacion Gdl">
-														             <img align="left" border="0" src="<?php echo $ruta; ?>images/WhatsApp.png"  style="width: 25px;  " >
-														         </a>
-														         <a class="btn bg-blue waves-effect" href="<?php echo $ruta; ?>paciente/registro_contacto.php<?php echo "?paciente_id=$paciente_id&paciente=$paciente&apaterno=$apaterno&amaterno=$amaterno"; ?>">
-														             <i class="material-icons">assignment</i> <B>Registro</B>
-														         </a>
-														         									         
+																<?php if (in_array((string)$funcion_id, ['1', '5', '2', '6', '8'], true)) { ?>	
+																	<a class="btn bg-cyan waves-effect" href="<?php echo $ruta; ?>agenda/agenda.php<?php echo "?paciente_id=$paciente_id&paciente=$paciente&apaterno=$apaterno&amaterno=$amaterno"; ?>">
+																		<i class="material-icons">call_missed_outgoing</i> <B>Agenda</B>
+																	</a>
+																	<a class="btn bg-teal waves-effect"  target="_blank" href="https://api.whatsapp.com/send?phone=52<?php echo $celular; ?>&text=Buen día  <?php echo $paciente." ".$apaterno." ".$amaterno; ?> 
+																		recibímos una solicitud para una Terapia Electromagnetica Transcraneal Atte. <?php echo $nombre; ?> de Neuro Modulacion Gdl">
+																		<img align="left" border="0" src="<?php echo $ruta; ?>images/WhatsApp.png"  style="width: 25px;  " >
+																	</a>
+																	<a class="btn bg-blue waves-effect" href="<?php echo $ruta; ?>paciente/registro_contacto.php<?php echo "?paciente_id=$paciente_id&paciente=$paciente&apaterno=$apaterno&amaterno=$amaterno"; ?>">
+																		<i class="material-icons">assignment</i> <B>Registro</B>
+																	</a>
+														        <?php } ?>									         
 														         <a class="btn bg-blue waves-effect" href="<?php echo $ruta; ?>paciente/info_paciente.php?paciente_id=<?php echo $paciente_id; ?>">
 														             <i class="material-icons">chat</i> <B>Datos</B>
 														         </a> 
 				
 				                                            </td>
 				                                        </tr>
-				                                       
-				                                        	<?php } ?>			
+														<?php } ?>			
 				                                    </tbody>
 				                                </table>
 				                                
-				            <button style="display: none" id="modal" type="button" class="btn btn-default waves-effect" data-toggle="modal" data-target="#largeModal"><i class="material-icons">assignment</i> <b>Seguimientos</b></button>
-				            <!-- Large Size -->
-				            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
-				                <div class="modal-dialog modal-lg" role="document">
-				                    <div class="modal-content">
-				                        <div class="modal-header">
-				                            <h4 class="modal-title" id="largeModalLabel">Seguimientos</h4>
-				                        </div>
-				                        <div id="contenido" class="modal-body">
-				                        	
-				                        </div>
-				                        <div class="modal-footer">
-				                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CERRAR</button>
-				                        </div>
-				                    </div>
-				                </div>
-				            </div>                                
+												<button style="display: none" id="modal" type="button" class="btn btn-default waves-effect" data-toggle="modal" data-target="#largeModal"><i class="material-icons">assignment</i> <b>Seguimientos</b></button>
+												<!-- Large Size -->
+												<div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
+													<div class="modal-dialog modal-lg" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h4 class="modal-title" id="largeModalLabel">Seguimientos</h4>
+															</div>
+															<div id="contenido" class="modal-body">
+																
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CERRAR</button>
+															</div>
+														</div>
+													</div>
+												</div>                                
 				                                
 				                            </div>
 				                        </div>

@@ -2,7 +2,19 @@
 // Incluir archivos necesarios para funciones de base de datos y envío de correos electrónicos
 include('../functions/funciones_mysql.php');
 include('../functions/email.php');
+include($ruta.'functions/conexion_mysqli.php');
 
+// Incluir el archivo de configuración y obtener las credenciales
+$configPath = $ruta.'../config.php';
+
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
+}
+
+$config = require $configPath;
+
+// Crear una instancia de la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
 session_start();
 
 // Establecer el nivel de notificación de errores
@@ -34,6 +46,23 @@ extract($_POST);
 // Fecha y hora de registro actual
 $f_registro = date("Y-m-d");
 $h_registro = date("H:i:s");
+
+$paciente_id = $_POST['paciente_id'] ?? null;
+$contacto = $_POST['contacto'] ?? '';
+$no_contacto = $_POST['no_contacto'] ?? '';
+$beneficios = $_POST['beneficios'] ?? '';
+$costo = $_POST['costo'] ?? '';
+$f_pago = $_POST['f_pago'] ?? '';
+$ini_tratamiento = $_POST['ini_tratamiento'] ?? '';
+$forma_pago = $_POST['forma_pago'] ?? '';
+$no_tratamiento = $_POST['no_tratamiento'] ?? '';
+$otros = $_POST['otros'] ?? '';
+$new_contacto = $_POST['new_contacto'] ?? '';
+$f_contacto_prox = $_POST['f_contacto_prox'] ?? null;
+$observaciones = $_POST['observaciones'] ?? '';
+$usuario_id = $_SESSION['usuario_id'] ?? 0;
+$empresa_id = $_SESSION['empresa_id'] ?? 0;
+
 
 // Consulta para insertar un nuevo registro de llamada en la tabla `registro_llamadas`
 $insert1 = "
@@ -214,13 +243,11 @@ if ($contacto == 'Si') {
                 <div align="center"> 
                     <div style="width: 90% !important;" align="left">
                         <h3>Se contactó al paciente para la terapia</h3>
-                        <?php echo $mensaje; ?>
                         <div style="width: 90% !important;" align="left">
                             <!-- Mostrar detalles de la llamada de contacto y estatus del paciente -->
                             Registro: <b><?php echo $paciente_id; ?></b><br>
                             Nombre: <b><?php echo $paciente; ?></b><br>
-                            Decidió iniciar el tratamiento: <b><?php echo $ini_tratamiento; ?></b><br>
-                            <?php echo $mensajes; ?><br><br>               
+                            Decidió iniciar el tratamiento: <b><?php echo $ini_tratamiento; ?></b><br>              
                         </div> 
                         <!-- Botón para continuar al listado de pendientes -->
                         <a href="<?php echo $ruta; ?>paciente/pendientes.php" class="btn bg-green btn-lg waves-effect">CONTINUAR</a>  
