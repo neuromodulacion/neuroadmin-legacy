@@ -54,7 +54,6 @@
                     switch ($tipo_m) {
                         case 'liga':
                             ?>
-                            
                             <!-- Elemento del menú: Principal -->
                             <li <?php if ($ubicacion_url == $ruta_menu) { echo 'class="active"'; } ?>>
                                 <a href="<?php echo $ruta.$ruta_menu; ?>">
@@ -64,6 +63,7 @@
                             </li>
                             <?php
                             break;
+
                         case 'principal':
 
                             // Consulta para obtener las rutas adicionales con tipo 'liga'
@@ -87,7 +87,8 @@
                                 SELECT
                                     submenus.ruta_submenu,
                                     submenus.nombre_s,
-                                    submenus.iconos
+                                    submenus.iconos,
+                                    submenus.tipo_s
                                 FROM
                                     submenus
                                 WHERE
@@ -119,14 +120,73 @@
                                         $ruta_submenu = $fila2['ruta_submenu'];
                                         $nombre_s = $fila2['nombre_s'];
                                         $iconos = $fila2['iconos'];
-                                        ?>
-                                        <li <?php echo ($ubicacion_url == $ruta_submenu) ? 'class="active"' : ''; ?>>
-                                            <a href="<?php echo $ruta . $ruta_submenu; ?>">
-                                                <?php echo $iconos; ?>
-                                                <span><?php echo $nombre_s; ?></span>
-                                            </a>
-                                        </li>
-                                        <?php
+                                        $tipo_s = $fila2['tipo_s'];
+                                        switch ($tipo_s) {
+                                            case 'liga':
+                                                ?>
+                                                <li <?php echo ($ubicacion_url == $ruta_submenu) ? 'class="active"' : ''; ?>>
+                                                    <a href="<?php echo $ruta . $ruta_submenu; ?>">
+                                                        <?php echo $iconos; ?>
+                                                        <span><?php echo $nombre_s; ?></span>
+                                                    </a>
+                                                </li>
+                                                <?php
+                                                break;
+
+                                            case 'etiqueta':
+                                                ?>
+                                                <li style="background-color: #eee"  <?php echo ($ubicacion_url == $ruta_submenu) ? 'class="active"' : ''; ?>>
+                                                    <a href="<?php echo $ruta . $ruta_submenu; ?>">
+                                                        <?php echo $iconos; ?>
+                                                        <span><?php echo $nombre_s; ?></span>
+                                                    </a>
+                                                </li>
+                                                <?php
+                                                break;
+                                                
+                                            case 'balance':
+                                                ?>
+                                                
+                                                <li <?php if ($ubicacion_url == 'caja/balance_mes.php' || $ubicacion_url == 'caja/balance_mes.php?us='.$emp_nombre) { echo 'class="active"'; } ?>>
+                                                    <a href="javascript:void(0);" class="menu-toggle">
+                                                        <?php echo $icono_menu; ?>
+                                                        <span><?php echo $nombre_m; ?></span>
+                                                    </a>
+                                                    <ul class="ml-menu">
+                                                        <!-- Submenú: Balance del usuario actual -->
+                                                        <li>
+                                                            <a href="<?php echo $ruta; ?>caja/balance_mes.php?us=<?php echo $emp_nombre; ?>">
+                                                                <span><?php echo $emp_nombre; ?></span>
+                                                            </a>
+                                                        </li>
+                                                        <!-- Submenú: Balance por cada médico registrado en la empresa -->
+                                                        <?php
+                                                            $sql_medico = "
+                                                                SELECT
+                                                                    medicos.medico_id, 
+                                                                    medicos.medico
+                                                                FROM
+                                                                    medicos
+                                                                WHERE
+                                                                    medicos.empresa_id = $empresa_id
+                                                            ";
+                                                            $result_medico = ejecutar($sql_medico); 
+                                                            while ($row_medico = mysqli_fetch_array($result_medico)) { 
+                                                                extract($row_medico);
+                                                        ?>
+                                                        <li>
+                                                            <a href="<?php echo $ruta; ?>caja/balance_mes.php?us=<?php echo $medico; ?>">
+                                                                <span><?php echo $medico; ?></span>
+                                                            </a>
+                                                        </li>
+                                                        <?php } ?>
+                                                    </ul>
+                                                </li>
+                    
+                                                <?php
+                                                break;
+                                        }
+
                                     }
                                     ?>
                                 </ul>

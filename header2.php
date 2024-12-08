@@ -75,12 +75,31 @@
 			        ";
 			        $result_protocolo=ejecutar($sql_protocolo);    
 		            $cnt= mysqli_num_rows($result_protocolo); 
+
+                    $query = "SELECT COUNT(*) AS totalPendientes
+                    FROM notices n
+                    LEFT JOIN notice_reads nr ON n.id = nr.notice_id AND nr.usuario_id = ?
+                    WHERE n.empresa_id = ?
+                    AND (n.usuario_id = ? OR n.usuario_id IS NULL)
+                    AND (nr.is_read = 0 OR nr.is_read IS NULL)";
+          
+                    $params = [$usuario_id, $empresa_id, $usuario_id];
+                    $result = $mysql->consulta($query, $params);
+                    
+                    if ($result['numFilas'] > 0) {
+                        $totalPendientes = $result['resultado'][0]['totalPendientes'];
+                      //  echo "Total de mensajes pendientes: " . $totalPendientes;
+                    } else {
+                      //  echo "No hay mensajes pendientes.";
+          }                    
+                        $notificationCount = $cnt + $totalPendientes; 
+                        $iconColor = ($notificationCount > 0) ? 'red' : 'white';
                     ?>
                     <li class="dropdown">
                         <!-- Icono de notificaciones con contador -->
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">notifications</i>
-                            <span class="label-count"><?php echo $cnt; ?></span>
+                            <i class="material-icons" style="color: <?php echo $iconColor; ?>;">notifications</i>
+                            <span class="label-count"><?php echo $notificationCount; ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="header">NOTIFICACIONES</li>
@@ -90,10 +109,20 @@
                                         <!-- Enlace a la lista de pacientes pendientes -->
                                         <a href="<?php echo $ruta; ?>paciente/pendientes.php">
                                             <div class="icon-circle bg-light-green">
-                                                <i class="material-icons">notifications</i> <!-- event -->
+                                                <i class="material-icons">notifications</i>
                                             </div>
                                             <div class="menu-info">
                                                 <h4><?php echo $cnt; ?> nuevos pacientes</h4>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo $ruta; ?>mensajes/mis_mensajes.php">
+                                            <div class="icon-circle bg-blue-grey">
+                                                <i class="material-icons">comment</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><?php echo $totalPendientes; ?> Nuevos Avisos</h4>
                                             </div>
                                         </a>
                                     </li>
@@ -105,6 +134,7 @@
                             </li>
                         </ul>
                     </li>
+      
                     <!-- #END# Notifications -->
                     
                     <!-- Botón para abrir la barra lateral derecha -->
