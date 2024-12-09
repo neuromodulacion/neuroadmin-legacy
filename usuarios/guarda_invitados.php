@@ -123,8 +123,8 @@ $cuerpo = "
     <body>
         <h2>Se guardó correctamente la información. Continúa para confirmar tu correo.</h2>
         <p><strong>Nombre:</strong> $nombre</p>
-        <p><strong>Correo Electrónico:</strong> $usuario</p>
-        <a href='https://$dominio/confirmacion.php?us=$usuario_id'>Confirmar</a>
+        <p><strong>Correo Electrónico:</strong> $usuario</p><hr>
+        <a href='https://neuromodulaciongdl.com/confirmacion.php?us=$usuario_id'>Confirmar</a>
     </body>
     </html>";
 $accion = "normal";
