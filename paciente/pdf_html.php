@@ -1,10 +1,9 @@
-
-
 <?php
 
-session_start();
+
+session_start(); //inicio
 error_reporting(7);
-iconv_set_encoding('internal_encoding', 'utf-8'); 
+ini_set('default_charset', 'UTF-8');
 header('Content-Type: text/html; charset=UTF-8');
 date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
@@ -46,6 +45,9 @@ function tildes($palabra) {
 return $palabra;
 }
 
+$paciente = isset($row['paciente']) ? $row['paciente'] : 'N/A';
+$medico = isset($row['medico']) ? $row['medico'] : 'N/A';
+$f_captura = isset($row['f_captura']) ? $row['f_captura'] : '';
 
 
 //$paciente_id = 26;

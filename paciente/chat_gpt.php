@@ -421,10 +421,10 @@ switch ($accion) {
 
         break;
 
-	case 'comentarios_reporte':
+	case 'observaciones':
     	$ejecutar = "";
         $contenido_2 = ""; // Contenido personalizado para 'recomendacion'
-        $campoGuardar = 'observaciones';
+        $campoGuardar = 'comentarios_reporte';
 		$promt = "
 		Corrige y reescribe el texto proporcionado de manera profesional, utilizando términos médicos específicos del campo de la psiquiatría y las neurociencias para crear un informe médico adecuado.
 
@@ -443,7 +443,7 @@ switch ($accion) {
 		# Examples
 
 		**Input:** Texto original con lenguaje coloquial y términos poco específicos sobre un caso de ansiedad.
-		**Output:** Reescritura del texto utilizando términos como 'trastorno de ansiedad generalizada", "síntomas persistentes de inquietud', incluyendo contexto sobre el historial médico del paciente de manera formal. 
+		**Output:** Reescritura del texto utilizando términos como 'trastorno de ansiedad generalizada', 'síntomas persistentes de inquietud', incluyendo contexto sobre el historial médico del paciente de manera formal. 
 
 		(Nota: Los ejemplos aquí son ilustrativos; ejemplifique con placeholders específicos según el contenido que se reciba.)".$contenido;		
 		break;	

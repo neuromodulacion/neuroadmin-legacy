@@ -1,4 +1,4 @@
-<?php
+<?php //mensajes.php
 //mensajes.php
 // Definir la ruta base para las inclusiones de archivos
 $ruta = "../";
@@ -64,7 +64,7 @@ include($ruta.'header2.php'); ?>
 
                                 // Ahora en el HTML del formulario:
                             ?>
-                            <div class="form-group">
+                            <div class="form-group form-float">
                                 <label for="usuario_id_input">Usuario (opcional, dejar vacío para todos)</label>
                                 <select name="usuario_id" id="usuario_id_input" class="form-control">
                                     <option value="">Todos</option>
@@ -94,10 +94,11 @@ include($ruta.'header2.php'); ?>
                                     ?>
                                 </select>
                             </div>
-
-                            <div class="form-group">
-                                <label for="message">Mensaje</label>
-                                <textarea name="message" id="message" class="form-control" required></textarea>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <label for="message">Mensaje</label>
+                                    <textarea name="message" id="message" class="form-control" required></textarea>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Enviar Aviso</button>
                         </form>
@@ -200,8 +201,8 @@ function loadNotices() {
 
                     var row = '<tr>' +
                               '<td>' + notice.id + '</td>' +
-                              '<td>' + usuarioAsignado + '</td>' +
-                              '<td>' + nombreUsuario + '</td>' +
+                              '<td>' + notice.usuario_id + '</td>' +
+                              '<td>' + nombre_usuario + '</td>' +
                               '<td>' + notice.message + '</td>' +
                               '<td>' + notice.created_at + '</td>' +
                               '<td>' + leidoTexto + '</td>' +

@@ -31,7 +31,7 @@ $ruta = "../";
 extract($_SESSION);
 
 // Genera un ticket basado en la marca de tiempo actual
-$ticket = mktime();	 
+$ticket = time();	 
 
 // Extrae las variables enviadas por POST y las convierte en variables locales
 extract($_POST);
@@ -400,46 +400,7 @@ while($row = mysqli_fetch_array($resultx)){
     });
 </script>
 			
-			<!-- <script>
-				$('#selecciona_<?php echo $paciente_id ; ?>').click(function() {
-					// Al hacer clic, se llenan los campos del formulario con los datos del paciente seleccionado
-					var medico = "<?php echo $medico ; ?>";
-					var paciente_id = "<?php echo $paciente_id ; ?>";
-					var paciente = "<?php echo $paciente ; ?>";
-					var apaterno = "<?php echo $apaterno ; ?>";
-					var amaterno = "<?php echo $amaterno ; ?>";
-					var celular = $('celular_<?php echo $paciente_id ; ?>').val();
-					var email = $('#mail_<?php echo $paciente_id ; ?>').val();
-					var tipo_c = $('#tipo_c').val();
-				
-					$('#paciente_consulta').val(paciente+' '+apaterno+' '+amaterno);
-					$('#paciente_consultax').val(paciente+' '+apaterno+' '+amaterno);				
-					$('#email').val(email);
-					$( "#info_cliente" ).show();
-					$( "#info_busca" ).hide();		
-					
-					$('#paciente_id').val(paciente_id);
-					$('#paciente_c').val(paciente);
-					$('#apaterno').val(apaterno);
-					$('#amaterno').val(amaterno);
-					$('#celular').val(celular);
-					$('#mail').val(email);			
-					
-					var datastring = 'paciente=' + paciente +'&paciente_id=' + paciente_id + '&apaterno=' + apaterno + '&amaterno=' + amaterno + '&celular=' + celular + '&email=' + email + '&tipo_c=' + tipo_c +'&medico=' + medico;
-					// Si es una consulta médica, se envía la información a través de AJAX
-					if(tipo_c === 'Consulta Medica'){
-						$.ajax({
-							url : 'agrega_paciente.php',
-							type : 'POST',
-							data : datastring,
-							cache : false,
-							success : function(html) {
-								var tipo_c = $('#paciente_cons_id').val(html);
-							}
-						});						
-					}
-				});
-			</script> -->
+	
 			<!-- Botón para editar los detalles del paciente -->
 			<button type="button" id="edit_<?php echo $paciente_id ; ?>_consul" class="btn bg-blue waves-effect" >
 				<i class="material-icons">mode_edit</i> Edita

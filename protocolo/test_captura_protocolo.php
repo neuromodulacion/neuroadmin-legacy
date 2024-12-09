@@ -114,52 +114,65 @@ function esMultiploDe10o15($numero) {
 	    <div>
 	    	<h1>MEDIDAS CEFÁLICAS</h1><br>	
 		</div><hr>
-	    <div>
-	    	<h4>NASION-INION *</h4><br>								
-	        <div class="form-group form-float">
-	            <div class="form-line">                 
-	                <input class="form-control" name="nasion" type="number" id="nasion" placeholder='NASION-INION' value="" required/>                
-	        	</div> 
-	    	</div>
+		<div class="row">
+			<div class="col-md-4">
+				<h4>NASION-INION *</h4><br>								
+				<div class="form-group form-float">
+					<div class="form-line">                 
+						<input class="form-control" name="nasion" type="number" id="nasion" placeholder='NASION-INION' value="" required/>                
+					</div> 
+				</div>
+			</div>
+			<div class="col-md-4">
+				<h4>TRAGO-TRAGO *</h4><br>								
+				<div class="form-group form-float">
+					<div class="form-line"> 	                
+						<input class="form-control" name="trago" type="number" id="trago" placeholder='TRAGO-TRAGO' value="" required/>                
+					</div> 
+				</div>
+			</div>
+			<div class="col-md-4">
+				<h4>CIRCUNFERENCIA CEFÁLIA *</h4><br>								
+				<div class="form-group form-float">
+					<div class="form-line">               
+						<input class="form-control" name="circunferencia_cef" type="number" id="circunferencia_cef"  placeholder='CIRCUNFERENCIA CEFÁLIA' value="" required/>                
+					</div> 
+				</div>
+			</div>
+			<div>
+				<h4>BEAM F3</h4><br>								
+				<div id="forma_otros" class="form-line">
+					<a target="_b" class="btn btn-info" href="https://clinicalresearcher.org/F3/" role="button">Ir a sitio</a>                
+				</div>
+			</div>
 		</div><hr>
-	    <div>
-	    	<h4>TRAGO-TRAGO *</h4><br>								
-	        <div class="form-group form-float">
-	            <div class="form-line"> 	                
-	                <input class="form-control" name="trago" type="number" id="trago" placeholder='TRAGO-TRAGO' value="" required/>                
-	        	</div> 
-	    	</div>
-		</div><hr>
-	    <div>
-	    	<h4>CIRCUNFERENCIA CEFÁLIA *</h4><br>								
-	        <div class="form-group form-float">
-	            <div class="form-line">               
-	                <input class="form-control" name="circunferencia_cef" type="number" id="circunferencia_cef"  placeholder='CIRCUNFERENCIA CEFÁLIA' value="" required/>                
-	        	</div> 
-	    	</div>
-		</div><hr>
-	    <div>
-	    	<h4>BEAM F3</h4><br>								
-	        <div id="forma_otros" class="form-line">
-	            <a target="_b" class="btn btn-info" href="https://clinicalresearcher.org/F3/" role="button">Ir a sitio</a>                
-	    	</div>
-		</div><hr>
-	    <div>
-	    	<h4>X *</h4><br>								
-	        <div class="form-group form-float">
-	            <div class="form-line"> 	                
-	                <input class="form-control" name="x" type="number" id="x"  placeholder='X' value="" required/>                
-	        	</div> 
-	    	</div>
-		</div><hr>  
-	    <div>
-	    	<h4>Y *</h4><br>								
-	        <div class="form-group form-float">
-	            <div class="form-line"> 	                
-	                <input class="form-control" name="y" type="number" id="y" placeholder='Y' value="" required/>                
-	        	</div> 
-	    	</div>
-		</div><hr>
+		<div class="row">
+			<div class="col-md-4">
+				<h4>X (lateral):*</h4><br>								
+				<div class="form-group form-float">
+					<div class="form-line"> 	                
+						<input class="form-control" name="x" type="number" id="x"  placeholder='X' value="" required/>                
+					</div> 
+				</div>
+			</div>  
+			<div class="col-md-4">
+				<h4>Y (antero-posterior):*</h4><br>								
+				<div class="form-group form-float">
+					<div class="form-line"> 	                
+						<input class="form-control" name="y" type="number" id="y" placeholder='Y' value="" required/>                
+					</div> 
+				</div>
+			</div>
+			<div class="col-md-4">
+				<h4>Z (vértice-tragus):*</h4><br>								
+				<div class="form-group form-float">
+					<div class="form-line"> 	                
+						<input class="form-control" name="z" type="number" id="z" placeholder='Z' value="" required/>                
+					</div> 
+				</div>
+			</div>
+		</div>
+		<hr>
 	    <div>
 	    	<h4>UMBRAL MOTOR EN REPOSO *</h4><br>								
 	        <div class="form-group form-float">
@@ -181,43 +194,77 @@ function esMultiploDe10o15($numero) {
 	    		<button id="submit_test" type="submit" style="display: none" class="btn bg-<?php echo $body; ?> btn-block btn-lg waves-effect">CONTINUAR</button>
 			</div>	
 		</div> 
-	        <script>
-		        $('#captura').click(function(){               
-		        	//alert("test"); 
-				        var emptyFields = $('#guarda_protocolo_ini').find('input[required], select[required], textarea[required]').filter(function() {
-				            return this.value === '';
-				        });
-				        if (emptyFields.length > 0) {
-				            emptyFields.each(function() {
-				            $('#submit_test').click();
-				                //alert('El campo ' + this.name + ' está vacío.');
-				            });
-				        }else{ 				        	
-				        	var datastring = $('#guarda_protocolo_ini').serialize();
-		                	$('#contenido').html('');
-							$.ajax({
-			                    url: 'guarda_captura.php', 
-			                    type: 'POST',
-			                    data: datastring,
-			                    cache: false,
-			                    success:function(html){	                    	     
-					                $.ajax({
-					                    url: 'test_captura_protocolo.php',
-					                    type: 'POST',
-					                    data: datastring,
-					                    cache: false,
-					                    success:function(html){	                    	     
-					                        $('#contenido').html(html); 
-					                        // alert('Test');
-					                        //$('#load1').hide();
-					                        //$('#muestra_asegurado').click();  
-					                    }
-					            	}); 
-			                    }
-			            	});		                	
-			        	}	        
-		        });  
-        	</script>	
+		<script>
+			$(document).ready(function () {
+				// Función para verificar si los campos están completos
+				function verificarYCalcular() {
+					// Obtener valores de entrada
+					const nasionToInion = parseFloat($('#nasion').val());
+					const tragusToTragus = parseFloat($('#trago').val());
+					const headCircumference = parseFloat($('#circunferencia_cef').val());
+
+					// Verificar que todos los campos tengan valores válidos
+					if (!isNaN(nasionToInion) && !isNaN(tragusToTragus) && !isNaN(headCircumference)) {
+						// Realizar cálculos
+						calcularF3(nasionToInion, tragusToTragus, headCircumference);
+					}
+				}
+
+				// Función para calcular X, Y y Z
+				function calcularF3(nasionToInion, tragusToTragus, headCircumference) {
+					// Calcular coordenadas basadas en las fórmulas del artículo
+					const x = headCircumference * 0.1154; // X: 11.54% de la circunferencia craneal
+					const avgDistance = (nasionToInion + tragusToTragus) / 2; // Promedio NI y TrTr
+					const y = avgDistance * 0.2637; // Y: 26.37% del promedio
+					const z = tragusToTragus * 0.33; // Z: 33% de Tragus-Tragus
+
+					// Colocar los valores calculados en los campos correspondientes
+					$('#x').val(x.toFixed(2));
+					$('#y').val(y.toFixed(2));
+					$('#z').val(z.toFixed(2)); // Opcional: puedes reemplazar por un campo específico para Z si lo prefieres
+				}
+
+				// Detectar cambios en los tres campos y verificar si se puede calcular
+				$('#nasion, #trago, #circunferencia_cef').on('input', verificarYCalcular);
+			});
+		</script>
+		<script>
+			$('#captura').click(function(){               
+				//alert("test"); 
+					var emptyFields = $('#guarda_protocolo_ini').find('input[required], select[required], textarea[required]').filter(function() {
+						return this.value === '';
+					});
+					if (emptyFields.length > 0) {
+						emptyFields.each(function() {
+						$('#submit_test').click();
+							//alert('El campo ' + this.name + ' está vacío.');
+						});
+					}else{ 				        	
+						var datastring = $('#guarda_protocolo_ini').serialize();
+						$('#contenido').html('');
+						$.ajax({
+							url: 'guarda_captura.php', 
+							type: 'POST',
+							data: datastring,
+							cache: false,
+							success:function(html){	                    	     
+								$.ajax({
+									url: 'test_captura_protocolo.php',
+									type: 'POST',
+									data: datastring,
+									cache: false,
+									success:function(html){	                    	     
+										$('#contenido').html(html); 
+										// alert('Test');
+										//$('#load1').hide();
+										//$('#muestra_asegurado').click();  
+									}
+								}); 
+							}
+						});		                	
+					}	        
+			});  
+		</script>	
 	</div>	
 <?php
 	

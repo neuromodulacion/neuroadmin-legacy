@@ -9,7 +9,6 @@
             // Si hay un error, muestra un mensaje con el código y el error
             echo "Falló la conexión con MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
         }
-        
         // Ejecuta la consulta SQL pasada como parámetro
         $resultado = $mysqli->query($sql);
         
@@ -52,35 +51,32 @@
 	}
 
     // Función para obtener el nombre del navegador basado en el User-Agent proporcionado
-    function ObtenerNavegador($user_agent) {
-        // Lista de patrones de User-Agent asociados con nombres de navegadores
-        $navegadores = array(
-            'Opera' => 'Opera',
-            'Mozilla Firefox'=> '(Firebird)|(Firefox)',
-            'Galeon' => 'Galeon',
-            'Mozilla'=>'Gecko',
-            'MyIE'=>'MyIE',
-            'Lynx' => 'Lynx',
-            'Netscape' => '(Mozilla/4\.75)|(Netscape6)|(Mozilla/4\.08)|(Mozilla/4\.5)|(Mozilla/4\.6)|(Mozilla/4\.79)',
-            'Konqueror'=>'Konqueror',
-            'Internet Explorer 7' => '(MSIE 7\.[0-9]+)',
-            'Internet Explorer 6' => '(MSIE 6\.[0-9]+)',
-            'Internet Explorer 5' => '(MSIE 5\.[0-9]+)',
-            'Internet Explorer 4' => '(MSIE 4\.[0-9]+)',
-        );
-
-        // Itera sobre la lista de navegadores para encontrar una coincidencia en el User-Agent
-        foreach($navegadores as $navegador => $pattern) {
-            // Utiliza la función eregi para comparar el User-Agent con el patrón del navegador
-            if (eregi($pattern, $user_agent)) {
-                return $navegador; // Retorna el nombre del navegador si se encuentra una coincidencia
-            }
-        }
-
-        // Si no se encuentra ningún navegador, retorna 'Desconocido'
-        return 'Desconocido';
-    }
-
+	function ObtenerNavegador($user_agent) {
+		// Lista de patrones de User-Agent asociados con nombres de navegadores
+		$navegadores = array(
+			'Opera' => '/Opera|OPR\//',
+			'Mozilla Firefox' => '/Firefox/',
+			'Microsoft Edge' => '/Edg(e|iOS|A)/',
+			'Google Chrome' => '/Chrome|CriOS/',
+			'Safari' => '/Safari/',
+			'Internet Explorer' => '/MSIE|Trident/',
+			'Konqueror' => '/Konqueror/',
+			'Netscape' => '/Netscape/',
+			'Lynx' => '/Lynx/',
+		);
+	
+		// Itera sobre la lista de navegadores para encontrar una coincidencia en el User-Agent
+		foreach ($navegadores as $navegador => $pattern) {
+			// Utiliza preg_match en lugar de eregi
+			if (preg_match($pattern, $user_agent)) {
+				return $navegador; // Retorna el nombre del navegador si se encuentra una coincidencia
+			}
+		}
+	
+		// Si no se encuentra ningún navegador, retorna 'Desconocido'
+		return 'Desconocido';
+	}
+	
     /* Función que devuelve el navegador web actual basado en el User-Agent del servidor */
 	function obtenerNavegadorWeb() {
         // Obtiene el User-Agent del navegador desde las variables del servidor

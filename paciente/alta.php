@@ -37,8 +37,9 @@ include($ruta.'header2.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>ALTAS</h2>
+                <?php echo $ubicacion_url."<br>"; ?>
                 <!-- Ejemplo de comentario en HTML para mostrar la ruta de ubicación -->
-                <!-- <?php echo $ubicacion_url."<br>"; ?> -->
+                <!-- > -->
             </div>
        
             <!-- Inicio del contenido principal de la página -->

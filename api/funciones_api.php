@@ -13,6 +13,23 @@ function validarSinEspacios($cadena) {
 }
 
 function agrega_cliente_bind($paciente_id) {
+    // busca las contraseñas propias de la empresa
+    $sql_key = "
+    SELECT
+        empresas.bind,
+        empresas.`key`,
+        empresas.authorization,
+        empresas.CurrencyID,
+        empresas.LocationID,
+        empresas.empresa_id 
+    FROM
+        empresas
+        INNER JOIN pacientes ON empresas.empresa_id = pacientes.empresa_id 
+    WHERE
+        pacientes.paciente_id = $paciente_id";
+        $result_ke = ejecutar($sql_key);
+        $row = mysqli_fetch_array($result_ke);
+        extract($row);
 
 	$sql = "
 	SELECT
@@ -36,8 +53,8 @@ function agrega_cliente_bind($paciente_id) {
 
 	$url = "https://api.bind.com.mx/api/Clients";
 // Leonardo
-	$key = "neuromodulaciongdl";
-	$authorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Imxlb25hcmRvIHNhbnp8MTI3NzkyIiwiSW50ZXJuYWxJRCI6ImUzNzM4OWVkLTdmM2EtNDM0OS1iMmNmLTU3YTZmMDdjZDEwZCIsIm5iZiI6MTcxMzU0NTY3MiwiZXhwIjoxNzQ1MDgxNjcyLCJpYXQiOjE3MTM1NDU2NzIsImlzcyI6Ik1pbm50X1NvbHV0aW9uc19TQV9ERV9DViIsImF1ZCI6IkJpbmRfRVJQX0FQSV9Vc2VycyJ9.lA7OgjBx9QDh6dwMGkYeKdCa4eNTFlx7wtPy3gF7M_E";	
+	//$key = $key_bind "neuromodulaciongdl";
+	//$authorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Imxlb25hcmRvIHNhbnp8MTI3NzkyIiwiSW50ZXJuYWxJRCI6ImUzNzM4OWVkLTdmM2EtNDM0OS1iMmNmLTU3YTZmMDdjZDEwZCIsIm5iZiI6MTcxMzU0NTY3MiwiZXhwIjoxNzQ1MDgxNjcyLCJpYXQiOjE3MTM1NDU2NzIsImlzcyI6Ik1pbm50X1NvbHV0aW9uc19TQV9ERV9DViIsImF1ZCI6IkJpbmRfRVJQX0FQSV9Vc2VycyJ9.lA7OgjBx9QDh6dwMGkYeKdCa4eNTFlx7wtPy3gF7M_E";	
 	$curl = curl_init($url);
 
 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");

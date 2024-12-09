@@ -185,7 +185,7 @@ if ($cnt !== 0) {
     extract($row);
 
     // Si la empresa es la ID 1, agrega el paciente en bind
-    if ($empresa_id == 1) {
+    if($bind == 'si'){
         echo agrega_cliente_bind($paciente_id);     
     } 
 

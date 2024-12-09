@@ -347,7 +347,8 @@ extract($row);
 					                                <div class='well'>
 					                                	<h2><b>* Comentarios para el reporte:</b></h2><br>
 					                                	<textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'><?php echo $comentarios_reporte; ?></textarea>
-					                                	<br><button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'><i class='material-icons'>person</i> Guarda Comentarios</button>
+					                                	<div id="test"></div>
+														<br><button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'><i class='material-icons'>person</i> Guarda Comentarios</button>
 												         <script type='text/javascript'>
 											                $('#guarda_comentarios').click(function(){
 											                	var paciente_id = '<?php echo $paciente_id ?>'; 
@@ -365,7 +366,8 @@ extract($row);
 											                        }
 											                	});
 											                });
-											            </script>                       	
+											            </script>  
+														<button id='edita_comentarios' type='button' class='btn bg-teal waves-effect'><i class='material-icons'>mode_edit</i> Edita Comentarios con IA</button>                     	
 														<hr>
 														<a $style class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html.php?paciente_id=<?php echo $paciente_id; ?>' role='button' >
 															Descarga Reporte Doctor 
@@ -1019,7 +1021,7 @@ extract($row);
 															$dia .=	$tabla."<h4>Se obtuvo $respuesta del $resultado_final% con respecto a la lectura inicial</h4>
 															</div>
 															  	<div class='col-md-7'>
-															  		<div style='min-width: 100%' id='graph_$encuesta_id'></div>
+															  		<div style='width: 510px' id='graph_$encuesta_id'></div>
 																	<script> 
 																		var week_data = [$datos];													
 																		Morris.Line({
@@ -1441,7 +1443,66 @@ extract($row);
 												});
 
 											</script>
-			
+
+<script>
+    $(document).ready(function() {
+        $('#edita_comentarios').on('click', function() {
+            // Obtener el contenido del textarea
+            var contenidoComentarios = $('#comentarios_rep').val().trim();
+
+            if (contenidoComentarios === "") {
+                alert("Por favor, ingresa comentarios antes de proceder.");
+                return;
+            }
+
+            // Mostrar elementos de carga y ocultar otros si es necesario
+            $('#gpt_reporte').show();
+            $("#gpt").html('');
+            $('#loadx').show();
+
+            // Variables PHP pasadas al JavaScript
+            var paciente_id = "<?php echo addslashes($paciente_id); ?>";
+            var fecha = "<?php echo addslashes($hoy); ?>";
+
+            // Datos a enviar en la solicitud AJAX
+            var requestData = { 
+                sistema: 'Recomendación del caso y del tratamiento...',
+                paciente_id: paciente_id,
+                accion: 'observaciones',
+                fecha: fecha,
+                tipo: 'reporte',
+                contenido: contenidoComentarios
+            };
+
+            // Realizar la solicitud AJAX
+            $.ajax({
+                url: 'chat_gpt.php', // Asegúrate de que esta ruta sea correcta
+                type: 'POST',
+                data: requestData,
+                success: function(response) {
+                    // Manejar la respuesta del servidor
+                    $("#gpt").html('<h1>El Informe de Recomendación se generó correctamente</h1><br><h4>Se recomienda revisar, modificar y/o corregir la información según sea necesario, incluir el protocolo a aplicar y GUARDAR los cambios.</h4>'); 
+                    $('#loadx').hide();
+                    
+                    // Actualizar el contenido del editor1 con la recomendación generada (si usas CKEditor)
+                    
+                    CKEDITOR.instances.comentarios_rep.setData(response);
+                    
+					$("#test").html(response);
+                    // Mostrar otros elementos o realizar otras acciones según sea necesario
+                    //$('#recomendacion_btn').click();
+                    //$('#accordion_1x_info').show();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Manejar errores
+                    alert("Ocurrió un error al procesar la solicitud: " + textStatus);
+                    $('#loadx').hide();
+                }
+            });
+        });
+    });
+</script>
+
 											<script>
 												document.getElementById('botonCopiar').addEventListener('click', function() {
 												    var codigo = document.getElementById('codigo');
