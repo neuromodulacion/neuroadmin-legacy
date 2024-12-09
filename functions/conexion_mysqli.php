@@ -131,6 +131,7 @@ class Mysql {
      * @param array  $params Parámetros de la consulta.
      * @return array Resultado de la consulta con 'resultado' y 'numFilas'.
      */
+    /*
     public function consulta($query, $params = []) {
         try {
             $stmt = $this->executeQuery($query, $params); // Ejecuta la consulta
@@ -142,7 +143,27 @@ class Mysql {
             error_log($e->getMessage());
             return ['resultado' => [], 'numFilas' => 0]; // Retorna vacío en caso de error
         }
+    }*/
+
+    public function consulta($query, $params = [], $throwOnError = false) {
+        try {
+            $stmt = $this->executeQuery($query, $params);
+            $resultado = $stmt->get_result();
+            if (!$resultado) {
+                throw new Exception("Error obteniendo el resultado: " . $this->link->error);
+            }
+            $data = $resultado->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            return ['resultado' => $data, 'numFilas' => count($data)];
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            if ($throwOnError) {
+                throw $e;
+            }
+            return ['resultado' => [], 'numFilas' => 0];
+        }
     }
+    
 
     /**
      * Inserta un nuevo registro en la base de datos y devuelve el último ID insertado.

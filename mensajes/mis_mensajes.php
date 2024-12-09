@@ -30,8 +30,8 @@ include($ruta.'header2.php'); ?>
 
 <?php
 // Variables de ejemplo (reemplazar con variables de sesión o lo que uses)
-$empresa_id = 1; 
-$usuario_id = 5; 
+//$empresa_id = 1; 
+//$usuario_id = 5; 
 ?>
 <section class="content">
     <div class="container-fluid">

@@ -1,256 +1,149 @@
 <?php
-include('../functions/funciones_mysql.php');
-include('../functions/email.php');
+// Inicia la sesión
+session_start();
 
-error_reporting(7);
-iconv_set_encoding('internal_encoding', 'utf-8'); 
+// Configuración inicial
+error_reporting(E_ALL);
+ini_set('default_charset', 'UTF-8');
 header('Content-Type: text/html; charset=UTF-8');
 date_default_timezone_set('America/Monterrey');
-setlocale(LC_TIME, 'es_ES.UTF-8');
-$time = time();
 
+// Configurar la localización de tiempo
+setlocale(LC_TIME, stripos(PHP_OS, 'WIN') === 0 ? 'Spanish_Spain.1252' : 'es_ES.UTF-8');
+
+// Incluye los archivos necesarios
 $ruta = "../";
+include($ruta . 'functions/funciones_mysql.php');
+include($ruta . 'functions/conexion_mysqli.php');
 
+// Verificar si la configuración existe
+$configPath = $ruta . '../config.php';
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
+}
+$config = require $configPath;
+
+// Crear conexión usando la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+// Incluye funciones de correo
+include('../functions/email.php');
+
+// Variables de sesión y solicitud
+extract($_SESSION);
 extract($_POST);
-//echo "<br><br><br><br><br>";
-// print_r($_POST);
-// echo "<hr>";
 
 $f_captura = date("Y-m-d");
-$h_captura = date("H:i:s"); 
-$mes =  substr($mes_ano, 5, 2);
-$ano = substr($mes_ano, 0, 4);
+$h_captura = date("H:i:s");
 
+// Consulta para obtener datos de la empresa
 $sql_protocolo = "
-	SELECT
-		empresas.emp_nombre,
-		empresas.body_principal,
-		empresas.icono,
-		empresas.logo,
-		empresas.web,
-		empresas.e_mail,
-		empresas.pdw,
-		empresas.tipo_email,
-		empresas.puerto,
-		empresas.`host` as e_host
-	FROM
-		empresas 
-	WHERE
-		empresas.empresa_id = $empresa_id 									
-    ";
-	
-echo $sql_protocolo."<hr>";
-$result_protocolo=ejecutar($sql_protocolo); 
+    SELECT
+        emp_nombre, body_principal, icono, logo, web, e_mail, pdw, tipo_email, puerto, `host` AS e_host
+    FROM empresas
+    WHERE empresa_id = ?";
+$result_protocolo = $mysql->consulta($sql_protocolo, [$empresa_id]);
+if ($result_protocolo['numFilas'] > 0) {
+    $row_protocolo = $result_protocolo['resultado'][0];
+    extract($row_protocolo);
+} else {
+    die('Empresa no encontrada.');
+}
 
-$row_protocolo = mysqli_fetch_array($result_protocolo);
-extract($row_protocolo);
-// print_r($row_protocolo);
-// echo "<br>mes ".$mes."<br>";
-//echo "<hr>";
-$sql = "SELECT
-			admin.usuario,
-			admin.usuario_id as usuario_idx 
-		FROM
-			admin
-		WHERE
-			admin.usuario ='$usuario'"; 
-//echo $sql."<hr>";			
-$result_insert = ejecutar($sql);
-$cnt = mysqli_num_rows($result_insert);
-//echo $cnt."<hr>";
+// Verificar si el usuario ya existe
+$sql_usuario = "SELECT usuario, usuario_id AS usuario_idx FROM admin WHERE usuario = ?";
+$result_usuario = $mysql->consulta($sql_usuario, [$usuario]);
 
-if ($cnt >= 1) {	 
-	$row = mysqli_fetch_array($result_insert);
-	extract($row);	
-	//print_r($row);
-	include($ruta.'functions/header_temp.php');
+if ($result_usuario['numFilas'] > 0) {
+    // Si el usuario ya existe, mostrar mensaje
+    $row_usuario = $result_usuario['resultado'][0];
+    extract($row_usuario);
+    include($ruta . 'functions/header_temp.php');
+    ?>
+    <section class="user-registered">
+        <div class="five-zero-zero-container" style="text-align: center;">
+            <h1>Ya capturado anteriormente</h1>
+            <h2>Usuario registrado</h2>
+            <div style="margin: 0 auto; max-width: 600px; text-align: left;">
+                <p><strong>Registro:</strong> <?php echo htmlspecialchars($usuario_idx, ENT_QUOTES, 'UTF-8'); ?></p>
+                <p><strong>Nombre:</strong> <?php echo htmlspecialchars($nombre ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
+                <p><strong>Correo Electrónico:</strong> <?php echo htmlspecialchars($usuario, ENT_QUOTES, 'UTF-8'); ?></p>
+                <a href="recupera.php" class="btn bg-green btn-lg waves-effect">RECUPERAR CONTRASEÑA</a>
+            </div>
+        </div>
+    </section>
+    <?php
+    include($ruta . 'functions/footer_temp.php');
+    exit;
+}
 
-	
-// Codificar los datos en base64
-$datos_codificados = base64_encode("usuario_id=$usuario_id&vigencia=$fecha_expiracion&empresa_id=$empresa_id&funcion=$funcion&time=$time&uso=$uso");
+// Si el usuario no existe, continuar con el registro
+$sql_funcion = "SELECT funcion_id FROM funciones WHERE funcion = ?";
+$result_funcion = $mysql->consulta($sql_funcion, [$funcion]);
 
-// URL base
-$url_base = "https://neuromodulaciongdl.com/usuarios/invitacion.php";
+if ($result_funcion['numFilas'] > 0) {
+    $row_funcion = $result_funcion['resultado'][0];
+    extract($row_funcion);
+} else {
+    die('Función no encontrada.');
+}
 
-// Construir la URL completa
-$enlace_invitacion = "$url_base?datos=$datos_codificados";	
-	?>
-	<!--  ----------------------------------- INICIA -------------------------------------------  -->
-	<section class="user-registered">
-		<div class="five-zero-zero-container" style="text-align: center;">
-			<div>
-				<h1>Ya capturado anteriormente</h1>
-			</div>
-			<div>
-				<h2>Usuario registrado</h2>
-			</div>
-			<div style="margin: 0 auto; max-width: 600px; text-align: left;">
-				<h3><?php echo htmlspecialchars($mensaje ?? 'Usuario ya registrado.', ENT_QUOTES, 'UTF-8'); ?></h3>
-				<p><strong>Registro:</strong> <?php echo htmlspecialchars($usuario_idx ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
-				<p><strong>Nombre:</strong> <?php echo htmlspecialchars($nombre ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
-				<p><strong>Correo Electrónico:</strong> <?php echo htmlspecialchars($usuario ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
-				<p><strong>Teléfono:</strong> <?php echo htmlspecialchars($celular ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
-				<br>
-				<a href="recupera.php" class="btn bg-green btn-lg waves-effect">RECUPERAR CONTRASEÑA</a>
-			</div>
-		</div>
-	</section>
+// Insertar nuevo usuario
+$f_alta = date("Y-m-d");
+$h_alta = date("H:i:s");
+$sql_insert_admin = "
+    INSERT IGNORE INTO admin (
+        nombre, usuario, pwd, acceso, funcion_id, funcion, telefono, saldo, f_alta, h_alta, estatus, empresa_id, sucursal_id
+    ) VALUES (?, ?, ?, 0, ?, ?, ?, 0, ?, ?, 'Pendiente', ?, ?)";
+$result_insert_admin = $mysql->consulta(
+    $sql_insert_admin,
+    [$nombre, $usuario, $password_c, $funcion_id, $funcion, $celular, $f_alta, $h_alta, $empresa_id, $sucursal_id]
+);
 
-	<!--  ----------------------------------- TERMINA -------------------------------------------  -->
-<?php	
-	include($ruta.'functions/footer_temp.php');	
+// Obtener ID del nuevo usuario
+$sql_max_usuario = "SELECT MAX(usuario_id) AS usuario_id FROM admin";
+$result_max_usuario = $mysql->consulta($sql_max_usuario);
+$usuario_id = $result_max_usuario['resultado'][0]['usuario_id'];
 
-}else{ 
+// Insertar herramientas del sistema
+$sql_insert_herramientas = "
+    INSERT IGNORE INTO herramientas_sistema (usuario_id, body, notificaciones)
+    VALUES (?, ?, 'Si')";
+$result_insert_herramientas = $mysql->consulta($sql_insert_herramientas, [$usuario_id, $body_principal]);
 
-	$sql = "
-		SELECT
-			funciones.funciones_id
-		FROM
-			funciones
-		WHERE 
-			funciones.funcion = '$funcion'"; 
-			
-		//echo $sql."<hr>";	
-	$result_insert = ejecutar($sql);
-	$row1 = mysqli_fetch_array($result_insert);
-	extract($row1);
-	//echo "<hr>";
+// Actualizar invitación
+$sql_update_invitacion = "UPDATE invitaciones SET estatus = 'usado' WHERE time = ?";
+$result_update_invitacion = $mysql->consulta($sql_update_invitacion, [$timex]);
 
-	$f_alta = date("Y-m-d");
-	$h_alta = date("H:i:s"); 
-	$insert1 ="
-		INSERT IGNORE INTO admin 
-			(
-				nombre,
-				usuario,
-				pwd,
-				acceso,
-				funcion_id,
-				funcion,
-				telefono,
-				saldo,
-				f_alta,
-				h_alta ,
-				estatus,
-				empresa_id,
-				sucursal_id
-			) 
-		VALUE
-			(
-				'$nombre',
-				'$usuario',
-				'$password_c',
-				'0',
-				$funciones_id,
-				'$funcion',
-				'$celular',
-				'0',
-				'$f_alta',
-				'$h_alta',
-				'Pendiente',
-				$empresa_id.
-				$sucursal_id
-			) ";
-    //echo $insert1."<hr>";
-	$result_insert = ejecutar($insert1);
-	//echo $result_insert."<hr>";
- 
-	$sql = "SELECT
-				max(usuario_id)  as usuario_id 
-			FROM
-				admin"; 
-				
-	$result_insert = ejecutar($sql);
-	$row1 = mysqli_fetch_array($result_insert);
-	extract($row1);
-	//echo "<hr>";
-	
-	$insert1 ="
-		INSERT IGNORE INTO herramientas_sistema 
-			(
-				usuario_id,
-				body,
-				notificaciones
-			) 
-		VALUE
-			(
-				'$usuario_id',
-				'$body_principal',
-				'Si'
-			) ";
-	      //echo $insert1."<hr>";
-	$result_insert = ejecutar($insert1);
-	// print_r($row1);
+// Enviar correo electrónico
+$destinatario = $usuario;
+$asunto = "Alta de Usuario";
+$cuerpo = "
+    <html>
+    <body>
+        <h2>Se guardó correctamente la información. Continúa para confirmar tu correo.</h2>
+        <p><strong>Nombre:</strong> $nombre</p>
+        <p><strong>Correo Electrónico:</strong> $usuario</p>
+        <a href='https://$dominio/confirmacion.php?us=$usuario_id'>Confirmar</a>
+    </body>
+    </html>";
+$accion = "normal";
+$mail = correo_electronico($usuario, $asunto, $cuerpo, $nombre, $empresa_id, $accion);
 
-		$update ="
-		
-		UPDATE invitaciones
-		SET
-			invitaciones.estatus ='usado'
-		WHERE
-			invitaciones.time = $timex";
-			
-		     //echo $update."<hr>";
-		$result_insert = ejecutar($update);
-
-	$destinatario = $usuario; 
-	$asunto = "Alta de Usuario"; 
-	$cuerpo = ' 
-	<html> 
-	<head> 
-	   <title>Concluye el proceso</title> 
-	</head> 
-	<body> 
-	
-	<div> <h2>Se guardo correctamente la información dale en continuar para confirmar el correo</h2></div>
-	<div align="center"> 
-		<div style="width: 90% ;!important;" align="left" >
-	    	<b>Nombre:</b> '.$nombre.'<br>
-	    	<b>Correo Electronico y Usuario:</b> '.$usuario.'<br>
-	    	<b>Celular:</b> '.$celular.'<br>
-	    	Atte. '.$emp_nombre.'   <br>	
-	    	<a class="btn btn-default" href="https://'.$dominio.'"/confirmacion.php?us='.$usuario_id.'" role="button"><h1>Confirmar</h1></a><br>  	  
-			   	      	
-		</div> 
-	</div> 
-	</body> 
-	</html> 
-	'; 
-	$cuerpo = $usuario_id;
-	//$mail = correo_electronico($correo_pac,$asunto,$cuerpo_correo,$paciente,$empresa_id);
-	//https://confirmacion.php?us='.$usuario_id
-	
-	$accion =  "normal"; // "Invitacion"; // "RFC"; // "General"; // 
-	 
-	$mail = correo_electronico($usuario,$asunto,$cuerpo,$nombre,$empresa_id,$accion);
-	
-	//$mail = correo_electronico_invitacion($usuario,$asunto,$cuerpo,$nombre,$empresa_id);
-     
-	include($ruta.'functions/header_temp.php');
-	?>            
-		<!--  ----------------------------------- INICIA -------------------------------------------  -->
-		<section class="success-message">
-			<div class="five-zero-zero-container" style="text-align: center;">
-				<div>
-					<h1>Éxito</h1>
-				</div>
-				<div>
-					<h2>Se guardó correctamente la información</h2>
-				</div>
-				<div style="margin: 0 auto; max-width: 600px; text-align: left;">
-					<h3><?php echo htmlspecialchars($mensaje ?? 'Operación completada exitosamente.', ENT_QUOTES, 'UTF-8'); ?></h3>
-					<p><strong>Registro:</strong> <?php echo htmlspecialchars($usuario_id ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
-					<p><strong>Nombre:</strong> <?php echo htmlspecialchars($nombre ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
-					<p><strong>Correo Electrónico:</strong> <?php echo htmlspecialchars($usuario ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
-					<p><strong>Teléfono:</strong> <?php echo htmlspecialchars($celular ?? 'N/A', ENT_QUOTES, 'UTF-8'); ?></p>
-					<p><?php echo htmlspecialchars($mail ?? 'No se proporcionó información adicional.', ENT_QUOTES, 'UTF-8'); ?></p>
-					<a href="<?php echo htmlspecialchars($ruta ?? '#', ENT_QUOTES, 'UTF-8'); ?>inicio.html" class="btn bg-green btn-lg waves-effect">CONTINUAR</a>
-				</div>
-			</div>
-		</section>
-
-		<!--  ----------------------------------- TERMINA -------------------------------------------  -->
-	<?php 
-	include($ruta.'functions/footer_temp.php');
-}	
+// Mostrar mensaje de éxito
+include($ruta . 'functions/header_temp.php');
+?>
+<section class="success-message">
+    <div class="five-zero-zero-container" style="text-align: center;">
+        <h1>Éxito</h1>
+        <h2>Se guardó correctamente la información</h2>
+        <div style="margin: 0 auto; max-width: 600px; text-align: left;">
+            <p><strong>Registro:</strong> <?php echo htmlspecialchars($usuario_id, ENT_QUOTES, 'UTF-8'); ?></p>
+            <p><strong>Nombre:</strong> <?php echo htmlspecialchars($nombre, ENT_QUOTES, 'UTF-8'); ?></p>
+            <p><strong>Correo Electrónico:</strong> <?php echo htmlspecialchars($usuario, ENT_QUOTES, 'UTF-8'); ?></p>
+        </div>
+    </div>
+</section>
+<?php
+include($ruta . 'functions/footer_temp.php');
 ?>
