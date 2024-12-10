@@ -33,7 +33,7 @@ extract($_POST);
 // print_r($_POST);
 // $protocolo_ter_id = 5;
 
-$encuesta_id = 12;
+$encuesta_id = 13;
 
 // $x = crea($protocolo_ter_id);
 
