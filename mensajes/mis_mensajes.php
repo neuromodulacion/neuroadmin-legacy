@@ -1,38 +1,21 @@
 <?php
-//mensajes_usuario_especifico.php
-// Definir la ruta base para las inclusiones de archivos
+// mis_mensajes.php
 $ruta = "../";
 $titulo = "Mis Mensajes";
 
-// Incluir la primera parte del header que contiene configuraciones iniciales
-include($ruta.'header1.php');
+include($ruta.'header1.php'); 
+include($ruta.'header2.php'); 
 
-// Incluir archivos CSS adicionales necesarios para el funcionamiento de la página
+// Asumiendo que las variables $usuario_id, $empresa_id ya provienen de la sesión o de los archivos incluidos.
 ?>
-    <!-- Estilos para la tabla de datos de JQuery DataTable -->
-    <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-    
-    <!-- Estilos para el selector de fecha y hora con Bootstrap Material -->
-    <link href="<?php echo $ruta; ?>plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
 
-    <!-- Estilos para el selector de fecha de Bootstrap -->
-    <link href="<?php echo $ruta; ?>plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<!-- Estilos CSS requeridos -->
+<link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+<link href="<?php echo $ruta; ?>plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+<link href="<?php echo $ruta; ?>plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="<?php echo $ruta; ?>plugins/waitme/waitMe.css" rel="stylesheet" />
+<link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
-    <!-- Estilos para el plugin "Wait Me" que muestra un indicador de carga -->
-    <link href="<?php echo $ruta; ?>plugins/waitme/waitMe.css" rel="stylesheet" />
-
-    <!-- Estilos para el select de Bootstrap -->
-    <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />   
-
-<?php  
-// Incluir la segunda parte del header que contiene la barra de navegación y el menú
-include($ruta.'header2.php'); ?>
-
-<?php
-// Variables de ejemplo (reemplazar con variables de sesión o lo que uses)
-//$empresa_id = 1; 
-//$usuario_id = 5; 
-?>
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -40,7 +23,7 @@ include($ruta.'header2.php'); ?>
             <?php echo $ubicacion_url."<br>"; ?>
         </div>
         
-        <!-- Tabla para mostrar avisos específicos del usuario -->
+        <!-- Tabla para mostrar avisos específicos del usuario y generales -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
@@ -71,7 +54,6 @@ include($ruta.'header2.php'); ?>
 </section>
 
 <script>
-// usuario_id actual (ajusta según tu lógica)
 var currentUserId = <?php echo $usuario_id; ?>;
 var currentEmpresaId = <?php echo $empresa_id; ?>;
 
@@ -80,13 +62,10 @@ $(document).ready(function() {
 });
 
 function loadNotices() {
-    var empresa_id = currentEmpresaId;
-    var usuario_id = currentUserId;
-    
     $.ajax({
-        url: 'optiene_noticias.php', // Ajustar el nombre del archivo si difiere
+        url: 'optiene_noticias.php',
         method: 'GET',
-        data: { empresa_id: empresa_id, usuario_id: usuario_id },
+        data: { empresa_id: currentEmpresaId, usuario_id: currentUserId },
         dataType: 'json',
         success: function(response) {
             if (response.success) {
@@ -122,7 +101,7 @@ function loadNotices() {
 
 function markAsRead(notice_id) {
     $.ajax({
-        url: 'marca_noticias.php', // Ajustar el nombre del archivo si difiere
+        url: 'marca_noticias.php',
         method: 'POST',
         data: { usuario_id: currentUserId, notice_id: notice_id },
         dataType: 'json',
@@ -141,19 +120,16 @@ function markAsRead(notice_id) {
 </script>
 
 <?php 
-// Incluir la primera parte del footer que contiene scripts y configuraciones iniciales del pie de página
 include($ruta.'footer1.php'); 
 ?>
 
-    <!-- Scripts adicionales necesarios para la funcionalidad de la página -->
-    <script src="<?php echo $ruta; ?>plugins/momentjs/moment.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/node-waves/waves.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/autosize/autosize.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/momentjs/moment.js"></script>
+<script src="<?php echo $ruta; ?>plugins/momentjs/moment.js"></script>
+<script src="<?php echo $ruta; ?>plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<script src="<?php echo $ruta; ?>plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="<?php echo $ruta; ?>plugins/node-waves/waves.js"></script>
+<script src="<?php echo $ruta; ?>plugins/autosize/autosize.js"></script>
+<script src="<?php echo $ruta; ?>plugins/momentjs/moment.js"></script>
 
 <?php 
-// Incluir la segunda parte del footer que finaliza la estructura del pie de página
 include($ruta.'footer2.php'); 
 ?>

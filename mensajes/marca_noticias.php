@@ -1,11 +1,9 @@
 <?php
-$ruta = "../";
 //marca_noticias.php
-// Incluye archivos PHP necesarios para la funcionalidad adicional
+$ruta = "../";
 include($ruta.'functions/funciones_mysql.php');
 include($ruta.'functions/conexion_mysqli.php');
 
-// Incluir el archivo de configuración y obtener las credenciales
 $configPath = $ruta.'../config.php';
 
 if (!file_exists($configPath)) {
@@ -13,13 +11,7 @@ if (!file_exists($configPath)) {
 }
 
 $config = require $configPath;
-
-// Crear una instancia de la clase Mysql
-$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
-
-// Crear una instancia de la clase Mysql
 $db = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
-$db->conectarse();
 $db->conectarse();
 
 $usuario_id = isset($_POST['usuario_id']) ? (int)$_POST['usuario_id'] : 0;
@@ -33,7 +25,7 @@ if ($usuario_id > 0 && $notice_id > 0) {
     $checkResult = $db->consulta($checkQuery, $checkParams);
 
     if ($checkResult['numFilas'] > 0) {
-        // Ya existe un registro, actualizarlo a leído
+        // Ya existe un registro, actualizar
         $readId = $checkResult['resultado'][0]['id'];
         $updateQuery = "UPDATE notice_reads SET is_read = 1, read_at = NOW() WHERE id = ?";
         $updateParams = [$readId];
@@ -45,7 +37,7 @@ if ($usuario_id > 0 && $notice_id > 0) {
             $response['message'] = 'No se pudo marcar el aviso como leído.';
         }
     } else {
-        // No existe registro, crearlo
+        // Crear registro nuevo
         $insertQuery = "INSERT INTO notice_reads (notice_id, usuario_id, is_read, read_at) VALUES (?, ?, 1, NOW())";
         $insertParams = [$notice_id, $usuario_id];
         $idInsertado = $db->insertar($insertQuery, $insertParams);

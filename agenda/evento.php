@@ -13,7 +13,7 @@ date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
 // Almacenar el tiempo actual en la sesión
-$_SESSION['time'] = mktime();
+$_SESSION['time'] = time();
 
 // Ruta base para incluir archivos y recursos
 $ruta = "../";

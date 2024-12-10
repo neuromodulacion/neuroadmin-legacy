@@ -31,7 +31,7 @@ include('../functions/email.php');
 
  
 extract($_POST);
-$ticket = mktime();	
+$ticket = time();	
 // print_r($_POST);
 //echo "<hr>";
 if ($protocolo_ter_id == '') {

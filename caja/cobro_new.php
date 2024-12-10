@@ -3,15 +3,6 @@
 $ruta = "../";
 $a = "";
 $ticket = "";
-
-// Obtener la fecha y hora actual
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
 $titulo = "Cobros";
 
 // Incluir archivos de cabecera
@@ -34,7 +25,8 @@ include($ruta . 'header1.php');
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
-            <h2>COBROS</h2>                  
+            <h2>COBROS</h2> 
+            <?php echo $ubicacion_url; ?>                 
         </div>
         <!-- Contenido principal -->
         <div class="row clearfix">

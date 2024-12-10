@@ -29,7 +29,7 @@ $ruta = "../";
 extract($_SESSION);
 
 // Genera un ticket basado en la marca de tiempo actual
-$ticket = mktime();	 
+$ticket = time();	 
 
 // Extrae las variables enviadas por POST y las convierte en variables locales
 extract($_POST);

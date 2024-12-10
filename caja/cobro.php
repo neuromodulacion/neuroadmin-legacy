@@ -6,14 +6,6 @@ $ruta="../";
 // Inicializa variables
 $a = "";
 $ticket = "";
-
-// Obtiene la fecha y hora actual, así como otros valores de tiempo como el año, mes y día
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
 $semana = date("W");
 $titulo ="Cobros"; // Título de la página
 
@@ -42,6 +34,7 @@ include($ruta.'header2.php');
     <div class="container-fluid">
         <div class="block-header">
             <h2>COBROS</h2> <!-- Título de la sección -->
+            <?php echo $ubicacion_url; ?>
         </div>
         
         <!-- Contenido principal de la página -->

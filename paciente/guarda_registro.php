@@ -1,7 +1,8 @@
 <?php
+$ruta = "../";
 // Incluir archivos necesarios para funciones de base de datos y envío de correos electrónicos
-include('../functions/funciones_mysql.php');
-include('../functions/email.php');
+include($ruta.'functions/funciones_mysql.php');
+include($ruta.'functions/email.php');
 include($ruta.'functions/conexion_mysqli.php');
 
 // Incluir el archivo de configuración y obtener las credenciales
