@@ -1,13 +1,5 @@
 <?php
 $ruta="../";
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
 $titulo ="Retiros";
 
 $mes_sel = date('m', strtotime($fechaInput));
@@ -44,6 +36,7 @@ if ($fechaInput =="") {
         <div class="container-fluid">
             <div class="block-header">
                 <h2>FONDO ACTUAL</h2>
+				<?php echo $ubicacion_url; ?>
             </div>
             
 <!-- // ************** Contenido ************** // -->

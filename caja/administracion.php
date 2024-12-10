@@ -1,17 +1,10 @@
 <?php
-
 // Define la ruta base para las inclusiones de archivos
 $ruta = "../";
-
-// Variables de fecha y hora actuales
-$hoy = date("Y-m-d"); // Fecha actual en formato "YYYY-MM-DD"
-$ahora = date("H:i:00"); // Hora actual en formato "HH:MM:00"
-$anio = date("Y"); // Año actual
-$mes_ahora = date("m"); // Mes actual en formato numérico "MM"
-$mes = strftime("%B"); // Nombre completo del mes actual
-$dia = date("N"); // Día de la semana (1=Lunes, 7=Domingo)
-$semana = date("W"); // Número de la semana del año
 $titulo = "Administración"; // Título de la página
+
+// Incluye el archivo header1.php, que contiene configuraciones y elementos comunes de la cabecera
+include($ruta . 'header1.php');
 
 // Fecha pasada (7 días antes de la fecha actual)
 $date_past = date("Y-m-d", strtotime('-7 day'));
@@ -61,9 +54,6 @@ function OptieneMesLargo($mes) {
 // Variables que representan el mes y año seleccionados a partir de la fecha de entrada
 $mes_sel = date('m', strtotime($fechaInput));
 $anio_sel = date('Y', strtotime($fechaInput));
-
-// Incluye el archivo header1.php, que contiene configuraciones y elementos comunes de la cabecera
-include($ruta . 'header1.php');
 ?>
 <!-- Estilos y plugins CSS -->
 <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
@@ -81,6 +71,7 @@ include($ruta . 'header2.php');
     <div class="container-fluid">
         <div class="block-header">
             <h2>CORTE</h2>
+            <?php echo $ubicacion_url; ?>
         </div>
 
         <!-- Contenido principal de la página -->

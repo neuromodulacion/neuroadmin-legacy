@@ -46,16 +46,16 @@ if ($cnt >= 1) {
 	
 	$update="
 		UPDATE clientes_sat SET
-		  cRazonSocial = '".utf8_encode($cRazonSocial)."', 
+		  cRazonSocial = '".($cRazonSocial)."', 
 		  cRFC = '$cRFC', 
-		  cNombreCalle = '".utf8_encode($cNombreCalle)."', 
-		  cNumeroExterior = '".utf8_encode($cNumeroExterior)."', 
-		  cNumeroInterior = '".utf8_encode($cNumeroInterior)."', 
-		  cColonia = '".utf8_encode($cColonia)."', 
+		  cNombreCalle = '".($cNombreCalle)."', 
+		  cNumeroExterior = '".($cNumeroExterior)."', 
+		  cNumeroInterior = '".($cNumeroInterior)."', 
+		  cColonia = '".($cColonia)."', 
 		  cCodigoPostal = '$cCodigoPostal', 
-		  cCiudad = '".utf8_encode($cCiudad)."', 
-		  cEstado = '".utf8_encode($cEstado)."', 
-		  cPais = '".utf8_encode($cPais)."', 
+		  cCiudad = '".($cCiudad)."', 
+		  cEstado = '".($cEstado)."', 
+		  cPais = '".($cPais)."', 
 		  aRegimen = '$aRegimen', 
 		  email_address = '$email_address'
 		WHERE clientes_sat.cRFC = '$cRFC';
@@ -81,16 +81,16 @@ if ($cnt >= 1) {
 		  aRegimen, 
 		  email_address
 		)value(
-		  '".utf8_encode($cRazonSocial)."', 
+		  '".($cRazonSocial)."', 
 		  '$cRFC', 
-		  '".utf8_encode($cNombreCalle)."', 
-		  '".utf8_encode($cNumeroExterior)."', 
-		  '".utf8_encode($cNumeroInterior)."', 
-		  '".utf8_encode($cColonia)."', 
+		  '".($cNombreCalle)."', 
+		  '".($cNumeroExterior)."', 
+		  '".($cNumeroInterior)."', 
+		  '".($cColonia)."', 
 		  '$cCodigoPostal', 
-		  '".utf8_encode($cCiudad)."', 
-		  '".utf8_encode($cEstado)."', 
-		  '".utf8_encode($cPais)."', 
+		  '".($cCiudad)."', 
+		  '".($cEstado)."', 
+		  '".($cPais)."', 
 		  '$aRegimen', 
 		  '$email_address'
 		)
@@ -100,9 +100,9 @@ if ($cnt >= 1) {
 }
 ?>
 
-<div align="left" class="body">
-	<h1 align="center">Valida la Información</h1>
-    <h2 align="center">Detalles del Ticket</h2>
+<div style="text-align: center"  class="body">
+	<h1 style="text-align: center" >Valida la Información</h1>
+    <h2 style="text-align: center" >Detalles del Ticket</h2>
 	<div class="row">
 	  	<div class="col-md-6"> 				    
 		    <p><strong>Razón Social:</strong> <?php echo htmlspecialchars($ticket); ?></p>
@@ -122,7 +122,7 @@ if ($cnt >= 1) {
 		    <p><strong>País:</strong> <?php echo htmlspecialchars($cPais); ?></p>
 		</div>
 	</div>	
-    <div align="center">
+    <div style="text-align: center" >
 		<input type="hidden" name="cRazonSocial" value="<?php echo htmlspecialchars($ticket); ?>">
 		<input type="hidden" name="cRazonSocial" value="<?php echo htmlspecialchars($cRazonSocial); ?>">
 		<input type="hidden" name="cRFC" value="<?php echo htmlspecialchars($cRFC); ?>">

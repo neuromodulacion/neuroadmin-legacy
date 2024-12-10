@@ -29,7 +29,7 @@ extract($_POST);
     }
 
     // Parámetros de la consulta
-    $empresa_id = 1; // Cambia por el ID de la empresa
+    //$empresa_id = 1; // Cambia por el ID de la empresa
     // $mes_sel = date('m'); // Cambia por el mes deseado
     // $anio_sel = date('Y'); // Cambia por el año deseado
 

@@ -20,20 +20,11 @@ setlocale(LC_TIME, 'es_ES.UTF-8');
 $_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
 
 $ruta="../";
-
-extract($_SESSION);
-extract($_POST);
-extract($_GET);
-//print_r($_SESSION);
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
 $titulo ="Corte";
+
+//$usuario_id = 127;
+//include('fun_protocolo.php');
+include($ruta.'header1.php');
 
 if ($fechaInput =="") {
 	$fechaInput = $hoy;
@@ -84,9 +75,6 @@ $anio_sel = date('Y', strtotime($fechaInput));
 
 $date_past = date("Y-m-d",strtotime('-7 day'));
 
-//$usuario_id = 127;
-//include('fun_protocolo.php');
-include($ruta.'header1.php');
 ?>
     <!-- JQuery DataTable Css -->
     <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
@@ -109,6 +97,7 @@ include($ruta.'header1.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>CORTE</h2>
+				<?php echo $ubicacion_url; ?>
             </div>
             
 <!-- // ************** Contenido ************** // -->

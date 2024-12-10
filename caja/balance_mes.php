@@ -1,23 +1,11 @@
 <?php
 // Define la ruta base para las inclusiones de archivos
 $ruta = "../";
-
-// Establece el título de la página
-$title = 'BALANCE MENSUAL';
-
-// Extrae las variables enviadas por POST y GET y las convierte en variables locales
-extract($_POST);
-extract($_GET);
-
-// Variables de fecha y hora actuales
-$hoy = date("Y-m-d"); // Fecha actual en formato "YYYY-MM-DD"
-$ahora = date("H:i:00"); // Hora actual en formato "HH:MM:00"
-$anio = date("Y"); // Año actual
-$mes_ahora = date("m"); // Mes actual en formato numérico "MM"
-$mes = strftime("%B"); // Nombre completo del mes actual
-$dia = date("N"); // Día de la semana (1=Lunes, 7=Domingo)
-$semana = date("W"); // Número de la semana del año
 $titulo = "Balance Mensual"; // Título de la página
+
+
+// Incluye el archivo header1.php, que contiene configuraciones y elementos comunes de la cabecera
+include($ruta . 'header1.php');
 
 // Si no se ha recibido una fecha de entrada, se asigna la fecha actual
 if ($_POST['fechaInput'] == '') {
@@ -64,8 +52,6 @@ function OptieneMesLargo($mes) {
 $mes_sel = date('m', strtotime($fechaInput));
 $anio_sel = date('Y', strtotime($fechaInput));
 
-// Incluye el archivo header1.php, que contiene configuraciones y elementos comunes de la cabecera
-include($ruta . 'header1.php');
 ?>
 
 <!-- Incluye los estilos y plugins CSS necesarios -->
@@ -86,6 +72,7 @@ include($ruta . 'header2.php');
     <div class="container-fluid">
         <div class="block-header">
             <h2>BALANCE MENSUAL</h2>
+            <?php echo $ubicacion_url; ?>
         </div>        
         <!-- Contenido principal de la página -->
         <div class="row clearfix">

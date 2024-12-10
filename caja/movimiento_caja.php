@@ -1,13 +1,5 @@
 <?php session_start();
 $ruta = "../";
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00");
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
 $titulo = "Movimientos";
 
 $date_past = date("Y-m-d", strtotime('-7 day'));

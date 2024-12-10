@@ -1,13 +1,5 @@
 <?php
 $ruta="../";
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
 $titulo ="Directorio";
 $genera ="";
 

@@ -1,41 +1,10 @@
 <?php
-session_start();
-
-// Establecer el nivel de notificación de errores
-error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
-
-// Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
-ini_set('default_charset', 'UTF-8');
-
-// Configurar la cabecera HTTP con codificación UTF-8
-header('Content-Type: text/html; charset=UTF-8');
-
-// Configurar la zona horaria
-date_default_timezone_set('America/Monterrey');
-
-// Configurar la localización para manejar fechas y horas en español
-setlocale(LC_TIME, 'es_ES.UTF-8');
-
-// Asignar el tiempo actual a la sesión en formato de timestamp
-$_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
-
-
 $ruta="../";
 $title = 'ADMINISTRACIÓN';
 
-extract($_SESSION);
-extract($_POST);
-extract($_GET);
-//print_r($_SESSION);
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
 $titulo ="Administracion";
+
+include($ruta.'header1.php');
 
 $date_past = date("Y-m-d",strtotime('-7 day'));
 $ahora = date("d-m-Y");
@@ -84,8 +53,6 @@ function OptieneMesLargo($mes){
 } 
 $mes_sel = date('m', strtotime($fechaInput));
 $anio_sel = date('Y', strtotime($fechaInput));
-
-include($ruta.'header1.php');
 ?>
     <!-- JQuery DataTable Css -->
     <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">

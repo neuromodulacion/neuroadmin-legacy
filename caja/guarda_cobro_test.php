@@ -33,7 +33,7 @@ extract($_SESSION);
 $CurrencyID = "b7e2c065-bd52-40ca-b508-3accdd538860"; 	
 
 extract($_POST);
-$ticket = mktime();	
+$ticket = time();	
 // print_r($_POST);
 // echo "<hr>";
 

@@ -34,7 +34,7 @@ if ($empresa_id === null) {
 
 // Consulta SQL para obtener los eventos de la agenda asociados a una empresa específica
 $sql_agenda = "
-SELECT
+SELECT DISTINCT
     agenda.agenda_id, 
     agenda.paciente_id, 
     agenda.usuario_id, 
@@ -165,7 +165,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
-            <h2>AGENDA</h2>  
+            <h2>AGENDA</h2>
+            <?php echo $ubicacion_url; ?>  
         </div>
         <div style="min-width: 350px" class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -176,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <hr>
                         
                         <!-- Botón para agregar un evento si el usuario tiene permisos -->
-                        <?php if (in_array($funcion, ['SISTEMAS', 'ADMINISTRADOR', 'TECNICO', 'RECEPCION'])) { ?>
+                        <?php if (in_array($funcion_id, [1, 5, 2, 3])) { ?>
                         <button id="agendar" type="button" class="btn bg-<?php echo htmlspecialchars($body); ?>" data-dismiss="modal"><i class="material-icons">add_box</i> Agendar</button>
                         <script>
                             $('#agendar').click(function(){ 

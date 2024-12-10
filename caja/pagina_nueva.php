@@ -1,4 +1,3 @@
-<?php phpinfo(); ?>
 <?php /*
 session_start();
 error_reporting(E_ALL & ~E_NOTICE);
@@ -53,5 +52,5 @@ if ($resultado['numFilas'] > 0) {
 	}
 } else {
 	echo "No se encontraron resultados.";
-}
+}*/
 ?>

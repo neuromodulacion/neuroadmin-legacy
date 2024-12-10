@@ -21,7 +21,7 @@ $hoy = date("Y-m-d");
 $ahora = date("H:i:00"); 
 $anio = date("Y");
 $mes_ahora = date("m");
-$mes = strftime("%B"); // Nombre del mes en español
+//$mes = strftime("%B"); // Nombre del mes en español
 $dia = date("N"); // Día de la semana (1-7, donde 1 es lunes)
 $semana = date("W"); // Número de la semana del año
 
@@ -38,14 +38,14 @@ $dias_semana = $_POST['dias_semana']; // Ejemplo: Array ( [0] => 1 [1] => 2 [2] 
 
 // Convertir el array en una cadena para usarlo en la consulta SQL
 $dias_semana_str = implode(',', $dias_semana);			
-echo $dias_semana_str." dias_semana_str<hr>"; // Salida: "1,2,3,4,5"
+//echo $dias_semana_str." dias_semana_str<hr>"; // Salida: "1,2,3,4,5"
 
 // Ajustar la recurrencia si no se seleccionaron días para un evento diario
 if ($dias_semana_str =='' && $recurrencia == 'diaria') {
 	$recurrencia = "corrida";
 }
 
-echo "<h2>".$recurrencia."</h2>";
+//echo "<h2>".$recurrencia."</h2>";
 
 // Seleccionar la consulta SQL dependiendo de la recurrencia del evento
 switch ($recurrencia) {
