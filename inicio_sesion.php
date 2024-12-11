@@ -119,6 +119,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Regenerar el ID de sesión para prevenir ataques de fijación de sesión
             session_regenerate_id(true);
 
+            // Consulta para obtener la última versión
+            $query = "SELECT version FROM versiones ORDER BY version_id DESC LIMIT 1";
+            $resultado = $conexion->consulta($query);
+
+            // Verifica y muestra el resultado
+            if ($resultado['numFilas'] > 0) {
+                $_SESSION['version'] = $resultado['resultado'][0]['version'];
+            } else {
+                echo "No se encontraron versiones en la tabla.";
+            }
+
+
             // Configurar las variables de sesión
             $_SESSION['sesion'] = "On";
             $_SESSION['time'] = time();
