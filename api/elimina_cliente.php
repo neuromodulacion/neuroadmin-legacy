@@ -80,10 +80,10 @@ if (!empty($paciente_cons_id)) {
 	SET
 		pacientes_bind.`STATUS` = 'Eliminado'
 	WHERE
-		pacientes_bind.ID = $ID";	
+		pacientes_bind.ID = '$ID'";	
 		
 	echo $update."<hr>";
-	 $result = ejecutar($update);	
+	$result = ejecutar($update);	
 		
 // $sql_protocolo = "
 // SELECT
