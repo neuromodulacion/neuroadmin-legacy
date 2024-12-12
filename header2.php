@@ -184,7 +184,7 @@
                     &copy; <?php echo $anio ?> <a href="javascript:void(0);">AdminNeuromodulación</a>.
                 </div>
                 <div class="version">
-                    <b>Version: </b> <?php echo $version ?>
+                    <b>Version: </b> <?php echo $version; ?>
                 </div>
             </div>
             <!-- #Footer -->

@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // Consulta para obtener la última versión
             $query = "SELECT version FROM versiones ORDER BY version_id DESC LIMIT 1";
-            $resultado = $conexion->consulta($query);
+            $resultado = $conexion->consulta($query); //inicio
 
             // Verifica y muestra el resultado
             if ($resultado['numFilas'] > 0) {

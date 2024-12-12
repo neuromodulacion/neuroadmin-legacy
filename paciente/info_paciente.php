@@ -367,7 +367,7 @@ extract($row);
 											                	});
 											                });
 											            </script>  
-														<button id='edita_comentarios' type='button' class='btn bg-teal waves-effect'><i class='material-icons'>mode_edit</i> Edita Comentarios con IA</button>                     	
+														<!--<button id='edita_comentarios' type='button' class='btn bg-teal waves-effect'><i class='material-icons'>mode_edit</i> Edita Comentarios con IA</button>  -->                   	
 														<hr>
 														<a $style class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html.php?paciente_id=<?php echo $paciente_id; ?>' role='button' >
 															Descarga Reporte Doctor 
@@ -1008,7 +1008,14 @@ extract($row);
 															}													
 															$tabla .="</table>";
 															
-															$resultado_final = round(($tot_ini/$total)*100,0);
+															if ($total != 0) {
+																$resultado_final = round(($tot_ini / $total) * 100, 0);
+															} else {
+																$resultado_final = 0; // O un valor predeterminado
+															}
+															
+
+															//$resultado_final = round(($tot_ini/$total)*100,0);
 															//$resultado_final = round(($total/$tot_ini)*100,0);
 															$resultado_final = 100 -$resultado_final;
 															
