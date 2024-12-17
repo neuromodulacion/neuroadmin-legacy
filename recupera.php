@@ -54,11 +54,11 @@ if ($cnt == 0) { ?>
 
 <!-- <body class="five-zero-zero"></body>-->
 <body class="theme-<?php echo $body; ?>">	
-    <div align="center" class="five-zero-zero-container">
+    <div style="text-align: center;" class="five-zero-zero-container">
         <div> <h1>No esta registrado este usuario</h1></div>
         <div> <h2>Usuario no registrado favor de registrarse</h2></div>
-        <div align="center"> 
-			<div style="width: 90% ;!important;" align="left" >
+        <div style="text-align: center;"> 
+			<div style="width: 90% !important; text-align: left;" >
 			        	 
 				<a href="sign-up.html" class="btn bg-green btn-lg waves-effect">REGISTRARCE</a>     	      	
 	    	</div>        		

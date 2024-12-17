@@ -30,7 +30,7 @@ extract($_SESSION);
  
 extract($_POST);
 // print_r($_POST);
- echo "<hr>";
+
 function tildes($palabra) {
     //Rememplazamos caracteres especiales latinos minusculas
     $encuentra = array('&','<','>','¢','£','¥','€','©','®','™','§','†','‡','¶','•','…','±','¹','²','³','½','¼','¾','µ','°','√','∞','Ω','Σ','μ','←','→','↑','↓','↔','↵','⇐','⇒'
@@ -42,7 +42,11 @@ function tildes($palabra) {
 return $palabra;
 }
 
-
+echo "<hr>";
+print_r($_SESSION);
+echo "<hr>";
+print_r($_POST);
+echo "<hr>";
 
 // echo "<hr>";
 $observaciones = stripslashes($_POST['observaciones']); 
@@ -55,6 +59,16 @@ $h_captura = date("H:i:s");
 //echo $observaciones."<BR>";
 if ($tms_cnt == '') { $tms_cnt = 0; }
 if ($tms_d == '') { $tms_d = 0; }
+
+$anodo          = !empty($_POST['anodo']) ? $_POST['anodo'] : '';
+$catodo         = !empty($_POST['catodo']) ? $_POST['catodo'] : '';
+$polaridad      = !empty($_POST['polaridad']) ? $_POST['polaridad'] : '';
+$umbral         = !empty($_POST['umbral']) ? $_POST['umbral'] : '';
+$tms_cnt        = !empty($_POST['tms_cnt']) ? $_POST['tms_cnt'] : '';
+$tms_d          = !empty($_POST['tms_d']) ? $_POST['tms_d'] : '';
+$adverso        = !empty($_POST['adverso']) ? $_POST['adverso'] : '';
+$observaciones  = !empty($_POST['observaciones']) ? $_POST['observaciones'] : '';
+
 
 switch ($tipo) {
 
@@ -607,7 +621,6 @@ switch ($tipo) {
 		if ($umbral =='') {
 			$umbral = 0;
 		} 
-		
 		
 		$insert = "
 			INSERT IGNORE INTO historico_sesion 

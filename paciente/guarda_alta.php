@@ -1,67 +1,100 @@
 <?php
-// Inclusión de archivos necesarios para las funciones del sistema
-include('../functions/funciones_mysql.php');  // Funciones para trabajar con MySQL
-include('../functions/email.php');  // Funciones para el envío de correos electrónicos
-include('../api/funciones_api.php');  // Funciones adicionales de la API
+// Inclusión de archivos necesarios
+include('../functions/funciones_mysql.php');
+include('../functions/email.php');
+include('../api/funciones_api.php');
 
-// Inicia la sesión y configura la codificación y zona horaria
 session_start();
 
-// Establecer el nivel de notificación de errores
-error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
+// Mostrar todos los errores
+error_reporting(E_ALL);
 
-// Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
+// Ajustar charset y zona horaria
 ini_set('default_charset', 'UTF-8');
-
-// Configurar la cabecera HTTP con codificación UTF-8
 header('Content-Type: text/html; charset=UTF-8');
-
-// Configurar la zona horaria
 date_default_timezone_set('America/Monterrey');
-
-// Configurar la localización para manejar fechas y horas en español
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
-// Asignar el tiempo actual a la sesión en formato de timestamp
-$_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
+// Establecer tiempo en sesión
+$_SESSION['time'] = time();
 
-// Define la ruta base y extrae los datos de la sesión y el formulario POST
+// Ruta base
 $ruta = "../";
+
 extract($_SESSION);
 extract($_POST);
 
-// Establece las variables de fecha y hora actuales
+// ===================
+// Variables desde $_SESSION (si las necesitas) 
+// Ajusta estos nombres según las variables que realmente existan en tu sesión
+
+$usuario_id = isset($_SESSION['usuario_id']) ? $_SESSION['usuario_id'] : 0;
+$usuario = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : '';
+$body = isset($_SESSION['body']) ? $_SESSION['body'] : '';
+$emp_nombre = isset($_SESSION['emp_nombre']) ? $_SESSION['emp_nombre'] : '';
+
+// ===================
+// Variables desde $_POST
+// Asignar valores por defecto si no existen
+$usuario_idm = isset($_POST['usuario_idm']) ? $_POST['usuario_idm'] : 0;
+$paciente = isset($_POST['paciente']) ? $_POST['paciente'] : '';
+$apaterno = isset($_POST['apaterno']) ? $_POST['apaterno'] : '';
+$amaterno = isset($_POST['amaterno']) ? $_POST['amaterno'] : '';
+$email = isset($_POST['email']) ? $_POST['email'] : '';
+$celular = isset($_POST['celular']) ? $_POST['celular'] : '';
+$valmail = isset($_POST['valmail']) ? $_POST['valmail'] : '';
+$f_nacimiento = isset($_POST['f_nacimiento']) ? $_POST['f_nacimiento'] : '';
+$sexo = isset($_POST['sexo']) ? $_POST['sexo'] : '';
+$contacto = isset($_POST['contacto']) ? $_POST['contacto'] : '';
+$parentesco = isset($_POST['parentesco']) ? $_POST['parentesco'] : '';
+$tel1 = isset($_POST['tel1']) ? $_POST['tel1'] : '';
+$tel2 = isset($_POST['tel2']) ? $_POST['tel2'] : '';
+$resumen_caso = isset($_POST['resumen_caso']) ? $_POST['resumen_caso'] : '';
+$diagnostico = isset($_POST['diagnostico']) ? $_POST['diagnostico'] : '';
+$diagnostico2 = isset($_POST['diagnostico2']) ? $_POST['diagnostico2'] : '';
+$diagnostico3 = isset($_POST['diagnostico3']) ? $_POST['diagnostico3'] : '';
+$medicamentos = isset($_POST['medicamentos']) ? $_POST['medicamentos'] : '';
+$terapias = isset($_POST['terapias']) ? $_POST['terapias'] : '';
+$notificaciones = isset($_POST['notificaciones']) ? $_POST['notificaciones'] : '';
+$tratamiento = isset($_POST['tratamiento']) ? $_POST['tratamiento'] : '';
+$observaciones = isset($_POST['observaciones']) ? $_POST['observaciones'] : '';
+//$empresa_id = isset($_POST['empresa_id']) ? $_POST['empresa_id'] : '';
+$bind = isset($_POST['bind']) ? $_POST['bind'] : 'no';
+$mensaje = isset($_POST['mensaje']) ? $_POST['mensaje'] : '';
+
+// Variables adicionales usadas por funciones_api.php (si las necesitas):
+$Phone = isset($_POST['Phone']) ? $_POST['Phone'] : '';
+$NextContactDate = isset($_POST['NextContactDate']) ? $_POST['NextContactDate'] : '';
+$LocationID = isset($_POST['LocationID']) ? $_POST['LocationID'] : '';
+
+// Variables de fecha y hora actuales
 $f_captura = date("Y-m-d");
-$h_captura = date("H:i:s"); 
-$mes =  substr($mes_ano, 5, 2);  // Extrae el mes de la variable mes_ano
-$ano = substr($mes_ano, 0, 4);  // Extrae el año de la variable mes_ano
+$h_captura = date("H:i:s");
 
-// Consulta para verificar si ya existe un paciente con el email proporcionado
-$sql = "SELECT * FROM pacientes WHERE email ='$email' 
-			and celular = '$celular' and paciente = '$paciente' 
-			and apaterno ='$apaterno' and amaterno = '$amaterno'"; 
-$result_insert = ejecutar($sql);
-$cnt = mysqli_num_rows($result_insert);  // Cuenta cuántos registros coinciden
-//$cnt =0;
-
+// Si valmail es No, forzar email
 if ($valmail == 'No') {
-	$email = "remisiones_bind@neuromodulaciongdl.com";
+    $email = "remisiones_bind@neuromodulaciongdl.com";
 }
 
+// Verifica si el paciente ya existe
+$sql = "SELECT * FROM pacientes WHERE email ='$email' 
+            AND celular = '$celular' 
+            AND paciente = '$paciente' 
+            AND apaterno ='$apaterno' 
+            AND amaterno = '$amaterno'"; 
+$result_insert = ejecutar($sql);
+$cnt = mysqli_num_rows($result_insert);
 
-// Si ya existe un paciente con ese email
 if ($cnt !== 0) {
-    $row = mysqli_fetch_array($result_insert);  // Obtiene los datos del paciente
-    extract($row);  // Extrae los datos del paciente a variables individuales
-    
-    // Muestra un mensaje de que el paciente ya está registrado
+    // Paciente ya existe
+    $row = mysqli_fetch_array($result_insert);
+    // extraer datos del paciente si fuera necesario
+    // Mostrar HTML de paciente ya registrado
     ?>
     <!DOCTYPE html>
     <html>
-
     <head>
         <meta charset="UTF-8">
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <title>Ya Capturado Anteriormente</title>
         <link rel="icon" href="<?php echo $ruta; ?>images/favicon.png" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
@@ -70,10 +103,9 @@ if ($cnt !== 0) {
         <link href="<?php echo $ruta; ?>plugins/node-waves/waves.css" rel="stylesheet" />
         <link href="<?php echo $ruta; ?>css/style.css" rel="stylesheet">
     </head>
-
     <body class="theme-<?php echo $body; ?>">    
-        <div class="container" style="padding-top: 50px">
-            <div style="background: #FFFFFF" class="jumbotron" style="margin-top: 50px;">
+        <div class="container" style="padding-top: 10px">
+            <div style="background: #FFFFFF" class="jumbotron">
                 <h1 class="display-4">Ya Capturado Anteriormente</h1>
                 <p class="lead">Paciente registrado</p>
                 <hr class="my-4">
@@ -85,33 +117,29 @@ if ($cnt !== 0) {
                 </ul>
                 <a href="<?php echo $ruta; ?>menu.php" class="btn btn-primary btn-lg">Continuar</a>
             </div>
-        </div>
-                    
-        <!-- Inclusión de scripts necesarios -->
+        </div>               
         <script src="<?php echo $ruta; ?>plugins/jquery/jquery.min.js"></script>
         <script src="<?php echo $ruta; ?>plugins/bootstrap/js/bootstrap.js"></script>
         <script src="<?php echo $ruta; ?>plugins/node-waves/waves.js"></script>
     </body>
-
     </html>     
     <?php    
 } else { 
-    // Si no existe un paciente con ese email, proceder con el registro
+    // Paciente no existe, registrar
 
-    // Validación y limpieza de campos de email y celular
+    // Validación y limpieza de email y celular
     if (empty($email)) {
         $email = "remisiones_bind@neuromodulaciongdl.com";
     } else {
-        $email = validarSinEspacios($email);  // Elimina espacios del email
+        $email = validarSinEspacios($email);
     }
 
     if (empty($celular)) {
         $celular = "";
     } else {
-        $celular = validarSinEspacios($celular);  // Elimina espacios del celular
+        $celular = validarSinEspacios($celular);
     }
 
-    // Inserta los datos del nuevo paciente en la base de datos
     $insert1 = "
     INSERT IGNORE INTO pacientes 
         (
@@ -141,7 +169,7 @@ if ($cnt !== 0) {
             observaciones,
             empresa_id 
         ) 
-    VALUE
+    VALUES
         (
             $usuario_idm,
             '$paciente',
@@ -169,27 +197,50 @@ if ($cnt !== 0) {
             '$observaciones',
             '$empresa_id' 
         ) ";
-    // Ejecuta la inserción
-    $result_insert = ejecutar($insert1);            
+    $result_insert = ejecutar($insert1);
 
-    // Obtiene el ID del nuevo paciente registrado
+    // Obtener ID del nuevo paciente
     $sql = "SELECT max(paciente_id) as paciente_id FROM pacientes"; 
     $result_insert = ejecutar($sql);
     $row1 = mysqli_fetch_array($result_insert);
-    extract($row1);  // Extrae el ID del paciente
+    $paciente_id = isset($row1['paciente_id']) ? $row1['paciente_id'] : 0;
 
-    // Verifica y extrae los datos del paciente recién insertado
+    // Obtener datos del paciente
     $sql = "SELECT * FROM pacientes WHERE paciente_id = $paciente_id"; 
     $result = ejecutar($sql);
     $row = mysqli_fetch_array($result);
-    extract($row);
+    // Extrae datos del paciente
+    $paciente     = $row['paciente'];
+    $apaterno     = $row['apaterno'];
+    $amaterno     = $row['amaterno'];
+    $email        = $row['email'];
+    $celular      = $row['celular'];
+    $f_nacimiento = $row['f_nacimiento'];
+    $sexo         = $row['sexo'];
+    $contacto     = $row['contacto'];
+    $parentesco   = $row['parentesco'];
+    $tel1         = $row['tel1'];
+    $tel2         = $row['tel2'];
+    $resumen_caso = $row['resumen_caso'];
+    $diagnostico  = $row['diagnostico'];
+    $diagnostico2 = $row['diagnostico2'];
+    $diagnostico3 = $row['diagnostico3'];
+    $medicamentos = $row['medicamentos'];
+    $terapias     = $row['terapias'];
+    $f_captura    = $row['f_captura'];
+    $h_captura    = $row['h_captura'];
+    $estatus      = $row['estatus'];
+    $notificaciones = $row['notificaciones'];
+    $tratamiento  = $row['tratamiento'];
+    $observaciones= $row['observaciones'];
+    $empresa_id   = $row['empresa_id'];
 
-    // Si la empresa es la ID 1, agrega el paciente en bind
+    // Si bind es si, agrega cliente a bind
     if($bind == 'si'){
         echo agrega_cliente_bind($paciente_id);     
     } 
 
-    // Inserta la información de terapias para el nuevo paciente
+    // Insertar terapias
     $insert_terapias = "
     INSERT IGNORE INTO terapias 
         (
@@ -200,7 +251,7 @@ if ($cnt !== 0) {
             observaciones,
             estatus
         ) 
-    VALUE
+    VALUES
         (
             $paciente_id,
             $usuario_id,
@@ -210,10 +261,9 @@ if ($cnt !== 0) {
             'Pendiente' 
         ) 
     "; 
-    //$result_insert = ejecutar($insert_terapias); 
-    $terapia_id= ejecutar_id($insert_terapias);
+    $terapia_id = ejecutar_id($insert_terapias);
 
-    // Inserta las sesiones de terapia según el protocolo seleccionado
+    // Procesar protocolos
     $sql_protocolo = "
     SELECT
         protocolo_terapia.protocolo_ter_id, 
@@ -226,15 +276,17 @@ if ($cnt !== 0) {
     $total = 0;
     $ter = "";
     while ($row_protocolo = mysqli_fetch_array($result_protocolo)) {
-        extract($row_protocolo);
-        
-        $protocolo_var = "protocolo".$protocolo_ter_id;
-        $valor = $_POST[$protocolo_var];
+        $protocolo_ter_id = $row_protocolo['protocolo_ter_id'];
+        $prot_terapia = $row_protocolo['prot_terapia'];
+
+        // Verificar si existe en $_POST protocoloX
+        $campo_protocolo = 'protocolo'.$protocolo_ter_id;
+        $valor = isset($_POST[$campo_protocolo]) ? intval($_POST[$campo_protocolo]) : 0;
+
         $total += $valor;
         if ($valor >= 1) {
-            $ter .= $prot_terapia." <b>".$valor." Sesiones </b><br>"; 
+            $ter .= $prot_terapia." <b>".$valor." Sesiones </b><br>";
 
-            // Inserta las sesiones de la terapia en la base de datos
             $insert1 = "
             INSERT IGNORE INTO sesiones 
                 (
@@ -245,7 +297,7 @@ if ($cnt !== 0) {
                     f_alta,
                     h_alta
                 ) 
-            VALUE
+            VALUES
                 (
                     $terapia_id,
                     $protocolo_ter_id,
@@ -257,9 +309,9 @@ if ($cnt !== 0) {
             $result_insert = ejecutar($insert1);
         }
         $cnt++;
-    } 
+    }
 
-    // Obtiene el nombre y usuario del médico tratante
+    // Obtener médico tratante
     $sql = "
     SELECT 
         admin.nombre as nombre_m, 
@@ -268,11 +320,12 @@ if ($cnt !== 0) {
         admin
     WHERE
         admin.usuario_id = $usuario_idm"; 
+     //   echo $sql."<hr>";
     $result = ejecutar($sql);
     $row = mysqli_fetch_array($result);
-    extract($row);
+    $nombre_m = $row['nombre_m'];
+    $usuario_m = $row['usuario_m'];
 
-    // Prepara y envía un correo de confirmación al médico tratante
     $asunto = "Alta de Paciente No. $paciente_id $paciente $apaterno $amaterno" ; 
     $cuerpo_correo = ' 
     <h3>Buen día Dr/a. '.$nombre_m.':<br>
@@ -304,81 +357,76 @@ if ($cnt !== 0) {
         </div> 
     </div> 
     '; 
-    $accion =  "General";
-    $mail = correo_electronico($usuario, $asunto, $cuerpo_correo, $nombre_m, $empresa_id, $accion);
-    //echo $mail."<hr>";
-?>
-<!DOCTYPE html>
-<html>
+    $accion = "General";
+    $mail = correo_electronico($usuario_m, $asunto, $cuerpo_correo, $nombre_m, $empresa_id, $accion);
 
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Éxito</title>
-    <link rel="icon" href="<?php echo $ruta; ?>images/favicon.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-    <link href="<?php echo $ruta; ?>plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="<?php echo $ruta; ?>plugins/node-waves/waves.css" rel="stylesheet" />
-    <link href="<?php echo $ruta; ?>css/style.css" rel="stylesheet">
-</head>
-
-<body class="theme-<?php echo $body; ?>">    
-    <div class="container" style="padding-top: 50px">
-        <div style="background: #FFFFFF" class="jumbotron" style="margin-top: 50px;">
-            <h1 class="display-4">Éxito</h1>
-            <p class="lead">Se guardó correctamente la información</p>
-            <hr class="my-4">
-            <p>Los datos del paciente han sido registrados exitosamente.</p>
-            <button id="botonCopiar" class="btn btn-info btn-lg">Copiar Informe</button>
-            <div id="codigo">
-				<h2><?php echo $mensaje; ?></h2>
-			    	<b>*Registro:*</b> _<?php echo $paciente_id; ?>_<br>
-			    	<b>*Nombre:*</b> _<?php echo $paciente." ".$apaterno." ".$amaterno; ?>_<br>
-			    	<b>*Correo Electronico:*</b> _<?php echo $email; ?>_<br>
-			    	<b>*Celular:*</b> _<?php echo $celular; ?>_<br>
-			    	<b>*Fecha de cumpleaños:*</b> _<?php echo $f_nacimiento; ?>_<br>
-			    	<b>*Sexo:*</b> _<?php echo $sexo; ?>_<br>
-					<b>*Contacto:*</b> _<?php echo $contacto; ?>_<br>
-					<b>*Parentesco:*</b> _<?php echo $parentesco; ?>_<br>
-					<b>*Telefono 1:*</b> _<?php echo $tel1; ?>_<br>
-					<b>*Telefono 2:*</b> _<?php echo $tel2; ?>_<br>
-					<b>*Resumen Caso:*</b> _<?php echo $resumen_caso; ?>_<br>
-					<b>*Diagnostico 1:*</b> _<?php echo $diagnostico; ?>_<br>
-					<b>*Diagnostico 2:*</b> _<?php echo $diagnostico2; ?>_<br>
-					<b>*Diagnostico 3:*</b> _<?php echo $diagnostico3; ?>_<br>
-					<b>*Tratamiento farmacologico actual:*</b> _<?php echo $medicamentos; ?>_<br>
-					<b>*Tratamiento no farmacologico actual:*</b> _<?php echo $terapias; ?>_<br>
-					<b>*Fecha de registro:*</b> _<?php echo date("d/m/Y", strtotime($f_captura)); ?>_<br>
-					<b>*Hora de registro:*</b> _<?php echo $h_captura; ?>_<br>
-					<b>*Estatus:*</b> _Pendiente_<br>
-					<b>*Observaciones:*</b> _<?php echo $observaciones ; ?>_<br><br>
-			    	<b>*Protocolo que está Indicando:*</b> <h2>*_<?php echo $tratamiento; ?>_*<h2><br> 				    				
-				</div>
-            <br>
-            <a href="<?php echo $ruta; ?>menu.php" class="btn btn-primary btn-lg">Continuar</a>
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Éxito</title>
+        <link rel="icon" href="<?php echo $ruta; ?>images/favicon.png" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+        <link href="<?php echo $ruta; ?>plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="<?php echo $ruta; ?>plugins/node-waves/waves.css" rel="stylesheet" />
+        <link href="<?php echo $ruta; ?>css/style.css" rel="stylesheet">
+    </head>
+    <body class="theme-<?php echo $body; ?>">
+        <div class="container" style="padding-top: 10px">
+            <div style="background: #FFFFFF" class="jumbotron">
+                <h1 class="display-4">Éxito</h1>
+                <p class="lead">Se guardó correctamente la información</p>
+                <hr class="my-4">
+                <p>Los datos del paciente han sido registrados exitosamente.</p>
+                <button id="botonCopiar" class="btn btn-info btn-lg">Copiar Informe</button>
+                <div id="codigo">
+                    <h2><?php echo $mensaje; ?></h2>
+                    <b>*Registro:*</b> _<?php echo $paciente_id; ?>_<br>
+                    <b>*Nombre:*</b> _<?php echo $paciente." ".$apaterno." ".$amaterno; ?>_<br>
+                    <b>*Correo Electronico:*</b> _<?php echo $email; ?>_<br>
+                    <b>*Celular:*</b> _<?php echo $celular; ?>_<br>
+                    <b>*Fecha de cumpleaños:*</b> _<?php echo $f_nacimiento; ?>_<br>
+                    <b>*Sexo:*</b> _<?php echo $sexo; ?>_<br>
+                    <b>*Contacto:*</b> _<?php echo $contacto; ?>_<br>
+                    <b>*Parentesco:*</b> _<?php echo $parentesco; ?>_<br>
+                    <b>*Telefono 1:*</b> _<?php echo $tel1; ?>_<br>
+                    <b>*Telefono 2:*</b> _<?php echo $tel2; ?>_<br>
+                    <b>*Resumen Caso:*</b> _<?php echo $resumen_caso; ?>_<br>
+                    <b>*Diagnostico 1:*</b> _<?php echo $diagnostico; ?>_<br>
+                    <b>*Diagnostico 2:*</b> _<?php echo $diagnostico2; ?>_<br>
+                    <b>*Diagnostico 3:*</b> _<?php echo $diagnostico3; ?>_<br>
+                    <b>*Tratamiento farmacologico actual:*</b> _<?php echo $medicamentos; ?>_<br>
+                    <b>*Tratamiento no farmacologico actual:*</b> _<?php echo $terapias; ?>_<br>
+                    <b>*Fecha de registro:*</b> _<?php echo date("d/m/Y", strtotime($f_captura)); ?>_<br>
+                    <b>*Hora de registro:*</b> _<?php echo $h_captura; ?>_<br>
+                    <b>*Estatus:*</b> _Pendiente_<br>
+                    <b>*Observaciones:*</b> _<?php echo $observaciones ; ?>_<br><br>
+                    <b>*Protocolo que está Indicando:*</b> <h2>*_<?php echo $tratamiento; ?>_*</h2><br>  
+                </div>
+                <br>
+                <a href="<?php echo $ruta; ?>menu.php" class="btn btn-primary btn-lg">Continuar</a>
+            </div>
         </div>
-    </div>
-                
-    <!-- Inclusión de scripts necesarios -->
-    <script src="<?php echo $ruta; ?>plugins/jquery/jquery.min.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/bootstrap/js/bootstrap.js"></script>
-    <script src="<?php echo $ruta; ?>plugins/node-waves/waves.js"></script>
-    <script>
-        // Función para copiar el informe al portapapeles
-        document.getElementById('botonCopiar').addEventListener('click', function() {
-            var codigo = document.getElementById('codigo');
-            var selection = window.getSelection();
-            var range = document.createRange();
-            range.selectNodeContents(codigo);
-            selection.removeAllRanges();
-            selection.addRange(range);
-            document.execCommand('copy');
-            selection.removeAllRanges();
-            alert('Información copiada al portapapeles');
-        });
-    </script>
-</body>
-
-</html>  
-<?php } ?>
+        <script src="<?php echo $ruta; ?>plugins/jquery/jquery.min.js"></script>
+        <script src="<?php echo $ruta; ?>plugins/bootstrap/js/bootstrap.js"></script>
+        <script src="<?php echo $ruta; ?>plugins/node-waves/waves.js"></script>
+        <script>
+            // Función para copiar el informe al portapapeles
+            document.getElementById('botonCopiar').addEventListener('click', function() {
+                var codigo = document.getElementById('codigo');
+                var selection = window.getSelection();
+                var range = document.createRange();
+                range.selectNodeContents(codigo);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                document.execCommand('copy');
+                selection.removeAllRanges();
+                alert('Información copiada al portapapeles');
+            });
+        </script>
+    </body>
+    </html>  
+    <?php
+} 

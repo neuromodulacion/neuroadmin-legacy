@@ -1113,7 +1113,7 @@ function actualiza_cliente($ID){
     	    		
 	}
   
-
+    $phone = $Telephones;
 
     // Si el cliente no existe, inserta un nuevo registro en la base de datos
     if ($cnt_protocolo == 0) {
@@ -1127,7 +1127,6 @@ function actualiza_cliente($ID){
             pacientes_bind.RFC, 
             pacientes_bind.Email, 
             pacientes_bind.Phone, 
-            pacientes_bind.NextContactDate, 
             pacientes_bind.LocationID, 
             pacientes_bind.RegimenFiscal
         ) VALUE (
@@ -1138,7 +1137,6 @@ function actualiza_cliente($ID){
             '$RFC',
             '$Email',
             '$Phone',
-            '$NextContactDate',
             '$LocationID',
             '$RegimenFiscal'
         )
