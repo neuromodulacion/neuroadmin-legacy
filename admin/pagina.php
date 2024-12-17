@@ -1,15 +1,8 @@
 <?php
 
 $ruta="../";
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
 $titulo ="Titulo de la pagina";
-$genera ="";
+
 
 include($ruta.'header1.php');?>
     
@@ -36,9 +29,7 @@ include($ruta.'header1.php');?>
 	<div class="container-fluid">
 		<div class="block-header">
 			<h2>Titulo de la pagina</h2>
-			<?php // echo $ubicacion_url."<br>";
-//echo $ruta."proyecto_medico/menu.php"
-			?>
+      <?php echo $ubicacion_url."<br>"; ?>
 		</div>
 		<!-- // ************** Contenido ************** // -->
 		<!-- CKEditor -->
@@ -47,7 +38,7 @@ include($ruta.'header1.php');?>
 				<div class="card">
 					<div style="height: 95%"  class="header">
 						<h1 align="center">Titulo de la pagina</h1>
-
+            <!---- Contenido ---->
 					</div>
 				</div>
 			</div>

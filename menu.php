@@ -1,19 +1,6 @@
 <?php
 // Definir la ruta base para las inclusiones de archivos
 $ruta = "";
-
-// Obtener la fecha actual en formato "YYYY-MM-DD"
-$hoy = date("Y-m-d");
-
-// Obtener la hora actual en formato "HH:MM:00"
-$ahora = date("H:i:00"); 
-
-// Obtener el año actual
-$anio = date("Y");
-
-// Obtener el mes actual en formato numérico "MM"
-$mes_ahora = date("m");
-
 // Definir el título de la página
 $titulo = "Menú TMS";
 
@@ -46,7 +33,7 @@ include($ruta.'header2.php'); ?>
         <div class="container-fluid">
             <div class="block-header">
                 <h2>INICIO</h2>
-                <?php echo $ubicacion_url."<br>"; ?>
+                <?php echo $ubicacion_url; ?>
             </div>
 			<!-- Contenido principal de la página -->
             <div class="row clearfix">

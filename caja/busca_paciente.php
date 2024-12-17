@@ -35,6 +35,10 @@ $ticket = time();
 
 // Extrae las variables enviadas por POST y las convierte en variables locales
 extract($_POST);
+// Verifica si se envió el valor del doctor (por ejemplo, en un formulario)
+$doctor = isset($_POST['doctor']) ? trim($_POST['doctor']) : null;
+$medico = isset($_POST['medico']) ? trim($_POST['medico']) : null;
+$medico = isset($_POST['paciente_cons_id']) ? trim($_POST['paciente_cons_id']) : null;
 
 // Función para reemplazar caracteres acentuados por el símbolo '%'
 function acentos($acentos){
@@ -316,7 +320,7 @@ $sqlx ="
 	FROM
 		pacientes 
 	WHERE
-		pacientes.empresa_id = 1 
+		pacientes.empresa_id = $empresa_id 
 		$filtro
 		$pacientesql  
 		$apaternosql 
@@ -428,9 +432,12 @@ while($row = mysqli_fetch_array($resultx)){
 					$( "#guarda_<?php echo $paciente_id ; ?>_consul" ).hide();
 					$('#tr_<?php echo $paciente_id; ?>').css("background-color", "#eee");
 
-					var paciente_cons_id = '<?php echo $paciente_cons_id ; ?>';
-					var email = $( "#email_<?php echo $paciente_cons_id ; ?>" ).val();
-					var celular = $( "#celular_<?php echo $paciente_cons_id ; ?>" ).val();	
+					if ($paciente_cons_id == '' || $paciente_cons_id == 0) { $paciente_cons_id=$paciente_id;};
+   
+
+					var paciente_id = '<?php echo $paciente_id ; ?>';
+					var email = $( "#email_<?php echo $paciente_id ; ?>" ).val();
+					var celular = $( "#celular_<?php echo $paciente_id ; ?>" ).val();	
 					var tipo_mod = 'paciente_id';
 					// Envía los datos editados a través de una solicitud AJAX
 					var datastring = 'paciente_id=' + paciente_id + '&celular=' + celular + '&email=' + email + '&tipo_mod=' + tipo_mod;
@@ -441,7 +448,7 @@ while($row = mysqli_fetch_array($resultx)){
 						cache : false,
 						success : function(html) {
 							alert(html);
-							$('#tr_<?php echo $paciente_cons_id; ?>').css("background-color", "#eee");
+							$('#tr_<?php echo $paciente_id; ?>').css("background-color", "#eee");
 
 						}
 					});											
