@@ -352,7 +352,7 @@ extract($row);
 													<button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'>
 														<i class='material-icons'>save</i> Guarda Comentarios
 													</button>
-
+<!-- se actualizo -->
 													<script type='text/javascript'>
 														$('#guarda_comentarios').click(function () {
 															var paciente_id = '<?php echo $paciente_id ?>'; 
