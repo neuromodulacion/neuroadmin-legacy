@@ -7,7 +7,7 @@ session_start();
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['empresa_id'])) {
     die('Sesión no válida. Por favor, inicie sesión.');
 }
-
+// print_r($_POST);
 // Validar que se haya enviado el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Instanciar conexión
@@ -27,14 +27,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $empresa_id = $_SESSION['empresa_id'];
     $telefono = trim($_POST['telefono']);
     $domicilio = trim($_POST['domicilio']);
+    $f_visita = $_POST['f_visita'];
+    
 
     // Insertar el contacto en la tabla `contactos`
     $query = "
         INSERT INTO contactos (
-            medico_id,telefono,domicilio, metodo_contacto, exito, observaciones, usuario_id, empresa_id
-        ) VALUES (?, ?, ?,?, ?, ?, ?, ?)";
+            medico_id,telefono,domicilio, metodo_contacto, exito, observaciones, usuario_id, empresa_id, f_visita
+        ) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?)";
     $resultado = $conexion->consulta_simple($query, [
-        $medico_id, $telefono, $domicilio, $metodo_contacto, $exito, $observaciones, $usuario_id, $empresa_id
+        $medico_id, $telefono, $domicilio, $metodo_contacto, $exito, $observaciones, $usuario_id, $empresa_id, $f_visita
     ]);
 
     try {

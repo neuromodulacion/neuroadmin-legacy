@@ -65,22 +65,24 @@ include($ruta.'header1.php');
                                     // Consulta para obtener los datos de la tabla
                                     $sql_contactos = "
                                         SELECT
-                                            c.id,
-                                            c.telefono,
-                                            c.domicilio,
-                                            c.metodo_contacto,
-                                            c.exito,
-                                            c.observaciones,
-                                            c.fecha_contacto,
-                                            a.nombre AS medico,
-                                            c.usuario_id,
-                                            admin.nombre 
+                                            contactos.id,
+                                            contactos.usuario_id,
+                                            contactos.medico_id,
+                                            contactos.telefono,
+                                            contactos.domicilio,
+                                            contactos.metodo_contacto,
+                                            contactos.exito,
+                                            contactos.observaciones,
+                                            contactos.f_visita,
+                                            contactos.fecha_registro,
+                                            admin.nombre AS representante,
+                                            admin_tem.nombre AS medico 
                                         FROM
-                                            contactos AS c
-                                            JOIN admin_tem AS a ON c.medico_id = a.medico_id
-                                            INNER JOIN admin ON c.usuario_id = admin.usuario_id 
+                                            contactos
+                                            INNER JOIN admin ON contactos.usuario_id = admin.usuario_id
+                                            INNER JOIN admin_tem ON contactos.medico_id = admin_tem.medico_id 
                                         WHERE
-                                            c.empresa_id = ?";
+                                            contactos.empresa_id = ?";
 
                                     // Ejecutar la consulta
                                     $contactos = $mysql->consulta($sql_contactos, [$_SESSION['empresa_id']]);
@@ -89,13 +91,13 @@ include($ruta.'header1.php');
                                         foreach ($contactos['resultado'] as $contacto) {
                                             ?>
                                             <tr>
-                                                <td><?php echo htmlspecialchars($contacto['nombre'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                                                <td><?php echo htmlspecialchars($contacto['representante'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                                                 <td><?php echo htmlspecialchars($contacto['medico'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                                                 <td><?php echo htmlspecialchars($contacto['telefono'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                                                 <td><?php echo htmlspecialchars($contacto['metodo_contacto'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                                                 <td><?php echo isset($contacto['exito']) && $contacto['exito'] ? 'Sí' : 'No'; ?></td>
                                                 <td><?php echo htmlspecialchars($contacto['observaciones'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-                                                <td><?php echo htmlspecialchars($contacto['fecha_contacto'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                                                <td><?php echo htmlspecialchars($contacto['f_visita'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                                             </tr>
                                             <?php
                                         }

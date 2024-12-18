@@ -102,7 +102,7 @@ include($ruta.'header2.php');
 															INNER JOIN admin ON pacientes.usuario_id = admin.usuario_id
 															INNER JOIN estatus_paciente ON pacientes.estatus = estatus_paciente.estatus 
 														WHERE
-															pacientes.estatus = 'Seguimiento'
+															pacientes.estatus list('Seguimiento','Confirmado')
 															$where
 												        ";
 														//echo $sql_protocolo."<hr>";
