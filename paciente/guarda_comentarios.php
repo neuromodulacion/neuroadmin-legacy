@@ -24,7 +24,7 @@ $_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
 extract($_POST);
 
 
-echo $comentarios_reporte."<hr>";
+//echo $comentarios_reporte."<hr>";
 // $comentarios_reporte = stripslashes($_POST["comentarios_reporte"]);
 // 
 // $comentarios_reporte = tildes($comentarios_reporte);
@@ -49,5 +49,7 @@ SET
 pacientes.comentarios_reporte = '$comentarios_reporte'
 WHERE pacientes.paciente_id = $paciente_id";
 
-echo $update;
+echo $update."<br>";
 $result_update = ejecutar($update);
+echo $result_update;
+//echo "<div class='alert alert-success'>Comentario guardado correctamente.</div>";

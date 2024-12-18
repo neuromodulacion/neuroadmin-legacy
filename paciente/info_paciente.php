@@ -345,29 +345,47 @@ extract($row);
 											<div class="col-md-12">
 												<div class='collapse' id='collapseExamplex'>
 					                                <div class='well'>
-					                                	<h2><b>* Comentarios para el reporte:</b></h2><br>
-					                                	<textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'><?php echo $comentarios_reporte; ?></textarea>
-					                                	<div id="test"></div>
-														<br><button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'><i class='material-icons'>person</i> Guarda Comentarios</button>
-												         <script type='text/javascript'>
-											                $('#guarda_comentarios').click(function(){
-											                	var paciente_id = '<?php echo $paciente_id ?>'; 
-											                	var comentarios_reporte = $( '#comentarios_rep').val();
-											                    var datastring = 'comentarios_reporte='+comentarios_reporte+'&paciente_id='+paciente_id;
-											                    $.ajax({
-											                        url: 'guarda_comentarios.php',
-											                        type: 'POST',
-											                        data: datastring,
-											                        cache: false,
-											                        success:function(html){   
-											                        	//alert(html);  
-											                            $('#descarga').show(); 
-											                            
-											                        }
-											                	});
-											                });
-											            </script>  
-														<!--<button id='edita_comentarios' type='button' class='btn bg-teal waves-effect'><i class='material-icons'>mode_edit</i> Edita Comentarios con IA</button>  -->                   	
+													<h2><b>* Comentarios para el reporte:</b></h2><br>
+													<textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'><?php echo htmlspecialchars($comentarios_reporte); ?></textarea>
+													<div id="test"></div>
+													<br>
+													<button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'>
+														<i class='material-icons'>save</i> Guarda Comentarios
+													</button>
+
+													<script type='text/javascript'>
+														$('#guarda_comentarios').click(function () {
+															var paciente_id = '<?php echo $paciente_id ?>'; 
+															// Aseguramos la sincronización del editor con el textarea
+															CKEDITOR.instances['comentarios_rep'].updateElement();
+															var comentarios_reporte = CKEDITOR.instances['comentarios_rep'].getData();
+
+															if (comentarios_reporte.trim() === "") {
+																alert("El comentario no puede estar vacío.");
+																return;
+															}
+
+															var datastring = {
+																comentarios_reporte: comentarios_reporte,
+																paciente_id: paciente_id
+															};
+
+															$.ajax({
+																url: 'guarda_comentarios.php',
+																type: 'POST',
+																data: datastring,
+																cache: false,
+			                                        			success:function(html){
+																	$('#test').html("<div class='alert alert-success'>Comentario guardado correctamente.</div>");
+																},
+
+															});
+														});
+
+
+													</script>
+ 
+														<button id='edita_comentarios' type='button' class='btn bg-teal waves-effect'><i class='material-icons'>mode_edit</i> Edita Comentarios con IA</button>                 	
 														<hr>
 														<a $style class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html.php?paciente_id=<?php echo $paciente_id; ?>' role='button' >
 															Descarga Reporte Doctor 
@@ -1357,7 +1375,7 @@ extract($row);
 
 												// $drop = "DROP TABLE IF EXISTS tabla_temporal_$paciente_id";
 												// $result = ejecutar($drop);													
-											
+												$grafica = [];
 										
 		                                	?>
 													                                	
@@ -1534,7 +1552,7 @@ extract($row);
 												    alert('Datos copiado al portapapeles'); // Opcional: muestra una alerta
 												});			
 											</script> 																			
-											<script> 
+											<!--<script> 
 												var week_data = <?php echo $grafica; ?>
 												Morris.Line({
 												  element: 'graph',
@@ -1545,7 +1563,7 @@ extract($row);
 												  labelColor: ['#005157', '#007580', '#89CFE5','#FFDA00','#FFDA00','#BBBABA'],
 							  					  lineColors: ['#005157', '#007580', '#89CFE5','#FFDA00','#FFDA00','#BBBABA'],			  
 												});	
-											</script>
+											</script>-->
 										  <button style="display: none"  id="myButton" onclick="handleClick()">Botón</button>   
 										<script>
 										  window.addEventListener('DOMContentLoaded', function() {
