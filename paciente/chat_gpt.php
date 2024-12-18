@@ -439,13 +439,14 @@ switch ($accion) {
 		# Output Format
 
 		El texto final deberá presentarse como un párrafo o conjunto de párrafos bien estructurados, con lenguaje profesional y enfocado en el ámbito de la psiquiatría y las neurociencias, listo para su inclusión en un informe médico.
-
+		- Responder usando el formato HTML especificado, proporcionando todo el contenido estructurado claramente conforme las secciones señaladas.
+		- No utilizar etiquetas \"html\", \"head\" ni \"body\". Limitarse a la estructura presentada. 
 		# Examples
 
 		**Input:** Texto original con lenguaje coloquial y términos poco específicos sobre un caso de ansiedad.
 		**Output:** Reescritura del texto utilizando términos como 'trastorno de ansiedad generalizada', 'síntomas persistentes de inquietud', incluyendo contexto sobre el historial médico del paciente de manera formal. 
 
-		(Nota: Los ejemplos aquí son ilustrativos; ejemplifique con placeholders específicos según el contenido que se reciba.)".$contenido;		
+		(Nota: Los ejemplos aquí son ilustrativos; ejemplifique con placeholders específicos según el contenido que se reciba.),  y ponlo que se sea visiblemente bonito y ordenado	".$contenido;		
 		break;	
     default:
         die("Error: Acción no válida.");

@@ -160,7 +160,7 @@ extract($row);
 								        </div>
 								        <div id="collapseOne_1_info" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne_1_info">
 								            <div class="panel-body card" style="max-width: 100%; margin: 0 auto; padding: 20px;">
-												<textarea id="editor1"><?php echo $recomendacion_gpt; ?></textarea>
+												<textarea id="editor1"><?php echo codificacionUTF($recomendacion_gpt); ?></textarea>
 								            </div>
 								        </div>
 								    </div>
@@ -176,7 +176,7 @@ extract($row);
 							            </div>
 							            <div id="collapseTwo_1_info" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo_1_info">
 							                <div class="panel-body" style="width: 100%; margin: 0 auto; padding: 20px; overflow: auto; overflow-wrap: break-word;">
-											<textarea id="editor2"><?php echo $informe_gpt; ?></textarea>
+											<textarea id="editor2"><?php echo codificacionUTF($informe_gpt); ?></textarea>
 
 							                </div>
 							            </div>
@@ -346,7 +346,7 @@ extract($row);
 												<div class='collapse' id='collapseExamplex'>
 					                                <div class='well'>
 													<h2><b>* Comentarios para el reporte:</b></h2><br>
-													<textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'><?php echo htmlspecialchars($comentarios_reporte); ?></textarea>
+													<textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'><?php echo codificacionUTF($comentarios_reporte); ?></textarea>
 													<div id="test"></div>
 													<br>
 													<button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'>
@@ -1513,7 +1513,7 @@ extract($row);
                     
                     CKEDITOR.instances.comentarios_rep.setData(response);
                     
-					$("#test").html(response);
+					$("#test").html('<h3>Texto Actualizado</h3> '+response+'<hr> <h3>Texto Anterior</h3>'+contenidoComentarios);
                     // Mostrar otros elementos o realizar otras acciones según sea necesario
                     //$('#recomendacion_btn').click();
                     //$('#accordion_1x_info').show();

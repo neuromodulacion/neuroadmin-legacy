@@ -77,39 +77,48 @@ $medicos = $mysql->consulta($query, [$_SESSION['empresa_id']]);
                     <!-- Información del médico seleccionada dinámicamente -->
                     <div class="form-group">
                         <label for="telefono">Teléfono:</label>
-                        <input type="text" id="telefono" name="telefono" class="form-control" readonly>
+                        <input type="text" id="telefono" name="telefono" class="form-control" >
                     </div>
 
                     <div class="form-group">
                         <label for="domicilio">Domicilio:</label>
-                        <textarea id="domicilio" name="domicilio" class="form-control" readonly></textarea>
+                        <textarea id="domicilio" name="domicilio" class="form-control" ></textarea>
                     </div>
-
-                    <!-- Método de contacto -->
-                    <div class="form-group">
-                        <label for="metodo_contacto">Método de contacto:</label>
-                        <select id="metodo_contacto" name="metodo_contacto" class="form-control" required>
-                            <option value="correo">Correo Electrónico</option>
-                            <option value="telefono">Teléfono</option>
-                            <option value="visita">Visita</option>
-                        </select>
-                    </div>
-
                     <!-- Resultado del contacto -->
-                    <div class="form-group">
-                        <label for="exito">¿Contacto exitoso?</label>
-                        <select id="exito" name="exito" class="form-control" required>
-                            <option value="1">Sí</option>
-                            <option value="0">No</option>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <!-- Método de contacto -->
+                            <div class="form-group">
+                                <label for="metodo_contacto">Método de contacto:</label>
+                                <select id="metodo_contacto" name="metodo_contacto" class="form-control" required>
+                                    <option value="correo">Correo Electrónico</option>
+                                    <option value="telefono">Teléfono</option>
+                                    <option value="visita">Visita</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exito">¿Contacto exitoso?</label>
+                                <select id="exito" name="exito" class="form-control" required>
+                                    <option value="1">Sí</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <!-- Fecha de visita -->
+                            <div class="form-group form-float">
+                                <label for="f_visita">Fecha de visita:</label>
+                                <input type="date" id="f_visita" name="f_visita" class="form-control" value="<?php echo $hoy; ?>">
+                            </div>
+                        </div>
+                        <!-- Observaciones -->
+                        <div class="form-group form-float">
+                            <label for="observaciones">Observaciones:</label>
+                            <textarea id="observaciones" name="observaciones" class="form-control"></textarea>
+                        </div>  
                     </div>
-
-                    <!-- Observaciones -->
-                    <div class="form-group">
-                        <label for="observaciones">Observaciones:</label>
-                        <textarea id="observaciones" name="observaciones" class="form-control"></textarea>
-                    </div>
-
                     <!-- Botón de envío -->
                     <button type="submit" class="btn btn-primary">Guardar Contacto</button>
                 </form>

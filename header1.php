@@ -3,8 +3,9 @@
 session_start();
 
 // Configura la notificación de errores para mostrar todos los errores
-error_reporting(E_ALL);
-
+// error_reporting(E_ALL);
+// Notificar solamente errores de ejecución
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 // Establece el conjunto de caracteres predeterminado como UTF-8
 ini_set('default_charset', 'UTF-8');
 
@@ -66,7 +67,26 @@ function obtenerMesActual($fecha) {
     );
     return ucfirst($formatter->format(strtotime($fecha))); // Capitalizar el primer carácter
 }
+function codificacionUTF($texto) {
+    $encodingActual = mb_detect_encoding($texto, ['UTF-8', 'ISO-8859-1', 'ASCII'], true);
 
+    // Aplicar la conversión basada en la codificación detectada
+    if ($encodingActual === 'UTF-8') {
+        // Convertir de UTF-8 a ISO-8859-1
+        $nombreConvertido = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+    } elseif ($encodingActual === 'ISO-8859-1') {
+        // Convertir de ISO-8859-1 a UTF-8
+        $nombreConvertido = mb_convert_encoding($texto, 'UTF-8', 'ISO-8859-1');
+    } else {
+        // Si la codificación es diferente, manejar según sea necesario (opcional)
+        $nombreConvertido = $texto;
+    }
+    
+    $texto = $nombreConvertido;
+
+    // Retornar el texto sin cambios si ya está en la codificación deseada
+    return $texto;
+}
 
 // Obtiene la URL del script actual y la recorta para obtener la ruta relativa
 $ubicacion_url = $_SERVER['PHP_SELF']; 

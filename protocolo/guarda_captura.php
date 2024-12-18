@@ -3,8 +3,9 @@ include('../functions/funciones_mysql.php');
 session_start();
 
 // Establecer el nivel de notificación de errores
-error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
-
+// error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
+// Notificar solamente errores de ejecución
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 // Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
 ini_set('default_charset', 'UTF-8');
 
@@ -42,11 +43,11 @@ function tildes($palabra) {
 return $palabra;
 }
 
-echo "<hr>";
-print_r($_SESSION);
-echo "<hr>";
-print_r($_POST);
-echo "<hr>";
+//echo "<hr>";
+//print_r($_SESSION);
+//echo "<hr>";
+//print_r($_POST);
+//echo "<hr>";
 
 // echo "<hr>";
 $observaciones = stripslashes($_POST['observaciones']); 
