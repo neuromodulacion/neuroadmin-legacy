@@ -20,6 +20,7 @@ include($ruta.'header.php'); ?>
 			                </div> -->
                             <h3>Test</h3>
                             <!-- se genera este movimiento para generar un cambio y lo registre el codigo-->
+                             <p>Pruebas para los cambios y sincronizacion del sistema</p>
                     	</div>
                 	</div>
             	</div>
