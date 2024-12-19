@@ -6,8 +6,7 @@ include($ruta.'header.php'); ?>
         <div class="container-fluid">
             <div class="block-header">
                 <h2>ANALISIS</h2>
-                 <!-- <?php echo $ubicacion_url."<br>"; 
-                // //echo $ruta."proyecto_medico/menu.php"?> -->
+                 <?php echo $ubicacion_url; ?>
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
