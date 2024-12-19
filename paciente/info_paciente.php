@@ -53,18 +53,20 @@ include($ruta.'header1.php'); ?>
 include($ruta.'header2.php');
 include('calendario.php');
 include('fun_paciente.php');
-$sql = "
-SELECT
-	*
-FROM
-	pacientes
-	WHERE
-	pacientes.paciente_id = $paciente_id";
-			
-// echo $sql."<hr>";	
-$result=ejecutar($sql); 
-$row = mysqli_fetch_array($result);
-extract($row);
+
+// Consulta segura utilizando parámetros
+$sql = "SELECT * FROM pacientes WHERE paciente_id = ?";
+$params = [$paciente_id];
+
+// Ejecución de la consulta
+$resultado = $mysql->consulta($sql, $params);
+
+if ($resultado['numFilas'] > 0) {
+	$row = $resultado['resultado'][0]; // Primer resultado
+	extract($row); // Extrae los datos como variables
+} else {
+	throw new Exception("No se encontró el paciente con el ID especificado.");
+}
 
  ?>
     <section class="content">
@@ -90,15 +92,33 @@ extract($row);
 								<?php }
 								if ($acceso_ia == 'si') { ?>
 									<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">														
-										<button id="botonCopiarx" class="btn bg-<?php echo $body; ?> btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Genera una recomendación apartir de los datos del paciente"><i class="material-icons">send</i>  Recomendacion GPT</button>
+										<!--<button id="botonCopiarx" class="btn bg-<?php echo $body; ?> btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Genera una recomendación apartir de los datos del paciente"><i class="material-icons">send</i>  Recomendacion GPT</button>-->
+										<button id="botonCopiarx" 
+												class="btn bg-<?php echo $body; ?> btn-block waves-effect" 
+												data-toggle="tooltip" 
+												data-placement="bottom" 
+												title="Genera una recomendación a partir de los datos del paciente">
+											<img src="<?php echo $ruta; ?>images/IA_white.png" alt="Recomendación GPT" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;">
+											Recomendación con IA
+										</button>
+
 									</div>
 									<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-										<button id="botonCopiary" class="btn bg-<?php echo $body; ?> btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Genera un informe apartir de los datos, clinimetrias y sesiones"><i class="material-icons">send</i>  Informe GPT</button>
+										<!--<button id="botonCopiary" class="btn bg-<?php echo $body; ?> btn-block waves-effect" data-toggle="tooltip" data-placement="bottom" title="Genera un informe apartir de los datos, clinimetrias y sesiones"><i class="material-icons">send</i>  Informe GPT</button>-->
+										<button id="botonCopiary" 
+												class="btn bg-<?php echo $body; ?> btn-block waves-effect" 
+												data-toggle="tooltip" 
+												data-placement="bottom" 
+												title="Genera un informe a partir de los datos, clinimetrías y sesiones">
+											<img src="<?php echo $ruta; ?>images/IA_white.png" alt="Informe GPT" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;">
+											Informe con IA
+										</button>
+
 									</div>
 								<?php } ?>
 							</div>
 							<h1 style="text-align: center" >Paciente</h1>
-							<h2 style="text-align: center" ><b>No. <?php echo $paciente_id." ".$paciente." ".$apaterno." ".$amaterno; ?><b></h2>
+							<h2 style="text-align: center" ><b>No. <?php echo codificacionUTF($paciente_id." ".$paciente." ".$apaterno." ".$amaterno); ?><b></h2>
 							<hr>
 							<!-- Acceso a inteligencia artificial -->
 							<?php if ($acceso_ia == 'si') { ?>
@@ -347,45 +367,61 @@ extract($row);
 					                                <div class='well'>
 													<h2><b>* Comentarios para el reporte:</b></h2><br>
 													<textarea id='comentarios_rep' class='form-control' rows='3' placeholder='Debe de tener comentarios para descargar el reporte'><?php echo codificacionUTF($comentarios_reporte); ?></textarea>
-													<div id="test"></div>
+													<div>
+														<div id="test"></div>
+														<div style="display:none; text-align: center" id="loadz">
+															<div class="preloader pl-size-xl">
+																<div class="spinner-layer">
+																<div class="spinner-layer pl-teal">
+																		<div class="circle-clipper left">
+																			<div class="circle"></div>
+																		</div>
+																		<div class="circle-clipper right">
+																			<div class="circle"></div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<h3>Procesando la información...</h3>
+															<h5>La generación de la información puede tardar unos minutos.</h5>
+														</div>
+													</div>
 													<br>
 													<button id='guarda_comentarios' type='button' class='btn bg-teal waves-effect'>
 														<i class='material-icons'>save</i> Guarda Comentarios
 													</button>
-<!-- se actualizo -->
-													<script type='text/javascript'>
-														$('#guarda_comentarios').click(function () {
-															var paciente_id = '<?php echo $paciente_id ?>'; 
-															// Aseguramos la sincronización del editor con el textarea
-															CKEDITOR.instances['comentarios_rep'].updateElement();
-															var comentarios_reporte = CKEDITOR.instances['comentarios_rep'].getData();
+													<!-- se actualizo -->
+														<script type='text/javascript'>
+															$('#guarda_comentarios').click(function () {
+																var paciente_id = '<?php echo $paciente_id ?>'; 
+																// Aseguramos la sincronización del editor con el textarea
+																CKEDITOR.instances['comentarios_rep'].updateElement();
+																var comentarios_reporte = CKEDITOR.instances['comentarios_rep'].getData();
 
-															if (comentarios_reporte.trim() === "") {
-																alert("El comentario no puede estar vacío.");
-																return;
-															}
+																if (comentarios_reporte.trim() === "") {
+																	alert("El comentario no puede estar vacío.");
+																	return;
+																}
 
-															var datastring = {
-																comentarios_reporte: comentarios_reporte,
-																paciente_id: paciente_id
-															};
+																var datastring = {
+																	comentarios_reporte: comentarios_reporte,
+																	paciente_id: paciente_id
+																};
 
-															$.ajax({
-																url: 'guarda_comentarios.php',
-																type: 'POST',
-																data: datastring,
-																cache: false,
-			                                        			success:function(html){
-																	$('#test').html("<div class='alert alert-success'>Comentario guardado correctamente.</div>");
-																},
+																$.ajax({
+																	url: 'guarda_comentarios.php',
+																	type: 'POST',
+																	data: datastring,
+																	cache: false,
+																	success:function(html){
+																		$('#test').html("<div class='alert alert-success'>Comentario guardado correctamente.</div>");
+																	},
 
+																});
 															});
-														});
-
-
-													</script>
+														</script>
  
-														<button id='edita_comentarios' type='button' class='btn bg-teal waves-effect'><i class='material-icons'>mode_edit</i> Edita Comentarios con IA</button>                 	
+														<button id='edita_comentarios' type='button' class='btn bg-teal waves-effect'><i class='material-icons'>mode_edit</i> Edita Comentarios con IA <img src="<?php echo $ruta; ?>images/IA_white.png" alt="Recomendación GPT" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;"></button>                 	
 														<hr>
 														<a $style class='btn bg-<?php echo $body; ?> waves-effect'  id='descarga' target='_blank' href='pdf_html.php?paciente_id=<?php echo $paciente_id; ?>' role='button' >
 															Descarga Reporte Doctor 
@@ -705,78 +741,14 @@ extract($row);
 		                                                <p>$diagnostico3</p><br>	
 	                                                <h3>Medico Tratante</h3> 	
 	                                                	<p>$medico</p><br>                                                				                                                													
-				                                    <!--<div class='panel-group' id='accordion_1' role='tablist' aria-multiselectable='true'>
-				                                        <div class='panel panel-col-$body'>
-				                                            <div class='panel-heading' role='tab' id='headingOne_1'>
-				                                                <h4 class='panel-title'>
-				                                                    <a role='button' data-toggle='collapse' data-parent='#accordion_1' href='#collapseOne_1' aria-expanded='true' aria-controls='collapseOne_1'>
-				                                                        Resumen del Caso
-				                                                    </a>
-				                                                </h4>
-				                                            </div>
-				                                            <div id='collapseOne_1' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingOne_1'>
-				                                                <div class='panel-body'>
-				                                                    $resumen_caso
-				                                                </div>
-				                                            </div>
-				                                        </div>
-				                                        <div class='panel panel-col-$body'>
-				                                            <div class='panel-heading' role='tab' id='headingTwo_1'>
-				                                                <h4 class='panel-title'>
-				                                                    <a class='collapsed' role='button' data-toggle='collapse' data-parent='#accordion_1' href='#collapseTwo_1' aria-expanded='false'
-				                                                       aria-controls='collapseTwo_1'>
-				                                                        Diagnóstico (Principal)
-				                                                    </a>
-				                                                </h4>
-				                                            </div>
-				                                            <div id='collapseTwo_1' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingTwo_1'>
-				                                                <div class='panel-body'>
-				                                                    $diagnostico
-				                                                </div>
-				                                            </div>
-				                                        </div>
-				                                        <div class='panel panel-col-$body'>
-				                                            <div class='panel-heading' role='tab' id='headingThree_1'>
-				                                                <h4 class='panel-title'>
-				                                                    <a class='collapsed' role='button' data-toggle='collapse' data-parent='#accordion_1' href='#collapseThree_1' aria-expanded='false'
-				                                                       aria-controls='collapseThree_1'>
-				                                                        Diagnóstico 2
-				                                                    </a>
-				                                                </h4>
-				                                            </div>
-				                                            <div id='collapseThree_1' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingThree_1'>
-				                                                <div class='panel-body'>
-				                                                    $diagnostico2
-				                                                </div>
-				                                            </div>
-				                                        </div>
-				                                        <div class='panel panel-col-$body'>
-				                                            <div class='panel-heading' role='tab' id='headingTwo_4'>
-				                                                <h4 class='panel-title'>
-				                                                    <a class='collapsed' role='button' data-toggle='collapse' data-parent='#accordion_4' href='#collapseTwo_4' aria-expanded='false'
-				                                                       aria-controls='collapseTwo_4'>
-				                                                        Diagnóstico 3
-				                                                    </a>
-				                                                </h4>
-				                                            </div>
-				                                            <div id='collapseTwo_4' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingTwo_4'>
-				                                                <div class='panel-body'>
-				                                                    $diagnostico3
-				                                                </div>
-				                                            </div>
-				                                        </div>
-				                                    </div>-->
-				                                    <hr><h3><b>Tratamiento farmacológico actual</b></h3><br>
+				                                    <hr>
+													<h3><b>Tratamiento farmacológico actual</b></h3><br>
 				                                    $medicamentos
-				                                    
 				                                    <hr><h3><b>Tratamiento no farmacológico actual</b></h3><br>
-				                                    $terapias
-				                                    				                                    
+				                                    $terapias                     				                                    
 				                                    <hr><h3><b>Observaciones</b></h3><br>
 				                                    $observaciones
 				                                    <hr>
-				                                    
-
 				                                    </div>
 				                                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				                                    <h3><b>Protocolo que está Indicado:</b></h3> <h2 align='center'><b>$tratamiento</h2></b><hr> 
@@ -909,9 +881,7 @@ extract($row);
 															$wherex
 														ORDER BY f_captura DESC";
 
-														//echo $sql_bases."<hr>";
-
-														
+														// echo $sql_bases."<hr>";
 
 														$result_bases=ejecutar($sql_bases);
 														//echo $result_bases." result_bases<br>";
@@ -921,7 +891,7 @@ extract($row);
 														
 														if ($cnt_bases >= 1) {
 															//echo "<h1>Hola mundo</h1><br>";
-															$dia .= $encuesta_id." - ".$encuesta." - ".$descripcion."<br>
+															$dia .= $encuesta_id." - ".codificacionUTF($encuesta)." - ".codificacionUTF($descripcion)."<br>
 															<div class='row'>
 															  <div class='col-md-5'>";
 															$datos = "";															
@@ -934,100 +904,95 @@ extract($row);
 																	<th></th>
 																</tr>";
 															//echo $tabla."<hr>";	
-															$cnt_calificacion = 1;	
+															$cnt_calif = 1;	
 													    	while($row_bases = mysqli_fetch_array($result_bases)){
 														        extract($row_bases);
 
 																if ($total === null) {
 																	$total = 0;
 																	$tabla ="													
-																	<table class='table table-bordered'>
 																		<tr>
 																			<td>$f_captura</td>
 																			<th colspan='3'>Clinimetria con error</th>
 																		</tr>";
 																}else{
 
-																
-																
+																	$color = "";
 
-															$color = "";
-
-																if ($encuesta_id == 11 && $cnt == $cnt_bases) {
-																	$extra = "";
-																} else {
-																	
-																	if ($encuesta_id == 11 ) {
-																		$extra = " AND extra='ok'";
-																	} else {
+																	if ($encuesta_id == 11 && $cnt == $cnt_bases) {
 																		$extra = "";
-																	}
+																	} else {
+																		
+																		if ($encuesta_id == 11 ) {
+																			$extra = " AND extra='ok'";
+																		} else {
+																			$extra = "";
+																		}
+																		
+																	}																
+																
+																	$cnt++;
 																	
-																}																
-																
-																$cnt++;
-																
-															$sql_calificacion = "
-															SELECT
-																calificaciones.calificacion_id, 
-																calificaciones.encuesta_id, 
-																calificaciones.min, 
-																calificaciones.max, 
-																calificaciones.valor, 
-																calificaciones.color
-															FROM
-																calificaciones
-															WHERE
-																calificaciones.encuesta_id = $encuesta_id													
-																AND calificaciones.max >= $total
-																AND calificaciones.min <= $total 
-																$extra";
-																
-																
-																
-															// $tabla .= $sql_calificacion."<br>";	
-															//echo $sql_calificacion."<hr>";
-															$result_calificacion = ejecutar($sql_calificacion);	
-															$cnt_calificacion = mysqli_num_rows($result_calificacion);
-															$row_calificacion = mysqli_fetch_array($result_calificacion);
-															if ($cnt_calificacion <> 0) {
-																extract($row_calificacion);
-															}	
-															
-															
-																if ($cnt_calificacion == 1) {
-																	$tot_ini = $total;
-																}
-																//$encuesta_id - $base_id
-																
-																$rutaxx = $ruta."paciente/clinimetria.php?paciente_id=".$paciente_id."&encuesta_id=".$encuesta_id."&base_id=".$base_id;
-																
-																
+																	$sql_calificacion = "
+																		SELECT
+																			calificaciones.calificacion_id, 
+																			calificaciones.encuesta_id, 
+																			calificaciones.min, 
+																			calificaciones.max, 
+																			calificaciones.valor, 
+																			calificaciones.color
+																		FROM
+																			calificaciones
+																		WHERE
+																			calificaciones.encuesta_id = $encuesta_id													
+																			AND calificaciones.max >= $total
+																			AND calificaciones.min <= $total 
+																			$extra";
+																	// $tabla .= $sql_calificacion."<br>";	
+																	// echo $sql_calificacion."<hr>";
+																	$result_calificacion = ejecutar($sql_calificacion);	
+																	$cnt_calificacion = mysqli_num_rows($result_calificacion);
+																	$row_calificacion = mysqli_fetch_array($result_calificacion);
+																	
+																	if ($cnt_calificacion <> 0) {
+																		extract($row_calificacion);
+																	}	
 
-																
-																
-																$tabla .="
-																<tr>
-																	<td>$f_captura</td>
-																	<td style='text-align: center'>$total</td>
-																	<td style='background-color: $color'>$valor</td>
-																	<td> <a class='btn bg-$body waves-effect' target='_blank' href='$rutaxx'>
-																             <i class='material-icons'>visibility</i> <B>Ver</B>
-																         </a> 
-															        </td>
-																</tr>
-																";
-																
-																//echo $tabla."<hr>";
-																$datos .= "
-																{'y': '$f_captura', '$encuesta': $total},";
-																$cnt_calificacion ++;
+																	if ($cnt_calif == 1) {
+																		$tot_ini = $total;
+																	}
+
+																	if ($cnt_bases == $cnt_calif) {
+																		$tot_fin = $total;
+																	}
+
+																	$rutaxx = $ruta."paciente/clinimetria.php?paciente_id=".$paciente_id."&encuesta_id=".$encuesta_id."&base_id=".$base_id;
+		
+																	//echo "<hr> cnt_calif ".$cnt_calif." cnt_bases ".$cnt_bases."<hr>";
+
+																	$tabla .="
+																		<tr>
+																			<td>$f_captura</td>
+																			<td style='text-align: center'>$total</td>
+																			<td style='background-color: $color'>$valor</td>
+																			<td> <a class='btn bg-$body waves-effect' target='_blank' href='$rutaxx'>
+																					<i class='material-icons'>visibility</i> <B>Ver</B>
+																				</a> 
+																			</td>
+																		</tr>
+																		";
+																	
+																	//echo $tabla."<hr>";
+																	$datos .= "
+																	{'y': '$f_captura', '$encuesta': $total},";
+																	$cnt_calif ++;
 																}
-															}													
+															}
+
 															$tabla .="</table>";
-															
+															//echo "<hr> tot_fin ".$tot_fin."<br>tot_ini ".$tot_ini."<hr>";
 															if ($total != 0) {
-																$resultado_final = round(($tot_ini / $total) * 100, 0);
+																$resultado_final = round(($tot_ini/$tot_fin ) * 100, 0);
 															} else {
 																$resultado_final = 0; // O un valor predeterminado
 															}
@@ -1043,7 +1008,13 @@ extract($row);
 																$respuesta = "una Disminución";
 															}
 															$n_grf = "enc_".$encuesta_id."_pac_".$paciente_id;
-															$dia .=	$tabla."<h4>Se obtuvo $respuesta del $resultado_final% con respecto a la lectura inicial</h4>
+
+															if ($cnt_bases >=2) {
+																$eval = "<h4>Se obtuvo $respuesta del $resultado_final% con respecto a la lectura inicial</h4>";
+															}else {
+																$eval = "";
+															}
+															$dia .=	$tabla.$eval."
 															</div>
 															  	<div class='col-md-7'>
 															  		<div style='width: 510px' id='graph_$encuesta_id'></div>
@@ -1469,64 +1440,65 @@ extract($row);
 
 											</script>
 
-<script>
-    $(document).ready(function() {
-        $('#edita_comentarios').on('click', function() {
-            // Obtener el contenido del textarea
-            var contenidoComentarios = $('#comentarios_rep').val().trim();
+											<script>
+												$(document).ready(function() {
+													$('#edita_comentarios').on('click', function() {
+														// Obtener el contenido del textarea
+														var contenidoComentarios = $('#comentarios_rep').val().trim();
 
-            if (contenidoComentarios === "") {
-                alert("Por favor, ingresa comentarios antes de proceder.");
-                return;
-            }
+														if (contenidoComentarios === "") {
+															alert("Por favor, ingresa comentarios antes de proceder.");
+															return;
+														}
 
-            // Mostrar elementos de carga y ocultar otros si es necesario
-            $('#gpt_reporte').show();
-            $("#gpt").html('');
-            $('#loadx').show();
+														// Mostrar elementos de carga y ocultar otros si es necesario
+														$('#gpt_reporte').show();
+														$("#gpt").html('');
+														$('#loadz').show();
 
-            // Variables PHP pasadas al JavaScript
-            var paciente_id = "<?php echo addslashes($paciente_id); ?>";
-            var fecha = "<?php echo addslashes($hoy); ?>";
+														// Variables PHP pasadas al JavaScript
+														var paciente_id = "<?php echo addslashes($paciente_id); ?>";
+														var fecha = "<?php echo addslashes($hoy); ?>";
 
-            // Datos a enviar en la solicitud AJAX
-            var requestData = { 
-                sistema: 'Recomendación del caso y del tratamiento...',
-                paciente_id: paciente_id,
-                accion: 'observaciones',
-                fecha: fecha,
-                tipo: 'reporte',
-                contenido: contenidoComentarios
-            };
+														// Datos a enviar en la solicitud AJAX
+														var requestData = { 
+															sistema: 'Recomendación del caso y del tratamiento...',
+															paciente_id: paciente_id,
+															accion: 'observaciones',
+															fecha: fecha,
+															tipo: 'reporte',
+															contenido: contenidoComentarios
+														};
 
-            // Realizar la solicitud AJAX
-            $.ajax({
-                url: 'chat_gpt.php', // Asegúrate de que esta ruta sea correcta
-                type: 'POST',
-                data: requestData,
-                success: function(response) {
-                    // Manejar la respuesta del servidor
-                    $("#gpt").html('<h1>El Informe de Recomendación se generó correctamente</h1><br><h4>Se recomienda revisar, modificar y/o corregir la información según sea necesario, incluir el protocolo a aplicar y GUARDAR los cambios.</h4>'); 
-                    $('#loadx').hide();
-                    
-                    // Actualizar el contenido del editor1 con la recomendación generada (si usas CKEditor)
-                    
-                    CKEDITOR.instances.comentarios_rep.setData(response);
-                    
-					$("#test").html('<h3>Texto Actualizado</h3> '+response+'<hr> <h3>Texto Anterior</h3>'+contenidoComentarios);
-                    // Mostrar otros elementos o realizar otras acciones según sea necesario
-                    //$('#recomendacion_btn').click();
-                    //$('#accordion_1x_info').show();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    // Manejar errores
-                    alert("Ocurrió un error al procesar la solicitud: " + textStatus);
-                    $('#loadx').hide();
-                }
-            });
-        });
-    });
-</script>
+														// Realizar la solicitud AJAX
+														$.ajax({
+															url: 'chat_gpt.php', // Asegúrate de que esta ruta sea correcta
+															type: 'POST',
+															data: requestData,
+															success: function(response) {
+																// Manejar la respuesta del servidor
+																$("#gpt").html('<h1>El Informe de Recomendación se generó correctamente</h1><br><h4>Se recomienda revisar, modificar y/o corregir la información según sea necesario, incluir el protocolo a aplicar y GUARDAR los cambios.</h4>'); 
+																$('#loadx').hide();
+																
+																// Actualizar el contenido del editor1 con la recomendación generada (si usas CKEditor)
+																
+																CKEDITOR.instances.comentarios_rep.setData(response);
+																
+																$("#test").html('<h2>Valida la Informacón</h2><h3>Texto Actualizado</h3> '+response+'<hr> <h3>Texto Anterior</h3>'+contenidoComentarios);
+																// Mostrar otros elementos o realizar otras acciones según sea necesario
+																//$('#recomendacion_btn').click();
+																//$('#accordion_1x_info').show();
+																$('#loadz').hide();
+															},
+															error: function(jqXHR, textStatus, errorThrown) {
+																// Manejar errores
+																alert("Ocurrió un error al procesar la solicitud: " + textStatus);
+																$('#loadz').hide();
+															}
+														});
+													});
+												});
+											</script>
 
 											<script>
 												document.getElementById('botonCopiar').addEventListener('click', function() {
@@ -1552,18 +1524,6 @@ extract($row);
 												    alert('Datos copiado al portapapeles'); // Opcional: muestra una alerta
 												});			
 											</script> 																			
-											<!--<script> 
-												var week_data = <?php echo $grafica; ?>
-												Morris.Line({
-												  element: 'graph',
-												  data: week_data,
-												  xkey: 'y',
-												  ykeys: ['PHQ9', 'GAD7', 'TINITUS', 'CPFDL'],
-												  labels: ['PHQ9', 'GAD7', 'TINITUS', 'CPFDL'],
-												  labelColor: ['#005157', '#007580', '#89CFE5','#FFDA00','#FFDA00','#BBBABA'],
-							  					  lineColors: ['#005157', '#007580', '#89CFE5','#FFDA00','#FFDA00','#BBBABA'],			  
-												});	
-											</script>-->
 										  <button style="display: none"  id="myButton" onclick="handleClick()">Botón</button>   
 										<script>
 										  window.addEventListener('DOMContentLoaded', function() {
