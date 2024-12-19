@@ -19,6 +19,7 @@ include($ruta.'header.php'); ?>
 			                    <img  src= "<?php echo $ruta.'images/menu.jpg'; ?>" style="max-width:100%;width:auto;height:auto;" />
 			                </div> -->
                             <h3>Test</h3>
+                            <!-- se genera este movimiento para generar un cambio y lo registre el codigo-->
                     	</div>
                 	</div>
             	</div>
