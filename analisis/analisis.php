@@ -18,6 +18,7 @@ include($ruta.'header.php'); ?>
         	                <!-- <div align="center" class="image">
 			                    <img  src= "<?php echo $ruta.'images/menu.jpg'; ?>" style="max-width:100%;width:auto;height:auto;" />
 			                </div> -->
+                            <h3>Test</h3>
                     	</div>
                 	</div>
             	</div>
