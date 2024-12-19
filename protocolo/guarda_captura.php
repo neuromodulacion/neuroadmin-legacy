@@ -57,10 +57,6 @@ $observaciones = tildes($observaciones);
 $f_captura = date("Y-m-d");
 $h_captura = date("H:i:s");
 
-//echo $observaciones."<BR>";
-if ($tms_cnt == '') { $tms_cnt = 0; }
-if ($tms_d == '') { $tms_d = 0; }
-
 $anodo          = !empty($_POST['anodo']) ? $_POST['anodo'] : '';
 $catodo         = !empty($_POST['catodo']) ? $_POST['catodo'] : '';
 $polaridad      = !empty($_POST['polaridad']) ? $_POST['polaridad'] : '';
@@ -69,7 +65,11 @@ $tms_cnt        = !empty($_POST['tms_cnt']) ? $_POST['tms_cnt'] : '';
 $tms_d          = !empty($_POST['tms_d']) ? $_POST['tms_d'] : '';
 $adverso        = !empty($_POST['adverso']) ? $_POST['adverso'] : '';
 $observaciones  = !empty($_POST['observaciones']) ? $_POST['observaciones'] : '';
+$umbral_new     = !empty($_POST['umbral_new']) ? $_POST['umbral_new'] : '';
 
+//echo $observaciones."<BR>";
+if ($tms_cnt == '') { $tms_cnt = 0; }
+if ($tms_d == '') { $tms_d = 0; }
 
 switch ($tipo) {
 

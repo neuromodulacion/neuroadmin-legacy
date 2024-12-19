@@ -219,7 +219,7 @@ include($ruta.'header1.php');
                                         // Procesar los resultados y construir las filas de la tabla
                                         if ($result_protocolo['numFilas'] > 0) {
                                             foreach ($result_protocolo['resultado'] as $row) {
-                                                $equipo = $row['equipo'];
+                                                $equipo = codificacionUTF($row['equipo']);
                                                 $prot_terapia = $row['prot_terapia'];
                                                 $total_sesion = $row['total_sesion'];
                                         

@@ -67,26 +67,38 @@ function obtenerMesActual($fecha) {
     );
     return ucfirst($formatter->format(strtotime($fecha))); // Capitalizar el primer carácter
 }
+/**
+ * Convierte la codificación de un texto entre UTF-8 e ISO-8859-1 dependiendo de su codificación actual.
+ *
+ * @param string|null $texto El texto a convertir. Si es null, se retornará un string vacío.
+ * @return string El texto con la codificación convertida o sin cambios si no se detecta una codificación soportada.
+ */
 function codificacionUTF($texto) {
+    // Validar si $texto es null o no es una cadena
+    if ($texto === null || !is_string($texto)) {
+        return ''; // Retorna un string vacío si el texto es null
+    }
+
+    // Detectar la codificación actual del texto
     $encodingActual = mb_detect_encoding($texto, ['UTF-8', 'ISO-8859-1', 'ASCII'], true);
+
+    // Inicializar la variable para la conversión
+    $textoConvertido = $texto;
 
     // Aplicar la conversión basada en la codificación detectada
     if ($encodingActual === 'UTF-8') {
         // Convertir de UTF-8 a ISO-8859-1
-        $nombreConvertido = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+        $textoConvertido = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
     } elseif ($encodingActual === 'ISO-8859-1') {
         // Convertir de ISO-8859-1 a UTF-8
-        $nombreConvertido = mb_convert_encoding($texto, 'UTF-8', 'ISO-8859-1');
-    } else {
-        // Si la codificación es diferente, manejar según sea necesario (opcional)
-        $nombreConvertido = $texto;
+        $textoConvertido = mb_convert_encoding($texto, 'UTF-8', 'ISO-8859-1');
     }
-    
-    $texto = $nombreConvertido;
 
-    // Retornar el texto sin cambios si ya está en la codificación deseada
-    return $texto;
+    // Retornar el texto convertido o el original si no hubo conversión
+    return $textoConvertido;
 }
+
+
 
 // Obtiene la URL del script actual y la recorta para obtener la ruta relativa
 $ubicacion_url = $_SERVER['PHP_SELF']; 
