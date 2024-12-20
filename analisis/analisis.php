@@ -21,7 +21,7 @@ include($ruta.'header.php'); ?>
                             <h3>Test</h3>
                             <!-- se genera este movimiento para generar un cambio y lo registre el codigo-->
                              <p>Pruebas para los cambios y sincronizacion del sistema seguimos con las actualizaciones para identificar las areas de oportunidad<br>
-                            ultima prueba mas cambios a tomar mas cambios que espero que ya quedo</p>
+                            ultima prueba mas cambios a tomar mas cambios que espero que ya quedo por ultimo agregamos todos los comentarios y ya quedo</p>
                     	</div>
                 	</div>
             	</div>
