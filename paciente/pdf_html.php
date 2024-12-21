@@ -1,5 +1,5 @@
 <?php
-
+$ruta = "../";
 
 session_start(); //inicio
 error_reporting(7);
@@ -28,11 +28,13 @@ $meses_espanol = [
 	'Dec' => 'Dic',
 ];
 
-include('../functions/funciones_mysql.php');
 
-include('../paciente/calendario.php');
+include($ruta.'functions/funciones_mysql.php');
+include($ruta.'functions/functions.php');
+include($ruta.'paciente/calendario.php');
+include($ruta.'paciente/fun_paciente.php');
 
-include('../paciente/fun_paciente.php');
+
 
 function tildes($palabra) {
     //Rememplazamos caracteres especiales latinos minusculas
@@ -329,7 +331,7 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 	$result_bases=ejecutar($sql_bases);
 	$cnt_bases = mysqli_num_rows($result_bases);
 	//$cuerpo_pdf .= $sql_bases."<br> Res".$cnt_bases."<hr>";
-	
+	$tot_fin = 0;
 	if ($cnt_bases >= 1) {				
 		$cuerpo_pdf .="
 		<tr>
@@ -350,7 +352,8 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 									<th>Evaluación</th>
 								</tr>";
 								
-							$cnt_calificacion = 1;	
+							//$cnt_calificacion = 1;
+							$cnt_calif = 1;		
 					    	while($row_bases = mysqli_fetch_array($result_bases)){
 						        extract($row_bases);
 							
@@ -371,16 +374,24 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 									AND calificaciones.min <= $total 
 									AND calificaciones.max >= $total
 									";
-							
+									
 								//$tabla .= $sql_calificacion."<hr>";	
 								$result_calificacion = ejecutar($sql_calificacion);	
+								$cnt_calificacion = mysqli_num_rows($result_calificacion);
+								$row_calificacion = mysqli_fetch_array($result_calificacion);
 								
-								$row_calificacion = mysqli_fetch_array($result_calificacion);	
-								extract($row_calificacion);
+								if ($cnt_calificacion <> 0) {
+									extract($row_calificacion);
+								}
+
+								if ($cnt_calif == 1) {
+									$tot_ini = $total;
+								}
+
+								if ($cnt_bases == $cnt_calif) {
+									$tot_fin = $total;
+								}
 								
-									if ($cnt_calificacion == 1) {
-										$tot_ini = $total;
-									}
 
 									if (isset($f_ini)) {
 										$f_ini_formateado = (new DateTime($f_ini))->format('d-M-Y');
@@ -399,13 +410,22 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 									";
 									$datos .= "
 									{'y': '$f_captura', '$encuesta': $total},";
-									$cnt_calificacion ++;
+									
+									$cnt_calif ++;
 								}													
 								$tabla .="</table>";
 						
-								$resultado_final = round(($tot_ini/$total)*100,0);
-								$resultado_final = 100 -$resultado_final;
+								//$resultado_final = round(($tot_ini/$total)*100,0);
+								//$resultado_final = 100 -$resultado_final;
 								
+
+								if ($total != 0 && $tot_fin != 0) {
+									$resultado_final = round(($tot_ini/$tot_fin ) * 100, 0);
+								} else {
+									$resultado_final = 0; // O un valor predeterminado
+								}
+								$resultado_final = 100 -$resultado_final;
+
 								if ($resultado_final < 0) {
 									$respuesta = "un Incremento";
 								}else{

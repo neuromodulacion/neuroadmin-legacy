@@ -1,4 +1,5 @@
 <?php
+$ruta = "../";
 // pdf_html_paciente.php
 session_start();
 
@@ -25,11 +26,11 @@ extract($_SESSION);
 extract($_GET);
 extract($_POST);
 
-include('../functions/funciones_mysql.php');
+include($ruta.'functions/funciones_mysql.php');
+include($ruta.'functions/functions.php');
+include($ruta.'paciente/calendario.php');
+include($ruta.'paciente/fun_paciente.php');
 
-include('../paciente/calendario.php');
-
-include('../paciente/fun_paciente.php');
 
 function tildes($palabra) {
     //Rememplazamos caracteres especiales latinos minusculas
@@ -194,7 +195,11 @@ WHERE efectos_adversos.historico_id = historico_sesion.historico_id) AS adversos
        //$observaciones =  utf8_decode($observaciones);		
        
        //$f_captura = date('d-m-y', strtotime($f_captura)) ;
-       $f_captura = strftime("%e-%b-%y",strtotime($f_captura));
+
+
+		$f_captura = format_fecha_esp_dmy($f_captura);
+
+
        if ($siglas == "TMS") {
            $tipo = $protocolo;
        }else{
@@ -317,7 +322,8 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 	$result_bases=ejecutar($sql_bases);
 	$cnt_bases = mysqli_num_rows($result_bases);
 	//$cuerpo_pdf .= $sql_bases."<br> Res".$cnt_bases."<hr>";
-	
+	$tot_fin = 0;
+	$tot_ini = 0;
 	if ($cnt_bases >= 1) {				
 		$cuerpo_pdf .="
 		<tr>
@@ -338,7 +344,8 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 									
 								</tr>";
 								
-							$cnt_calificacion = 1;	
+							//$cnt_calificacion = 1;
+							$cnt_calif = 1;		
 					    	while($row_bases = mysqli_fetch_array($result_bases)){
 						        extract($row_bases);
 							
@@ -362,15 +369,23 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 							
 								//$tabla .= $sql_calificacion."<hr>";	
 								$result_calificacion = ejecutar($sql_calificacion);	
+								$cnt_calificacion = mysqli_num_rows($result_calificacion);
+								$row_calificacion = mysqli_fetch_array($result_calificacion);
 								
-								$row_calificacion = mysqli_fetch_array($result_calificacion);	
-								extract($row_calificacion);
-								
-									if ($cnt_calificacion == 1) {
-										$tot_ini = $total;
-									}
-									$f_ini = strftime("%e-%b-%Y",strtotime($f_captura));
-									
+								if ($cnt_calificacion <> 0) {
+									extract($row_calificacion);
+								}
+
+								if ($cnt_calif == 1) {
+									$tot_ini = $total;
+								}
+
+								if ($cnt_bases == $cnt_calif) {
+									$tot_fin = $total;
+								}
+
+									$f_ini = format_fecha_esp_dmy($f_captura);
+
 									$tabla .="
 									<tr>
 										<td>$f_ini</td>
@@ -380,13 +395,20 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 									";
 									$datos .= "
 									{'y': '$f_captura', '$encuesta': $total},";
-									$cnt_calificacion ++;
+									$cnt_calif ++;
 								}													
 								$tabla .="</table>";
 						
-								$resultado_final = round(($tot_ini/$total)*100,0);
-								$resultado_final = 100 -$resultado_final;
 								
+
+								if ($total != 0 && $tot_fin != 0) {
+									$resultado_final = round(($tot_ini/$tot_fin ) * 100, 0);
+								} else {
+									$resultado_final = 0; // O un valor predeterminado
+								}
+								
+								$resultado_final = 100 -$resultado_final;
+
 								if ($resultado_final < 0) {
 									$respuesta = "un Incremento";
 								}else{
@@ -425,20 +447,28 @@ d>
 </body>
 ";
 
-// echo $cuerpo_pdf;
-// Require composer autoload
+//echo $cuerpo_pdf;
+
 require_once __DIR__ . '/../vendor/autoload.php';
-// Create an instance of the class:
-$mpdf = new \Mpdf\Mpdf();
 
-// Write some HTML code:
-$mpdf->WriteHTML($cuerpo_pdf);
+// Asegurar que el contenido está en UTF-8
+$cuerpo_pdf = mb_convert_encoding($cuerpo_pdf, 'UTF-8', 'auto');
 
-// D descarga
-// F guarda
-// I imprime
+// Eliminar caracteres no válidos
+$cuerpo_pdf = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '', $cuerpo_pdf);
 
-// Output a PDF file directly to the browser
-$mpdf->Output('Paciente_'.$paciente_id.'.pdf','D');
+try {
+    $mpdf = new \Mpdf\Mpdf([
+        'mode' => 'utf-8', // Asegurar UTF-8
+        'default_font' => 'Arial' // Opcional
+    ]);
+
+    $mpdf->WriteHTML($cuerpo_pdf);
+    $mpdf->Output('Paciente_'.$paciente_id.'.pdf', 'D');
+} catch (\Mpdf\MpdfException $e) {
+    error_log($e->getMessage());
+    echo "Error generando el PDF. Consulte el registro de errores.";
+}
+
 
 ?>	
