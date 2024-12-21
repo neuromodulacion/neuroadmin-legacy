@@ -898,7 +898,7 @@ if ($resultado['numFilas'] > 0) {
 															$tabla ="													
 															<table class='table table-bordered'>
 																<tr>
-																	<th>Fecha</th>
+																	<th class='width: 120px'>Fecha</th>
 																	<th>Resultado</th>
 																	<th>Evaluación</th>
 																	<th></th>

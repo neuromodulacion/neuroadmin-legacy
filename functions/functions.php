@@ -1,181 +1,65 @@
 <?php
-session_start();
-error_reporting(0);
-    include('funciones_mysql.php');
-date_default_timezone_set('America/Monterrey');
-
-extract($_POST);
-switch($action){
-	case 'A':
-		inicia_sesion($email,$pwd);
-		break;
-	case 'B':
-		//valida_actividad($time,$user,$n);
-		valida_actividad($user,$n);
-		break;
-	case 'C':
-		get_mensajes($user_re,$user_em);
-		break;
-	case 'D':
-		add_mensajes($user_re,$user_em,$msg);
-		break;
-	case 'E':
-		checking_msg();
-		break;
-	case 'F':
-		actividad_usuarios();
-		break;
-}
-function inicia_sesion($email,$pwd){
-
-	//$obj=new Mysql;
-    $contra="
-	SELECT
-    admin.usuario_id,
-    admin.nombre,
-    admin.casa_id,
-    admin.usuario,
-    admin.pwd,
-    admin.acceso,
-    admin.funcion,
-    admin.saldo,
-    admin.observaciones,
-    herramientas_sistema.perfil_id,
-    herramientas_sistema.usuario_id,
-    herramientas_sistema.foto,
-    herramientas_sistema.nombre_corto,
-    herramientas_sistema.body,
-    herramientas_sistema.notificaciones
-FROM
-    admin
-INNER JOIN herramientas_sistema ON admin.usuario_id = herramientas_sistema.usuario_id
-WHERE admin.usuario='$email' AND admin.pwd='$pwd'
-    ";
-   //echo $contra."<br>";
-      $result_tabla=ejecutar($contra); 
-     //echo $result_tabla."<br>";
-     $cnt= mysqli_num_rows($result_tabla);
-    $row_tabla = mysqli_fetch_array($result_tabla);
-    
-    //print_r($row_tabla);
-
-             
-    $b=ejecutar("SELECT version FROM versiones_sis ORDER BY versiones_id DESC LIMIT 1");
-    extract($b);
-    if ($cnt==1) {
-        extract($row_tabla); 
-        //$hora = date("H:i:s");
-        $mktime = time();
-        $fecha = date("Y-m-d H:i:s");
-
-        $_SESSION['nombre_user']  = $nombre;
-        $_SESSION['user_id'] = $usuario_id;
-        $_SESSION['usuario']  = $usuario;
-        $_SESSION['sesion'] = 'On';
-        $_SESSION['time'] = $mktime;
-        $_SESSION['body'] = $body;
-        $_SESSION['nombre_corto_user'] = $nombre_corto;
-        $_SESSION['email'] = $email;
-        $_SESSION['notificaciones'] = $notificaciones;
-        $_SESSION['funcion'] = $funcion;
-        $_SESSION['version'] = $version;
-        $_SESSION['foto_user'] = $foto;
-        $_SESSION['contra_cambio'] = $pwd;
-        
-        $monitoreo="SELECT monitoreo_id FROM monitoreo WHERE usuario_id='$usuario_id'";
-        $result_tabla=ejecutar($monitoreo); 
-        $cnt1= mysqli_num_rows($result_tabla);
-        
-        if ($cnt1>=1) {
-            $update="
-            UPDATE monitoreo 
-                SET 
-                fecha = '$fecha', 
-                mktime ='$mktime', 
-                estatus= 'ACTIVO' 
-            WHERE monitoreo_id = '$monitoreo_id'";
-            $result_tabla=ejecutar($update); 
-        } else {
-            $insert ="INSERT IGNORE INTO  monitoreo 
-            (usuario_id,fecha,mktime,estatus) VALUE
-            ('$usuario_id','$fecha','$mktime','$estatus') ";
-            $result_tabla=ejecutar($insert);
-        }
-        
-        echo 1;
-    }else{
-        session_destroy();
-        echo 'Usuario y Contraseña Erróneo...';    
+function codificacionUTF($texto) {
+    // Validar si $texto es null o no es una cadena
+    if ($texto === null || !is_string($texto)) {
+        return ''; // Retorna un string vacío si el texto es null
     }
-	// if($a){
-		// extract($a);
-// 
 
-//             
-			// $sql_access= "";
-			// $b=$obj->get_var("SELECT monitoreo_id FROM monitoreo WHERE usuario_id='$usuario_id'");
-			// if($b!=0)
-				// $c=$obj->update('monitoreo',array('fecha'=>$fecha,'mktime'=>$mktime,'estatus'=>'ACTIVO'),array('monitoreo_id'=>$b));
-			// else
-				// $d=$obj->insert('monitoreo',array('usuario_id'=>$usuario_id,'fecha'=>$fecha,'mktime'=>$mktime,'estatus'=>'ACTIVO'));
-			// echo 1;
-		// echo "hola";
-	// }
-	// else{
-		// session_destroy();
-		// echo 'Usuario y Contraseña Erróneo...';
-	// }
-}
-function valida_actividad($user,$n){
-	// $obj=new Mysql;
-	// $time=$obj->get_var("SELECT mktime FROM usuario_actividad WHERE usuarios='$user'");
-	// $session_life=mktime()-$time;
-	// $val=0;
-	// $txt_head='';
-	// $table='';
-	// if($session_life>=1800 || $n==2){
-		// $a=$obj->update('usuario_actividad',array('estatus'=>'INACTIVO','activo'=>0),array('usuarios'=>$user));
-		// session_destroy();
-		// $val=1;
-	// }
-	// if($val!=1){
-		// $sql="SELECT DISTINCT a.usuarios, b.nombre_corto FROM usuario_actividad a INNER JOIN directorio b ON a.usuarios=b.usuario WHERE a.activo=1 AND a.usuarios NOT IN('$user')";
-		// $users=$obj->consulta($sql);
-		// $cnt_users=mysqli_num_rows($users);
-		// $txt_head="Usuarios ($cnt_users)";
-		// if($cnt_users>0){
-			// $i_u=0;
-			// while($row_users=mysqli_fetch_array($users)){
-				// $i_u++;
-				// extract($row_users);
-				// $table.=
-				// "<tr>
-					// <td><span class='glyphicon glyphicon-user' style='color:green'></span></td>
-					// <td><a href='javascript:void(0)' onclick='chat_usuario(\"$usuarios\",\"$nombre_corto\",0)'>$nombre_corto</a></td>
-				// </tr>";
-			// }
-		// }
-		// else{
-			// $table.='<tr><td>No hay usuarios conectados...</td></tr>';
-		// }
-	// }
-	// $exit_arr=array('val'=>$val,'head'=>$txt_head,'body'=>$table);
-	// echo json_encode($exit_arr);
+    // Detectar la codificación actual del texto
+    $encodingActual = mb_detect_encoding($texto, ['UTF-8', 'ISO-8859-1', 'ASCII'], true);
+
+    // Inicializar la variable para la conversión
+    $textoConvertido = $texto;
+
+    // Aplicar la conversión basada en la codificación detectada
+    if ($encodingActual === 'UTF-8') {
+        // Convertir de UTF-8 a ISO-8859-1
+        $textoConvertido = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+    } elseif ($encodingActual === 'ISO-8859-1') {
+        // Convertir de ISO-8859-1 a UTF-8
+        $textoConvertido = mb_convert_encoding($texto, 'UTF-8', 'ISO-8859-1');
+    }
+
+    // Retornar el texto convertido o el original si no hubo conversión
+    return $textoConvertido;
 }
 
-function actividad_usuarios(){
-	// $obj=new Mysql;
-	// $a=$obj->consulta("SELECT usuarios, mktime FROM usuario_actividad WHERE estatus='ACTIVO' AND activo='1'");
-	// $cnt=mysqli_num_rows($a);
-	// if($cnt>0){
-		// $time=mktime();
-		// while($row=mysqli_fetch_array($a)){
-			// extract($row);
-			// $session_life=$time-$mktime;
-			// if($session_life>=2400)
-				// $b=$obj->update('usuario_actividad',array('estatus'=>'INACTIVO','activo'=>0),array('usuarios'=>$usuarios));
-		// }
-	// }
+
+function obMesActualespaniol($fecha) {
+    $formatter = new IntlDateFormatter(
+        'es_ES',  // Configuración regional en español
+        IntlDateFormatter::FULL,
+        IntlDateFormatter::NONE,
+        'UTC',  // Zona horaria
+        IntlDateFormatter::GREGORIAN,
+        'MMMM'  // Formato de mes completo
+    );
+    return ucfirst($formatter->format(strtotime($fecha))); // Capitalizar el primer carácter
 }
 
-?>
+function format_fecha_esp_dmy($f_ini) {
+    // Diccionario de meses en inglés a español
+    $meses_espanol = [
+        'Jan' => 'Ene', 'Feb' => 'Feb', 'Mar' => 'Mar', 'Apr' => 'Abr', 'May' => 'May',
+        'Jun' => 'Jun', 'Jul' => 'Jul', 'Aug' => 'Ago', 'Sep' => 'Sep', 'Oct' => 'Oct',
+        'Nov' => 'Nov', 'Dec' => 'Dic'
+    ];
+
+    if (isset($f_ini)) {
+        try {
+            // Crear un objeto DateTime desde la fecha proporcionada
+            $fecha_objeto = new DateTime($f_ini);
+            // Formatear la fecha al formato deseado (d-M-Y)
+            $f_ini_formateado = $fecha_objeto->format('d-M-Y');
+            // Reemplazar los meses en inglés por los equivalentes en español
+            $f_ini_formateado = strtr($f_ini_formateado, $meses_espanol);
+        } catch (Exception $e) {
+            error_log("Error formateando la fecha: " . $e->getMessage());
+            $f_ini_formateado = ""; // Devolver vacío en caso de error
+        }
+    } else {
+        $f_ini_formateado = "";
+    }
+
+    return $f_ini_formateado;
+}
