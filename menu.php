@@ -33,7 +33,8 @@ include($ruta.'header2.php'); ?>
         <div class="container-fluid">
             <div class="block-header">
                 <h2>INICIO</h2>
-                <?php echo $ubicacion_url; ?>
+                <?php echo $ubicacion_url; 
+                //print_r($_SESSION);?>
             </div>
 			<!-- Contenido principal de la página -->
             <div class="row clearfix">

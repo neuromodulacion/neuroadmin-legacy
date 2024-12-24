@@ -33,7 +33,7 @@ $hoy = date("Y-m-d");
 $ahora = date("H:i:00"); 
 $anio = date("Y");
 $mes_ahora = date("m");
-$mes = strftime("%B");
+$mes = date("m");
 $dia = date("N");
 $semana = date("W");
 $titulo ="ANALISIS";
@@ -43,7 +43,7 @@ $titulo ="ANALISIS";
 
 include($ruta.'functions/funciones_mysql.php');
 include($ruta.'functions/fotografia.php');
-include($ruta.'uso.php');
+//include($ruta.'uso.php');
 include($ruta.'paciente/calendario.php');
 
 include($ruta.'paciente/fun_paciente.php');
@@ -89,9 +89,7 @@ include($ruta.'paciente/fun_paciente.php');
 
 
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<style type="text/css">
-			${demo.css}
-		</style>
+
 		   
 </head>
 
@@ -288,6 +286,7 @@ include($ruta.'paciente/fun_paciente.php');
 						LIMIT 3				  			
 			  			";
 						//echo $sql_PHQ9."<br>";
+						$final_gad = 0;
 						$cnt_GAD7 = 1;
 			  			$result_GAD7=ejecutar($sql_GAD7);
 				    	while($row_GAD7 = mysqli_fetch_array($result_GAD7)){				    	
@@ -331,8 +330,9 @@ include($ruta.'paciente/fun_paciente.php');
 					$inter_gad,
 					$final_gad
 					)							
-				";					
-				$result = ejecutar($insert);	
+				";	
+				//echo $insert."<hr>";				
+				$result = ejecutar_id($insert);	
 	  			?>
 	  			<tr>
 	  				<td style="text-align: center"><?php echo $cnt_g ; ?></td>
@@ -805,6 +805,7 @@ include($ruta.'paciente/fun_paciente.php');
 			  			";
 						//echo $sql_PHQ9."<br>";
 						$cnt_GAD7 = 1;
+						$final_gad= 0;
 			  			$result_GAD7=ejecutar($sql_GAD7);
 				    	while($row_GAD7 = mysqli_fetch_array($result_GAD7)){				    	
 					    	extract($row_GAD7);					    	
@@ -833,7 +834,7 @@ include($ruta.'paciente/fun_paciente.php');
 						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_90 AND respuestas.encuesta_id = 7 )+ 
 						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_91 AND respuestas.encuesta_id = 7 )+ 
 						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_92 AND respuestas.encuesta_id = 7 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_93 AND respuestas.encuesta_id = 7 ) AS totalc,
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_93 AND respuestas.encuesta_id = 7 ) AS total_c,
 						protocolo_terapia.terapia,
 						base_encuesta_7.respuesta_82 
 					FROM
@@ -851,8 +852,9 @@ include($ruta.'paciente/fun_paciente.php');
 						base_encuesta_7.f_captura ASC
 						LIMIT 3				  			
 			  			";
-						//echo $sql_PHQ9."<br>";
+						//echo $sql_craving."<br>";
 						$cnt_craving = 1;
+						$final_craving = 0;
 			  			$result_craving=ejecutar($sql_craving);
 				    	while($row_craving = mysqli_fetch_array($result_craving)){				    	
 					    	extract($row_craving);					    	

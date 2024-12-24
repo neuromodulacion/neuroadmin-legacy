@@ -1,274 +1,297 @@
 <?php
-// Definir la ruta base para incluir archivos
-$ruta="../";
-// Obtener la fecha actual en formato "YYYY-MM-DD"
-$hoy = date("Y-m-d");
-// Obtener la hora actual en formato "HH:MM:00"
-$ahora = date("H:i:00");
-// Obtener el año actual
-$anio = date("Y");
-// Obtener el mes actual en formato numérico "MM"
-$mes_ahora = date("m");
-// Definir el título de la página actual
-$titulo = "Directorio"; 
+// ------------------------------------------------
+// EJEMPLO: directorio.php
+// ------------------------------------------------
 
-// Incluir la primera parte del header que contiene configuraciones iniciales
-include($ruta.'header1.php');
-//include($ruta.'header.php'); // Este es un include comentado que podrías utilizar si decides cambiar el header
+// 1) Definir la ruta base para incluir archivos (ajusta según tu proyecto)
+$ruta = "../";
+
+// 2) Incluir header1.php u otras inicializaciones
+include($ruta . 'header1.php');
+
+// ------------------------------------------------
+// OBTENER LISTA DE ESTATUS DESDE LA BD
+// ------------------------------------------------
+// (Incluir “Eliminado” para que pueda ser seleccionado si se desea)
+$estatus_disponibles = [];
+$sql_estatus = "SELECT DISTINCT estatus FROM estatus_paciente";
+$result_estatus = ejecutar($sql_estatus);
+while ($row = mysqli_fetch_assoc($result_estatus)) {
+    $estatus_disponibles[] = $row['estatus'];
+}
+
+// ------------------------------------------------
+// RECIBIR SELECCIONES DEL USUARIO (POST) Y CONSTRUIR FILTRO
+// ------------------------------------------------
+$selectedStatuses = [];
+if (isset($_POST['estatus'])) {
+    $selectedStatuses = $_POST['estatus'];  // array con los estatus seleccionados
+}
+
+// Si el usuario no selecciona nada, consideraremos “mostrar todos”
+$where = "";
+if (!empty($selectedStatuses)) {
+    // En lugar de mysqli_real_escape_string, usamos el método de nuestra clase
+    $arr = array_map(function($item) use ($mysql) {
+        return $mysql->escape($item);
+    }, $selectedStatuses);
+
+    $estatus_string = "'" . implode("','", $arr) . "'";
+    $where = " AND pacientes.estatus IN ($estatus_string)";
+}
+
+// ------------------------------------------------
+// Variables comunes, fecha, etc.
+// ------------------------------------------------
+$hoy       = date("Y-m-d");
+$ahora     = date("H:i:00");
+$anio      = date("Y");
+$mes_ahora = date("m");
+$titulo    = "Directorio";
 ?>
-    <!-- Inclusión de los estilos para DataTable de JQuery -->
+    <!-- Enlace al archivo CSS para los estilos de DataTables -->
     <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+    
+    <!-- Enlace al archivo CSS para el selector de fechas en Material Design -->
+    <link href="<?php echo $ruta; ?>plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+
+    <!-- Enlace al archivo CSS para el selector de fechas en Bootstrap -->
+    <link href="<?php echo $ruta; ?>plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <!-- Enlace al archivo CSS para el efecto de espera "Wait Me" -->
+    <link href="<?php echo $ruta; ?>plugins/waitme/waitMe.css" rel="stylesheet" />
+
+    <!-- Enlace al archivo CSS para el selector de opciones en Bootstrap -->
+    <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" /> 
+
 
 <?php
-// Incluir la segunda parte del header con la barra de navegación y el menú
-include($ruta.'header2.php');
-
-// Condicional para definir la clase y los criterios de filtro en base a la función del usuario
-if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR' || $funcion == 'TECNICO' || $funcion == 'COORDINADOR'  || $funcion == 'REPRESENTANTE') {
-    // Si el usuario es uno de los mencionados, se permite la exportación de la tabla
-    $class = "js-exportable";  
-    // Filtro por empresa
-    $where = "AND pacientes.empresa_id=$empresa_id ";
-} else {
-    // Para otros usuarios, se establece una clase básica sin opciones de exportación
-    $class = "js-basic-example";
-    // Si el usuario es médico, solo se muestran los pacientes asociados a él
-    if ($funcion == 'MEDICO') {
-        $where = " AND pacientes.empresa_id=$empresa_id AND pacientes.usuario_id = $usuario_id";
-    } else {
-        // Si es otra función, no se aplica ningún filtro adicional
-        $where = "";
-    }
-}
+// Incluir header2.php
+include($ruta . 'header2.php');
 ?>
 
-<!-- Inicio de la sección de contenido principal -->
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
-            <!-- Título de la página -->
             <h2>DIRECTORIO</h2>
-            <!-- Depuración opcional para imprimir los datos de la sesión -->
-            <?php //print_r($_SESSION); ?>
         </div>
 
-        <!-- Contenedor del contenido principal -->
+        <!-- Formulario para seleccionar uno o varios estatus (incluyendo "Eliminado") -->
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Filtrar por Estatus</h2>
+                    </div>
+                    <div class="body">
+                        <form method="POST" action="">
+                            <p>Selecciona uno o más estatus y haz clic en <strong>"Filtrar"</strong>:</p>
+                            <?php 
+                            // Usamos un contador para asignar IDs únicos
+                            $i = 1;
+                            foreach ($estatus_disponibles as $est) {
+                                $checked = in_array($est, $selectedStatuses) ? 'checked' : '';
+                                // Creamos un ID único, por ejemplo "md_checkbox_1"
+                                $checkboxId = 'md_checkbox_' . $i;
+                                ?>
+                                <div style="display:inline-block; margin-right:15px;">
+                                    <!-- Checkbox con la clase y el ID que deseas -->
+                                    <input 
+                                        type="checkbox"
+                                        id="<?php echo $checkboxId; ?>"
+                                        name="estatus[]"
+                                        value="<?php echo $est; ?>"
+                                        class="filled-in chk-col-teal"
+                                        <?php echo $checked; ?>
+                                    />
+                                    <!-- El label referencia a ese mismo ID -->
+                                    <label for="<?php echo $checkboxId; ?>">
+                                        <?php echo $est; ?>
+                                    </label>
+                                </div>
+                                <?php
+                                $i++;
+                            }
+                            ?>
+                            <br><br>
+                            <button type="submit" class="btn btn-primary">Filtrar</button>
+                            <!-- Un botón opcional para quitar el filtro y ver todos -->
+                            <a href="directorio.php" class="btn btn-default">Quitar filtro</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mostramos la tabla de resultados filtrados -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div style="height: 95%" class="header">
-                        <!-- Título de la sección -->
-                        <h1 align="center">Directorio Pacientes</h1>                        
+                        <h1 align="center">Directorio Pacientes</h1>
                         <div class="body">
                             <div class="table-responsive">
-                                <!-- Tabla de pacientes, con opciones de exportación si están habilitadas -->
-                                <table class="table table-bordered table-striped table-hover dataTable <?php echo $class; ?>">
+                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example">
                                     <thead>
                                         <tr>
-                                            <!-- Columnas de la tabla -->
                                             <th style="display: none"></th>
-                                            <th style="max-width: 10px">ID</th>
-                                            <th style="min-width: 40px">Fecha</th>
-                                            <th style="min-width: 120px">Nombre</th>
-                                            <th style="max-width: 15px">TMS</th> 
-                                            <th style="max-width: 15px">tDCS</th>                                          
-                                            <th style="min-width: 50px">Celular</th>
-                                            <th style="min-width: 40px">Estatus</th>
-                                            <th style="min-width: 220px">Acción</th>
+                                            <th>ID</th>
+                                            <th>Fecha</th>
+                                            <th>Nombre</th>
+                                            <th>TMS</th>
+                                            <th>tDCS</th>
+                                            <th>Celular</th>
+                                            <th>Estatus</th>
+                                            <th>Acción</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
-                                        <tr>                                          
-                                            <!-- Filtros o pie de tabla -->
+                                        <tr>
                                             <th style="display: none"></th>
-                                            <th style="max-width: 10px">ID</th>
-                                            <th style="min-width: 40px">Fecha</th>
-                                            <th style="min-width: 120px">Nombre</th>
-                                            <th style="max-width: 15px">TMS</th> 
-                                            <th style="max-width: 15px">tDCS</th>                                          
-                                            <th style="min-width: 50px">Celular</th>
-                                            <th style="min-width: 40px">Estatus</th>
-                                            <th style="min-width: 220px">Acción</th>
+                                            <th>ID</th>
+                                            <th>Fecha</th>
+                                            <th>Nombre</th>
+                                            <th>TMS</th>
+                                            <th>tDCS</th>
+                                            <th>Celular</th>
+                                            <th>Estatus</th>
+                                            <th>Acción</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                     <?php
-                                    // Consulta SQL para obtener la información de los pacientes
+                                    // ------------------------------------------------
+                                    // 4) CONSULTA CON FILTRO DE ESTATUS
+                                    // ------------------------------------------------
+                                    // Ajusta según tu proyecto:
+                                    $empresa_id = 1;  // Ejemplo
+
                                     $sql_protocolo = "
                                         SELECT DISTINCT
                                             pacientes.*,
                                             estatus_paciente.color,
                                             estatus_paciente.rgb,
                                             estatus_paciente.class,
-                                            (SELECT DISTINCT COUNT(*) AS total_sesion FROM historico_sesion WHERE historico_sesion.paciente_id = pacientes.paciente_id) AS total_sesion,
-                                            (SELECT DISTINCT COUNT(*) AS total_tms FROM historico_sesion INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id WHERE historico_sesion.paciente_id = pacientes.paciente_id AND protocolo_terapia.terapia = 'TMS') AS total_TMS,
-                                            (SELECT DISTINCT COUNT(*) AS total_tdcs FROM historico_sesion INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id WHERE historico_sesion.paciente_id = pacientes.paciente_id AND protocolo_terapia.terapia = 'tDCS') AS total_tDCS,
-                                            (SELECT SUM(cobros.cantidad) AS total FROM cobros WHERE cobros.empresa_id = $empresa_id AND cobros.paciente_id = pacientes.paciente_id ORDER BY cobros.f_captura ASC) AS cnt_pagos,
-                                            (SELECT SUM(cobros.importe) AS total FROM cobros WHERE cobros.empresa_id = pacientes.empresa_id AND cobros.paciente_id = pacientes.paciente_id ORDER BY cobros.f_captura ASC) AS pago,
+                                            (SELECT DISTINCT COUNT(*) 
+                                             FROM historico_sesion 
+                                             WHERE historico_sesion.paciente_id = pacientes.paciente_id
+                                            ) AS total_sesion,
+                                            (SELECT DISTINCT COUNT(*) 
+                                             FROM historico_sesion 
+                                             INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+                                             WHERE historico_sesion.paciente_id = pacientes.paciente_id 
+                                               AND protocolo_terapia.terapia = 'TMS'
+                                            ) AS total_TMS,
+                                            (SELECT DISTINCT COUNT(*) 
+                                             FROM historico_sesion 
+                                             INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+                                             WHERE historico_sesion.paciente_id = pacientes.paciente_id 
+                                               AND protocolo_terapia.terapia = 'tDCS'
+                                            ) AS total_tDCS,
+                                            (SELECT SUM(cobros.cantidad) 
+                                             FROM cobros 
+                                             WHERE cobros.empresa_id = $empresa_id 
+                                               AND cobros.paciente_id = pacientes.paciente_id
+                                             ORDER BY cobros.f_captura ASC
+                                            ) AS cnt_pagos,
+                                            (SELECT SUM(cobros.importe) 
+                                             FROM cobros 
+                                             WHERE cobros.empresa_id = pacientes.empresa_id 
+                                               AND cobros.paciente_id = pacientes.paciente_id
+                                             ORDER BY cobros.f_captura ASC
+                                            ) AS pago,
                                             admin.nombre AS medico
-                                        FROM
+                                        FROM 
                                             pacientes
                                         INNER JOIN estatus_paciente ON pacientes.estatus = estatus_paciente.estatus
-                                        INNER JOIN admin ON pacientes.usuario_id = admin.usuario_id 
-                                        WHERE
-                                            pacientes.estatus <>'Eliminado' AND pacientes.empresa_id = $empresa_id $where
+                                        INNER JOIN admin ON pacientes.usuario_id = admin.usuario_id
+                                        WHERE 1=1 
+                                        $where
                                         ORDER BY f_captura DESC
                                     ";
-                                    // Mostrar la consulta SQL (opcional para depuración)
-                                    //echo $sql_protocolo."<br>";
-                                    //echo $sql_protocolo."<hr>";
 
-                                    // Ejecutar la consulta y almacenar el resultado
                                     $result_protocolo = ejecutar($sql_protocolo); 
-                                    $cnt = 0;  // Contador de pacientes
-                                    $total = 0;  // Total de pacientes
+                                    $cnt = 0;
 
-                                    // Iterar sobre los resultados de la consulta y construir las filas de la tabla
                                     while ($row_protocolo = mysqli_fetch_array($result_protocolo)) {
                                         extract($row_protocolo);
+
+                                        // Ajustar color/clase
                                         if ($class == 'bg-yellow') {
-                                            $class = "class='$class' style='color: black !important;'";
+                                            $classHTML = "class='$class' style='color: black !important;'";
                                         } else {
-                                            $class = "class='$class'";
+                                            $classHTML = "class='$class'";
                                         }
-										
-										$pago = is_null($pago) ? 0 : $pago;
-										$cnt_pagos = is_null($cnt_pagos) ? 0 : $cnt_pagos;
 
-                                    	//echo "<hr>Paciente: $paciente_id, Pago: $pago, cnt_pagos: $cnt_pagos, Fecha Captura: $f_captura, Sesiones: $total_sesion<br>";
-                                    
-										// Convertir la fecha al formato deseado
-										$date = new DateTime($f_captura);
-										$today = $date->format('d-M-y');
+                                        // Manejo de null
+                                        $pago      = is_null($pago) ? 0 : $pago;
+                                        $cnt_pagos = is_null($cnt_pagos) ? 0 : $cnt_pagos;
 
-                                        $terapias = $total_TMS + $total_tDCS;  // Calcular el total de terapias
+                                        // Fecha
+                                        $date  = new DateTime($f_captura);
+                                        $today = $date->format('d-M-y');
 
-                                        // Lógica para mostrar mensajes basados en el estado de pagos y terapias
-                                        if ($terapias >= 1 && $pago == 0 && $cnt_pagos == 0 && $f_captura >= '2024-04-01') {
-                                            $pagos = $terapias * 1000;
-                                            $span = '<span class="label label-danger">Falta Pago de $' . number_format($pagos) . '</span>';
+                                        // Lógica simple para mostrar un span (solo como ejemplo)
+                                        $terapias = $total_TMS + $total_tDCS;
+                                        $span = "";
+                                        if ($terapias > 0 && $pago == 0) {
+                                            $span = '<span class="label label-danger">Falta pago</span>';
                                         } else {
-											if ($pago == 0 && $cnt_pagos == 0 && $f_captura >= '2024-04-01') {
-                                                   
-                                                    $span = '<span class="label label-warning">Sin Saldo ' . $pago . '</span>';												
-											} else {
-	                                            // Otras condiciones relacionadas con el pago y las terapias
-	                                            if ($pago == 30000 || $pago == 24000 || $pago == 15000 || $cnt_pagos == 30) {
-	                                            	
-	                                                $terapias_pag = 30;
-	                                                if (($terapias == $terapias_pag && $pago != 0) || ($terapias == $cnt_pagos)) {
-	                                                	
-	                                                    $span = '<span class="label label-primary">Concluido las sesiones</span>';
-	                                                } else {
-	                                                    	
-	                                                    $span = '<span class="label label-success">Con saldo disponible<br>Restan '.($cnt_pagos-$total_sesion).' terapias</span>';
-	                                                }
-	                                            } elseif ($pago < 24000) {
-	                                                $terapias_pag = $pago / 1000;
-	                                                if ($terapias > $terapias_pag && $pago >= 0 && $f_captura >= '2024-04-01') {
-	                                                	
-	                                                    $pagos = ($terapias - $terapias_pag) * 1000;
-	                                                    $span = '<span class="label label-danger">Falta Pago de $' . number_format($pagos) . '</span>';
-	                                                } else {	
-	                                                    switch ($estatus) {
-	                                                        case 'Pendiente':
-	                                                        
-	                                                            $span = '';
-	                                                            break;
-	                                                        case 'Confirmado':
-	                                                        
-	                                                            $span = '<span class="label label-warning">Pendiente de Saldo ' . $pago . '</span>';
-	                                                            break;
-	                                                        case 'Seguimiento':
-	                                                        
-	                                                            $span = '<span class="label label-warning">Sin Saldo ' . $pago . '</span>';
-	                                                            break;
-	                                                        case 'Activo':
-																
-	                                                            $terapias_pag = $pago / 1000;
-																
-	                                                            if ($terapias == $terapias_pag && $pago != 0) {
-
-	                                                                $span = '<span class="label label-warning">Concluido el saldo</span>';
-	                                                            } else {
-           	                                                        if (($cnt_pagos-$total_sesion)<0 && $f_captura >= '2024-04-01') {
-																		//$span = '<span class="label label-warning">Concluido el saldo</span>';
-												                        $pagos = ($terapias - $terapias_pag) * 1000;
-	                                                    				$span = '<span class="label label-danger">Falta Pago de $' . number_format($pagos) . '</span>';							
-																	} else {
-																		if (($cnt_pagos-$total_sesion)<0) {
-																			$span = '<span class="label label-warning">Concluido el saldo</span>';
-																		} else {
-																			$span = '<span class="label label-success">Con saldo disponible<br>Restan '.($cnt_pagos-$total_sesion).' terapias</span>';
-																		}
-																	}                 			
-	                                                            }
-	                                                            break;
-	                                                    }
-	                                                }
-	                                            } else {
-	                                                $span = '<span class="label label-success">Saldo $' . $pago . '</span>';
-	                                            }
-												
-											}
-												                                            
+                                            $span = '<span class="label label-success">OK</span>';
                                         }
-                                        // Incrementar el contador de pacientes
+
                                         $cnt++;
-                                    ?>  
-                                        <!-- Renderizar la fila de la tabla con los datos del paciente -->
+                                        ?>
                                         <tr>
                                             <td style="display: none"><?php echo $cnt; ?></td>
                                             <td><?php echo $paciente_id; ?></td>
-                                            <td><?php echo $today; ?><br><?php // echo $f_captura; ?></td>
+                                            <td><?php echo $today; ?></td>
                                             <td>
-                                                <b><?php echo $paciente . " " . $apaterno . " " . $amaterno; ?></b>
-                                                <br>
+                                                <b><?php echo $paciente . " " . $apaterno . " " . $amaterno; ?></b><br>
                                                 <i><?php echo $medico; ?></i>
                                             </td>
                                             <td><?php echo $total_TMS; ?></td>
                                             <td><?php echo $total_tDCS; ?></td>
                                             <td><?php echo $celular; ?></td>
-                                            <td <?php echo $class; ?>><?php echo $estatus; ?><br><?php echo $span; ?></td>
+                                            <td <?php echo $classHTML; ?>>
+                                                <?php echo $estatus; ?><br>
+                                                <?php echo $span; ?>
+                                            </td>
                                             <td>
-                                                <!-- Botones de acción para cada paciente -->
                                                 <div class="btn-group" role="group">
-                                                    <!-- Botón para ver la agenda del paciente -->
                                                     <a class="btn bg-cyan waves-effect" href="<?php echo $ruta; ?>agenda/agenda.php?paciente_id=<?php echo $paciente_id; ?>">
-                                                        <i class="material-icons">call_missed_outgoing</i> <B>Agenda</B>
+                                                        <i class="material-icons">call_missed_outgoing</i> <b>Agenda</b>
                                                     </a>
-                                                    <!-- Botón para ver información del paciente -->
                                                     <a class="btn bg-blue waves-effect" href="<?php echo $ruta; ?>paciente/info_paciente.php?paciente_id=<?php echo $paciente_id; ?>">
-                                                        <i class="material-icons">chat</i> <B>Datos</B>
+                                                        <i class="material-icons">chat</i> <b>Datos</b>
                                                     </a>
-                                                    <!-- Botón para editar los datos del paciente -->
                                                     <a class="btn btn-info waves-effect" href="<?php echo $ruta; ?>paciente/paciente_edit.php?paciente_id=<?php echo $paciente_id; ?>">
-                                                        <i class="material-icons">edit</i> <B>Edit</B>
-                                                    </a>                                        
-                                                </div>                                       
+                                                        <i class="material-icons">edit</i> <b>Edit</b>
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
-                                    <?php 
-                                        // Reiniciar el mensaje de alerta de pago
-                                        $span = ''; 
-                                    } 
-                                    ?>     
+                                        <?php
+                                    }
+                                    ?>
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                            </div> <!-- table-responsive -->
+                        </div> <!-- body -->
+                    </div> <!-- header -->
+                </div> <!-- card -->
+            </div> <!-- col -->
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
 
+<!-- Incluimos footer1.php y scripts requeridos para DataTables -->
 <?php 
-// Incluir la primera parte del footer que contiene scripts iniciales
 include($ruta.'footer1.php'); 
 ?>
 
-<!-- Incluir los scripts necesarios para el funcionamiento de DataTable -->
+<!-- Estilos y Scripts de DataTable (ajusta según tu estructura) -->
+<link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 <script src="<?php echo $ruta; ?>plugins/jquery-datatable/jquery.dataTables.js"></script>
 <script src="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
 <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
@@ -278,12 +301,8 @@ include($ruta.'footer1.php');
 <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
 <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
 <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
-
-<!-- Inicializar el DataTable para la tabla -->
 <script src="<?php echo $ruta; ?>js/pages/tables/jquery-datatable.js"></script>
 
 <?php 
-// Incluir la segunda parte del footer que finaliza la estructura HTML
-include($ruta.'footer2.php'); 
+include($ruta.'footer2.php');
 ?>
-                                                            

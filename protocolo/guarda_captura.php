@@ -27,10 +27,7 @@ include('fun_protocolo.php');
 
 $ruta = "../";
 extract($_SESSION);
-// print_r($_SESSION);
- 
 extract($_POST);
-// print_r($_POST);
 
 function tildes($palabra) {
     //Rememplazamos caracteres especiales latinos minusculas
@@ -52,7 +49,6 @@ return $palabra;
 // echo "<hr>";
 $observaciones = stripslashes($_POST['observaciones']); 
 $observaciones = tildes($observaciones);
-
 
 $f_captura = date("Y-m-d");
 $h_captura = date("H:i:s");

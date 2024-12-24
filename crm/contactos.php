@@ -8,22 +8,13 @@ $titulo ="Directorio de Contactos";
 include($ruta.'header1.php'); 
 ?>
 
-<!-- JQuery DataTable Css -->
+<!-- Inclusión de los estilos para DataTable de JQuery -->
 <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
-<!-- Bootstrap Material Datetime Picker Css -->
-<link href="<?php echo $ruta; ?>plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+<?php include($ruta.'header2.php'); 
 
-<!-- Bootstrap DatePicker Css -->
-<link href="<?php echo $ruta; ?>plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
 
-<!-- Wait Me Css -->
-<link href="<?php echo $ruta; ?>plugins/waitme/waitMe.css" rel="stylesheet" />
-
-<!-- Bootstrap Select Css -->
-<link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
-
-<?php include($ruta.'header2.php'); ?>
+?>
 
 <section class="content">
     <div class="container-fluid">
@@ -35,7 +26,7 @@ include($ruta.'header1.php');
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div style="height: 95%" class="header">
-                        <h1 align="center">Historial de Contactos</h1>
+                        <h1 style="text-align: center;" >Historial de Contactos</h1>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                 <thead>
@@ -102,7 +93,7 @@ include($ruta.'header1.php');
                                             <?php
                                         }
                                     } else {
-                                        echo "<tr><td colspan='8' align='center'>No se encontraron registros</td></tr>";
+                                        echo "<tr><td colspan='7' align='center'>No se encontraron registros</td></tr>";
                                     }
                                     ?>
                                 </tbody>
@@ -128,6 +119,5 @@ include($ruta.'header1.php');
 <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
 <script src="<?php echo $ruta; ?>plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
-<script src="<?php echo $ruta; ?>js/pages/tables/jquery-datatable.js"></script>
 
 <?php include($ruta.'footer2.php'); ?>

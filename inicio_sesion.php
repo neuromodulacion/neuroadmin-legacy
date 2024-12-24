@@ -1,4 +1,11 @@
 <?php
+
+// Iniciar la sesión
+session_start();
+//extract($_SESSION);
+//print_r($_SESSION);
+$timezone = $_SESSION['timezone'];
+
 // Activar reporte de errores para depuración
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -16,9 +23,6 @@ $config = require $configPath;
 
 // Incluir la clase de conexión
 include("functions/conexion_mysqli.php");
-
-// Iniciar la sesión
-session_start();
 
 // Inicializar la variable $conexion
 $conexion = null;
@@ -160,6 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['bind'] = $cnt['bind'];
             $_SESSION['acceso_ia'] = $cnt['acceso_ia'];
             $_SESSION['paquete_id'] = $cnt['paquete_id'];
+            $_SESSION['timezone'] = $timezone;
 
             // Actualizar el estado del usuario a "Activo"
             $query_update = "UPDATE admin SET actividad = 'Activo' WHERE usuario_id = ?";
@@ -220,3 +225,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <script src="plugins/node-waves/waves.js"></script>
 </body>
 </html>
+*/
