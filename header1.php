@@ -13,8 +13,8 @@ ini_set('default_charset', 'UTF-8');
 header('Content-Type: text/html; charset=UTF-8');
 
 // Establece la zona horaria predeterminada para la aplicación
-// date_default_timezone_set('America/Monterrey'); // Opción comentada para Monterrey
-date_default_timezone_set('America/Monterrey');
+$timezone = $_SESSION['timezone']; // nos trae la zona horaria de la sesion
+date_default_timezone_set($timezone);
 
 // Asegurar que se establezca la configuración regional para los nombres de mes y día
 setlocale(LC_TIME, 'es_ES.UTF-8');  // Para sistemas Unix
@@ -45,6 +45,8 @@ extract($_SESSION);
 extract($_POST);
 extract($_GET);
 
+include($ruta.'functions/functions.php');
+
 // Definición de variables de fecha y hora actuales
 $hoy = date("Y-m-d");  // Fecha actual en formato año-mes-día
 $ahora = date("H:i:00"); // Hora actual en formato horas:minutos:segundos
@@ -54,22 +56,7 @@ $dia = date("N");  // Día de la semana (1 = Lunes, 7 = Domingo)
 $semana = date("W");  // Número de la semana en el año
 
 // Obtener el nombre completo del mes en español
-$mes = obtenerMesActual($hoy);
-
-function obtenerMesActual($fecha) {
-    $formatter = new IntlDateFormatter(
-        'es_ES',  // Configuración regional en español
-        IntlDateFormatter::FULL,
-        IntlDateFormatter::NONE,
-        'UTC',  // Zona horaria
-        IntlDateFormatter::GREGORIAN,
-        'MMMM'  // Formato de mes completo
-    );
-    return ucfirst($formatter->format(strtotime($fecha))); // Capitalizar el primer carácter
-}
-
-include($ruta.'functions/functions.php');
-
+$mes = obMesActualespaniol($hoy);
 
 // Obtiene la URL del script actual y la recorta para obtener la ruta relativa
 $ubicacion_url = $_SERVER['PHP_SELF']; 

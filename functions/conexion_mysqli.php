@@ -260,6 +260,18 @@ class Mysql {
     public function revertirTransaccion() {
         $this->link->rollback();
     }
+
+    public function escape($cadena) {
+        // Verifica si la conexión está abierta
+        if (!$this->link) {
+            $this->conectarse();
+        }
+        // Retorna la cadena escapada
+        return $this->link->real_escape_string($cadena);
+    }
+    
+    
+
 } // Asegúrate de que este cierre de clase esté presente
 
 
