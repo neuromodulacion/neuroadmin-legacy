@@ -12,16 +12,15 @@ extract($_SESSION);
 $ruta = "../";
 extract($_POST);
 
- // print_r($_SESSION);
- // echo "<hr>";
- // print_r($_POST);
+	// print_r($_SESSION);
+	// echo "<hr>";
+	// print_r($_POST);
 
 //$aviso = stripslashes($_POST['aviso']); 
 
 $f_captura = date("Y-m-d");
 $h_captura = date("H:i:s"); 
-$mes =  substr($mes_ano, 5, 2);
-$ano = substr($mes_ano, 0, 4);
+$option = isset($option) ? $option : '';
 
 switch ($option) {
 	case 'perfil':
@@ -71,13 +70,12 @@ switch ($option) {
     <div style="padding-top: 30px" class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <div align="center" style="padding: 20px;" class="five-zero-zero-container card">
+			<div style="padding: 20px; text-align: center" class="five-zero-zero-container card">
                 <!-- Mensaje de confirmación de éxito -->
                 <div><h1>Exito</h1></div>
                 <div><h2>Se guardo correctamente la información</h2></div>
-                <div align="center"> 
-                    <div style="width: 90% !important;" align="left">
-							<h2><?php echo $mensaje; ?></h2>
+                <div style="text-align: center"> 
+                    <div style="width: 90% !important; text-align: center">
 						        	Registro: <?php echo $usuario_id; ?><br>
 						        	Nombre: <?php echo $nombre; ?><br>
 						        	Correo Electronico: <?php echo $usuario; ?><br>
@@ -150,17 +148,17 @@ switch ($option) {
 			<div style="padding-top: 30px" class="row">
 				<div class="col-md-4"></div>
 				<div class="col-md-4">
-					<div align="center" style="padding: 20px;" class="five-zero-zero-container card">
+					<div style="text-align: center; padding: 20px;" class="five-zero-zero-container card">
 						<!-- Mensaje de confirmación de éxito -->
 						<div><h1>Exito</h1></div>
 						<div><h2>Se guardo correctamente la información</h2></div>
-						<div align="center"> 
-							<div style="width: 90% !important;" align="left">
+						<div  style="text-align: center"> 
+							<div style="width: 90% !important; text-align:left">
 									<!-- Mensaje de confirmación de éxito -->
 								<div> <h1>Exito</h1></div>
 								<div> <h2>Se actualizo correctamente la contraseña</h2></div>
-								<div align="center"> 
-									<div align="center" style="width: 90% ;!important;" align="left" >		        	 
+								<div style="text-align: center"> 
+									<div  style="text-align: center" style="width: 90% !important; text-align: left" >		        	 
 										<a href="<?php echo $ruta; ?>menu.php" class="btn bg-green btn-lg waves-effect">CONTINUAR</a>     	      	
 									</div>         		
 								</div>	
@@ -194,7 +192,6 @@ switch ($option) {
 		SET
 			admin.nombre ='$nombre',
 			admin.usuario ='$usuario',
-			admin.pwd ='$pwdx',
 			admin.funcion ='$funcionx',
 			admin.telefono ='$telefono'
 		
@@ -233,20 +230,21 @@ switch ($option) {
     <div style="padding-top: 30px" class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <div align="center" style="padding: 20px;" class="five-zero-zero-container card">
-                <!-- Mensaje de confirmación de éxito -->
-                <div><h1>Exito</h1></div>
-                <div><h2>Se guardo correctamente la información</h2></div>
-                <div align="center"> 
-                    <div style="width: 90% !important;" align="left">
-						<h2><?php echo $mensaje; ?></h2>
-					        	Registro: <?php echo $usuario_id; ?><br>
-					        	Nombre: <?php echo $nombre; ?><br>
-					        	Correo Electronico: <?php echo $usuario; ?><br>
-					        	Telefono: <?php echo $telefono; ?><br><br>			        	 
-						<a href="<?php echo $ruta; ?>menu.php" class="btn bg-green btn-lg waves-effect">CONTINUAR</a>     	      	
-					</div>                
-                </div>
+            <div  style="text-align: center; padding: 20px;" class="five-zero-zero-container card">
+				<div >
+					<!-- Mensaje de confirmación de éxito -->
+					<div><h1>Exito</h1></div>
+					<div><h2>Se guardo correctamente la información</h2></div>
+					<div  style="text-align: center"> 
+						<div style="width: 90% !important; text-align: left">
+									Registro: <?php echo $usuario_id; ?><br>
+									Nombre: <?php echo $nombre; ?><br>
+									Correo Electronico: <?php echo $usuario; ?><br>
+									Telefono: <?php echo $telefono; ?><br><br>			        	 
+							<a href="<?php echo $ruta; ?>menu.php" class="btn bg-green btn-lg waves-effect">CONTINUAR</a>     	      	
+						</div>                
+					</div>
+				</div>
             </div>
         </div>
         <div class="col-md-4"></div>

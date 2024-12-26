@@ -63,3 +63,100 @@ function format_fecha_esp_dmy($f_ini) {
 
     return $f_ini_formateado;
 }
+
+function mesCorto($numeroMes) {
+    $mesesCortos = [
+        1 => "Ene", 2 => "Feb", 3 => "Mar", 4 => "Abr",
+        5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Ago",
+        9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dic"
+    ];
+
+    // Normalizar el mes como un entero
+    $numeroMes = (int) ltrim($numeroMes, '0');
+
+    // Validar si el mes es válido
+    if (isset($mesesCortos[$numeroMes])) {
+        return $mesesCortos[$numeroMes];
+    }
+
+    return "Mes inválido";
+}
+
+function mesLargo($numeroMes) {
+    $mesesLargos = [
+        1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril",
+        5 => "Mayo", 6 => "Junio", 7 => "Julio", 8 => "Agosto",
+        9 => "Septiembre", 10 => "Octubre", 11 => "Noviembre", 12 => "Diciembre"
+    ];
+
+    // Normalizar el mes como un entero
+    $numeroMes = (int) ltrim($numeroMes, '0');
+
+    // Validar si el mes es válido
+    if (isset($mesesLargos[$numeroMes])) {
+        return $mesesLargos[$numeroMes];
+    }
+
+    return "Mes inválido";
+}
+
+/**
+ * Formatea una fecha en el estilo "día - mesAbreviado" en español
+ * por ejemplo, "2024-12-25" => "25 - dic"
+ *
+ * @param string $fecha Cadena con la fecha (ejemplo: '2024-12-25')
+ * @return string       Cadena formateada en español (ejemplo: '25 - dic')
+ */
+function formdiaanoEsp($fecha)
+{
+    // Creamos un arreglo manual con los meses en español
+    $meses = [
+        1 => 'ene', 2 => 'feb', 3 => 'mar', 4 => 'abr',
+        5 => 'may', 6 => 'jun', 7 => 'jul', 8 => 'ago',
+        9 => 'sep', 10 => 'oct', 11 => 'nov', 12 => 'dic'
+    ];
+
+    // Convertimos la fecha a objeto DateTime
+    $fechaObj = new DateTime($fecha);
+
+    // Obtenemos el día y el número de mes
+    $dia    = $fechaObj->format('d');    // 01 al 31
+    $numMes = (int) $fechaObj->format('n'); // 1 al 12
+
+    // Devolvemos la fecha con el formato "día - mesAbreviado"
+    return "{$dia} - {$meses[$numMes]}";
+}
+
+/**
+ * Formatea una fecha tipo "día-mesAbrev-año hora:min:seg AM/PM" en español
+ * Ejemplo: '2024-12-25 13:05:06' => '25-dic-2024 01:05:06 PM'
+ *
+ * @param  string $fecha Cadena con la fecha (e.g. "2024-12-25 13:05:06")
+ * @return string        Cadena formateada (e.g. "25-dic-2024 01:05:06 PM")
+ */
+function formatearFechaCompleta($fecha)
+{
+    // Meses abreviados en español
+    $meses = [
+        1  => 'ene', 2  => 'feb', 3  => 'mar', 4  => 'abr',
+        5  => 'may', 6  => 'jun', 7  => 'jul', 8  => 'ago',
+        9  => 'sep', 10 => 'oct', 11 => 'nov', 12 => 'dic'
+    ];
+
+    // Convertimos la fecha a objeto DateTime
+    $fechaObj = new DateTime($fecha);
+
+    // Obtenemos partes de la fecha
+    $dia     = $fechaObj->format('d');    // 01-31
+    $numMes  = (int) $fechaObj->format('n'); // 1-12
+    $anio    = $fechaObj->format('Y');    // año con 4 dígitos
+    $hora12  = $fechaObj->format('h');    // 12-horas (con 0 a la izquierda)
+    $min     = $fechaObj->format('i');    // minutos
+    $seg     = $fechaObj->format('s');    // segundos
+    $ampm    = $fechaObj->format('A');    // AM o PM
+
+    // Retornamos en formato "día-mesAbrev-año hh:mm:ss AM/PM"
+    return "{$dia}-{$meses[$numMes]}-{$anio} {$hora12}:{$min}:{$seg} {$ampm}";
+}
+
+

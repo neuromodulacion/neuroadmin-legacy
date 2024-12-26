@@ -1,34 +1,9 @@
 <?php
-
-session_start();
-error_reporting(7);
-iconv_set_encoding('internal_encoding', 'utf-8'); 
-header('Content-Type: text/html; charset=UTF-8');
-date_default_timezone_set('America/Mazatlan');
-setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=mktime();
-
 $ruta="../";
-$title = 'INICIO';
-
-//extract($_SESSION);
-//print_r($_SESSION);
-
-
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
 $titulo ="Participantes Registrados";
 
+include($ruta.'header1.php');
 
-if ($mes_nav =='') {
-	$mes_nav = $mes_ahora;
-}
-
-if ($anio_nav =='') {
-	$anio_nav = $anio;
-}
 //include($ruta.'header.php'); 
 if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR') {
 	$class = "js-exportable";	
@@ -37,8 +12,6 @@ if ($funcion == 'SISTEMAS' || $funcion == 'ADMINISTRADOR') {
 	$class = "";
 	if ($funcion == 'MEDICO'){$where = "AND pacientes.usuario_id = $usuario_id";}else{$where = "";}
 }
-
-include($ruta.'header1.php');
 ?>
     <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
     
@@ -117,9 +90,9 @@ include($ruta.'header2.php');
 										if ($cnt > 0) {
 							                while($row = mysqli_fetch_array($result_protocolo)){
 												$f_captura = $row['fecha_registro'];
-												$today = strftime( '%d-%b-%Y %I:%M:%S %p', strtotime( $f_captura) );
+												$today = formatearFechaCompleta($f_captura);
 												$seminario = $row['seminario'];
-												$semi = strftime( '%d - %b', strtotime( $seminario) );
+												$semi = formdiaanoEsp($seminario);
 												$id = $row['id'];
 												$celular = $row['celular'];
 												$nombre_completo = $row['nombre_completo'];

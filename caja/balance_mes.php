@@ -7,10 +7,19 @@ $titulo = "Balance Mensual"; // Título de la página
 // Incluye el archivo header1.php, que contiene configuraciones y elementos comunes de la cabecera
 include($ruta . 'header1.php');
 
-// Si no se ha recibido una fecha de entrada, se asigna la fecha actual
-if ($_POST['fechaInput'] == '') {
+// Verifica si "fechaInput" existe en el arreglo $_POST
+$fechaInput = $_POST['fechaInput'] ?? null;
+
+// Si no está definido, puedes asignar un valor predeterminado
+if (!$fechaInput) {
+    // Usar la fecha actual como predeterminado
     $fechaInput = $anio . "-" . $mes_ahora; // Fecha en formato "YYYY-MM"
 }
+
+// Si no se ha recibido una fecha de entrada, se asigna la fecha actual
+// if ($_POST['fechaInput'] == '') {
+//     $fechaInput = $anio . "-" . $mes_ahora; // Fecha en formato "YYYY-MM"
+// }
 
 // Función que obtiene la abreviatura del nombre del mes en español
 function OptieneMesCorto($mes) {
@@ -86,6 +95,8 @@ include($ruta . 'header2.php');
                                 <input id="fechaInput" name="fechaInput" style="width: 180px" align="center" type="month" class="form-control" value="<?php echo $fechaInput; ?>"/>
                                 <input id="us" name="us" align="center" type="hidden" class="form-control" value="<?php echo $us; ?>"/>
                             </form> 
+
+
                             <script>
                                 // Al cambiar la fecha, el formulario se envía automáticamente
                                 $(document).ready(function() {
@@ -101,7 +112,9 @@ include($ruta . 'header2.php');
                             <h1>Entradas</h1>
                             <hr>
                             <!-- Botón para generar el reporte en Excel y enviarlo por correo -->
-                            <button id="genera_excel" type="button" class="btn bg-teal waves-effect">Genera Excel y envia correo <i class="material-icons">mail_outline</i></button>
+                            <?php if ($empresa_id == 1) { ?>
+                                <button id="genera_excel" type="button" class="btn bg-teal waves-effect">Genera Excel y envia correo <i class="material-icons">mail_outline</i></button>
+                            <?php } ?>
                             <div style="display: none" id="load_mail">
                                 <h4>Generando Correo</h4><i class="material-icons">clear_all</i><i class="material-icons">mail_outline</i>
                                 <div class="preloader pl-size-sm">                                  
@@ -226,7 +239,7 @@ include($ruta . 'header2.php');
                                                 if ($cnt_cob <> 0) {
                                                     while($row_cob = mysqli_fetch_array($result_cob)) {
                                                         extract($row_cob);    
-                                                        $f_captura = strftime("%e-%b-%Y", strtotime($f_captura));
+                                                        $f_captura = format_fecha_esp_dmy($f_captura);
                                                         if ($paciente == '') {
                                                             $paciente = $paciente_con;
                                                         } 
@@ -330,8 +343,8 @@ include($ruta . 'header2.php');
                                                 $cnt_cob = mysqli_num_rows($result_cob);
                                                 if ($cnt_cob <> 0) {
                                                     while($row_cob = mysqli_fetch_array($result_cob)) {
-                                                        extract($row_cob);    
-                                                        $f_captura = strftime("%e-%b-%Y", strtotime($f_captura));
+                                                        extract($row_cob);  
+                                                        $f_captura = format_fecha_esp_dmy($f_captura);  
                                                         ?>
                                                         <tr>
                                                             <td style="text-align: center"><?php echo $f_captura . " T " . $h_captura; ?></td>
@@ -413,7 +426,7 @@ include($ruta . 'header2.php');
                                             if ($cnt_cob <> 0) {
                                                 while($row_cob = mysqli_fetch_array($result_cob)) {
                                                     extract($row_cob);    
-                                                    $f_captura = strftime("%e-%b-%Y", strtotime($f_captura));
+                                                    $f_captura = format_fecha_esp_dmy($f_captura);
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $f_captura; ?></td> 

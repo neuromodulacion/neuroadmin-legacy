@@ -2,8 +2,6 @@
 $ruta="../";
 $titulo ="Retiros";
 
-$mes_sel = date('m', strtotime($fechaInput));
-$anio_sel = date('Y', strtotime($fechaInput));
 
 //include('fun_protocolo.php');
 include($ruta.'header1.php');
@@ -25,9 +23,7 @@ include($ruta.'header1.php');
 
 <?php  include($ruta.'header2.php');
 
-if ($fechaInput =="") {
-	$fechaInput = $anio."-".$mes_ahora;
-}
+
 
 
  ?>
@@ -59,6 +55,7 @@ if ($fechaInput =="") {
 											admin
 										WHERE
 											admin.usuario_id = $usuario_id
+											and admin.empresa_id = $empresa_id
 								    ";
 								    $result_medico=ejecutar($sql_medico); 
 								    $row_medico = mysqli_fetch_array($result_medico);

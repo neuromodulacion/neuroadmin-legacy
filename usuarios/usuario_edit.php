@@ -2,15 +2,6 @@
 // Ruta base para incluir archivos
 $ruta="../";
 
-// Variables de fecha y hora actuales
-$hoy = date("Y-m-d"); // Fecha actual en formato YYYY-MM-DD
-$ahora = date("H:i:00"); // Hora actual en formato HH:MM:00
-$anio = date("Y"); // Año actual
-$mes_ahora = date("m"); // Mes actual en formato numérico
-$mes = strftime("%B"); // Nombre del mes en formato de cadena
-$dia = date("N"); // Número del día de la semana (1=Lunes, 7=Domingo)
-$semana = date("W"); // Número de la semana del año
-
 // Título de la página
 $titulo = "Modificación de Médico o Usuario";
 
@@ -101,16 +92,16 @@ $usuario = validarSinEspacio($usuario);
                                             <input type="hidden" id="funcionx" name="funcionx" value="<?php echo $funcionx; ?>">
                                         <?php } ?>
                                         
-                                        <select id="funcionx" name="funcionx" class="form-control show-tick"
-                                            <?php if ($funcion != 'SISTEMAS' && $funcion != 'ADMINISTRADOR' && $funcion != 'COORDINADOR ADMIN') { echo 'disabled'; } ?>>
+                                        <select id="funcionx" name="funcionx" class="form-control show-tick" >
+                                            <?php // if ($funcion != 'ADMINISTRADOR' && $funcion != 'COORDINADOR ADMIN') { echo 'disabled'; } ?>>
 
                                             <?php
                                             // Consulta para obtener las opciones de funciones de usuario
                                             $sql_funciones = "
                                                 SELECT
-                                                    lamanad1_medico.funciones.funcion as funciony 
+                                                    funciones.funcion as funciony 
                                                 FROM
-                                                    lamanad1_medico.funciones 
+                                                    funciones 
                                                 ORDER BY
                                                     1 ASC";
                                             $result_funciones = ejecutar($sql_funciones);

@@ -265,7 +265,8 @@ $anio_sel = date('Y', strtotime($fechaInput));
 										    		while($row_cob = mysqli_fetch_array($result_cob)){
 												    	extract($row_cob);	
 												    	//$f_captura = date("d-m-Y",strtotime($f_captura));
-														$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
+														$f_captura = format_fecha_esp_dmy($f_captura);
+														
 												    	?>
 											  			<tr>
 											  				<td><?php echo $f_captura; ?></td> 	 

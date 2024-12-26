@@ -26,6 +26,7 @@ $ruta = "../";
 // Incluye archivos PHP necesarios para la funcionalidad adicional
 include($ruta.'functions/funciones_mysql.php');
 include($ruta.'functions/conexion_mysqli.php');
+include($ruta.'functions/functions.php');
 
 // Incluir el archivo de configuración y obtener las credenciales
 $configPath = $ruta.'../config.php';
@@ -56,7 +57,7 @@ switch ($tipo_consulta) {
     case 'Total':
         ?>
         <!-- Mostrar el nombre del médico en un título centrado -->
-        <h1 style="text-align: center"><b><?php echo $medico; ?></b></h1>
+        <h1 style="text-align: center"><b>Total del mes <?php echo mesLargo($mes)." del ".$anio; ?></b></h1>
 
         <!-- Tabla para mostrar los resultados de la consulta -->
         <table class="table table-bordered">
@@ -154,8 +155,7 @@ switch ($tipo_consulta) {
     case 'TMS':
         ?>
         <!-- Mostrar el nombre del médico en un título centrado -->
-        <h1 style="text-align: center"><b><?php echo $medico; ?></b></h1>
-
+        <h1 style="text-align: center"><b>Total del mes de TMS de <?php echo mesLargo($mes)." del ".$anio; ?></b></h1>
         <!-- Tabla para mostrar los resultados de la consulta -->
         <table class="table table-bordered">
             <tr>
@@ -272,7 +272,7 @@ switch ($tipo_consulta) {
     case 'tDCS':
         ?>
         <!-- Mostrar el nombre del médico en un título centrado -->
-        <h1 style="text-align: center"><b><?php echo $medico; ?></b></h1>
+        <h1 style="text-align: center"><b>Total del mes de tDCS de <?php echo mesLargo($mes)." del ".$anio; ?></b></h1>
 
         <!-- Tabla para mostrar los resultados de la consulta -->
         <table class="table table-bordered">
@@ -389,8 +389,8 @@ switch ($tipo_consulta) {
     case 'diaria':
         ?>
         <!-- Mostrar el nombre del médico en un título centrado -->
-        <h1 style="text-align: center"><b><?php echo $medico; ?></b></h1>
-
+        <h1 style="text-align: center"><b><?php echo $medico." del mes de ".mesLargo($mes)." del ".$anio; ?></b></h1>
+ 
         <!-- Tabla para mostrar los resultados de la consulta diaria -->
         <table class="table table-bordered">
             <tr>
@@ -576,7 +576,7 @@ switch ($tipo_consulta) {
 if ($tipo == 'Total') {
         ?>
         <!-- Mostrar el nombre del médico en un título centrado -->
-        <h1 style="text-align: center"><b><?php echo $medico; ?></b></h1>
+        <h1 style="text-align: center"><b>Gran Total</b></h1>
 
         <!-- Tabla para mostrar los resultados de la consulta -->
         <table class="table table-bordered">
@@ -671,7 +671,7 @@ if ($tipo == 'Total') {
 	
         ?>
         <!-- Mostrar el nombre del médico en un título centrado -->
-        <h1 style="text-align: center"><b><?php echo $medico; ?></b></h1>
+        <h1 style="text-align: center"><b>Gran Total <?php echo $tipo; ?></b></h1>
 
         <!-- Tabla para mostrar los resultados de la consulta -->
         <table class="table table-bordered">

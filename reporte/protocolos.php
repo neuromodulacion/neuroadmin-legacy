@@ -4,8 +4,8 @@ $titulo ="Protocolos";
 
 include($ruta.'header1.php');
 
-$mes_nav = $_POST['mes_nav'] ?? '';
-$anio_nav = $_POST['anio_nav'] ?? '';
+$mes_nav = $_GET['mes_nav'] ?? '';
+$anio_nav = $_GET['anio_nav'] ?? '';
 
 if ($mes_nav =='') {
 	$mes_nav = $mes_ahora;
@@ -95,8 +95,9 @@ include($ruta.'header2.php');
 											    
 												var mes_nav = $('#mes_nav').val();
 												var anio_nav = $('#anio_nav').val();
+												var ruta = '<?php echo $ruta; ?>';
 											    // Asignar la URL de destino según el valor seleccionado en el <select>
-												var newUrl = 'https://neuromodulaciongdl.com/reporte/protocolos.php?anio_nav='+anio_nav+'&mes_nav='+mes_nav; // Aquí debes colocar la URL de destino a la que deseas redireccionar
+												var newUrl = ruta+'reporte/protocolos.php?anio_nav='+anio_nav+'&mes_nav='+mes_nav; // Aquí debes colocar la URL de destino a la que deseas redireccionar
 											
 											    // Redireccionar a la nueva URL
 											    window.location.href = newUrl;
@@ -175,8 +176,7 @@ include($ruta.'header2.php');
 									$fechax = $fecha;							
 							        //$fecha = strftime("%e",strtotime($fecha));
 									try {
-										$date = new DateTime($fecha);
-										$fecha = $date->format('d-M-Y'); // Formato similar a '%d-%b-%Y'
+										$fecha = format_fecha_esp_dmy($fecha);
 									} catch (Exception $e) {
 										$fecha = "Fecha no válida";
 										error_log("Error al procesar la fecha: " . $e->getMessage());

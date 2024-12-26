@@ -2,8 +2,9 @@
 	// Función para ejecutar una consulta SQL simple y devolver el resultado
 	function ejecutar($sql){
         // Conexión a la base de datos utilizando MySQLi
-        $mysqli = new mysqli("174.136.25.64","lamanad1_conexion","7)8S!K{%NBoL", "lamanad1_medico");
-
+        //$mysqli = new mysqli("174.136.25.64","lamanad1_conexion","7)8S!K{%NBoL", "lamanad1_medico");
+		
+		$mysqli = new mysqli("198.59.144.197","neuromod_conexion","7)8S!K{%NBoL", "neuromod_medico");
         // Verifica si hay un error en la conexión
         if ($mysqli->connect_errno) {
             // Si hay un error, muestra un mensaje con el código y el error

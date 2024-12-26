@@ -88,6 +88,7 @@ include($ruta.'header1.php');?>
 											admin.empresa_id = $empresa_id
 											and admin.estatus <>'Bloqueado'							
 								        ";
+										// echo $sql_protocolo;
 								        $result_protocolo=ejecutar($sql_protocolo); 
 								            //echo $cnt."<br>";  
 								            //echo "<br>";    
@@ -109,9 +110,9 @@ include($ruta.'header1.php');?>
 												 	<?php
 														$sql_funciones = "
 															SELECT
-																lamanad1_medico.funciones.funcion as funciony 
+																funciones.funcion as funciony 
 															FROM
-																lamanad1_medico.funciones 
+																funciones 
 															ORDER BY
 																1 ASC							
 													        ";
