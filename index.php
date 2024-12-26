@@ -36,7 +36,6 @@ if (!$result_art) {
 // extract($_POST);
 // extract($_GET);
 
-
 ?>
 
 <!DOCTYPE html>
@@ -44,13 +43,6 @@ if (!$result_art) {
 <head>
 
      <title>Neuro Modulaci&oacute;n Gdl</title>
-<!--
-
-Template 2098 Health
-
-http://www.tooplate.com/view/2098-health
-
--->
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
      <meta name="description" content="">
@@ -64,13 +56,11 @@ http://www.tooplate.com/view/2098-health
      <link rel="stylesheet" href="css/owl.carousel.css">
      <link rel="stylesheet" href="css/owl.theme.default.min.css">
 
-	<link rel="icon" href="../images/logo_aldana_tc.png" type="image/x-icon">
+	 <link rel="icon" href="../images/logo_aldana_tc.png" type="image/x-icon">
      <!-- MAIN CSS -->
     <link rel="stylesheet" href="css/tooplate-style.css">
 
-	<!-- <script src="https://www.google.com/recaptcha/enterprise.js?render=6Lf1PlQpAAAAAGNctnH2YTQJQCWugSibNKDvYY3w"></script> -->
-	    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LefWXQpAAAAAEVNo3MwhrL5qhPXyIoezmTk8_LP"></script>
-  	<!-- Your code -->
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LefWXQpAAAAAEVNo3MwhrL5qhPXyIoezmTk8_LP"></script>
 </head>
 
 
@@ -90,9 +80,7 @@ http://www.tooplate.com/view/2098-health
      <!-- PRE LOADER -->
      <section class="preloader">
           <div class="spinner">
-
                <span class="spinner-rotate"></span>
-               
           </div>
      </section>
      <!-- HEADER -->
@@ -105,10 +93,10 @@ http://www.tooplate.com/view/2098-health
                     </div>
                          
                     <div class="col-md-9 col-sm-7 text-align-right">
-                         <span class="phone-icon"><i style="color: #0096AA" class="fa fa-phone"></i><a target="_blank" href="https://api.whatsapp.com/send?phone=523334702176&text=Solicito informes de Neuromodulación Gdl">
+                         <span class="phone-icon"><i style="color: #0096AA" class="fa fa-phone"></i><a target="_blank" href="https://api.whatsapp.com/send?phone=523334702176&text=Solicito%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Neuromodulaci%C3%B3n%20Gdl">
           33 3470 2176</a></span>
                          <span class="date-icon"><i style="color: #0096AA"  class="fa fa-calendar-plus-o"></i> 9:00 AM - 8:00 PM (Lun-Vie) 10:00 AM - 2:00 PM (S&aacute;b)</span>
-                         <span class="email-icon"><i style="color: #0096AA"  class="fa fa-envelope-o"></i><a href="mailto:contacto@neuromodulacion.com.mx?subject=Solicito%20Informacion%20de%20Neuromodulacion&body=Favor%20de%20enviar%20Informacion">contacto@neuromodulacion.com.mx</a></span>
+                         <span class="email-icon"><i style="color: #0096AA"  class="fa fa-envelope-o"></i><a href="mailto:contacto@neuromodulacion.com.mx?subject=Solicito%20Informaci%C3%B3n%20de%20Neuromodulaci%C3%B3n&body=Favor%20de%20proporcionar%20m%C3%A1s%20detalles">contacto@neuromodulacion.com.mx</a></span>
                     </div>
 
                </div>
@@ -136,7 +124,7 @@ http://www.tooplate.com/view/2098-health
                          <li><a href="#top" class="smoothScroll">Inicio</a></li>
                          <li><a href="#about" class="smoothScroll">Acerca de</a></li>
                          <li><a href="#team" class="smoothScroll">Doctores</a></li>
-						  <li role="presentation" class="dropdown">
+						 <li role="presentation" class="dropdown">
 						    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 						      Noticias<span class="caret"></span>
 						    </a>
@@ -147,9 +135,9 @@ http://www.tooplate.com/view/2098-health
 		                        }
 		                        ?>
 		                    </ul>
-						  </li>
+						 </li>
                          <li><a href="#google-map" class="smoothScroll">Contacto</a></li>
-                         <li class="appointment-btn"><a style="background: #0096AA"  href="#appointment">Solicita una cita</a></li>
+                         <li class="appointment-btn"><a style="background: #0096AA"  href="#appointment">Información sobre Procedimientos</a></li>
                          <li class="appointment-btn"><a style="background: #BBBABA"  href="inicio.html">Ingreso Medico</a></li>
                     </ul>
                </div>
@@ -205,20 +193,20 @@ http://www.tooplate.com/view/2098-health
                          <div class="about-info">
                               <h2 class="wow fadeInUp" data-wow-delay="0.6s"><i style="color: #0096AA" class="fa fa-user-md"></i> Bienvenidos a Neuromodulaci&oacute;n Gdl</h2>
                               <div class="wow fadeInUp" data-wow-delay="0.8s">
-                                   <p>"En nuestro centro, buscamos ofrecer las terapias por neuromodulación más actualizadas y con mejor evidencia científica, como lo son la Estimulación Transcraneal con Corriente Directa, y Estimulación Magnética Transcraneal, que sean accesibles para las personas en quienes estén indicadas”
-									Nuestros equipos cuentan con la aprobación Nacional de COFEPRIS, así como agendas de regulación internacional. Las tecnologías de vanguardia y nuestro equipo de profesionales en salud mental, están aquí para ayudarte a mejorar tu bienestar y tu calidad de vida.</p>
-									<b><h3>¿Cómo funciona nuestro servicio?</h3></b><br>
-										<p>Neuromodulación GDL opera de manera similar a una farmacia. Es decir, nosotros recibimos la prescripción y referencia por parte de médicos que han determinado que la persona requiere de alguna terapia por neuromodulación. De tal forma que la indicación y seguimiento clínico, seguirá siendo de la o el médico que recomendó neuromodulación, y nuestro equipo le contactará para explicar detalles del procedimiento, calendarizar el número de sesiones que están prescritas, aplicar la técnica de neuromodulación indicada, y reportar los resutados de sus avances a la o el médico que le recomendó.
-									</p>
-									<b><h3>Quiero recibir Neuromodulación, pero no tengo médico que me asesore</h3></b><br>
-										<p>En Neuromodulación GDL, tenemos alianza con Ágape – Unidad Médica de Atención Universal y Especializada, contando con un grupo de especialistas en salud mental que mediante una consulta médica programada pueden revisar su caso particular, establecer diagnóstico y opciones de tratamiento adecuados. Si junto a la o el médico, determinan los objetivos terapéuticos, indicaciones y contraindicaciones de Neuromodulación, éste le registrará su referencia para que nuestro Staff pueda calendarizar las sesiones prescritas.
+                                   <p>"En nuestro centro, buscamos ofrecer las terapias por neuromodulación más actualizadas y con mejor evidencia científica, como la Estimulación Transcraneal con Corriente Directa y la Estimulación Magnética Transcraneal, que sean accesibles para quienes estén indicadas.  
+                                   Nuestros equipos cuentan con la aprobación Nacional de COFEPRIS, así como agendas de regulación internacional. Las tecnologías de vanguardia y nuestro equipo de profesionales en salud mental, están aquí para apoyar a otros profesionales de la salud en la búsqueda del bienestar y la calidad de vida de sus pacientes."</p>
+								   
+								   <b><h3>¿Cómo funciona nuestro proceso?</h3></b><br>
+										<p>Neuromodulación GDL opera de forma similar a una farmacia especializada: recibimos la prescripción y referencia del médico tratante que haya determinado que su paciente requiere una terapia por neuromodulación. De esta manera, la indicación y el seguimiento clínico quedan bajo responsabilidad del médico de referencia. Nuestro equipo se encarga de coordinar las sesiones indicadas, aplicar la técnica de neuromodulación y mantener informado al médico remitente sobre los avances obtenidos.</p>
+									
+								   <b><h3>¿Qué hacer si no se cuenta con un médico que indique Neuromodulación?</h3></b><br>
+										<p>En caso de requerir asesoría para indicar neuromodulación, Neuromodulación GDL mantiene alianzas con grupos de especialistas en salud mental. Estos profesionales pueden llevar a cabo una valoración médica programada para determinar si la neuromodulación es apropiada, establecer diagnósticos, opciones terapéuticas y objetivos específicos. Una vez definida la indicación, nuestro equipo proporcionará información detallada sobre las técnicas disponibles y coordinará las sesiones según lo prescrito.
 									</p>
 									
 									<b><h3>¿Qué es la Neuromodulación?</h3></b><br>
-										<p>Es una modalidad de tratamiento que utiliza dispositivos médicos, con tecnología electromagnética, capaz de modificar las funciones eléctricas del cerebro, localizadas en las diferentes áreas de la corteza, sin necesidad ingresar agentes al cuerpo, sin producir dolor, ni requerir sedación para ser aplicadas. A esto también se le conoce como estimulación cerebral no invasiva (NIBS, por sus siglas en inglés).</p>
+										<p>La neuromodulación es una modalidad de intervención que emplea dispositivos médicos con tecnología electromagnética para modificar las funciones eléctricas del cerebro, ubicadas en áreas específicas de la corteza. Esto se realiza sin introducir agentes farmacológicos, sin dolor y sin requerir sedación. También se le conoce como estimulación cerebral no invasiva (NIBS, por sus siglas en inglés).</p>
 									
-									<p>Se podría pensar que se trata de tratamientos novedosos, sin embargo existen más de 30 años de investigación y aplicación clínica de estas técnicas de intervención, siendo la Estimulación Magnética Transcraneal (TMS), y la Estimulación Transcraneal por Corriente Directa (tDCS), las que han demostrado con sólida evidencia científica, su utilidad en diferentes condiciones de salud como la depresión, ansiedad, migraña, fibromialgia, trastorno obsesivo compulsivo, y una creciente evidencia de su aplicación en adicciones, estrés postraumático, epilepsia y autismo.
-									</p>
+									<p>Existe más de 30 años de investigación y uso clínico de estas técnicas, siendo la Estimulación Magnética Transcraneal (TMS) y la Estimulación Transcraneal por Corriente Directa (tDCS) las más estudiadas y con evidencia científica sólida en condiciones como depresión, ansiedad, migraña, fibromialgia y trastorno obsesivo-compulsivo, además de evidencia emergente en adicciones, estrés postraumático, epilepsia y autismo.</p>
                               </div>
                               <figure class="profile wow fadeInUp" data-wow-delay="1s">
                                    <img src="images/author-image.jpg" class="img-responsive" alt="">
@@ -232,6 +220,8 @@ http://www.tooplate.com/view/2098-health
                </div>
           </div>
      </section>
+
+
      <!-- TEAM -->
      <section id="team" data-stellar-background-ratio="1">
           <div class="container">
@@ -251,10 +241,9 @@ http://www.tooplate.com/view/2098-health
                                <div class="team-info">
                                     <h3>Dr. Alejandro Aldana</h3>
                                     <p>Psiquiatra</p>
-                                    <!-- <p>Director General</p> -->
                                     <div class="team-contact-info">
                                          <p><i class="fa fa-phone"></i> 33 3470 2176</p>
-                                         <p><i class="fa fa-envelope-o"></i> <a href="mailto:dr.alejandro.aldana@neuromodulacion.com.mx?subject=Solicito%20Informacion%20de%20Neuromodulacion&body=Favor%20de%20enviar%20Informacion">dr.alejandro.aldana@neuromodulacion.com.mx</a></p>
+                                         <p><i class="fa fa-envelope-o"></i> <a href="mailto:dr.alejandro.aldana@neuromodulacion.com.mx?subject=Solicito%20Informaci%C3%B3n%20de%20Neuromodulaci%C3%B3n&body=Favor%20de%20proporcionar%20m%C3%A1s%20detalles">dr.alejandro.aldana@neuromodulacion.com.mx</a></p>
                                     </div>
                                     <ul class="social-icon">
                                          <li><a href="#" class="fa fa-linkedin-square"></a></li>
@@ -275,15 +264,6 @@ http://www.tooplate.com/view/2098-health
 										Miembro de la mesa directiva de la Sociedad Investigadora Estudiantil (SIE) 2018-2021.<hr> 
 										Miembro de la mesa directiva de la Sociedad DISE (Doctors Interested in Surgical Education) 2019-2020
 									</p>
-	                                <!-- <div class="team-contact-info">
-	                                     <p><i class="fa fa-phone"></i> 010-070-0170</p>
-	                                     <p><i class="fa fa-envelope-o"></i> <a href="#">pregnancy@company.com</a></p>
-	                                </div>
-	                                <ul class="social-icon">
-	                                     <li><a href="#" class="fa fa-facebook-square"></a></li>
-	                                     <li><a href="#" class="fa fa-envelope-o"></a></li>
-	                                     <li><a href="#" class="fa fa-flickr"></a></li>
-	                                </ul> -->
 	                           </div>
                          </div>
                     </div>
@@ -300,15 +280,6 @@ http://www.tooplate.com/view/2098-health
 										Miembro de la mesa directiva de la Sociedad Investigadora Estudiantil (SIE) 2018-2021.<hr> 
 										Miembro del Colegio Médico Joseph Lister.<hr>
 									</p>
-
-                                    <!-- <div class="team-contact-info">
-                                         <p><i class="fa fa-phone"></i> 010-040-0140</p>
-                                         <p><i class="fa fa-envelope-o"></i> <a href="#">cardio@company.com</a></p>
-                                    </div>
-                                    <ul class="social-icon">
-                                         <li><a href="#" class="fa fa-twitter"></a></li>
-                                         <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                    </ul> -->
                               </div>
                          </div>
                     </div> 
@@ -324,14 +295,6 @@ http://www.tooplate.com/view/2098-health
 											Capacitación de simulación nivel instructor en la Universidad Autónoma de Guadalajara 2023.<hr> 
 											Certificado por la American Heart Association (AHA), Basic Life Support 2023.
 										</p>
-                                        <!-- <div class="team-contact-info">
-                                             <p><i class="fa fa-phone"></i> 010-040-0140</p>
-                                             <p><i class="fa fa-envelope-o"></i> <a href="#">cardio@company.com</a></p>
-                                        </div> -->
-                                        <!-- <ul class="social-icon">
-                                             <li><a href="#" class="fa fa-twitter"></a></li>
-                                             <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                        </ul> -->
                                    </div>
 
                          </div>
@@ -346,22 +309,10 @@ http://www.tooplate.com/view/2098-health
            								Médico de Enlace del Centro de Neuromodulación GDL.<hr>
            								Médico cirujano y partero por la Universidad de Guadalajara (UDG).<hr>
 										Testimonio de desempeño "Sobresaliente” por el Centro Nacional de Evaluación para la Educación Superior A.C. (CENEVAL) 2022.<hr>
-										Acreditada por la Asociación Americana del Corazón e ILCOR para el soporte vital en emergencias cardiovasculares en 2020.<hr>
-										<!-- Acreditada por la Asociación Americana del Corazón e Internacional Liasion Committee on Resuscitation (ILCOR) para el soporte vital en emergencias Cardiovasculares 2020<hr> -->
+										Acreditada por la AHA e ILCOR para el soporte vital en emergencias cardiovasculares en 2020.<hr>
 										Certificada por el marco Común Europeo de Referencia para las lenguas B1 (2021)<hr>
 										Gestora de la salud en el sistema de educación media superior (UDG) 2015<hr>
-										<!-- Médico Cirujano por la Universidad Autónoma de Guadalajara (UAG).<hr>
-										Capacitación de simulación nivel instructor en la Universidad Autónoma de Guadalajara 2023.<hr> 
-										Certificado por la American Heart Association (AHA), Basic Life Support 2023. -->
 									</p>
-                                    <!-- <div class="team-contact-info">
-                                         <p><i class="fa fa-phone"></i> 010-040-0140</p>
-                                         <p><i class="fa fa-envelope-o"></i> <a href="#">cardio@company.com</a></p>
-                                    </div>
-                                    <ul class="social-icon">
-                                         <li><a href="#" class="fa fa-twitter"></a></li>
-                                         <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                    </ul> -->
                                </div>
 
                          </div>
@@ -393,7 +344,7 @@ http://www.tooplate.com/view/2098-health
                               <div class="news-info">
                                    <span>Agosto 04, 2023</span>
                                    <h3><a href="news-tms.html">Acerca de la tecnología TMS</a></h3>
-                                   <p>Estimulación Magnetica Transcraneal.</p>
+                                   <p>Estimulación Magnética Transcraneal.</p>
                                    <div class="author">
                                         <img src="images/author-image.jpg" class="img-responsive" alt="">
                                         <div class="author-info">
@@ -414,7 +365,7 @@ http://www.tooplate.com/view/2098-health
                               <div class="news-info">
                                    <span>Agosto 04, 2023</span>
                                    <h3><a href="news-tdcs.html">Acerca de la tecnología tDCS</a></h3>
-                                   <p>Estimulación Transcraneal Con corriente directa.</p>
+                                   <p>Estimulación Transcraneal con corriente directa.</p>
                                    <div class="author">
                                         <img src="images/author-image.jpg" class="img-responsive" alt="">
                                         <div class="author-info">
@@ -425,34 +376,13 @@ http://www.tooplate.com/view/2098-health
                               </div>
                          </div>
                     </div>
-<!-- NEWS THUMB -->
-                    <!-- <div class="col-md-4 col-sm-6">
-                         
-                         <div class="news-thumb wow fadeInUp" data-wow-delay="0.8s">
-                              <a href="news-detail.html">
-                                   <img src="images/news-image3.jpg" class="img-responsive" alt="">
-                              </a>
-                              <div class="news-info">
-                                   <span>January 27, 2018</span>
-                                   <h3><a href="news-detail.html">Review Annual Medical Research</a></h3>
-                                   <p>Vivamus non nulla semper diam cursus maximus. Pellentesque dignissim.</p>
-                                   <div class="author">
-                                        <img src="images/author-image.jpg" class="img-responsive" alt="">
-                                        <div class="author-info">
-                                             <h5>Andrio Abero</h5>
-                                             <p>Online Advertising</p>
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
-                    </div> -->
 
                </div>
           </div>
      </section>
 
 
-     <!-- SOLICITA UNA CITA -->
+     <!-- INFORMACIÓN SOBRE PROCEDIMIENTOS (antes "Solicita una cita") -->
      <section id="appointment" data-stellar-background-ratio="3">
           <div class="container">
                <div class="row">
@@ -467,7 +397,7 @@ http://www.tooplate.com/view/2098-health
 
                               <!-- SECTION TITLE -->
                               <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
-                                   <h2>Solicita Informes</h2>
+                                   <h2>Obtén más información</h2>
                               </div>
 
                               <div class="wow fadeInUp" data-wow-delay="0.8s">
@@ -478,20 +408,20 @@ http://www.tooplate.com/view/2098-health
 
                                    <div class="col-md-6 col-sm-6">
                                         <label for="email">Correo</label>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Tu correo electronico">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Tu correo electrónico">
                                    </div>
 
                                    <div class="col-md-6 col-sm-6">
-                                        <label for="name">Medico tratante</label>
+                                        <label for="name">Médico tratante</label>
                                         <input type="text" class="form-control" id="medico" name="medico" placeholder="Nombre en caso de tener">
                                    </div>
 
                                    <div class="col-md-12 col-sm-12">
-                                        <label for="telephone">Numero de Celular</label>
+                                        <label for="telephone">Número de Celular</label>
                                         <input type="tel" class="form-control" id="phone" name="phone" placeholder="Celular">
                                         <label for="Message">Mensaje Adicional</label>
                                         <textarea class="form-control" rows="5" id="message" name="message" placeholder="Mensaje"></textarea>
-                                        <button  style="background: #0096AA" type="submit" class="form-control" id="cf-submit" name="submit">Envia Mensaje</button>
+                                        <button  style="background: #0096AA" type="submit" class="form-control" id="cf-submit" name="submit">Enviar Mensaje</button>
                                    </div>
                               </div>
                         </form>
@@ -504,15 +434,8 @@ http://www.tooplate.com/view/2098-health
 
      <!-- GOOGLE MAP -->
      <section id="google-map">
-     <!-- How to change your own map point
-            1. Go to Google Maps
-            2. Click on your location point
-            3. Click "Share" and choose "Embed map" tab
-            4. Copy only URL and paste it within the src="" field below
-	-->
-          <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3647.3030413476204!2d100.5641230193719!3d13.757206847615207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xf51ce6427b7918fc!2sG+Tower!5e0!3m2!1sen!2sth!4v1510722015945" width="100%" height="350" frameborder="0" style="border:0" allowfullscreen></iframe> -->
     		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3733.1502497646443!2d-103.38700462607751!3d20.66346540022751!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428ae7579ec0939%3A0xf8691c23c0b47a54!2sAv.%20de%20los%20Arcos%20876%2C%20Jardines%20del%20Bosque%2C%2044520%20Guadalajara%2C%20Jal.%2C%20M%C3%A9xico!5e0!3m2!1ses-419!2sus!4v1691282797537!5m2!1ses-419!2sus" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</section>           
+     </section>           
 
 
      <!-- FOOTER -->
@@ -522,21 +445,21 @@ http://www.tooplate.com/view/2098-health
 
                     <div class="col-md-4 col-sm-4">
                          <div class="footer-thumb"> 
-                              <h4 class="wow fadeInUp" data-wow-delay="0.4s">Informaci&oacute;n de Contacto</h4>
-                              <p>"¡Solicita información tu consulta hoy mismo!"</p>
+                              <h4 class="wow fadeInUp" data-wow-delay="0.4s">Información de Contacto</h4>
+                              <p>"Para mayor información, contáctanos"</p>
 
                               <div class="contact-info">
-                                   <p><i class="fa fa-phone"></i><a target="_blank" href="https://api.whatsapp.com/send?phone=523334702176&text=Solicito informes de Neuromodulación Gdl">
+                                   <p><i class="fa fa-phone"></i><a target="_blank" href="https://api.whatsapp.com/send?phone=523334702176&text=Solicito%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Neuromodulaci%C3%B3n%20Gdl">
           33 3470 2176</a></p>
                                    <p><i class="fa fa-envelope-o"></i> 
-                                   	<a href="mailto:contacto@neuromodulacion.com.mx?subject=Solicito%20Informacion%20de%20Neuromodulacion&body=Favor%20de%20enviar%20Informacion">contacto@neuromodulacion.com.mx</a></p>                              
+                                   	<a href="mailto:contacto@neuromodulacion.com.mx?subject=Solicito%20Informaci%C3%B3n%20de%20Neuromodulaci%C3%B3n&body=Favor%20de%20proporcionar%20m%C3%A1s%20detalles">contacto@neuromodulacion.com.mx</a></p>                              
                               </div>
                          </div>
                     </div>
 
                     <div class="col-md-4 col-sm-4"> 
                          <div class="footer-thumb"> 
-                              <h4 class="wow fadeInUp" data-wow-delay="0.4s">Servicios</h4>
+                              <h4 class="wow fadeInUp" data-wow-delay="0.4s">Procedimientos Disponibles</h4>
                               <div class="latest-stories">
                                    <div class="stories-image">
                                         <a href="news-tms.html"><img src="images/news-image.jpg" class="img-responsive" alt=""></a>
@@ -567,14 +490,6 @@ http://www.tooplate.com/view/2098-health
                                    <p>S&aacute;bado <span>09:00 AM - 02:00 PM</span></p>
                                    <p>Domingo <span>Cerrado</span></p>
                               </div> 
-
-
-                              <!-- <ul class="social-icon">
-                                   <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
-                                   <li><a href="#" class="fa fa-twitter"></a></li>
-                                   <li><a href="#" class="fa fa-instagram"></a></li>
-                              </ul> -->
-                              <!-- </div> -->
                          </div>
                     </div>
 
@@ -582,17 +497,10 @@ http://www.tooplate.com/view/2098-health
                          <div class="col-md-5 col-sm-6">
                               <div class="copyright-text"> 
                                    <p>Copyright &copy; 2023 Neuromodulación Gdl  
-                                   
                                    | Design: <a href="http://www.tooplate.com" target="_parent">Tooplate</a></p>
                               </div>
                          </div>
                          <div class="col-md-5 col-sm-6">
-                              <!-- <div class="footer-link"> 
-                                   <a href="#">Laboratory Tests</a>
-                                   <a href="#">Departments</a>
-                                   <a href="#">Insurance Policy</a>
-                                   <a href="#">Careers</a>
-                              </div> -->
                          </div>
                          <div class="col-md-2 col-sm-2 text-align-center">
                               <div class="angle-up-btn"> 

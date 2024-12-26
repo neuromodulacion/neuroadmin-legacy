@@ -82,9 +82,32 @@ include($ruta.'header2.php');
                                     ?>	
                                         <tr>
                                             <td style='!color: black'><?php echo $encuesta_id; ?></td>
-                                            <td><?php echo $encuesta; ?></td>
+                                            <td><?php echo codificacionUTF($encuesta); ?></td>
                                             <td><?php echo $descripcion; ?></td>
-                                            <td><button class="btn btn-default" id="btn_<?php echo $encuesta_id; ?>" type="button">Calificación</button></td>
+                                            <td><button class="btn btn-default" id="btn_<?php echo $encuesta_id; ?>" type="button">Ver</button>
+                                            <script>
+                                                $('#btn_<?php echo $encuesta_id; ?>').click(function(){ 
+
+                                                    var encuesta_id = '<?php echo $encuesta_id; ?>';
+                                                    var accion = 'ver';
+                                                    var datastring = 'encuesta_id='+encuesta_id+'&accion='+accion;
+                                                    $('#modalcli').click();
+                                                    //alert(datastring);
+                                                    $.ajax({
+                                                        url: 'muestra_clinimetria.php',
+                                                        type: 'POST',
+                                                        data: datastring,
+                                                        cache: false,
+                                                        success:function(html){
+                                                            //alert('Se modifico correctemente');   
+                                                            $('#contenido').html(html); 
+                                                            //$('#load1').hide();
+                                                            //$('#muestra_asegurado').click();
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                            </td>
                                         </tr>
                                      <?php } ?>   
                                         
@@ -97,11 +120,27 @@ include($ruta.'header2.php');
                 	</div>
             	</div>
         	</div>
-              
+            <button id="modalcli" type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#clinimetriaModal">MODAL - LARGE SIZE</button>
+    <!-- Large Size -->
+    <div class="modal fade" id="clinimetriaModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="clinimetriaModalLabel">Clinimetria</h4>
+                </div>
+                <div id="contenido" class="modal-body">
+ 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CERRAR</button>
+                </div>
+            </div>
+        </div>
+    </div>               
 
         </div>
     </section>
-
+   
 <?php
 
 include($ruta.'footer1.php'); ?>

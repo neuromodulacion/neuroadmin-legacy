@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -8,21 +9,29 @@ extract($_SESSION);
 
 require '../vendor/autoload.php';
 include('../functions/funciones_mysql.php'); // Asegúrate de incluir el archivo donde está la función ejecutar()
+include('../functions/functions.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+extract($_SESSION);    
+extract($_POST);
 
 
 
 function exportToExcel() {
     // Crear la carpeta si no existe
-    
-extract($_POST);
-//print_r($_POST);    
-    
+   // Extraer las variables necesarias
+   global $_POST, $_SESSION; // Si quieres mantener el uso de globales explícito
+
+   // Variables de sesión y POST
+   $empresa_id = $_SESSION['empresa_id'] ?? null; // Extraer empresa_id de la sesión
+   $mes_sel = $_POST['mes_sel'] ?? date('m'); // Usar el mes actual si no está definido
+   $anio_sel = $_POST['anio_sel'] ?? date('Y'); // Usar el año actual si no está definido
+
+
     $dir = 'exports';
     if (!is_dir($dir)) {
         mkdir($dir, 0777, true);

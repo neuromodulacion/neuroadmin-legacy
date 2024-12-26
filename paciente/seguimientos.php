@@ -50,18 +50,7 @@ include($ruta.'header2.php');
 				                            <h2>
 				                                PACIENTES EN SEGUIMIENTO
 				                            </h2>
-				                            <!-- <ul class="header-dropdown m-r--5">
-				                                <li class="dropdown">
-				                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-				                                        <i class="material-icons">more_vert</i>
-				                                    </a>
-				                                    <ul class="dropdown-menu pull-right">
-				                                        <li><a href="javascript:void(0);">Action</a></li>
-				                                        <li><a href="javascript:void(0);">Another action</a></li>
-				                                        <li><a href="javascript:void(0);">Something else here</a></li>
-				                                    </ul>
-				                                </li>
-				                            </ul> -->
+
 				                        </div>
 				                        <div class="body">
 				                            <div class="table-responsive">
@@ -102,7 +91,7 @@ include($ruta.'header2.php');
 															INNER JOIN admin ON pacientes.usuario_id = admin.usuario_id
 															INNER JOIN estatus_paciente ON pacientes.estatus = estatus_paciente.estatus 
 														WHERE
-															pacientes.estatus list('Seguimiento','Confirmado')
+															pacientes.estatus IN('Seguimiento','Confirmado')
 															$where
 												        ";
 														//echo $sql_protocolo."<hr>";
@@ -117,6 +106,7 @@ include($ruta.'header2.php');
 																try {
 																	$date = new DateTime($f_captura);
 																	$today = $date->format('d-M-Y'); // Formato similar a '%d-%b-%Y'
+																	$today = format_fecha_esp_dmy($today);
 																} catch (Exception $e) {
 																	$today = "Fecha no válida";
 																	error_log("Error al procesar la fecha: " . $e->getMessage());

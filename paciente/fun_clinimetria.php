@@ -2,7 +2,7 @@
 
 $ruta="../";
 
-extract($_SESSION);
+//extract($_SESSION);
 //include($ruta.'functions/funciones_mysql.php');
 
 function tipo_elemento($tipo,$cnt_radio,$pregunta,$respuestas,$pregunta_id,$body,$protocolo_ter_id){

@@ -5,6 +5,7 @@
 
 // 1) Definir la ruta base para incluir archivos (ajusta según tu proyecto)
 $ruta = "../";
+$titulo = "Directorio";
 
 // 2) Incluir header1.php u otras inicializaciones
 include($ruta . 'header1.php');
@@ -43,11 +44,23 @@ if (!empty($selectedStatuses)) {
 // ------------------------------------------------
 // Variables comunes, fecha, etc.
 // ------------------------------------------------
-$hoy       = date("Y-m-d");
-$ahora     = date("H:i:00");
-$anio      = date("Y");
-$mes_ahora = date("m");
-$titulo    = "Directorio";
+
+if (in_array((string)$funcion_id, ['1', '5', '6', '8'], true)) {
+	$class = "js-exportable";	
+	$where = "AND pacientes.empresa_id = $empresa_id ";
+	$app ="min-width: 320px";
+}else{
+	$class = "";
+	
+	if (in_array((string)$funcion_id, ['4'], true)) {
+		$app ="min-width: 100px";
+		$where = "AND pacientes.empresa_id = $empresa_id AND pacientes.usuario_id = $usuario_id";
+	}else{
+		$app ="min-width: 100px";
+		$where = "AND pacientes.empresa_id = $empresa_id ";}
+}
+
+
 ?>
     <!-- Enlace al archivo CSS para los estilos de DataTables -->
     <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
@@ -81,7 +94,7 @@ include($ruta . 'header2.php');
             <div class="col-lg-12">
                 <div class="card">
                     <div class="header">
-                        <h2>Filtrar por Estatus</h2>
+                        <h3>Filtrar por Estatus</h3>
                     </div>
                     <div class="body">
                         <form method="POST" action="">
@@ -131,18 +144,18 @@ include($ruta . 'header2.php');
                         <h1 align="center">Directorio Pacientes</h1>
                         <div class="body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example">
+                                <table class="table table-bordered table-striped table-hover dataTable <?php echo $class; ?>">
                                     <thead>
                                         <tr>
                                             <th style="display: none"></th>
                                             <th>ID</th>
-                                            <th>Fecha</th>
-                                            <th>Nombre</th>
+                                            <th style="min-width: 60px;">Fecha</th>
+                                            <th style="min-width: 150px">Nombre</th>
                                             <th>TMS</th>
                                             <th>tDCS</th>
                                             <th>Celular</th>
                                             <th>Estatus</th>
-                                            <th>Acción</th>
+                                            <th style="min-width: 230px;">Acción</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -205,7 +218,7 @@ include($ruta . 'header2.php');
                                             pacientes
                                         INNER JOIN estatus_paciente ON pacientes.estatus = estatus_paciente.estatus
                                         INNER JOIN admin ON pacientes.usuario_id = admin.usuario_id
-                                        WHERE 1=1 
+                                        WHERE 1=1 and pacientes.empresa_id = $empresa_id
                                         $where
                                         ORDER BY f_captura DESC
                                     ";
@@ -230,6 +243,7 @@ include($ruta . 'header2.php');
                                         // Fecha
                                         $date  = new DateTime($f_captura);
                                         $today = $date->format('d-M-y');
+                                        $today = format_fecha_esp_dmy($today);
 
                                         // Lógica simple para mostrar un span (solo como ejemplo)
                                         $terapias = $total_TMS + $total_tDCS;

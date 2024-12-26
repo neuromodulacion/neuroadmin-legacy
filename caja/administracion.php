@@ -219,8 +219,9 @@ include($ruta . 'header2.php');
                                             // Si hay resultados, los muestra en la tabla
                                             if ($cnt_cob <> 0) {
                                                 while($row_cob = mysqli_fetch_array($result_cob)) {
-                                                    extract($row_cob);    
-                                                    $f_captura = strftime("%e-%b-%Y", strtotime($f_captura));
+                                                    extract($row_cob); 
+                                                    $f_captura = format_fecha_esp_dmy($f_captura);   
+                                                    
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $ticket; ?></td>
@@ -306,8 +307,8 @@ include($ruta . 'header2.php');
                                             // Si hay resultados, los muestra en la tabla ." / Bind-".$id_bind
                                             if ($cnt_cob <> 0) {
                                                 while($row_cob = mysqli_fetch_array($result_cob)) {
-                                                    extract($row_cob);    
-                                                    $f_captura = strftime("%e-%b-%Y", strtotime($f_captura));
+                                                    extract($row_cob);  
+                                                    $f_captura = format_fecha_esp_dmy($f_captura);   
                                                     ?>
                                                     <tr>
                                                         <td style="text-align: center"><?php echo $f_captura . " T " . $h_captura; ?></td> 
@@ -440,8 +441,8 @@ include($ruta . 'header2.php');
                                             // Si hay resultados, los muestra en la tabla
                                             if ($cnt_cob <> 0) {
                                                 while($row_cob = mysqli_fetch_array($result_cob)) {
-                                                    extract($row_cob);    
-                                                    $f_captura = strftime("%e-%b-%Y", strtotime($f_captura));
+                                                    extract($row_cob);  
+                                                    $f_captura = format_fecha_esp_dmy($f_captura);   
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $f_captura; ?></td> 
@@ -582,8 +583,8 @@ include($ruta . 'header2.php');
                                             // Si hay resultados, los muestra en la tabla
                                             if ($cnt_cob <> 0) {
                                                 while($row_cob = mysqli_fetch_array($result_cob)) {
-                                                    extract($row_cob);    
-                                                    $f_captura = strftime("%e-%b-%Y", strtotime($f_captura));
+                                                    extract($row_cob);  
+                                                    $f_captura = format_fecha_esp_dmy($f_captura);   
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $f_captura; ?></td> 

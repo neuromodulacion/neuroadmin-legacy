@@ -1,4 +1,4 @@
-<?php session_start();
+<?php 
 $ruta = "../";
 $titulo = "Movimientos";
 
@@ -7,9 +7,15 @@ $ahora = date("d-m-Y");
 
 include ($ruta . 'header1.php');
 
-if ($fechaInput == "") {
-	$fechaInput = $anio . "-" . $mes_ahora;
+// Verifica si "fechaInput" existe en el arreglo $_POST
+$fechaInput = $_POST['fechaInput'] ?? null;
+
+// Si no está definido, puedes asignar un valor predeterminado
+if (!$fechaInput) {
+    // Usar la fecha actual como predeterminado
+    $fechaInput = $anio . "-" . $mes_ahora;
 }
+
 
 function OptieneMesCorto($mes) {
 
@@ -169,8 +175,7 @@ $anio_sel = date('Y', strtotime($fechaInput));
 									    	while($row_cob = mysqli_fetch_array($result_cob)){
 									    	extract($row_cob);	
 												$date = date("d-m-Y", strtotime($fecha));
-												$datex = strftime("%A %d de %B %Y", strtotime($fecha));
-	
+												$datex = format_fecha_esp_dmy($fecha)
 								    		?>
 	                                    <div class="panel panel-col-<?php echo $body; ?>">
 	                                        <div class="panel-heading" role="tab" id="headingTwo_1">

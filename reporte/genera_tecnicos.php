@@ -26,6 +26,7 @@ $ruta = "../";
 // Incluye archivos PHP necesarios para la funcionalidad adicional
 include($ruta.'functions/funciones_mysql.php');
 include($ruta.'functions/conexion_mysqli.php');
+include($ruta.'functions/functions.php');
 
 // Incluir el archivo de configuración y obtener las credenciales
 $configPath = $ruta.'../config.php';
@@ -171,8 +172,9 @@ switch ($tipo_consulta) {
 
     case 'mensual':
         // Reporte mensual de un técnico específico
+        $mesLargo = mesLargo($mes_sel);
         ?>
-        <h1 style="text-align: center"><b><?php echo strftime('%B de %Y', strtotime($anio_sel.'-'.$mes_sel.'-01')); ?></b></h1>
+        <h1 style="text-align: center"><b><?php echo $mesLargo.' del '.$anio_sel; ?></b></h1>
         <h2>Médico: <?php echo $medico; ?></h2>
         <table class="table table-bordered">
             <tr>
@@ -232,8 +234,9 @@ switch ($tipo_consulta) {
 
     case 'total_mensual':
         // Reporte mensual total (para todos los técnicos)
+        $mesLargo = mesLargo($mes_sel);
         ?>
-        <h1 style="text-align: center"><b><?php echo strftime('%B de %Y', strtotime($anio_sel.'-'.$mes_sel.'-01')); ?></b></h1>
+        <h1 style="text-align: center"><b><?php echo $mesLargo.' del '.$anio_sel; ?></b></h1>
         <h2>Reporte Mensual General</h2>
         <table class="table table-bordered">
             <tr>

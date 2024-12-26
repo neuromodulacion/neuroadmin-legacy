@@ -29,23 +29,21 @@ extract($_POST);
 
 $titulo ="Reporte";
 
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
-$mes = strftime("%B");
-$dia = date("N");
-$semana = date("W");
-
-
-if ($fechaInput =="") {
-	$fechaInput = $anio."-".$mes_ahora;
-	$mes_sel = $mes_ahora;
-	$anio_sel = $anio;
-}else{
-	$mes_sel = date('m', strtotime($fechaInput));
-	$anio_sel = date('Y', strtotime($fechaInput));	
+if (empty($fechaInput)) {
+    // Si no hay fecha ingresada, usar el mes y año actuales
+    $mes_ahora = date('m');
+    $anio = date('Y');
+    $fechaInput = $anio . "-" . $mes_ahora; // Formato "YYYY-MM"
+} else {
+    // Si se recibió una fecha, calcular el mes y año seleccionados
+    $mes_sel = date('m', strtotime($fechaInput));
+    $anio_sel = date('Y', strtotime($fechaInput));
 }
+
+// Si $mes_sel y $anio_sel no están definidos, inicializarlos
+$mes_sel = $mes_sel ?? $mes_ahora;
+$anio_sel = $anio_sel ?? $anio;
+
 
 include($ruta.'header1.php');
 ?>
@@ -86,7 +84,7 @@ include($ruta.'header2.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>REPORTE DE TÉCNICOS</h2>
-				<?php echo $ubicacion_url;?>
+				<?php echo $ubicacion_url; //print_r($_POST);?>
             </div>
 <!-- // ************** Contenido ************** // -->
             <!-- CKEditor -->
@@ -96,16 +94,10 @@ include($ruta.'header2.php');
                         <div style="height: 95%"  class="header">
                         	<h1 align="center">Reporte de Técnicos</h1>
                         	<hr>
-                        	<?php 
-                        		// print_r($_POST);
-								// echo $mes_sel."<br>";
-								// echo $anio_sel."<br>";
-                        	?>
                         	<div align="right">
                         		<form action="tecnicos.php" method="post">
                         			<?php // echo $fechaInput; ?>
                         			<input id="fechaInput" name="fechaInput" style="width: 180px" align="center" type="month" class="form-control" value="<?php echo $fechaInput; ?>"/>
-                        			<input id="us" name="us" align="center" type="hidden" class="form-control" value="<?php echo $us; ?>"/>
                         		</form> 	
                         		<script>
 									$(document).ready(function() {
@@ -223,7 +215,7 @@ include($ruta.'header2.php');
 							                	var tipo_consulta = 'diaria';
 												var medico = '".$nombre."'
 							                    var datastring = 'fecha='+fecha+'&tipo_consulta='+tipo_consulta+'&usuario_idx='+usuario_idx+'&medico='+medico;
-							                    alert(datastring);
+							                    //alert(datastring);
 												$('#contenido_modal').html('');
 							                    $.ajax({
 							                        url: 'genera_tecnicos.php',
@@ -231,7 +223,7 @@ include($ruta.'header2.php');
 							                        data: datastring,
 							                        cache: false,
 							                        success:function(html){   
-							                        	alert(html);  
+							                        	//alert(html);  
 							                            $('#contenido_modal').html(html);
 							                            $('#modal_grafica').click(); 
 							                            

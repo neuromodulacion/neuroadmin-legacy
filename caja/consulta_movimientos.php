@@ -1,5 +1,6 @@
 <?php
 include('../functions/funciones_mysql.php');
+include('../functions/functions.php');
 session_start();
 
 // Establecer el nivel de notificación de errores
@@ -732,7 +733,8 @@ switch ($tipo_consulta) {
 		    		while($row_cob = mysqli_fetch_array($result_cob)){
 				    	extract($row_cob);	
 				    	//$f_captura = date("d-m-Y",strtotime($f_captura));
-						$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
+						$f_captura = format_fecha_esp_dmy($f_captura);
+						//$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
 						$importet = $importet+$importe;
 				    	?>
 			  			<tr>
@@ -933,7 +935,8 @@ switch ($tipo_consulta) {
 			    											    	
 			    	while($row_cob = mysqli_fetch_array($result_cob)){
 			    	extract($row_cob);	
-			    	$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
+					$f_captura = format_fecha_esp_dmy($f_captura);
+			    	//$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
 			    	?>
 			  			<tr>
 			  				<td><?php echo $f_captura; ?></td>
