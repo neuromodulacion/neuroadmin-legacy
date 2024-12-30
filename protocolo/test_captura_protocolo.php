@@ -400,9 +400,6 @@ function esMultiploDe10o15($numero) {
 				$pregunta .= "</select><hr>";
 				echo $pregunta;
 ?>	
-
-
-
 		<input name="protocolo_ter_id" type="hidden" id="protocolo_ter_id" value="<?php echo $protocolo_ter_id; ?>" />
 		<input name="terapia_id" type="hidden" id="terapia_id" value="<?php echo $terapia_id; ?>" />
 		<input name="paciente_id" type="hidden" id="paciente_id" value="<?php echo $paciente_id; ?>" /> 	
@@ -547,11 +544,7 @@ function esMultiploDe10o15($numero) {
         <h3>Cargando...</h3>			                        	
     </div> 	
 	<div id="div_encuesta" ></div>		
-		<?php	
-	
-}
-
-?>
+		<?php } ?>
 		<hr>
   		<div style="display: none" id="continuar" class="row clearfix demo-button-sizes">
 	    	<div id="boton_cnt" class="col-xs-6 col-sm-3 col-md-2 col-lg-2">

@@ -153,7 +153,7 @@ include($ruta.'paciente/fun_paciente.php');
 					pacientes.empresa_id = 1
 					AND terapia = 'TMS'		  			
 	  			";
-				//echo $sql_cobro."<br>";
+				// echo $sql_cobro."<br>";
 				$cnt_g = 1;
 	  			$result_cob=ejecutar($sql_cobro);
 		    	while($row_cob = mysqli_fetch_array($result_cob)){
@@ -197,7 +197,7 @@ include($ruta.'paciente/fun_paciente.php');
 							historico_sesion.f_captura ASC
 						LIMIT 3					  			
 			  			";
-						//echo $sql_PHQ9."<br>";
+						echo $sql_PHQ9."<br>";
 						$cnt_PHQ9 = 1;
 			  			$result_PHQ9=ejecutar($sql_PHQ9);
 				    	while($row_PHQ9 = mysqli_fetch_array($result_PHQ9)){				    	

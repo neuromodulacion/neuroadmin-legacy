@@ -1,21 +1,6 @@
 <?php
 // Definir la ruta base para incluir archivos
 $ruta="../";
-// Título de la página
-$title = 'INICIO';
-
-// Extraer todas las variables de la sesión para usarlas directamente
-extract($_SESSION);
-
-// Obtener la fecha actual en formato "YYYY-MM-DD"
-$hoy = date("Y-m-d");
-// Obtener la hora actual en formato "HH:MM:00"
-$ahora = date("H:i:00");
-// Obtener el año actual
-$anio = date("Y");
-// Obtener el mes actual en formato numérico "MM"
-$mes_ahora = date("m");
-// Definir el título de la página actual
 $titulo = "Cartas"; 
 
 // Incluir la primera parte del header que contiene configuraciones iniciales
@@ -37,6 +22,7 @@ include($ruta.'header2.php');
         <div class="block-header">
             <!-- Título de la página -->
             <h2>PACIENTES</h2>
+            <?php echo $ubicacion_url; ?>
             <!-- Depuración opcional para imprimir los datos de la sesión -->
             <?php //print_r($_SESSION); ?>
         </div>

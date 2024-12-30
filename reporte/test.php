@@ -24,454 +24,1156 @@ $_SESSION['time'] = time();
 $ruta = "../";
 
 
-$titulo ="Reporte";
+extract($_SESSION);
+extract($_POST);
+extract($_GET);
+//print_r($_SESSION);
 
 $hoy = date("Y-m-d");
 $ahora = date("H:i:00"); 
 $anio = date("Y");
 $mes_ahora = date("m");
-$mes = strftime("%B");
+$mes = date("m");
 $dia = date("N");
 $semana = date("W");
+$titulo ="ANALISIS";
 
 
-if ($fechaInput =="") {
-	$fechaInput = $anio."-".$mes_ahora;
-	$mes_sel = $mes_ahora;
-	$anio_sel = $anio;
-}else{
-	$mes_sel = date('m', strtotime($fechaInput));
-	$anio_sel = date('Y', strtotime($fechaInput));	
-}
 
-include($ruta.'header1.php');
+
+include($ruta.'functions/funciones_mysql.php');
+include($ruta.'functions/fotografia.php');
+//include($ruta.'uso.php');
+include($ruta.'paciente/calendario.php');
+
+include($ruta.'paciente/fun_paciente.php');
+//uso($usuario_id);
+//'..'.
 ?>
-    <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <html lang="es">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title><?php echo $titulo; ?></title>
     
-     <!-- Bootstrap Material Datetime Picker Css -->
-    <link href="<?php echo $ruta; ?>plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>   
+    <!-- <script src="<?php echo $ruta; ?>js/jquery-3.3.1.min.js"></script>  -->    
+    <!-- Favicon-->
+    <link rel="icon" href="<?php echo $ruta.$icono; ?>" type="image/x-icon">
 
-    <!-- Bootstrap DatePicker Css -->
-    <link href="<?php echo $ruta; ?>plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
-    <!-- Wait Me Css -->
-    <link href="<?php echo $ruta; ?>plugins/waitme/waitMe.css" rel="stylesheet" />
+    <!-- Bootstrap Core Css -->
+    <link href="<?php echo $ruta; ?>plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
-    <!-- Bootstrap  Css -->
-    <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />   
+    <!-- Waves Effect Css -->
+    <link href="<?php echo $ruta; ?>plugins/node-waves/waves.css" rel="stylesheet" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+    <!-- Animation Css -->
+    <link href="<?php echo $ruta; ?>plugins/animate-css/animate.css" rel="stylesheet" />
+<!-- *************Tronco comun ******************** -->  
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
-	<script src="../morris.js-master/morris.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
-	<script src="../morris.js-master/examples/lib/example.js"></script>
-	<!--<script src="../morris.js-master/lib/example.js"></script>
-	<link rel="stylesheet" href="../morris.js-master/examples/lib/example.css">-->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
-	<link rel="stylesheet" href="../morris.js-master/morris.css">
-	
-<?php
-include($ruta.'header2.php'); 
-//print_r($_SESSION);
-?>
 
-    <section class="content">
-        <div class="container-fluid">
-            <div class="block-header">
-                <h2>REPORTE DE TÉCNICOS</h2>
+<!-- *************Tronco comun ******************** --> 
+    <!-- Custom Css -->
+    <link href="<?php echo $ruta; ?>css/style.css" rel="stylesheet">
 
-            </div>
-<!-- // ************** Contenido ************** // -->
-            <!-- CKEditor -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div style="height: 95%"  class="header">
-                        	<h1 align="center">Reporte de Técnicos</h1>
-                        	<hr>
-                        	<?php 
-                        		// print_r($_POST);
-								// echo $mes_sel."<br>";
-								// echo $anio_sel."<br>";
-                        	?>
-                        	<div align="right">
-                        		<form action="test.php" method="post">
-                        			<?php // echo $fechaInput; ?>
-                        			<input id="fechaInput" name="fechaInput" style="width: 180px" align="center" type="month" class="form-control" value="<?php echo $fechaInput; ?>"/>
-                        			<input id="us" name="us" align="center" type="hidden" class="form-control" value="<?php echo $us; ?>"/>
-                        		</form> 	
-                        		<script>
-									$(document).ready(function() {
-										// Evento que detecta cambio en el valor del input de fecha
-										$('#fechaInput').change(function() {
-											// Envía el formulario en el que se encuentra este input
-											$(this).closest('form').submit();
-										});
-									});
-                        		</script>                        		                        		
-                        	</div>
-                        	<hr>                        	
+    <!-- AdminTMS Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="<?php echo $ruta; ?>css/themes/all-themes.css" rel="stylesheet" />
 
-							                        
-								<?php     
-								$td_id = 1;                    	
-								$sql ="
-								SELECT
-									fechas.id,
-									fechas.fecha,
-									fechas.semana,
-									fechas.dia 
-								FROM
-									fechas 
-								WHERE
-									MONTH ( fechas.fecha ) = $mes_sel
-									AND YEAR ( fechas.fecha ) = $anio_sel 
-									AND fechas.fecha <= '$hoy'";
-								//echo $sql."<hr>";
-											
-						        $result_sem=ejecutar($sql); 
 
-								
-								$tr = "<tr>";
-								$th = "<th ><p style='width: 250px'>Nombre</p></th>";
-								$td = "<tr>";
-								$table = "<div class='table-responsive'>
-								<table style='width: 100%; font-size: 12px' class='table table-bordered js-exportable'>";
-								//echo $cnt." xx<hr>";
-									
-								$cnt1 = 1;
-								$sql1 = "
-									SELECT
-										admin.usuario_id as usuario_idx,
-										admin.nombre,";
-								$cnt = mysqli_num_rows($result_sem);
-								//echo $cnt." conteo inicial<br>";		
-							    while($row_sem = mysqli_fetch_array($result_sem)){
-							        extract($row_sem);	
-									//echo $cnt1." cnt1<br>";
-									//print_r($row_sem);
-									$fechax = $fecha;							
-							        $fecha_cnt = date("j",strtotime($fecha));
-							        $th .= "<th style='background: #FFF; text-align: center'>$fecha_cnt</th>";
-									
-									if ($cnt == $cnt1) {
-										$sql1 .= "
-										(SELECT
-												COUNT(*) AS cnt  
-											FROM
-												historico_sesion 
-												INNER JOIN admin as admin$fecha_cnt ON historico_sesion.usuario_id = admin$fecha_cnt.usuario_id
-											WHERE 
-												historico_sesion.f_captura = '$fechax' AND admin$fecha_cnt.usuario_id = admin.usuario_id
-											) as fecha$fecha_cnt ";										
-									} else {
-										$sql1 .= "
-										(SELECT
-												COUNT(*) AS cnt  
-											FROM 
-												historico_sesion 
-												INNER JOIN admin as admin$fecha_cnt ON historico_sesion.usuario_id = admin$fecha_cnt.usuario_id
-											WHERE 
-												historico_sesion.f_captura = '$fechax' AND admin$fecha_cnt.usuario_id = admin.usuario_id
-											) as fecha$fecha_cnt,";										
-									}
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 
-									$cnt1++;								
-							        
-								}
-									$sql1 .=" FROM
-										admin 
-										WHERE 
-											admin.funcion in('TECNICO')
-											AND admin.estatus = 'Activo'
-											AND admin.empresa_id = $empresa_id
-											";
-								//echo $sql1."<hr><br>";
-									$result_sem1=ejecutar($sql1); 
-							    while($row_sem1 = mysqli_fetch_array($result_sem1)){
-							        extract($row_sem1);	
-							        //print_r($row_sem1);
+		   
+</head>
 
-							        $td .= "<tr><td>$nombre</td>";
-							        for ($i=1; $i < $cnt1 ; $i++) {
-							        		
-							        	
-							        	$fechay = "fecha".$i;	
-							        	if ($$fechay <> 0) {
-											$class =" style='background: #D1F2EB'";
-											$class_tx = "success";
-										} else {
-											$class =" style='background: #FFF'";
-											$class_tx = "default";
-										}
-										 
-										//$td .= "<td $class>".$$fechay."xx</td>";
+<body style="background-color: #fff" >
+<script src="../highcharts/js/highcharts.js"></script>
+<script src="../highcharts/js/highcharts-more.js"></script>
+<script src="../highcharts/js/modules/exporting.js"></script>
 
-										$script_tx = "
-		                        		<script>
-											$('#boton_tdx_".$td_id."').click(function() {
-												
-							                	var fecha = '".$anio_sel."-".$mes_sel."-".$i."';
-												var usuario_idx = '".$usuario_idx."'
-							                	var tipo_consulta = 'diaria';
-												var medico = '".$nombre."'
-							                    var datastring = 'fecha='+fecha+'&tipo_consulta='+tipo_consulta+'&usuario_idx='+usuario_idx+'&medico='+medico;
-							                    //alert(datastring);
-												$('#contenido_modal').html('');
-							                    $.ajax({
-							                        url: 'genera_tecnicos.php',
-							                        type: 'POST',
-							                        data: datastring,
-							                        cache: false,
-							                        success:function(html){   
-							                        	//alert(html);  
-							                            $('#contenido_modal').html(html);
-							                            $('#modal_grafica').click(); 
-							                            
-							                        }
-							                	});																				
-											});
-		                        		</script> 								
-										";								
-										$td .= "<td><button id='boton_tdx_".$td_id."' type='button' class='btn btn-".$class_tx." waves-effect'>".$$fechay."</button>".$script_tx."</td>";										
-										$td_id++;	
+
+	<h1 align="center">Analisis</h1>
+	<hr>
+	<div class="row">
+		<div align="center" class="col-md-12">
+			<h1>PHQ9 y GAD7</h1>
+	  		<table style="width: 80%; font-size: 12px" class="table table-bordered">								  			
+	  			<tr>
+	  				<th colspan="5"  style="text-align: center" >DATOS</th>
+	  				
+	  				<th colspan="3" style="text-align: center" >PHQ9</th>
+	  				
+	  				<th colspan="3" style="text-align: center" >GAD7</th>	
+	  				
+	  				<th style="text-align: center" >Protocolos</th>  					  				
+	  			</tr>
+	  			<tr>
+	  				<th style="text-align: center" >Cnt</th>
+	  				<th style="text-align: center" ># Id</th>
+	  				<th style="text-align: center" >Sexo</th>
+	  				<th style="text-align: center" >Edad</th>
+	  				<th style="text-align: center" >Diagnostico</th>
+	  				
+	  				<th style="text-align: center" >BASAL</th>
+	  				<th style="text-align: center" >INTER</th>
+	  				<th style="text-align: center" >FINAL</th>
+	  				
+	  				<th style="text-align: center" >BASAL</th>
+	  				<th style="text-align: center" >INTER</th>
+	  				<th style="text-align: center" >FINAL</th>	
+	  				
+	  				<th style="text-align: center" >Protocolos</th>  					  				
+	  			</tr>
+	  			<?php
+	  			
+				$delete = "DELETE FROM analisis_phq9_gad7";
+				$result = ejecutar($delete);	  			
+	  			
+	  			$sql_cobro = "
+				SELECT DISTINCT
+					pacientes.paciente_id,
+					pacientes.f_nacimiento,
+					pacientes.sexo,
+					pacientes.diagnostico,
+					( SELECT COUNT(*) AS total FROM base_encuesta_1 WHERE base_encuesta_1.paciente_id = pacientes.paciente_id ) AS phq,
+					( SELECT COUNT(*) AS total FROM base_encuesta_2 WHERE base_encuesta_2.paciente_id = pacientes.paciente_id ) AS gad,
+					protocolo_terapia.terapia 
+				FROM
+					pacientes
+					INNER JOIN historico_sesion ON pacientes.paciente_id = historico_sesion.paciente_id
+					INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+				WHERE
+					pacientes.empresa_id = 1
+					AND terapia = 'TMS'		  			
+	  			";
+				// echo $sql_cobro."<br>";
+				$cnt_g = 1;
+	  			$result_cob=ejecutar($sql_cobro);
+		    	while($row_cob = mysqli_fetch_array($result_cob)){
+			    	extract($row_cob);	
+					$edad = obtener_edad_segun_fecha($f_nacimiento);
+					
+					//echo $phq."<hr>";
+					
+					if ($phq >= 3 && $gad >= 3) {
+						
+
+					$sql_PHQ9 = "
+						SELECT DISTINCT
+							historico_sesion.f_captura,
+							historico_sesion.sesion, 
+							base_encuesta_1.total, 
+							protocolo_terapia.terapia
+						FROM
+							pacientes
+							INNER JOIN
+							base_encuesta_1 ON pacientes.paciente_id = base_encuesta_1.paciente_id INNER JOIN historico_sesion
+							ON 
+								base_encuesta_1.paciente_id = historico_sesion.paciente_id AND
+								base_encuesta_1.f_captura = historico_sesion.f_captura AND
+								base_encuesta_1.h_captura = historico_sesion.h_captura
+							INNER JOIN
+							protocolo_terapia
+							ON 
+								historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id
+						WHERE
+							base_encuesta_1.respuesta_3 <> ''
+							AND historico_sesion.paciente_id = $paciente_id
+						ORDER BY
+							historico_sesion.f_captura ASC
+						LIMIT 3					  			
+			  			";
+						//echo $sql_PHQ9."<br>";
+						$cnt_PHQ9 = 1;
+			  			$result_PHQ9=ejecutar($sql_PHQ9);
+				    	while($row_PHQ9 = mysqli_fetch_array($result_PHQ9)){				    	
+					    	extract($row_PHQ9);					    	
+					    	if ($cnt_PHQ9 == 1) {
+								$basal_phq = $total;
+							} 
+					    	if ($cnt_PHQ9 == 2) {
+								$inter_phq = $total;
+							}							
+					    	if ($cnt_PHQ9 == 3) {
+								$final_phq = $total;
+							}					    	
+
+					    	$cnt_PHQ9++;					    	
+				    	}
+
+						// <tr>
+							// <td>Protocolo</td>
+							// <td>Cantidad</td>
+						// </tr>				    	
+				    						
+					$tabla ="
+					<table class='table table-bordered'>
+					
+					";
 										
-										//$con_graf ='';
-									}
-									$td .= "</tr>";
-									
-									//$resultado .= '{"y": "'.$nombre.'", "PHQ9": '.$PHQ9.', "GAD7": '.$GAD7.'},';
-							    }    										
-							$table .= "<tr>".$th.$td."</tr>";
-							
-							$table .= "<tr><th>Total</th>";
-							
-							$sql_tot = "
-								SELECT
-									fechas.id,
-									fechas.fecha,
-									(SELECT
-										COUNT(*) AS cnt 
-									FROM
-										historico_sesion
-									WHERE
-										historico_sesion.f_captura = fechas.fecha
-									) AS total
-								FROM
-									fechas
-								WHERE
-									MONTH(fechas.fecha) = $mes_sel
-									AND YEAR(fechas.fecha) = $anio_sel
-									AND fechas.fecha <= '$hoy'";
-								$result_tot = ejecutar($sql_tot); 
+					$sql_terapia ="
+					SELECT
+						historico_sesion.paciente_id,
+						protocolo_terapia.prot_terapia,
+						COUNT(*) as cnt
+					FROM
+						historico_sesion
+						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+					WHERE
+						historico_sesion.paciente_id = $paciente_id 
+						AND historico_sesion.f_captura <= '$f_captura' 
+					GROUP BY
+						1,2					
+					";
+			  			$result_terapia=ejecutar($sql_terapia);
+				    	while($row_terapia = mysqli_fetch_array($result_terapia)){				    	
+					    	extract($row_terapia);	
 
-						    while($row_tot = mysqli_fetch_array($result_tot)){
-						        extract($row_tot);	
-								if ($total >= 1) {
-									$class_t = "info";
-								} else {
-									$class_t = "default";
-								}
-								$script_t = "
-                        		<script>
-									$('#boton_".$id."').click(function() {
+						$tabla .="
+							<tr>
+								<td>$prot_terapia</td>
+								<td>$cnt</td>
+							</tr>					
+						";							
+
+							
+						}	
+						
+					$tabla .="
+					</table>					
+					";										
+							
+					//echo $tabla."<hr>";		
+							
+					$sql_GAD7 = "
+					SELECT DISTINCT
+						historico_sesion.f_captura,
+						historico_sesion.sesion, 
+						base_encuesta_2.total AS total_g,
+						protocolo_terapia.terapia 
+					FROM
+						pacientes
+						INNER JOIN base_encuesta_2 ON pacientes.paciente_id = base_encuesta_2.paciente_id
+						INNER JOIN historico_sesion ON base_encuesta_2.paciente_id = historico_sesion.paciente_id 
+							AND base_encuesta_2.f_captura = historico_sesion.f_captura 
+							AND base_encuesta_2.h_captura = historico_sesion.h_captura
+						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+					WHERE
+						base_encuesta_2.respuesta_14 <> '' 
+						AND base_encuesta_2.paciente_id = $paciente_id
+					ORDER BY
+						pacientes.paciente_id ASC,
+						base_encuesta_2.f_captura ASC
+						LIMIT 3				  			
+			  			";
+						//echo $sql_GAD7."<br>";
+						$final_gad = 0;
+						$cnt_GAD7 = 1;
+			  			$result_GAD7=ejecutar($sql_GAD7);
+				    	while($row_GAD7 = mysqli_fetch_array($result_GAD7)){				    	
+					    	extract($row_GAD7);					    	
+					    	if ($cnt_GAD7 == 1) {
+								$basal_gad = $total_g;
+							} 
+					    	if ($cnt_GAD7 == 2) {
+								$inter_gad = $total_g;
+							}							
+					    	if ($cnt_GAD7 == 3) {
+								$final_gad = $total_g;
+							}					    	
+
+					    	$cnt_GAD7++;					    	
+				    	}					
+				
+
+				
+				$insert ="
+				INSERT INTO analisis_phq9_gad7 (
+					analisis_phq9_gad7.paciente_id,
+					analisis_phq9_gad7.sexo,
+					analisis_phq9_gad7.edad,
+					analisis_phq9_gad7.basal_phq9,
+					analisis_phq9_gad7.inter_phq9,
+					analisis_phq9_gad7.final_phq9,
+					analisis_phq9_gad7.basal_gad7,
+					analisis_phq9_gad7.inter_gad7,
+					analisis_phq9_gad7.final_gad7 
+				)
+				VALUES
+					(
+					$paciente_id,
+					'$sexo',
+					$edad,
+					$basal_phq,
+					$inter_phq,
+					$final_phq,
+					$basal_gad,
+					$inter_gad,
+					$final_gad
+					)							
+				";	
+				//echo $insert."<hr>";				
+				$result = ejecutar_id($insert);	
+	  			?>
+	  			<tr>
+	  				<td style="text-align: center"><?php echo $cnt_g ; ?></td>
+	  				<td style="text-align: center"><?php echo $paciente_id ; ?></td>
+	  				<td style="text-align: center"><?php echo $sexo; ?></td>
+	  				<td style="text-align: center"><?php echo $edad; ?></td>
+	  				<td style="text-align: center"><?php echo $diagnostico; ?></td>
+	  				
+	  				<td style="text-align: center"><?php echo $basal_phq; ?></td>
+	  				<td style="text-align: center"><?php echo $inter_phq; ?></td>
+	  				<td style="text-align: center"><?php echo $final_phq; ?></td>
+	  				
+	  				<td style="text-align: center"><?php echo $basal_gad; ?></td>
+	  				<td style="text-align: center"><?php echo $inter_gad; ?></td>
+	  				<td style="text-align: center"><?php echo $final_gad; ?></td>
+	  				
+	  				<td style="text-align: center"><?php echo $tabla; ?></td>
+	  			</tr>
+	  			<?php 
+					    	$basal_gad = '';
+					    	$inter_gad = '';
+					    	$final_gad = '';
+					$cnt_g++;		
+					}
 										
-					                	var fecha = '".$fecha."';
-					                	var tipo_consulta = 'total'
-					                    var datastring = 'fecha='+fecha+'&tipo_consulta='+tipo_consulta;
-										$('#contenido_modal').html('');
-					                    $.ajax({
-					                        url: 'genera_tecnicos.php',
-					                        type: 'POST',
-					                        data: datastring,
-					                        cache: false,
-					                        success:function(html){   
-					                        	//alert(html);  
-					                            $('#contenido_modal').html(html);
-					                            $('#modal_grafica').click(); 
-					                            
-					                        }
-					                	});																				
-									});
-                        		</script> 								
-								";								
-								$table .= "<th><button id='boton_".$id."' type='button' class='btn btn-".$class_t." waves-effect'>".$total."</button>".$script_t."</th>";
+				} ?>
 
+  			</table>	
+
+  		<?php
+  		
+  		$sql ="SET @rowindex := -1";
+  		$result = ejecutar($sql);
 		
-															
-								//$table .= "<th>".$total."</th>";
-							}
+  		$sql ="
+		SELECT
+			MAX( basal_phq9 ) AS Maximo_basal_phq9,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( basal_phq9 ORDER BY basal_phq9 SEPARATOR ',' ), ',', 75 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Superior_basal_phq9,
+			(SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( basal_phq9 ORDER BY basal_phq9 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*) + 1 ), ',', - 1 ) + 
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( basal_phq9 ORDER BY basal_phq9 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*)), ',', - 1 )) / 2 AS Mediana_basal_phq9,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( basal_phq9 ORDER BY basal_phq9 SEPARATOR ',' ), ',', 25 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Inferior_basal_phq9,
+			MIN( basal_phq9 ) AS Minimo_basal_phq9 
+		FROM
+			analisis_phq9_gad7
+  		";
+		// echo $sql."<hr>";
+  		$result = ejecutar($sql);		
+  		$row_basal_phq9 = mysqli_fetch_array($result);
+		extract($row_basal_phq9);
+		// print_r($row_basal_phq9);
+
+  		$sql ="
+		SELECT
+			MAX( inter_phq9 ) AS Maximo_inter_phq9,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( inter_phq9 ORDER BY inter_phq9 SEPARATOR ',' ), ',', 75 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Superior_inter_phq9,
+			(SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( inter_phq9 ORDER BY inter_phq9 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*) + 1 ), ',', - 1 ) + 
+             SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( inter_phq9 ORDER BY inter_phq9 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*)), ',', - 1 )) / 2 AS Mediana_inter_phq9,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( inter_phq9 ORDER BY inter_phq9 SEPARATOR ',' ), ',', 25 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Inferior_inter_phq9,
+			MIN( inter_phq9 ) AS Minimo_inter_phq9 
+		FROM
+			analisis_phq9_gad7
+  		";
+  		// echo $sql."<hr>";
+  		$result = ejecutar($sql);		
+  		$row_basal_phq9 = mysqli_fetch_array($result);
+		extract($row_basal_phq9);
+		// print_r($row_basal_phq9);		
+
+  		$sql ="
+		SELECT
+			MAX( final_phq9 ) AS Maximo_final_phq9,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( final_phq9 ORDER BY final_phq9 SEPARATOR ',' ), ',', 75 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Superior_final_phq9,
+			(SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( final_phq9 ORDER BY final_phq9 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*) + 1 ), ',', - 1 ) + 
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( final_phq9 ORDER BY final_phq9 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*)), ',', - 1 )) / 2 AS Mediana_final_phq9,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( final_phq9 ORDER BY final_phq9 SEPARATOR ',' ), ',', 25 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Inferior_final_phq9,
+			MIN( final_phq9 ) AS Minimo_final_phq9 
+		FROM
+			analisis_phq9_gad7
+  		";
+  		// echo $sql."<hr>";
+  		$result = ejecutar($sql);		
+  		$row_basal_phq9 = mysqli_fetch_array($result);
+		extract($row_basal_phq9);
+		// print_r($row_basal_phq9);	
+		
+		/***************************************************************************************************************************************/
+		
+  		$sql ="
+		SELECT
+			MAX( basal_gad7 ) AS Maximo_basal_gad7,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( basal_gad7 ORDER BY basal_gad7 SEPARATOR ',' ), ',', 75 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Superior_basal_gad7,
+			(SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( basal_gad7 ORDER BY basal_gad7 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*) + 1 ), ',', - 1 ) + 
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( basal_gad7 ORDER BY basal_gad7 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*)), ',', - 1 )) / 2 AS Mediana_basal_gad7,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( basal_gad7 ORDER BY basal_gad7 SEPARATOR ',' ), ',', 25 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Inferior_basal_gad7,
+			MIN( basal_gad7 ) AS Minimo_basal_gad7 
+		FROM
+			analisis_phq9_gad7
+  		";
+		// echo $sql."<hr>";
+  		$result = ejecutar($sql);		
+  		$row_basal_gad7 = mysqli_fetch_array($result);
+		extract($row_basal_gad7);
+		// print_r($row_basal_gad7);
+
+  		$sql ="
+		SELECT
+			MAX( inter_gad7 ) AS Maximo_inter_gad7,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( inter_gad7 ORDER BY inter_gad7 SEPARATOR ',' ), ',', 75 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Superior_inter_gad7,
+			(SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( inter_gad7 ORDER BY inter_gad7 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*) + 1 ), ',', - 1 ) + 
+            SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( inter_gad7 ORDER BY inter_gad7 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*)), ',', - 1 )) / 2 AS Mediana_inter_gad7,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( inter_gad7 ORDER BY inter_gad7 SEPARATOR ',' ), ',', 25 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Inferior_inter_gad7,
+			MIN( inter_gad7 ) AS Minimo_inter_gad7 
+		FROM
+			analisis_phq9_gad7
+  		";
+  		// echo $sql."<hr>";
+  		$result = ejecutar($sql);		
+  		$row_basal_gad7 = mysqli_fetch_array($result);
+		extract($row_basal_gad7);
+		// print_r($row_basal_gad7);		
+
+  		$sql ="
+		SELECT
+			MAX( final_gad7 ) AS Maximo_final_gad7,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( final_gad7 ORDER BY final_gad7 SEPARATOR ',' ), ',', 75 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Superior_final_gad7,
+			(SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( final_gad7 ORDER BY final_gad7 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*) + 1 ), ',', - 1 ) + 
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( final_gad7 ORDER BY final_gad7 SEPARATOR ',' ), ',', 50 / 100 * COUNT(*)), ',', - 1 )) / 2 AS Mediana_final_gad7,
+			SUBSTRING_INDEX( SUBSTRING_INDEX( GROUP_CONCAT( final_gad7 ORDER BY final_gad7 SEPARATOR ',' ), ',', 25 / 100 * COUNT(*)), ',', - 1 ) AS Cuartil_Inferior_final_gad7,
+			MIN( final_gad7 ) AS Minimo_final_gad7 
+		FROM
+			analisis_phq9_gad7
+  		";
+  		// echo $sql."<hr>";
+  		$result = ejecutar($sql);		
+  		$row_basal_gad7 = mysqli_fetch_array($result);
+		extract($row_basal_gad7);
+		// print_r($row_basal_gad7);			
+					
+  		?>	
+				<h1>General</h1>
+				<table style="width: 50%; font-size: 12px" class="table table-bordered">
+					<tr>
+						<th></th>
+						<th>Basal PHQ9</th>	
+						<th>Intermedia PHQ9</th>
+						<th>Final PHQ9</th>	
+						
+						<th>Basal GAD7</th>	
+						<th>Intermedia GAD7</th>
+						<th>Final GAD7</th>											
+					</tr>
+					<tr>
+						<td>Maxima</td>
+						<td><?php echo $Maximo_basal_phq9; ?></td>
+						<td><?php echo $Maximo_inter_phq9; ?></td>
+						<td><?php echo $Maximo_final_phq9; ?></td>
+						
+						<td><?php echo $Maximo_basal_gad7; ?></td>
+						<td><?php echo $Maximo_inter_gad7; ?></td>
+						<td><?php echo $Maximo_final_gad7; ?></td>
+					</tr>
+					<tr>
+						<td>Cuartil Superior</td>
+						<td><?php echo $Cuartil_Superior_basal_phq9; ?></td>
+						<td><?php echo $Cuartil_Superior_inter_phq9; ?></td>
+						<td><?php echo $Cuartil_Superior_final_phq9; ?></td>
+						
+						<td><?php echo $Cuartil_Superior_basal_gad7; ?></td>
+						<td><?php echo $Cuartil_Superior_inter_gad7; ?></td>
+						<td><?php echo $Cuartil_Superior_final_gad7; ?></td>						
+					</tr>	
+					<tr>
+						<td>Mediana</td>
+						<td><?php echo $Mediana_basal_phq9; ?></td>
+						<td><?php echo $Mediana_inter_phq9; ?></td>
+						<td><?php echo $Mediana_final_phq9; ?></td>
+						
+						<td><?php echo $Mediana_basal_gad7; ?></td>
+						<td><?php echo $Mediana_inter_gad7; ?></td>
+						<td><?php echo $Mediana_final_gad7; ?></td>						
+					</tr>	
+					<tr>
+						<td>Cuartil Inferior</td>
+						<td><?php echo $Cuartil_Inferior_basal_phq9; ?></td>
+						<td><?php echo $Cuartil_Inferior_inter_phq9; ?></td>
+						<td><?php echo $Cuartil_Inferior_final_phq9; ?></td>
+						
+						<td><?php echo $Cuartil_Inferior_basal_gad7; ?></td>
+						<td><?php echo $Cuartil_Inferior_inter_gad7; ?></td>
+						<td><?php echo $Cuartil_Inferior_final_gad7; ?></td>						
+					</tr>	
+					<tr>
+						<td>Minimo</td>
+						<td><?php echo $Minimo_basal_phq9; ?></td>
+						<td><?php echo $Minimo_inter_phq9; ?></td>
+						<td><?php echo $Minimo_final_phq9; ?></td>
+						
+						<td><?php echo $Minimo_basal_gad7; ?></td>
+						<td><?php echo $Minimo_inter_gad7; ?></td>
+						<td><?php echo $Minimo_final_gad7; ?></td>						
+					</tr>																	
+				</table>
+				
+				
+				
+		<div id="container" style="height: 400px; margin: auto; min-width: 310px; max-width: 600px"></div>		
+		<script type="text/javascript">
+			$(function () {
+			    $('#container').highcharts({
+			
+				    chart: {
+				        type: 'boxplot'
+				    },
+				    
+				    title: {
+				        text: 'Analisis General PHQ9 y GAD7'
+				    },
+				    
+				    legend: {
+				        enabled: false
+				    },
+				
+				    xAxis: {
+				        categories: ['Basal PHQ9', 'Intermedia PHQ9', 'Final PHQ9', 'Basal GAD7', 'Intermedia GAD7', 'Final GAD7'],
+				        title: {
+				            text: 'Experiment No.'
+				        }
+				    },
+				    
+				    yAxis: {
+				        title: {
+				            text: 'Observations'
+				        },
+				        plotLines: [{
+				            value: 15,
+				            color: 'red',
+				            width: 1,
+				            label: {
+				                text: 'Media teórica: 15',
+				                align: 'center',
+				                style: {
+				                    color: 'gray'
+				                }
+				            }
+				        }]  
+				    },
+				
+				    series: [{
+				        name: 'Observations',
+				        data: [
+				            [<?php echo $Minimo_basal_phq9; ?>, <?php echo $Cuartil_Inferior_basal_phq9; ?>, <?php echo $Mediana_basal_phq9; ?>, <?php echo $Cuartil_Superior_basal_phq9; ?>, <?php echo $Maximo_basal_phq9; ?>],
+				            [<?php echo $Minimo_inter_phq9; ?>, <?php echo $Cuartil_Inferior_inter_phq9; ?>, <?php echo $Mediana_inter_phq9; ?>, <?php echo $Cuartil_Superior_inter_phq9; ?>, <?php echo $Maximo_inter_phq9; ?>],
+				            [<?php echo $Minimo_final_phq9; ?>, <?php echo $Cuartil_Inferior_final_phq9; ?>, <?php echo $Mediana_final_phq9; ?>, <?php echo $Cuartil_Superior_final_phq9; ?>, <?php echo $Maximo_final_phq9; ?>],
+				            [<?php echo $Minimo_basal_gad7; ?>, <?php echo $Cuartil_Inferior_basal_gad7; ?>, <?php echo $Mediana_basal_gad7; ?>, <?php echo $Cuartil_Superior_basal_gad7; ?>, <?php echo $Maximo_basal_gad7; ?>],
+				            [<?php echo $Minimo_inter_gad7; ?>, <?php echo $Cuartil_Inferior_inter_gad7; ?>, <?php echo $Mediana_inter_gad7; ?>, <?php echo $Cuartil_Superior_inter_gad7; ?>, <?php echo $Maximo_inter_gad7; ?>],
+				            [<?php echo $Minimo_final_gad7; ?>, <?php echo $Cuartil_Inferior_final_gad7; ?>, <?php echo $Mediana_final_gad7; ?>, <?php echo $Cuartil_Superior_final_gad7; ?>, <?php echo $Maximo_final_gad7; ?>]
+				        ],
+				        tooltip: {
+				            headerFormat: '<em>Experiment No {point.key}</em><br/>'
+				        }
+				    }, {
+				        name: 'Outlier',
+				        color: Highcharts.getOptions().colors[0],
+				        type: 'scatter',
+				        data: [ // x, y positions where 0 is the first category
+				            [1, 27],
+				            [0, 24],
+				            [0, 24],
+				            [1, 21],
+				            [0, 20],
+				            [0, 19]
+				        ],
+				        marker: {
+				            fillColor: 'white',
+				            lineWidth: 1,
+				            lineColor: Highcharts.getOptions().colors[0]
+				        },
+				        tooltip: {
+				            pointFormat: 'Observation: {point.y}'
+				        }
+				    }]
+				
+				});
+			});
+		</script> 				
+				
+										
+		</div>	
+		<hr>  
+		<div align="center" class="col-md-12">
+			<h1>PHQ9, GAD7 y Craving</h1>
+	  		<table style="width: 90%; font-size: 12px" class="table table-bordered">								  			
+	  			<tr>
+	  				<th colspan="6"  style="text-align: center" >DATOS</th>
+	  				
+	  				<th colspan="3" style="text-align: center" >PHQ9</th>
+	  				
+	  				<th colspan="3" style="text-align: center" >GAD7</th>
+	  				
+	  				<th colspan="3" style="text-align: center" >Craving</th>
+	  				
+	  				<th style="text-align: center" >Protocolos</th>	  					  				
+	  			</tr>
+	  			<tr>
+	  				<th style="text-align: center" >Cnt</th>
+	  				<th style="text-align: center" ># Id</th>
+	  				<th style="text-align: center" >Sexo</th>
+	  				<th style="text-align: center" >Edad</th>
+	  				<th style="text-align: center" >Sustancia</th>
+	  				<th style="text-align: center" >Diagnostico</th>
+	  				
+	  				<th style="text-align: center" >BASAL</th>
+	  				<th style="text-align: center" >INTER</th>
+	  				<th style="text-align: center" >FINAL</th>
+	  				
+	  				<th style="text-align: center" >BASAL</th>
+	  				<th style="text-align: center" >INTER</th>
+	  				<th style="text-align: center" >FINAL</th>	
+	  				
+	  				<th style="text-align: center" >BASAL</th>
+	  				<th style="text-align: center" >INTER</th>
+	  				<th style="text-align: center" >FINAL</th>	 
+	  				
+	  				<th style="text-align: center" >Protocolos</th>  				  					  				
+	  			</tr>
+	  			<?php
+	  			$sql_cobro = "
+				SELECT DISTINCT
+					pacientes.paciente_id, 
+					pacientes.f_nacimiento, 
+					pacientes.sexo,
+					pacientes.diagnostico,
+					( SELECT COUNT(*) AS total FROM base_encuesta_1 WHERE base_encuesta_1.paciente_id = pacientes.paciente_id ) AS phq,
+					( SELECT COUNT(*) AS total FROM base_encuesta_2 WHERE base_encuesta_2.paciente_id = pacientes.paciente_id ) AS gad,
+					( SELECT COUNT(*) AS total FROM base_encuesta_7 WHERE base_encuesta_7.paciente_id = pacientes.paciente_id ) AS craving,
+					protocolo_terapia.terapia 
+				FROM
+					pacientes
+					INNER JOIN historico_sesion ON pacientes.paciente_id = historico_sesion.paciente_id
+					INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+				WHERE
+					pacientes.empresa_id = 1
+					AND terapia = 'TMS'					  			
+	  			";
+				//echo $sql_cobro."<br>";
+				$cnt_g = 1;
+	  			$result_cob=ejecutar($sql_cobro);
+		    	while($row_cob = mysqli_fetch_array($result_cob)){
+			    	extract($row_cob);	
+					$edad = obtener_edad_segun_fecha($f_nacimiento);
+					
+					//echo $phq."<hr>";
+					
+					if ($phq >= 3 && $gad >= 3 && $craving >= 3 ) {
+						
+
+					$sql_PHQ9 = "
+						SELECT DISTINCT
+							historico_sesion.f_captura, 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_3 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_4 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_5 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_6 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_7 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_8 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_9 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_10 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_11 AND respuestas.encuesta_id = 1 ) AS total, 
+							protocolo_terapia.terapia
+						FROM
+							pacientes
+							INNER JOIN
+							base_encuesta_1 ON pacientes.paciente_id = base_encuesta_1.paciente_id INNER JOIN historico_sesion
+							ON 
+								base_encuesta_1.paciente_id = historico_sesion.paciente_id AND
+								base_encuesta_1.f_captura = historico_sesion.f_captura AND
+								base_encuesta_1.h_captura = historico_sesion.h_captura
+							INNER JOIN
+							protocolo_terapia
+							ON 
+								historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id
+						WHERE
+							base_encuesta_1.respuesta_3 <> ''
+							AND historico_sesion.paciente_id = $paciente_id
+						ORDER BY
+							historico_sesion.f_captura ASC
+						LIMIT 3					  			
+			  			";
+						//echo $sql_PHQ9."<br>";
+						$cnt_PHQ9 = 1;
+			  			$result_PHQ9=ejecutar($sql_PHQ9);
+				    	while($row_PHQ9 = mysqli_fetch_array($result_PHQ9)){				    	
+					    	extract($row_PHQ9);					    	
+					    	if ($cnt_PHQ9 == 1) {
+								$basal_phq = $total;
+							} 
+					    	if ($cnt_PHQ9 == 2) {
+								$inter_phq = $total;
+							}							
+					    	if ($cnt_PHQ9 == 3) {
+								$final_phq = $total;
+							}					    	
+
+					    	$cnt_PHQ9++;					    	
+				    	}
+				    	
+				    	
+					$tabla ="
+					<table class='table table-bordered'>
+					
+					";
+										
+					$sql_terapia ="
+					SELECT
+						historico_sesion.paciente_id,
+						protocolo_terapia.prot_terapia,
+						COUNT(*) as cnt
+					FROM
+						historico_sesion
+						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+					WHERE
+						historico_sesion.paciente_id = $paciente_id 
+						AND historico_sesion.f_captura <= '$f_captura' 
+					GROUP BY
+						1,2					
+					";
+			  			$result_terapia=ejecutar($sql_terapia);
+				    	while($row_terapia = mysqli_fetch_array($result_terapia)){				    	
+					    	extract($row_terapia);	
+
+						$tabla .="
+							<tr>
+								<td>$prot_terapia</td>
+								<td>$cnt</td>
+							</tr>					
+						";							
+
 							
-							$table.= "</tr></table><div>";
+						}	
+						
+					$tabla .="
+					</table>					
+					";					    	
 							
-							echo $table;
+					$sql_GAD7 = "
+					SELECT DISTINCT
+						historico_sesion.f_captura,
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_14 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_15 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_16 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_17 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_18 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_19 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_20 AND respuestas.encuesta_id = 2 ) AS total_g,
+						protocolo_terapia.terapia 
+					FROM
+						pacientes
+						INNER JOIN base_encuesta_2 ON pacientes.paciente_id = base_encuesta_2.paciente_id
+						INNER JOIN historico_sesion ON base_encuesta_2.paciente_id = historico_sesion.paciente_id 
+							AND base_encuesta_2.f_captura = historico_sesion.f_captura 
+							AND base_encuesta_2.h_captura = historico_sesion.h_captura
+						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+					WHERE
+						base_encuesta_2.respuesta_14 <> '' 
+						AND base_encuesta_2.paciente_id = $paciente_id
+					ORDER BY
+						pacientes.paciente_id ASC,
+						base_encuesta_2.f_captura ASC
+						LIMIT 3				  			
+			  			";
+						//echo $sql_PHQ9."<br>";
+						$cnt_GAD7 = 1;
+						$final_gad= 0;
+			  			$result_GAD7=ejecutar($sql_GAD7);
+				    	while($row_GAD7 = mysqli_fetch_array($result_GAD7)){				    	
+					    	extract($row_GAD7);					    	
+					    	if ($cnt_GAD7 == 1) {
+								$basal_gad = $total_g;
+							} 
+					    	if ($cnt_GAD7 == 2) {
+								$inter_gad = $total_g;
+							}							
+					    	if ($cnt_GAD7 == 3) {
+								$final_gad = $total_g;
+							}					    	
+
+					    	$cnt_GAD7++;					    	
+				    	}					
+
+					$sql_craving = "
+					SELECT DISTINCT
+						historico_sesion.f_captura,
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_82 AND respuestas.encuesta_id = 7 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_84 AND respuestas.encuesta_id = 7 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_85 AND respuestas.encuesta_id = 7 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_86 AND respuestas.encuesta_id = 7 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_87 AND respuestas.encuesta_id = 7 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_89 AND respuestas.encuesta_id = 7 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_90 AND respuestas.encuesta_id = 7 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_91 AND respuestas.encuesta_id = 7 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_92 AND respuestas.encuesta_id = 7 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_93 AND respuestas.encuesta_id = 7 ) AS total_c,
+						protocolo_terapia.terapia,
+						base_encuesta_7.respuesta_82 
+					FROM
+						pacientes
+						INNER JOIN base_encuesta_7 ON pacientes.paciente_id = base_encuesta_7.paciente_id
+						INNER JOIN historico_sesion ON base_encuesta_7.paciente_id = historico_sesion.paciente_id 
+						AND base_encuesta_7.f_captura = historico_sesion.f_captura 
+						AND base_encuesta_7.h_captura = historico_sesion.h_captura
+						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+					WHERE
+						base_encuesta_7.respuesta_82 <> '' 
+						AND base_encuesta_7.paciente_id = $paciente_id
+					ORDER BY
+						pacientes.paciente_id ASC,
+						base_encuesta_7.f_captura ASC
+						LIMIT 3				  			
+			  			";
+						//echo $sql_craving."<br>";
+						$cnt_craving = 1;
+						$final_craving = 0;
+			  			$result_craving=ejecutar($sql_craving);
+				    	while($row_craving = mysqli_fetch_array($result_craving)){				    	
+					    	extract($row_craving);					    	
+					    	if ($cnt_craving == 1) {
+								$basal_craving = $total_c;
+							} 
+					    	if ($cnt_craving == 2) {
+								$inter_craving = $total_c;
+							}							
+					    	if ($cnt_craving == 3) {
+								$final_craving = $total_c;
+							}					    	
+
+					    	$cnt_craving++;					    	
+				    	}				    						
+					
+	  			?>
+	  			<tr>
+	  				<td style="text-align: center"><?php echo $cnt_g ; ?></td>
+	  				<td style="text-align: center"><?php echo $paciente_id ; ?></td>
+	  				<td style="text-align: center"><?php echo $sexo; ?></td>
+	  				<td style="text-align: center"><?php echo $edad; ?></td>
+	  				<td style="text-align: center"><?php echo $diagnostico; ?></td>
+	  				<td style="text-align: center"><?php echo $respuesta_82; ?></td>
+	  				
+	  				<td style="text-align: center"><?php echo $basal_phq; ?></td>
+	  				<td style="text-align: center"><?php echo $inter_phq; ?></td>
+	  				<td style="text-align: center"><?php echo $final_phq; ?></td>
+	  				
+	  				<td style="text-align: center"><?php echo $basal_gad; ?></td>
+	  				<td style="text-align: center"><?php echo $inter_gad; ?></td>
+	  				<td style="text-align: center"><?php echo $final_gad; ?></td>
+	  				
+	  				<td style="text-align: center"><?php echo $basal_gad; ?></td>
+	  				<td style="text-align: center"><?php echo $inter_gad; ?></td>
+	  				<td style="text-align: center"><?php echo $final_gad; ?></td>	
+	  				
+	  				<td style="text-align: center"><?php echo $tabla; ?></td>	  				  				
+	  			</tr>
+	  			<?php 
+					    	$basal_gad = '';
+					    	$inter_gad = '';
+					    	$final_gad = '';
+					$cnt_g++;		
+					}
+										
+				} ?>
+
+  			</table>										
+		</div>	
+		<hr>  
+		<div align="center" class="col-md-12">
+			<h1>PHQ9, GAD7 y Y-BOCS</h1>
+	  		<table style="width: 90%; font-size: 12px" class="table table-bordered">								  			
+	  			<tr>
+	  				<th colspan="5"  style="text-align: center" >DATOS</th>
+	  				
+	  				<th colspan="3" style="text-align: center" >PHQ9</th>
+	  				
+	  				<th colspan="3" style="text-align: center" >GAD7</th>
+	  				
+	  				<th colspan="3" style="text-align: center" >Y-BOCS</th>	
+	  				
+	  				<th style="text-align: center" >Protocolos</th>  					  				
+	  			</tr>
+	  			<tr>
+	  				<th style="text-align: center" >Cnt</th>
+	  				<th style="text-align: center" ># Id</th>
+	  				<th style="text-align: center" >Sexo</th>
+	  				<th style="text-align: center" >Edad</th>
+	  				<th style="text-align: center" >Diagnostico</th>
+	  				
+	  				<th style="text-align: center" >BASAL</th>
+	  				<th style="text-align: center" >INTER</th>
+	  				<th style="text-align: center" >FINAL</th>
+	  				
+	  				<th style="text-align: center" >BASAL</th>
+	  				<th style="text-align: center" >INTER</th>
+	  				<th style="text-align: center" >FINAL</th>	
+	  				
+	  				<th style="text-align: center" >BASAL</th>
+	  				<th style="text-align: center" >INTER</th>
+	  				<th style="text-align: center" >FINAL</th>	
+	  				
+	  				<th style="text-align: center" >Protocolos</th>  				  					  				
+	  			</tr>
+	  			<?php
+	  			$sql_cobro = "
+				SELECT DISTINCT
+					pacientes.paciente_id, 
+					pacientes.f_nacimiento, 
+					pacientes.sexo,
+					pacientes.diagnostico,
+					( SELECT COUNT(*) AS total FROM base_encuesta_1 WHERE base_encuesta_1.paciente_id = pacientes.paciente_id ) AS phq,
+					( SELECT COUNT(*) AS total FROM base_encuesta_2 WHERE base_encuesta_2.paciente_id = pacientes.paciente_id ) AS gad,
+					( SELECT COUNT(*) AS total FROM base_encuesta_4 WHERE base_encuesta_4.paciente_id = pacientes.paciente_id ) AS ybocs,
+					protocolo_terapia.terapia 
+				FROM
+					pacientes
+					INNER JOIN historico_sesion ON pacientes.paciente_id = historico_sesion.paciente_id
+					INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+				WHERE
+					pacientes.empresa_id = 1
+					AND terapia = 'TMS'	  			
+	  			";
+				//echo $sql_cobro."<br>";
+				$cnt_g = 1;
+	  			$result_cob=ejecutar($sql_cobro);
+		    	while($row_cob = mysqli_fetch_array($result_cob)){
+			    	extract($row_cob);	
+					$edad = obtener_edad_segun_fecha($f_nacimiento);
+					
+					//echo $phq."<hr>";
+					
+					if ($phq >= 3 && $gad >= 3 && $ybocs >= 3 ) {
+						
+
+					$sql_PHQ9 = "
+						SELECT DISTINCT
+							historico_sesion.f_captura, 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_3 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_4 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_5 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_6 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_7 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_8 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_9 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_10 AND respuestas.encuesta_id = 1 )+ 
+							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_11 AND respuestas.encuesta_id = 1 ) AS total, 
+							protocolo_terapia.terapia
+						FROM
+							pacientes
+							INNER JOIN
+							base_encuesta_1 ON pacientes.paciente_id = base_encuesta_1.paciente_id INNER JOIN historico_sesion
+							ON 
+								base_encuesta_1.paciente_id = historico_sesion.paciente_id AND
+								base_encuesta_1.f_captura = historico_sesion.f_captura AND
+								base_encuesta_1.h_captura = historico_sesion.h_captura
+							INNER JOIN
+							protocolo_terapia
+							ON 
+								historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id
+						WHERE
+							base_encuesta_1.respuesta_3 <> ''
+							AND historico_sesion.paciente_id = $paciente_id
+						ORDER BY
+							historico_sesion.f_captura ASC
+						LIMIT 3					  			
+			  			";
+						//echo $sql_PHQ9."<br>";
+						$cnt_PHQ9 = 1;
+			  			$result_PHQ9=ejecutar($sql_PHQ9);
+				    	while($row_PHQ9 = mysqli_fetch_array($result_PHQ9)){				    	
+					    	extract($row_PHQ9);					    	
+					    	if ($cnt_PHQ9 == 1) {
+								$basal_phq = $total;
+							} 
+					    	if ($cnt_PHQ9 == 2) {
+								$inter_phq = $total;
+							}							
+					    	if ($cnt_PHQ9 == 3) {
+								$final_phq = $total;
+							}					    	
+
+					    	$cnt_PHQ9++;					    	
+				    	}
+				    	
+				    	//echo $f_captura."<hr>";
+					$tabla ="
+					<table class='table table-bordered'>
+					
+					";
+										
+					$sql_terapia ="
+					SELECT
+						historico_sesion.paciente_id,
+						protocolo_terapia.prot_terapia,
+						COUNT(*) as cnt
+					FROM
+						historico_sesion
+						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+					WHERE
+						historico_sesion.paciente_id = $paciente_id 
+						AND historico_sesion.f_captura <= '$f_captura' 
+					GROUP BY
+						1,2					
+					";
+			  			$result_terapia=ejecutar($sql_terapia);
+				    	while($row_terapia = mysqli_fetch_array($result_terapia)){				    	
+					    	extract($row_terapia);	
+
+						$tabla .="
+							<tr>
+								<td>$prot_terapia</td>
+								<td>$cnt</td>
+							</tr>					
+						";							
+
 							
-							$sql_user = "
-							SELECT
-								admin.usuario_id, 
-								admin.nombre, 
-								admin.funcion
-							FROM
-								admin
-							WHERE 
-								admin.funcion in('TECNICO')
-								AND admin.estatus = 'Activo'
-								AND admin.empresa_id = $empresa_id
-								ORDER BY nombre ASC";
-								//echo $sql_user;
-								$result_user = ejecutar($sql_user); 
-								$cnt = mysqli_num_rows($result_user);
-								$cnt1 = 1;
-								$sql2 = "
-								SELECT
-									fechas.fecha,";
-									$ykeys = "";
-									$labels = "";
-						    while($row_sem1 = mysqli_fetch_array($result_user)){
-						        extract($row_sem1);	
-											
-									$ykeys .= "'user_$usuario_id',";
-									$labels	.= "'$nombre',";					
-									if ($cnt == $cnt1) {
-										$sql2 .= "
-										(SELECT
-												COUNT(*)
-											FROM
-												admin as admin$cnt1
-												INNER JOIN historico_sesion ON admin$cnt1.usuario_id = historico_sesion.usuario_id 
-												WHERE admin$cnt1.usuario_id = $usuario_id AND historico_sesion.f_captura = fechas.fecha
-												AND admin$cnt1.estatus = 'Activo'
-												AND admin$cnt1.empresa_id = $empresa_id
-										) AS usuario_$usuario_id ";										
-									} else {
-										$sql2 .= "
-										(SELECT
-												COUNT(*)
-											FROM
-												admin as admin$cnt1
-												INNER JOIN historico_sesion ON admin$cnt1.usuario_id = historico_sesion.usuario_id 
-												WHERE admin$cnt1.usuario_id = $usuario_id AND historico_sesion.f_captura = fechas.fecha
-												AND admin$cnt1.estatus = 'Activo'
-												AND admin$cnt1.empresa_id = $empresa_id
-										) AS usuario_$usuario_id,	";										
-									}
-									$cnt1++;							
-							}
+						}	
+						
+					$tabla .="
+					</table>					
+					";					    	
 							
-							$sql2 .= "FROM
-										fechas 
-									WHERE
-										MONTH ( fechas.fecha ) = $mes_sel 
-										AND YEAR ( fechas.fecha ) = $anio_sel 
-										AND fechas.fecha <= '$hoy';";									
-								//echo $sql2."<hr>";	
-								$result_user2 = ejecutar($sql2); 
-								$grafica = "[ ";
-								
-						    while($row_sem2 = mysqli_fetch_array($result_user2)){
-						        extract($row_sem2);	
-						        //print_r($row_sem2);
-						        //$f_captura = strftime("%e-%b-%Y",strtotime($fecha));     
-						     	$grafica .="{ y: '$fecha',"; 
-						     
-								$sql_user = "
-								SELECT
-									admin.usuario_id, 
-									admin.nombre
-								FROM
-									admin
-								WHERE admin.funcion in('TECNICO') AND admin.estatus = 'Activo' AND admin.empresa_id = $empresa_id
-								ORDER BY nombre ASC";
-									$result_user = ejecutar($sql_user); 
-									$cnt = mysqli_num_rows($result_user);
-									$cnt1 = 1;
-									$sql2 = "
-									SELECT
-										fechas.fecha,";
-							    while($row_sem1 = mysqli_fetch_array($result_user)){
-							        extract($row_sem1);
-									$user = "usuario_$usuario_id";
-									$grafica .= "'user_$usuario_id' : ".$$user.", ";
-								}						     
-							     
-						      	$grafica .= " },";
-						        
-					        }	
-							$grafica .= " ]";
-							//echo $grafica;								
-                        	?>
-                        	</div></div>
-                        	<hr>
-                        	<h1 align="center">Grafica</h1>
-                       
-                        	<div style='width: 100%' id='graph'></div>                        	
-							<script> 
-								var week_data = <?php echo $grafica; ?>;
-								Morris.Line({
-								  element: 'graph',
-								  data: week_data,
-								  xkey: 'y',
-								  ykeys: [<?php echo $ykeys; ?>],
-								  labels: [<?php echo $labels; ?>],
-								  labelColor: ['#ff0000', '#00ff00', '#0000ff','#FFFF00','#FF00FF','#00FFFF'],
-								  lineColors: ['#ff0000', '#00ff00', '#0000ff','#FFFF00','#FF00FF','#00FFFF'],
-								  
-								});	
-							</script>
-                    	</div>
-                	</div>
-            	</div>
-        	</div>
-              
-<table style='background: #D1F2EB'></table>
- <button style="display: none" id="modal_grafica" type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#largeModal">MODAL - LARGE SIZE</button>
- <!-- Large Size -->
-            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="largeModalLabel">Detalle de Terapias</h4>
-                        </div>
-                        <div id="contenido_modal" class="modal-body">
+					$sql_GAD7 = "
+					SELECT DISTINCT
+						historico_sesion.f_captura,
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_14 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_15 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_16 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_17 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_18 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_19 AND respuestas.encuesta_id = 2 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_20 AND respuestas.encuesta_id = 2 ) AS total_g,
+						protocolo_terapia.terapia 
+					FROM
+						pacientes
+						INNER JOIN base_encuesta_2 ON pacientes.paciente_id = base_encuesta_2.paciente_id
+						INNER JOIN historico_sesion ON base_encuesta_2.paciente_id = historico_sesion.paciente_id 
+							AND base_encuesta_2.f_captura = historico_sesion.f_captura 
+							AND base_encuesta_2.h_captura = historico_sesion.h_captura
+						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+					WHERE
+						base_encuesta_2.respuesta_14 <> '' 
+						AND base_encuesta_2.paciente_id = $paciente_id
+					ORDER BY
+						pacientes.paciente_id ASC,
+						base_encuesta_2.f_captura ASC
+						LIMIT 3				  			
+			  			";
+						//echo $sql_PHQ9."<br>";
+						$cnt_GAD7 = 1;
+			  			$result_GAD7=ejecutar($sql_GAD7);
+				    	while($row_GAD7 = mysqli_fetch_array($result_GAD7)){				    	
+					    	extract($row_GAD7);					    	
+					    	if ($cnt_GAD7 == 1) {
+								$basal_gad = $total_g;
+							} 
+					    	if ($cnt_GAD7 == 2) {
+								$inter_gad = $total_g;
+							}							
+					    	if ($cnt_GAD7 == 3) {
+								$final_gad = $total_g;
+							}					    	
 
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CERRAR</button>
-                        </div>
-                    </div>
-                </div>
-            </div> 
+					    	$cnt_GAD7++;					    	
+				    	}	
+				    								
+					$sql_YBOCS = "
+					SELECT DISTINCT
+						historico_sesion.f_captura,
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_50 AND respuestas.encuesta_id = 4 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_51 AND respuestas.encuesta_id = 4 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_52 AND respuestas.encuesta_id = 4 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_53 AND respuestas.encuesta_id = 4 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_54 AND respuestas.encuesta_id = 4 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_55 AND respuestas.encuesta_id = 4 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_56 AND respuestas.encuesta_id = 4 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_57 AND respuestas.encuesta_id = 4 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_58 AND respuestas.encuesta_id = 4 )+ 
+						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_59 AND respuestas.encuesta_id = 4 ) AS totaly,
+						historico_sesion.historico_id,
+						protocolo_terapia.terapia 
+					FROM
+						pacientes
+						INNER JOIN base_encuesta_4 ON pacientes.paciente_id = base_encuesta_4.paciente_id
+						INNER JOIN historico_sesion ON base_encuesta_4.paciente_id = historico_sesion.paciente_id 
+						AND base_encuesta_4.f_captura = historico_sesion.f_captura 
+						AND base_encuesta_4.h_captura = historico_sesion.h_captura
+						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+					WHERE
+						base_encuesta_4.respuesta_50 <> ''
+						AND base_encuesta_4.paciente_id = $paciente_id 
+					ORDER BY
+						pacientes.paciente_id ASC,
+						base_encuesta_4.f_captura ASC
+						LIMIT 3				  			
+			  			";
+						//echo $sql_YBOCS."<br>";
+						$cnt_YBOCS = 1;
+			  			$result_YBOCS=ejecutar($sql_YBOCS);
+				    	while($row_YBOCS = mysqli_fetch_array($result_YBOCS)){				    	
+					    	extract($row_YBOCS);
+					    	// print_r($row_YBOCS);					    	
+					    	if ($cnt_YBOCS == 1) {
+								$basal_YBOCS = $totaly;
+							} 
+					    	if ($cnt_YBOCS == 2) {
+								$inter_YBOCS = $totaly;
+							}							
+					    	if ($cnt_YBOCS == 3) {
+								$final_YBOCS = $totaly;
+							}					    	
 
-        </div>
-    </section>
-    
-<?php	include($ruta.'footer1.php');	?>
+					    	$cnt_YBOCS++;					    	
+				    	}					
+					
+					
+	  			?>
+	  			<tr>
+	  				<td style="text-align: center"><?php echo $cnt_g ; ?></td>
+	  				<td style="text-align: center"><?php echo $paciente_id ; ?></td>
+	  				<td style="text-align: center"><?php echo $sexo; ?></td>
+	  				<td style="text-align: center"><?php echo $edad; ?></td>
+	  				<td style="text-align: center"><?php echo $diagnostico; ?></td>
+	  				
+	  				<td style="text-align: center"><?php echo $basal_phq; ?></td>
+	  				<td style="text-align: center"><?php echo $inter_phq; ?></td>
+	  				<td style="text-align: center"><?php echo $final_phq; ?></td>
+	  				
+	  				<td style="text-align: center"><?php echo $basal_gad; ?></td>
+	  				<td style="text-align: center"><?php echo $inter_gad; ?></td>
+	  				<td style="text-align: center"><?php echo $final_gad; ?></td>
+	  				
+	  				<td style="text-align: center"><?php echo $basal_YBOCS; ?></td>
+	  				<td style="text-align: center"><?php echo $inter_YBOCS; ?></td>
+	  				<td style="text-align: center"><?php echo $final_YBOCS; ?></td>	 
+	  				
+	  				<td style="text-align: center"><?php echo $tabla; ?></td>	  				 				
+	  			</tr>
+	  			<?php 
+					    	$basal_YBOCS = '';
+					    	$inter_YBOCS = '';
+					    	$final_YBOCS = '';
+					$cnt_g++;		
+					}
+										
+				} ?>
 
-    <!-- Moment Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/momentjs/moment.js"></script>
-
-    <!-- Bootstrap Material Datetime Picker Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-
-    <!-- Bootstrap Datepicker Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-
-    <!-- Waves Effect Plugin Js -->
-    <!-- Autosize Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/autosize/autosize.js"></script>
-
-    <!-- Moment Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/momentjs/moment.js"></script>
-    
-    <!-- Jquery Knob Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/jquery-knob/jquery.knob.min.js"></script>
-
-    <!-- Custom Js -->
-    <script src="<?php echo $ruta; ?>js/pages/charts/jquery-knob.js"></script>   
-   
-
-<?php	include($ruta.'footer2.php');	?>
+  			</table>										
+		</div>				
+	</div>	
+</body>

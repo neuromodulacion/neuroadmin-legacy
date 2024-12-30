@@ -78,9 +78,12 @@ WHERE
 // Ejecutar la consulta de actualización
 $result_insert = ejecutar($update);
 
-// Llamar a una función externa para modificar el cliente en otro sistema (función en la API)
-modifica_cliente_bind($paciente_id);
 
+ // Si bind es si, agrega cliente a bind
+ if($bind == 'si'){
+    // Llamar a una función externa para modificar el cliente en otro sistema (función en la API)
+    modifica_cliente_bind($paciente_id);
+ }
 ?>            
 
 <!-- HTML para mostrar el mensaje de éxito de actualización -->
