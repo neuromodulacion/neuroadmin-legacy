@@ -30,35 +30,37 @@ if (isset($_POST['estatus'])) {
 }
 
 // Si el usuario no selecciona nada, consideraremos “mostrar todos”
-$where = "";
+$where = " AND 1=1 ";
 if (!empty($selectedStatuses)) {
-    // En lugar de mysqli_real_escape_string, usamos el método de nuestra clase
     $arr = array_map(function($item) use ($mysql) {
         return $mysql->escape($item);
     }, $selectedStatuses);
 
     $estatus_string = "'" . implode("','", $arr) . "'";
-    $where = " AND pacientes.estatus IN ($estatus_string)";
+    // En lugar de "=", aquí haces ".=" para concatenar
+    $where .= " AND pacientes.estatus IN ($estatus_string)";
 }
+
 
 // ------------------------------------------------
 // Variables comunes, fecha, etc.
 // ------------------------------------------------
 
-if (in_array((string)$funcion_id, ['1', '5', '6', '8'], true)) {
-	$class = "js-exportable";	
-	$where = "AND pacientes.empresa_id = $empresa_id ";
-	$app ="min-width: 320px";
-}else{
-	$class = "";
-	
-	if (in_array((string)$funcion_id, ['4'], true)) {
-		$app ="min-width: 100px";
-		$where = "AND pacientes.empresa_id = $empresa_id AND pacientes.usuario_id = $usuario_id";
-	}else{
-		$app ="min-width: 100px";
-		$where = "AND pacientes.empresa_id = $empresa_id ";}
+if (in_array((string)$funcion_id, ['1','5','6','8'], true)) {
+    $class = "js-exportable";
+    $where .= " AND pacientes.empresa_id = $empresa_id"; // <--- usar .=
+    $app ="min-width: 320px";
+} else {
+    $class = "";
+    if (in_array((string)$funcion_id, ['4'], true)) {
+        $app ="min-width: 100px";
+        $where .= " AND pacientes.empresa_id = $empresa_id AND pacientes.usuario_id = $usuario_id";
+    } else {
+        $app ="min-width: 100px";
+        $where .= " AND pacientes.empresa_id = $empresa_id";
+    }
 }
+
 
 
 ?>
@@ -203,7 +205,7 @@ include($ruta . 'header2.php');
                                             ) AS total_tDCS,
                                             (SELECT SUM(cobros.cantidad) 
                                              FROM cobros 
-                                             WHERE cobros.empresa_id = $empresa_id 
+                                             WHERE cobros.empresa_id = pacientes.empresa_id  
                                                AND cobros.paciente_id = pacientes.paciente_id
                                              ORDER BY cobros.f_captura ASC
                                             ) AS cnt_pagos,
@@ -218,11 +220,11 @@ include($ruta . 'header2.php');
                                             pacientes
                                         INNER JOIN estatus_paciente ON pacientes.estatus = estatus_paciente.estatus
                                         INNER JOIN admin ON pacientes.usuario_id = admin.usuario_id
-                                        WHERE 1=1 and pacientes.empresa_id = $empresa_id
-                                        $where
+                                        WHERE  1=1 
+                                            $where
                                         ORDER BY f_captura DESC
                                     ";
-
+                                    // echo $sql_protocolo;
                                     $result_protocolo = ejecutar($sql_protocolo); 
                                     $cnt = 0;
 

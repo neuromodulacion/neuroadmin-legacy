@@ -113,27 +113,6 @@ switch ($tipo) {
 				";
 			// echo $update;
 			$result_update = ejecutar($update);			
-
-			$update = "
-				update pacientes
-				set
-				pacientes.estatus = 'Activo'
-				where pacientes.paciente_id = $paciente_id	
-				";
-			// echo $update;
-			$result_update = ejecutar($update);	
-		
-		// $update = "
-			// update sesiones
-			// set
-			// sesiones.total_sesion = (sesiones.total_sesion +1)
-			// where sesiones.paciente_id = $paciente_id
-			// and protocolo_ter_id = $protocolo_ter_id	
-		// ";
-		// echo $update;
-		// $result_update = ejecutar($update);	
-// 		
-		// echo "<h1>Capturado</h1>";
 		
 		break;
 
@@ -144,9 +123,10 @@ switch ($tipo) {
 		break;
 
 	case 'preguntas_protocolo':
-
+		//creo que este ya no se utiliza falta validar
 		//print_r($_POST);
-		
+		//$total_sesion = ($total_sesion+1);
+		// guardar la captura de la sesion
 		$insert = "
 			INSERT IGNORE INTO historico_sesion 
 			( 	
@@ -154,6 +134,7 @@ switch ($tipo) {
 				historico_sesion.paciente_id,
 				historico_sesion.empresa_id,
 				historico_sesion.usuario_id,
+				historico_sesion.sesion,
 				historico_sesion.f_captura,
 				historico_sesion.h_captura,
 				historico_sesion.umbral,
@@ -171,6 +152,7 @@ switch ($tipo) {
 				$paciente_id,
 				$empresa_id,
 				$usuario_id,
+				$total_sesion,
 				'$f_captura',
 				'$h_captura',
 				$umbral,
@@ -185,8 +167,11 @@ switch ($tipo) {
 			)
 		";	
 		// echo $insert."<hr>";
-		$result_insert = ejecutar($insert);		
 
+		// ejecutar_id devuelve el id del registro insertado	
+		$historico_id = ejecutar_id($insert);		
+		/*
+		$result_insert = ejecutar($insert);
 		$sql_hist ="
 			SELECT
 				max(historico_sesion.historico_id) as historico_id
@@ -194,7 +179,8 @@ switch ($tipo) {
 				historico_sesion";
 			$result_hist = ejecutar($sql_hist);
 			$row_hist = mysqli_fetch_array($result_hist);
-			extract($row_hist);	
+			extract($row_hist);	*/
+
 		if (!empty($adversos)) {
 			foreach ($adversos as $valor) {
 			
@@ -304,46 +290,47 @@ switch ($tipo) {
 			$result_update = ejecutar($update);				
 		}
 
-			$update = "
-				update terapias
-				set
-				terapias.estatus = 'Activo'
-				where terapias.paciente_id = $paciente_id	
-				";
-			//echo $update;
-			$result_update = ejecutar($update);	
+		$update = "
+			update terapias
+			set
+			terapias.estatus = 'Activo'
+			where terapias.paciente_id = $paciente_id	
+			";
+		//echo $update;
+		$result_update = ejecutar($update);	
 
 
-			$update = "
-				update pacientes
-				set
-				pacientes.estatus = 'Activo'
-				where pacientes.paciente_id = $paciente_id	
-				";
-			//echo $update;
-			$result_update = ejecutar($update);	
+		$update = "
+			update pacientes
+			set
+			pacientes.estatus = 'Activo'
+			where pacientes.paciente_id = $paciente_id	
+			";
+		//echo $update;
+		$result_update = ejecutar($update);	
 			
-			if ($umbral_new == 'ok') {
-				$update = "
-					update metricas
-					set
-					metricas.umbral = '$umbral'
-					where metricas.paciente_id = $paciente_id	
-					";
-				//echo $update;
-				$result_update = ejecutar($update);	
-			}			
-//****************falta guardar las preguntas
-	$sql_sem1 = "
-		SELECT
-			preguntas.pregunta_id, 
-			preguntas.protocolo_ter_id, 
-			preguntas.tipo
-		FROM
-			preguntas
-		WHERE
-			preguntas.protocolo_ter_id = $protocolo_ter_id
-	    ";
+		if ($umbral_new == 'ok') {
+			$update = "
+				update metricas
+				set
+				metricas.umbral = '$umbral'
+				where metricas.paciente_id = $paciente_id	
+				";
+			//echo $update;
+			$result_update = ejecutar($update);	
+		}	
+
+		//****************falta guardar las preguntas tengo dudas cone esta seccion
+		$sql_sem1 = "
+			SELECT
+				preguntas.pregunta_id, 
+				preguntas.protocolo_ter_id, 
+				preguntas.tipo
+			FROM
+				preguntas
+			WHERE
+				preguntas.protocolo_ter_id = $protocolo_ter_id
+			";
 		//echo $sql_sem1."<hr>";
 		$result_sem1 = ejecutar($sql_sem1);
 		$cnt_se1 = mysqli_num_rows($result_sem1);
@@ -355,6 +342,7 @@ switch ($tipo) {
 			  base_protocolo_$protocolo_ter_id.empresa_id,
 			  base_protocolo_$protocolo_ter_id.f_captura,
 			  base_protocolo_$protocolo_ter_id.h_captura,";
+
 		$insert_v ="values
 			( $paciente_id,
 			  $usuario_id,
@@ -363,20 +351,21 @@ switch ($tipo) {
 			  '$f_captura',
 			  '$h_captura',";	
 			$cnt =1;	 
-    while($row_sem1 = mysqli_fetch_array($result_sem1)){
-        extract($row_sem1);
-		$respuesta = 'pregunta_'.$pregunta_id;
-		if ($tipo <> 'instrucciones' && $tipo <> 'titulo') {						
-			if ($cnt_se1 <> $cnt) {
-				$insert_c .="base_protocolo_$protocolo_ter_id.respuesta_$pregunta_id,";
-				$insert_v .="'".$$respuesta."',";
-			} else {
-				$insert_c .="base_protocolo_$protocolo_ter_id.respuesta_$pregunta_id";
-				$insert_v .="'".$$respuesta."'";
-			}			
-		}
-		$cnt ++;
-	}		
+
+		while($row_sem1 = mysqli_fetch_array($result_sem1)){
+			extract($row_sem1);
+			$respuesta = 'pregunta_'.$pregunta_id;
+			if ($tipo <> 'instrucciones' && $tipo <> 'titulo') {						
+				if ($cnt_se1 <> $cnt) {
+					$insert_c .="base_protocolo_$protocolo_ter_id.respuesta_$pregunta_id,";
+					$insert_v .="'".$$respuesta."',";
+				} else {
+					$insert_c .="base_protocolo_$protocolo_ter_id.respuesta_$pregunta_id";
+					$insert_v .="'".$$respuesta."'";
+				}			
+			}
+			$cnt ++;
+		}		
 		
 		$insert = $insert_c.") ".$insert_v.")";
 	    echo $insert;
@@ -402,7 +391,8 @@ switch ($tipo) {
 	case 'protocolo_ordinario':
 		
 		//print_r($_POST);
-		
+		//$total_sesion = ($total_sesion+1);
+
 		$insert = "
 			INSERT IGNORE INTO historico_sesion 
 			( 	
@@ -410,6 +400,7 @@ switch ($tipo) {
 				historico_sesion.paciente_id,
 				historico_sesion.empresa_id,
 				historico_sesion.usuario_id,
+				historico_sesion.sesion,
 				historico_sesion.f_captura,
 				historico_sesion.h_captura,
 				historico_sesion.umbral,
@@ -427,6 +418,7 @@ switch ($tipo) {
 				$paciente_id,
 				$empresa_id,
 				$usuario_id,
+				$total_sesion,
 				'$f_captura',
 				'$h_captura',
 				$umbral,
@@ -440,10 +432,10 @@ switch ($tipo) {
 
 			)
 		";	
-	 // echo $insert."<hr>";
-		$result_insert = ejecutar($insert);		
-
-
+		//echo $insert."<hr>";	
+		//$historico_id = ejecutar_id($insert);
+		
+		$result_insert = ejecutar($insert);	
 		$sql_hist ="
 			SELECT
 				max(historico_sesion.historico_id) as historico_id
@@ -574,7 +566,6 @@ switch ($tipo) {
 			//echo $update."<hr>";
 			$result_update = ejecutar($update);	
 
-
 			$update = "
 				update pacientes
 				set
@@ -584,7 +575,6 @@ switch ($tipo) {
 			//echo $update;
 			$result_update = ejecutar($update);	
 
-			
 			if ($umbral_new == 'ok') {
 				$update = "
 					update metricas
@@ -612,9 +602,10 @@ switch ($tipo) {
 		break;		
 	
 	case 'protocolo_nuevo':
-
+		//revisado y funcionando
 		//print_r($_POST);
-		
+		//$total_sesion = ($total_sesion+1);
+
 		if ($umbral =='') {
 			$umbral = 0;
 		} 
@@ -626,6 +617,7 @@ switch ($tipo) {
 				historico_sesion.paciente_id,
 				historico_sesion.empresa_id,
 				historico_sesion.usuario_id,
+				historico_sesion.sesion,
 				historico_sesion.f_captura,
 				historico_sesion.h_captura,
 				historico_sesion.umbral,
@@ -643,6 +635,7 @@ switch ($tipo) {
 				$paciente_id,
 				$empresa_id,
 				$usuario_id,
+				$total_sesion,
 				'$f_captura',
 				'$h_captura',
 				$umbral,
@@ -656,10 +649,11 @@ switch ($tipo) {
 
 			)
 		";	
-		// echo $insert."<hr>";
+		//echo $insert."<hr>";
+		//$historico_id = ejecutar_id($insert);
+		//echo "historico_id ",$historico_id;
+		
 		$result_insert = ejecutar($insert);		
-
-
 		$sql_hist ="
 			SELECT
 				max(historico_sesion.historico_id) as historico_id
@@ -671,8 +665,7 @@ switch ($tipo) {
 
 			
 		if (!empty($adversos)) {			
-			foreach ($adversos as $valor) {
-			
+			foreach ($adversos as $valor) {	
 				if ($valor == 'OTROS') {
 					$otros = strtoupper($otros);
 					$insert = "
@@ -790,7 +783,6 @@ switch ($tipo) {
 			//echo $update."<hr>";
 			$result_update = ejecutar($update);	
 
-
 			$update = "
 				update pacientes
 				set
@@ -800,7 +792,6 @@ switch ($tipo) {
 			//echo $update;
 			$result_update = ejecutar($update);	
 
-			
 			if ($umbral_new == 'ok') {
 				$update = "
 					update metricas
@@ -813,22 +804,28 @@ switch ($tipo) {
 			}	
 			
 			$tabla_enc = "";		
-/// guarda las encuestas
-		if (!empty($encuestas)) {
-			
-				$tabla_enc ="
-					<table style='width: 70%' class='table table-bordered'>
-						<tr>
-							<th>Clinimetria</th>
-							<th>Capturado</th>
-						</tr>
-							";
+		/// guarda las encuestas
+		if (!empty($encuestas)) {	
+			$tabla_enc ="
+				<table style='width: 70%' class='table table-bordered'>
+					<tr>
+						<th>Clinimetria</th>
+						<th>Capturado</th>
+						<th>Resultado</th>
+					</tr>
+						";
 										
 			foreach ($encuestas as $valor) {
-				//echo $valor."string";
-
+				//echo $valor."string";	
 				
-								
+				$sql_bases = "
+				SELECT
+					base_encuesta_$valor.base_id,
+					base_encuesta_$valor.paciente_id,
+					base_encuesta_$valor.usuario_id,
+					base_encuesta_$valor.f_captura,
+					base_encuesta_$valor.h_captura,";	
+
 				$sql_sem1 = "
 					SELECT
 						preguntas_encuestas.pregunta_id,
@@ -851,6 +848,7 @@ switch ($tipo) {
 						  base_encuesta_$valor.empresa_id,
 						  base_encuesta_$valor.f_captura,
 						  base_encuesta_$valor.h_captura,";
+
 					$insert_v ="values
 						( $paciente_id,
 						  $usuario_id,
@@ -859,9 +857,13 @@ switch ($tipo) {
 						  '$f_captura',
 						  '$h_captura',";	
 						$cnt =1;	 
+						$sql_basesX = "";
+						$wherex = "";
 			    while($row_sem1 = mysqli_fetch_array($result_sem1)){
 			        extract($row_sem1);
 					$respuesta = 'pregunta_'.$pregunta_id;
+
+					// se construye la qwuery para guardar las respuestas
 					if ($tipo <> 'instrucciones' && $tipo <> 'titulo') {						
 						if ($cnt_se1 <> $cnt) {
 							$insert_c .="base_encuesta_$valor.respuesta_$pregunta_id,";
@@ -871,20 +873,105 @@ switch ($tipo) {
 							$insert_v .="'".$$respuesta."'";
 						}			
 					}
+					
+					// estamos construyendo la consulta para sumar las respuestas y tener los resultados
+					$sql_basesX .= "
+					( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_$encuesta_id.respuesta_$pregunta_id and respuestas.encuesta_id = $encuesta_id )+";
+					//echo $cnt." - ".$pregunta_id."<br>";
+					if ( $cnt == 1) {
+						//echo $cnt." - ".$pregunta_id."<br>";
+						$wherex .= "AND base_encuesta_$valor.respuesta_$pregunta_id <>''";
+					}
+
 					$cnt ++;
 				}		
 					
 					$insert = $insert_c.") ".$insert_v.")";
 				    // echo $insert."<hr>";
+					//$base_id = ejecutar_id($insert);
 				    $result_insert = ejecutar($insert);				
-				
+					//echo $insert."<hr>";
+					$sql_base_id ="
+					SELECT
+						max(base_encuesta_$valor.base_id) as base_id
+					FROM	
+						base_encuesta_$valor";
+					$result_base_id = ejecutar($sql_base_id);
+					$row_base_id = mysqli_fetch_array($result_base_id);
+					extract($row_base_id);
+					//echo $base_id."<hr>";
+
+					// ------------------- se construye la consulta para sumar las respuestas y tener los resultados
+					$sql_basesX = substr($sql_basesX, 0, -1);
+					$sql_bases .= "
+						$sql_basesX as total
+					FROM
+						base_encuesta_$encuesta_id
+					WHERE
+						base_encuesta_$encuesta_id.paciente_id = $paciente_id 
+						$wherex
+						AND base_encuesta_$valor.base_id = $base_id
+					ORDER BY f_captura DESC";
+					//echo $sql_bases."<hr>";
+					$result_bases = ejecutar($sql_bases);
+					$row_bases = mysqli_fetch_array($result_bases);
+					extract($row_bases);
+					//echo $total."<hr>";
+
+					//-------------------- fin de la consulta para sumar las respuestas y tener los resultados
+					if ($total_sesion !== 1 and $valor == 11) {
+						$extra = " AND calificaciones.extra = 'ok'"; 
+					}else{
+						$extra = " AND calificaciones.extra <> 'ok'";
+					}
+					//--- poner los resultados en tablas de la encuesta
+					if ($valor == 11) {
+						$update = "
+							UPDATE base_encuesta_11
+							INNER JOIN historico_sesion
+								ON base_encuesta_11.historico_id = historico_sesion.historico_id
+							SET base_encuesta_11.total = 
+								CASE
+									WHEN historico_sesion.sesion = 1 THEN
+										(SELECT respuestas.valor 
+										FROM respuestas 
+										WHERE respuestas.respuesta LIKE base_encuesta_11.respuesta_125 
+										AND respuestas.encuesta_id = 11 
+										LIMIT 1)
+									ELSE
+										(SELECT respuestas.valor 
+										FROM respuestas 
+										WHERE respuestas.respuesta LIKE base_encuesta_11.respuesta_127 
+										AND respuestas.encuesta_id = 11 
+										LIMIT 1)
+								END
+							WHERE 
+								base_encuesta_11.paciente_id = $paciente_id AND
+								((historico_sesion.sesion = 1 AND base_encuesta_11.respuesta_125 <> '') OR
+								(historico_sesion.sesion > 1 AND base_encuesta_11.respuesta_127 <> ''));
+						";
+					}else{
+						$update = "
+							UPDATE base_encuesta_$valor
+							set
+							base_encuesta_$valor.total = $total
+							where base_encuesta_$valor.base_id = $base_id
+							";
+							
+					}
+					//echo $update;
+					$result_update = ejecutar($update);
+					//-------------------- fin de la consulta con resultados
 
 					$sql_clini = "
-					SELECT
+					SELECT DISTINCT
 						base_encuesta_$valor.paciente_id, 
 						base_encuesta_$valor.usuario_id, 
 						base_encuesta_$valor.f_captura, 
-						base_encuesta_$valor.h_captura
+						base_encuesta_$valor.h_captura,
+						base_encuesta_$valor.total,
+						(SELECT valor FROM calificaciones WHERE encuesta_id = $valor AND min <= base_encuesta_$valor.total and max >= base_encuesta_$valor.total $extra) as evaluacion,
+						(SELECT color FROM calificaciones WHERE encuesta_id = $valor AND min <= base_encuesta_$valor.total and max >= base_encuesta_$valor.total $extra) as color
 					FROM
 						base_encuesta_$valor
 					WHERE
@@ -893,13 +980,18 @@ switch ($tipo) {
 						base_encuesta_$valor.f_captura = '$f_captura' AND 
 						base_encuesta_$valor.h_captura = '$h_captura'";
 					
-							$result_valida = ejecutar($sql_clini);
-							$cnt_valida = mysqli_num_rows($result_valida);
-							if ($cnt_valida ==1) { 
-								$exito ="<b><p style='color: green'>Grabado Exitosamente <i class='material-icons'>check</i></p></b>";
-							} else {
-								$exito ="<b><p style='color: red'>Error no se Grabo <i class='material-icons'>close</i></p></b>";
-							}
+						//echo $sql_clini;
+						$result_valida = ejecutar($sql_clini);
+						$cnt_valida = mysqli_num_rows($result_valida);
+						$row_valida = mysqli_fetch_array($result_valida);
+						extract($row_valida);
+						$resultado = $total;
+
+						if ($cnt_valida ==1) { 
+							$exito ="<b><p style='color: green'>Grabado Exitosamente <i class='material-icons'>check</i></p></b>";
+						} else {
+							$exito ="<b><p style='color: red'>Error no se Grabo <i class='material-icons'>close</i></p></b>";
+						}
 							
 					
 					$sql_clini2 = "
@@ -918,6 +1010,7 @@ switch ($tipo) {
 											<tr>
 												<td>$descripcion</td>
 												<td>$exito</td>
+												<td style='background-color: $color'>$evaluacion</td>
 											</tr>
 												";			
 				
