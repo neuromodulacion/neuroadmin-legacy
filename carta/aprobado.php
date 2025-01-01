@@ -21,6 +21,6 @@ $merchant_order_id = $_GET['merchant_order_id'];
 <body>
     <h1>¡Pago exitoso!</h1>
     <p>Gracias por tu pago. Serás redirigido en breve.</p>
-    <p>Si no eres redirigido automáticamente, haz clic <a href="index.php">aquí</a>.</p>
+    <p>Si no eres redirigido automáticamente, haz clic <a href="../index.php">aquí</a>.</p>
 </body>
 </html>
