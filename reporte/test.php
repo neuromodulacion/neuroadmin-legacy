@@ -28,6 +28,9 @@ extract($_SESSION);
 extract($_POST);
 extract($_GET);
 //print_r($_SESSION);
+// 1. Capturamos la variable que viene por GET. 
+//    Si no viene nada, por defecto usamos 'TMS' (o lo que tú consideres).
+$tipo_terapia = isset($_GET['tipo_terapia']) ? $_GET['tipo_terapia'] : '';
 
 $hoy = date("Y-m-d");
 $ahora = date("H:i:00"); 
@@ -93,7 +96,7 @@ include($ruta.'paciente/fun_paciente.php');
 		   
 </head>
 
-<body style="background-color: #fff" >
+<body style="background-color: #fff; text-align: center;">
 <script src="../highcharts/js/highcharts.js"></script>
 <script src="../highcharts/js/highcharts-more.js"></script>
 <script src="../highcharts/js/modules/exporting.js"></script>
@@ -101,9 +104,27 @@ include($ruta.'paciente/fun_paciente.php');
 
 	<h1 align="center">Analisis</h1>
 	<hr>
+	<!-- <form method="GET" action="analisis.php"> -->
+	<form method="GET" action="test.php">
+    <label for="tipo_terapia">Tipo de terapia:</label>
+    <select name="tipo_terapia" id="tipo_terapia">
+        <option value="TMS">Solo TMS</option>
+        <option value="tDCS">Solo tDCS</option>
+        <option value="ambas">TMS y tDCS</option>
+    </select>
+    
+    <button type="submit">Consultar</button>
+</form>
+	<hr>
+	<?php	
+	if ($tipo_terapia <> 'TMS' && $tipo_terapia <> 'tDCS' && $tipo_terapia <> 'ambas') {
+		echo "<h1>No se ha seleccionado un tipo de terapia.</h1>";
+	}else{ ?>
+		<h2>Resultados para: <?php echo $tipo_terapia; ?></h2>
+
 	<div class="row">
 		<div align="center" class="col-md-12">
-			<h1>PHQ9 y GAD7</h1>
+			<h1>PHQ9 y GAD7 de <?php echo $tipo_terapia; ?></h1>
 	  		<table style="width: 80%; font-size: 12px" class="table table-bordered">								  			
 	  			<tr>
 	  				<th colspan="5"  style="text-align: center" >DATOS</th>
@@ -136,23 +157,38 @@ include($ruta.'paciente/fun_paciente.php');
 				$delete = "DELETE FROM analisis_phq9_gad7";
 				$result = ejecutar($delete);	  			
 	  			
-	  			$sql_cobro = "
-				SELECT DISTINCT
-					pacientes.paciente_id,
-					pacientes.f_nacimiento,
-					pacientes.sexo,
-					pacientes.diagnostico,
-					( SELECT COUNT(*) AS total FROM base_encuesta_1 WHERE base_encuesta_1.paciente_id = pacientes.paciente_id ) AS phq,
-					( SELECT COUNT(*) AS total FROM base_encuesta_2 WHERE base_encuesta_2.paciente_id = pacientes.paciente_id ) AS gad,
-					protocolo_terapia.terapia 
-				FROM
-					pacientes
-					INNER JOIN historico_sesion ON pacientes.paciente_id = historico_sesion.paciente_id
-					INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
-				WHERE
-					pacientes.empresa_id = 1
-					AND terapia = 'TMS'		  			
-	  			";
+				$filtro_terapia = "";
+				if ($tipo_terapia === 'TMS') {
+					$filtro_terapia = "AND protocolo_terapia.terapia = 'TMS'";
+				} elseif ($tipo_terapia === 'tDCS') {
+					$filtro_terapia = "AND protocolo_terapia.terapia = 'tDCS'";
+				} elseif ($tipo_terapia === 'ambas') {
+					$filtro_terapia = "AND protocolo_terapia.terapia IN ('TMS', 'tDCS')";
+				} else {
+					// Por si el valor es desconocido; puedes setear un valor por defecto:
+					$filtro_terapia = "AND protocolo_terapia.terapia = 'TMS'";
+				}
+				
+				$sql_cobro = "
+					SELECT DISTINCT
+						pacientes.paciente_id,
+						pacientes.f_nacimiento,
+						pacientes.sexo,
+						pacientes.diagnostico,
+						( SELECT COUNT(*) AS total FROM base_encuesta_1 WHERE base_encuesta_1.paciente_id = pacientes.paciente_id ) AS phq,
+						( SELECT COUNT(*) AS total FROM base_encuesta_2 WHERE base_encuesta_2.paciente_id = pacientes.paciente_id ) AS gad,
+						protocolo_terapia.terapia 
+					FROM
+						pacientes
+						INNER JOIN historico_sesion 
+							ON pacientes.paciente_id = historico_sesion.paciente_id
+						INNER JOIN protocolo_terapia 
+							ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+					WHERE
+						pacientes.empresa_id = 1
+						$filtro_terapia
+				";
+				
 				// echo $sql_cobro."<br>";
 				$cnt_g = 1;
 	  			$result_cob=ejecutar($sql_cobro);
@@ -167,8 +203,7 @@ include($ruta.'paciente/fun_paciente.php');
 
 					$sql_PHQ9 = "
 						SELECT DISTINCT
-							historico_sesion.f_captura,
-							historico_sesion.sesion, 
+							historico_sesion.f_captura, 
 							base_encuesta_1.total, 
 							protocolo_terapia.terapia
 						FROM
@@ -186,6 +221,7 @@ include($ruta.'paciente/fun_paciente.php');
 						WHERE
 							base_encuesta_1.respuesta_3 <> ''
 							AND historico_sesion.paciente_id = $paciente_id
+							$filtro_terapia
 						ORDER BY
 							historico_sesion.f_captura ASC
 						LIMIT 3					  			
@@ -228,7 +264,8 @@ include($ruta.'paciente/fun_paciente.php');
 						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
 					WHERE
 						historico_sesion.paciente_id = $paciente_id 
-						AND historico_sesion.f_captura <= '$f_captura' 
+						AND historico_sesion.f_captura <= '$f_captura'
+						$filtro_terapia 
 					GROUP BY
 						1,2					
 					";
@@ -255,7 +292,6 @@ include($ruta.'paciente/fun_paciente.php');
 					$sql_GAD7 = "
 					SELECT DISTINCT
 						historico_sesion.f_captura,
-						historico_sesion.sesion, 
 						base_encuesta_2.total AS total_g,
 						protocolo_terapia.terapia 
 					FROM
@@ -268,12 +304,13 @@ include($ruta.'paciente/fun_paciente.php');
 					WHERE
 						base_encuesta_2.respuesta_14 <> '' 
 						AND base_encuesta_2.paciente_id = $paciente_id
+						$filtro_terapia
 					ORDER BY
 						pacientes.paciente_id ASC,
 						base_encuesta_2.f_captura ASC
 						LIMIT 3				  			
 			  			";
-						//echo $sql_GAD7."<br>";
+						//echo $sql_PHQ9."<br>";
 						$final_gad = 0;
 						$cnt_GAD7 = 1;
 			  			$result_GAD7=ejecutar($sql_GAD7);
@@ -292,7 +329,14 @@ include($ruta.'paciente/fun_paciente.php');
 					    	$cnt_GAD7++;					    	
 				    	}					
 				
-
+						$basal_phq  = !empty($basal_phq)  ? $basal_phq  : 0;
+						$inter_phq  = !empty($inter_phq) ? $inter_phq  : 0;
+						$final_phq  = !empty($final_phq) ? $final_phq  : 0;
+						$basal_gad  = !empty($basal_gad) ? $basal_gad  : 0;
+						$inter_gad  = !empty($inter_gad)? $inter_gad  : 0;
+						$final_gad  = !empty($final_gad)? $final_gad  : 0;
+						
+						
 				
 				$insert ="
 				INSERT INTO analisis_phq9_gad7 (
@@ -609,571 +653,5 @@ include($ruta.'paciente/fun_paciente.php');
 				
 										
 		</div>	
-		<hr>  
-		<div align="center" class="col-md-12">
-			<h1>PHQ9, GAD7 y Craving</h1>
-	  		<table style="width: 90%; font-size: 12px" class="table table-bordered">								  			
-	  			<tr>
-	  				<th colspan="6"  style="text-align: center" >DATOS</th>
-	  				
-	  				<th colspan="3" style="text-align: center" >PHQ9</th>
-	  				
-	  				<th colspan="3" style="text-align: center" >GAD7</th>
-	  				
-	  				<th colspan="3" style="text-align: center" >Craving</th>
-	  				
-	  				<th style="text-align: center" >Protocolos</th>	  					  				
-	  			</tr>
-	  			<tr>
-	  				<th style="text-align: center" >Cnt</th>
-	  				<th style="text-align: center" ># Id</th>
-	  				<th style="text-align: center" >Sexo</th>
-	  				<th style="text-align: center" >Edad</th>
-	  				<th style="text-align: center" >Sustancia</th>
-	  				<th style="text-align: center" >Diagnostico</th>
-	  				
-	  				<th style="text-align: center" >BASAL</th>
-	  				<th style="text-align: center" >INTER</th>
-	  				<th style="text-align: center" >FINAL</th>
-	  				
-	  				<th style="text-align: center" >BASAL</th>
-	  				<th style="text-align: center" >INTER</th>
-	  				<th style="text-align: center" >FINAL</th>	
-	  				
-	  				<th style="text-align: center" >BASAL</th>
-	  				<th style="text-align: center" >INTER</th>
-	  				<th style="text-align: center" >FINAL</th>	 
-	  				
-	  				<th style="text-align: center" >Protocolos</th>  				  					  				
-	  			</tr>
-	  			<?php
-	  			$sql_cobro = "
-				SELECT DISTINCT
-					pacientes.paciente_id, 
-					pacientes.f_nacimiento, 
-					pacientes.sexo,
-					pacientes.diagnostico,
-					( SELECT COUNT(*) AS total FROM base_encuesta_1 WHERE base_encuesta_1.paciente_id = pacientes.paciente_id ) AS phq,
-					( SELECT COUNT(*) AS total FROM base_encuesta_2 WHERE base_encuesta_2.paciente_id = pacientes.paciente_id ) AS gad,
-					( SELECT COUNT(*) AS total FROM base_encuesta_7 WHERE base_encuesta_7.paciente_id = pacientes.paciente_id ) AS craving,
-					protocolo_terapia.terapia 
-				FROM
-					pacientes
-					INNER JOIN historico_sesion ON pacientes.paciente_id = historico_sesion.paciente_id
-					INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
-				WHERE
-					pacientes.empresa_id = 1
-					AND terapia = 'TMS'					  			
-	  			";
-				//echo $sql_cobro."<br>";
-				$cnt_g = 1;
-	  			$result_cob=ejecutar($sql_cobro);
-		    	while($row_cob = mysqli_fetch_array($result_cob)){
-			    	extract($row_cob);	
-					$edad = obtener_edad_segun_fecha($f_nacimiento);
-					
-					//echo $phq."<hr>";
-					
-					if ($phq >= 3 && $gad >= 3 && $craving >= 3 ) {
-						
-
-					$sql_PHQ9 = "
-						SELECT DISTINCT
-							historico_sesion.f_captura, 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_3 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_4 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_5 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_6 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_7 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_8 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_9 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_10 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_11 AND respuestas.encuesta_id = 1 ) AS total, 
-							protocolo_terapia.terapia
-						FROM
-							pacientes
-							INNER JOIN
-							base_encuesta_1 ON pacientes.paciente_id = base_encuesta_1.paciente_id INNER JOIN historico_sesion
-							ON 
-								base_encuesta_1.paciente_id = historico_sesion.paciente_id AND
-								base_encuesta_1.f_captura = historico_sesion.f_captura AND
-								base_encuesta_1.h_captura = historico_sesion.h_captura
-							INNER JOIN
-							protocolo_terapia
-							ON 
-								historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id
-						WHERE
-							base_encuesta_1.respuesta_3 <> ''
-							AND historico_sesion.paciente_id = $paciente_id
-						ORDER BY
-							historico_sesion.f_captura ASC
-						LIMIT 3					  			
-			  			";
-						//echo $sql_PHQ9."<br>";
-						$cnt_PHQ9 = 1;
-			  			$result_PHQ9=ejecutar($sql_PHQ9);
-				    	while($row_PHQ9 = mysqli_fetch_array($result_PHQ9)){				    	
-					    	extract($row_PHQ9);					    	
-					    	if ($cnt_PHQ9 == 1) {
-								$basal_phq = $total;
-							} 
-					    	if ($cnt_PHQ9 == 2) {
-								$inter_phq = $total;
-							}							
-					    	if ($cnt_PHQ9 == 3) {
-								$final_phq = $total;
-							}					    	
-
-					    	$cnt_PHQ9++;					    	
-				    	}
-				    	
-				    	
-					$tabla ="
-					<table class='table table-bordered'>
-					
-					";
-										
-					$sql_terapia ="
-					SELECT
-						historico_sesion.paciente_id,
-						protocolo_terapia.prot_terapia,
-						COUNT(*) as cnt
-					FROM
-						historico_sesion
-						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
-					WHERE
-						historico_sesion.paciente_id = $paciente_id 
-						AND historico_sesion.f_captura <= '$f_captura' 
-					GROUP BY
-						1,2					
-					";
-			  			$result_terapia=ejecutar($sql_terapia);
-				    	while($row_terapia = mysqli_fetch_array($result_terapia)){				    	
-					    	extract($row_terapia);	
-
-						$tabla .="
-							<tr>
-								<td>$prot_terapia</td>
-								<td>$cnt</td>
-							</tr>					
-						";							
-
-							
-						}	
-						
-					$tabla .="
-					</table>					
-					";					    	
-							
-					$sql_GAD7 = "
-					SELECT DISTINCT
-						historico_sesion.f_captura,
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_14 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_15 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_16 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_17 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_18 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_19 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_20 AND respuestas.encuesta_id = 2 ) AS total_g,
-						protocolo_terapia.terapia 
-					FROM
-						pacientes
-						INNER JOIN base_encuesta_2 ON pacientes.paciente_id = base_encuesta_2.paciente_id
-						INNER JOIN historico_sesion ON base_encuesta_2.paciente_id = historico_sesion.paciente_id 
-							AND base_encuesta_2.f_captura = historico_sesion.f_captura 
-							AND base_encuesta_2.h_captura = historico_sesion.h_captura
-						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
-					WHERE
-						base_encuesta_2.respuesta_14 <> '' 
-						AND base_encuesta_2.paciente_id = $paciente_id
-					ORDER BY
-						pacientes.paciente_id ASC,
-						base_encuesta_2.f_captura ASC
-						LIMIT 3				  			
-			  			";
-						//echo $sql_PHQ9."<br>";
-						$cnt_GAD7 = 1;
-						$final_gad= 0;
-			  			$result_GAD7=ejecutar($sql_GAD7);
-				    	while($row_GAD7 = mysqli_fetch_array($result_GAD7)){				    	
-					    	extract($row_GAD7);					    	
-					    	if ($cnt_GAD7 == 1) {
-								$basal_gad = $total_g;
-							} 
-					    	if ($cnt_GAD7 == 2) {
-								$inter_gad = $total_g;
-							}							
-					    	if ($cnt_GAD7 == 3) {
-								$final_gad = $total_g;
-							}					    	
-
-					    	$cnt_GAD7++;					    	
-				    	}					
-
-					$sql_craving = "
-					SELECT DISTINCT
-						historico_sesion.f_captura,
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_82 AND respuestas.encuesta_id = 7 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_84 AND respuestas.encuesta_id = 7 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_85 AND respuestas.encuesta_id = 7 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_86 AND respuestas.encuesta_id = 7 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_87 AND respuestas.encuesta_id = 7 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_89 AND respuestas.encuesta_id = 7 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_90 AND respuestas.encuesta_id = 7 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_91 AND respuestas.encuesta_id = 7 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_92 AND respuestas.encuesta_id = 7 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_7.respuesta_93 AND respuestas.encuesta_id = 7 ) AS total_c,
-						protocolo_terapia.terapia,
-						base_encuesta_7.respuesta_82 
-					FROM
-						pacientes
-						INNER JOIN base_encuesta_7 ON pacientes.paciente_id = base_encuesta_7.paciente_id
-						INNER JOIN historico_sesion ON base_encuesta_7.paciente_id = historico_sesion.paciente_id 
-						AND base_encuesta_7.f_captura = historico_sesion.f_captura 
-						AND base_encuesta_7.h_captura = historico_sesion.h_captura
-						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
-					WHERE
-						base_encuesta_7.respuesta_82 <> '' 
-						AND base_encuesta_7.paciente_id = $paciente_id
-					ORDER BY
-						pacientes.paciente_id ASC,
-						base_encuesta_7.f_captura ASC
-						LIMIT 3				  			
-			  			";
-						//echo $sql_craving."<br>";
-						$cnt_craving = 1;
-						$final_craving = 0;
-			  			$result_craving=ejecutar($sql_craving);
-				    	while($row_craving = mysqli_fetch_array($result_craving)){				    	
-					    	extract($row_craving);					    	
-					    	if ($cnt_craving == 1) {
-								$basal_craving = $total_c;
-							} 
-					    	if ($cnt_craving == 2) {
-								$inter_craving = $total_c;
-							}							
-					    	if ($cnt_craving == 3) {
-								$final_craving = $total_c;
-							}					    	
-
-					    	$cnt_craving++;					    	
-				    	}				    						
-					
-	  			?>
-	  			<tr>
-	  				<td style="text-align: center"><?php echo $cnt_g ; ?></td>
-	  				<td style="text-align: center"><?php echo $paciente_id ; ?></td>
-	  				<td style="text-align: center"><?php echo $sexo; ?></td>
-	  				<td style="text-align: center"><?php echo $edad; ?></td>
-	  				<td style="text-align: center"><?php echo $diagnostico; ?></td>
-	  				<td style="text-align: center"><?php echo $respuesta_82; ?></td>
-	  				
-	  				<td style="text-align: center"><?php echo $basal_phq; ?></td>
-	  				<td style="text-align: center"><?php echo $inter_phq; ?></td>
-	  				<td style="text-align: center"><?php echo $final_phq; ?></td>
-	  				
-	  				<td style="text-align: center"><?php echo $basal_gad; ?></td>
-	  				<td style="text-align: center"><?php echo $inter_gad; ?></td>
-	  				<td style="text-align: center"><?php echo $final_gad; ?></td>
-	  				
-	  				<td style="text-align: center"><?php echo $basal_gad; ?></td>
-	  				<td style="text-align: center"><?php echo $inter_gad; ?></td>
-	  				<td style="text-align: center"><?php echo $final_gad; ?></td>	
-	  				
-	  				<td style="text-align: center"><?php echo $tabla; ?></td>	  				  				
-	  			</tr>
-	  			<?php 
-					    	$basal_gad = '';
-					    	$inter_gad = '';
-					    	$final_gad = '';
-					$cnt_g++;		
-					}
-										
-				} ?>
-
-  			</table>										
-		</div>	
-		<hr>  
-		<div align="center" class="col-md-12">
-			<h1>PHQ9, GAD7 y Y-BOCS</h1>
-	  		<table style="width: 90%; font-size: 12px" class="table table-bordered">								  			
-	  			<tr>
-	  				<th colspan="5"  style="text-align: center" >DATOS</th>
-	  				
-	  				<th colspan="3" style="text-align: center" >PHQ9</th>
-	  				
-	  				<th colspan="3" style="text-align: center" >GAD7</th>
-	  				
-	  				<th colspan="3" style="text-align: center" >Y-BOCS</th>	
-	  				
-	  				<th style="text-align: center" >Protocolos</th>  					  				
-	  			</tr>
-	  			<tr>
-	  				<th style="text-align: center" >Cnt</th>
-	  				<th style="text-align: center" ># Id</th>
-	  				<th style="text-align: center" >Sexo</th>
-	  				<th style="text-align: center" >Edad</th>
-	  				<th style="text-align: center" >Diagnostico</th>
-	  				
-	  				<th style="text-align: center" >BASAL</th>
-	  				<th style="text-align: center" >INTER</th>
-	  				<th style="text-align: center" >FINAL</th>
-	  				
-	  				<th style="text-align: center" >BASAL</th>
-	  				<th style="text-align: center" >INTER</th>
-	  				<th style="text-align: center" >FINAL</th>	
-	  				
-	  				<th style="text-align: center" >BASAL</th>
-	  				<th style="text-align: center" >INTER</th>
-	  				<th style="text-align: center" >FINAL</th>	
-	  				
-	  				<th style="text-align: center" >Protocolos</th>  				  					  				
-	  			</tr>
-	  			<?php
-	  			$sql_cobro = "
-				SELECT DISTINCT
-					pacientes.paciente_id, 
-					pacientes.f_nacimiento, 
-					pacientes.sexo,
-					pacientes.diagnostico,
-					( SELECT COUNT(*) AS total FROM base_encuesta_1 WHERE base_encuesta_1.paciente_id = pacientes.paciente_id ) AS phq,
-					( SELECT COUNT(*) AS total FROM base_encuesta_2 WHERE base_encuesta_2.paciente_id = pacientes.paciente_id ) AS gad,
-					( SELECT COUNT(*) AS total FROM base_encuesta_4 WHERE base_encuesta_4.paciente_id = pacientes.paciente_id ) AS ybocs,
-					protocolo_terapia.terapia 
-				FROM
-					pacientes
-					INNER JOIN historico_sesion ON pacientes.paciente_id = historico_sesion.paciente_id
-					INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
-				WHERE
-					pacientes.empresa_id = 1
-					AND terapia = 'TMS'	  			
-	  			";
-				//echo $sql_cobro."<br>";
-				$cnt_g = 1;
-	  			$result_cob=ejecutar($sql_cobro);
-		    	while($row_cob = mysqli_fetch_array($result_cob)){
-			    	extract($row_cob);	
-					$edad = obtener_edad_segun_fecha($f_nacimiento);
-					
-					//echo $phq."<hr>";
-					
-					if ($phq >= 3 && $gad >= 3 && $ybocs >= 3 ) {
-						
-
-					$sql_PHQ9 = "
-						SELECT DISTINCT
-							historico_sesion.f_captura, 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_3 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_4 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_5 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_6 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_7 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_8 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_9 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_10 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_11 AND respuestas.encuesta_id = 1 ) AS total, 
-							protocolo_terapia.terapia
-						FROM
-							pacientes
-							INNER JOIN
-							base_encuesta_1 ON pacientes.paciente_id = base_encuesta_1.paciente_id INNER JOIN historico_sesion
-							ON 
-								base_encuesta_1.paciente_id = historico_sesion.paciente_id AND
-								base_encuesta_1.f_captura = historico_sesion.f_captura AND
-								base_encuesta_1.h_captura = historico_sesion.h_captura
-							INNER JOIN
-							protocolo_terapia
-							ON 
-								historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id
-						WHERE
-							base_encuesta_1.respuesta_3 <> ''
-							AND historico_sesion.paciente_id = $paciente_id
-						ORDER BY
-							historico_sesion.f_captura ASC
-						LIMIT 3					  			
-			  			";
-						//echo $sql_PHQ9."<br>";
-						$cnt_PHQ9 = 1;
-			  			$result_PHQ9=ejecutar($sql_PHQ9);
-				    	while($row_PHQ9 = mysqli_fetch_array($result_PHQ9)){				    	
-					    	extract($row_PHQ9);					    	
-					    	if ($cnt_PHQ9 == 1) {
-								$basal_phq = $total;
-							} 
-					    	if ($cnt_PHQ9 == 2) {
-								$inter_phq = $total;
-							}							
-					    	if ($cnt_PHQ9 == 3) {
-								$final_phq = $total;
-							}					    	
-
-					    	$cnt_PHQ9++;					    	
-				    	}
-				    	
-				    	//echo $f_captura."<hr>";
-					$tabla ="
-					<table class='table table-bordered'>
-					
-					";
-										
-					$sql_terapia ="
-					SELECT
-						historico_sesion.paciente_id,
-						protocolo_terapia.prot_terapia,
-						COUNT(*) as cnt
-					FROM
-						historico_sesion
-						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
-					WHERE
-						historico_sesion.paciente_id = $paciente_id 
-						AND historico_sesion.f_captura <= '$f_captura' 
-					GROUP BY
-						1,2					
-					";
-			  			$result_terapia=ejecutar($sql_terapia);
-				    	while($row_terapia = mysqli_fetch_array($result_terapia)){				    	
-					    	extract($row_terapia);	
-
-						$tabla .="
-							<tr>
-								<td>$prot_terapia</td>
-								<td>$cnt</td>
-							</tr>					
-						";							
-
-							
-						}	
-						
-					$tabla .="
-					</table>					
-					";					    	
-							
-					$sql_GAD7 = "
-					SELECT DISTINCT
-						historico_sesion.f_captura,
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_14 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_15 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_16 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_17 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_18 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_19 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_20 AND respuestas.encuesta_id = 2 ) AS total_g,
-						protocolo_terapia.terapia 
-					FROM
-						pacientes
-						INNER JOIN base_encuesta_2 ON pacientes.paciente_id = base_encuesta_2.paciente_id
-						INNER JOIN historico_sesion ON base_encuesta_2.paciente_id = historico_sesion.paciente_id 
-							AND base_encuesta_2.f_captura = historico_sesion.f_captura 
-							AND base_encuesta_2.h_captura = historico_sesion.h_captura
-						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
-					WHERE
-						base_encuesta_2.respuesta_14 <> '' 
-						AND base_encuesta_2.paciente_id = $paciente_id
-					ORDER BY
-						pacientes.paciente_id ASC,
-						base_encuesta_2.f_captura ASC
-						LIMIT 3				  			
-			  			";
-						//echo $sql_PHQ9."<br>";
-						$cnt_GAD7 = 1;
-			  			$result_GAD7=ejecutar($sql_GAD7);
-				    	while($row_GAD7 = mysqli_fetch_array($result_GAD7)){				    	
-					    	extract($row_GAD7);					    	
-					    	if ($cnt_GAD7 == 1) {
-								$basal_gad = $total_g;
-							} 
-					    	if ($cnt_GAD7 == 2) {
-								$inter_gad = $total_g;
-							}							
-					    	if ($cnt_GAD7 == 3) {
-								$final_gad = $total_g;
-							}					    	
-
-					    	$cnt_GAD7++;					    	
-				    	}	
-				    								
-					$sql_YBOCS = "
-					SELECT DISTINCT
-						historico_sesion.f_captura,
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_50 AND respuestas.encuesta_id = 4 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_51 AND respuestas.encuesta_id = 4 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_52 AND respuestas.encuesta_id = 4 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_53 AND respuestas.encuesta_id = 4 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_54 AND respuestas.encuesta_id = 4 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_55 AND respuestas.encuesta_id = 4 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_56 AND respuestas.encuesta_id = 4 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_57 AND respuestas.encuesta_id = 4 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_58 AND respuestas.encuesta_id = 4 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_4.respuesta_59 AND respuestas.encuesta_id = 4 ) AS totaly,
-						historico_sesion.historico_id,
-						protocolo_terapia.terapia 
-					FROM
-						pacientes
-						INNER JOIN base_encuesta_4 ON pacientes.paciente_id = base_encuesta_4.paciente_id
-						INNER JOIN historico_sesion ON base_encuesta_4.paciente_id = historico_sesion.paciente_id 
-						AND base_encuesta_4.f_captura = historico_sesion.f_captura 
-						AND base_encuesta_4.h_captura = historico_sesion.h_captura
-						INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
-					WHERE
-						base_encuesta_4.respuesta_50 <> ''
-						AND base_encuesta_4.paciente_id = $paciente_id 
-					ORDER BY
-						pacientes.paciente_id ASC,
-						base_encuesta_4.f_captura ASC
-						LIMIT 3				  			
-			  			";
-						//echo $sql_YBOCS."<br>";
-						$cnt_YBOCS = 1;
-			  			$result_YBOCS=ejecutar($sql_YBOCS);
-				    	while($row_YBOCS = mysqli_fetch_array($result_YBOCS)){				    	
-					    	extract($row_YBOCS);
-					    	// print_r($row_YBOCS);					    	
-					    	if ($cnt_YBOCS == 1) {
-								$basal_YBOCS = $totaly;
-							} 
-					    	if ($cnt_YBOCS == 2) {
-								$inter_YBOCS = $totaly;
-							}							
-					    	if ($cnt_YBOCS == 3) {
-								$final_YBOCS = $totaly;
-							}					    	
-
-					    	$cnt_YBOCS++;					    	
-				    	}					
-					
-					
-	  			?>
-	  			<tr>
-	  				<td style="text-align: center"><?php echo $cnt_g ; ?></td>
-	  				<td style="text-align: center"><?php echo $paciente_id ; ?></td>
-	  				<td style="text-align: center"><?php echo $sexo; ?></td>
-	  				<td style="text-align: center"><?php echo $edad; ?></td>
-	  				<td style="text-align: center"><?php echo $diagnostico; ?></td>
-	  				
-	  				<td style="text-align: center"><?php echo $basal_phq; ?></td>
-	  				<td style="text-align: center"><?php echo $inter_phq; ?></td>
-	  				<td style="text-align: center"><?php echo $final_phq; ?></td>
-	  				
-	  				<td style="text-align: center"><?php echo $basal_gad; ?></td>
-	  				<td style="text-align: center"><?php echo $inter_gad; ?></td>
-	  				<td style="text-align: center"><?php echo $final_gad; ?></td>
-	  				
-	  				<td style="text-align: center"><?php echo $basal_YBOCS; ?></td>
-	  				<td style="text-align: center"><?php echo $inter_YBOCS; ?></td>
-	  				<td style="text-align: center"><?php echo $final_YBOCS; ?></td>	 
-	  				
-	  				<td style="text-align: center"><?php echo $tabla; ?></td>	  				 				
-	  			</tr>
-	  			<?php 
-					    	$basal_YBOCS = '';
-					    	$inter_YBOCS = '';
-					    	$final_YBOCS = '';
-					$cnt_g++;		
-					}
-										
-				} ?>
-
-  			</table>										
-		</div>				
-	</div>	
-</body>
+	</div>
+	<?php } ?>

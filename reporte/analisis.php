@@ -168,15 +168,7 @@ include($ruta.'paciente/fun_paciente.php');
 					$sql_PHQ9 = "
 						SELECT DISTINCT
 							historico_sesion.f_captura, 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_3 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_4 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_5 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_6 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_7 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_8 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_9 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_10 AND respuestas.encuesta_id = 1 )+ 
-							( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_1.respuesta_11 AND respuestas.encuesta_id = 1 ) AS total, 
+							base_encuesta_1.total, 
 							protocolo_terapia.terapia
 						FROM
 							pacientes
@@ -236,10 +228,12 @@ include($ruta.'paciente/fun_paciente.php');
 					WHERE
 						historico_sesion.paciente_id = $paciente_id 
 						AND historico_sesion.f_captura <= '$f_captura' 
+					
 					GROUP BY
 						1,2					
 					";
-			  			$result_terapia=ejecutar($sql_terapia);
+			  			
+						$result_terapia=ejecutar($sql_terapia);
 				    	while($row_terapia = mysqli_fetch_array($result_terapia)){				    	
 					    	extract($row_terapia);	
 
@@ -262,13 +256,7 @@ include($ruta.'paciente/fun_paciente.php');
 					$sql_GAD7 = "
 					SELECT DISTINCT
 						historico_sesion.f_captura,
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_14 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_15 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_16 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_17 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_18 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_19 AND respuestas.encuesta_id = 2 )+ 
-						( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_2.respuesta_20 AND respuestas.encuesta_id = 2 ) AS total_g,
+						base_encuesta_2.total AS total_g,
 						protocolo_terapia.terapia 
 					FROM
 						pacientes
@@ -621,7 +609,8 @@ include($ruta.'paciente/fun_paciente.php');
 				
 										
 		</div>	
-		<hr>  
+		<hr> 
+		<?php /* 
 		<div align="center" class="col-md-12">
 			<h1>PHQ9, GAD7 y Craving</h1>
 	  		<table style="width: 90%; font-size: 12px" class="table table-bordered">								  			
@@ -1188,4 +1177,4 @@ include($ruta.'paciente/fun_paciente.php');
   			</table>										
 		</div>				
 	</div>	
-</body>
+</body> */ ?>

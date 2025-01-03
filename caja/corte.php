@@ -205,7 +205,8 @@ $date_past = date("Y-m-d",strtotime('-7 day'));
 										     	$result_cob=ejecutar($sql_cob); 
 									    	while($row_cob = mysqli_fetch_array($result_cob)){
 										    	extract($row_cob);	
-										    	$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
+												$f_captura = obMesActualespaniol($f_captura);
+										    	
 									    		if ($paciente == '') {
 													$paciente = $paciente_consulta;
 													$paciente_id = '';
@@ -266,7 +267,8 @@ $date_past = date("Y-m-d",strtotime('-7 day'));
 										     	$result_cob=ejecutar($sql_cob); 
 										    	while($row_cob = mysqli_fetch_array($result_cob)){
 										    	extract($row_cob);	
-										    	$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
+												$f_captura = obMesActualespaniol($f_captura);
+										    	
 										    	?>
 								  			<tr>
 								  				<td><?php echo $f_captura."<br>".$h_captura; ?></td> 
@@ -314,7 +316,8 @@ $date_past = date("Y-m-d",strtotime('-7 day'));
 										    	while($row_cob = mysqli_fetch_array($result_cob)){
 										    	extract($row_cob);	
 										    	//$f_captura = date("d-m-Y",strtotime($f_captura));
-												$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
+												$f_captura = obMesActualespaniol($f_captura);
+												
 										    	?>
 								  			<tr>
 								  				<td style="text-align: center" ><?php echo $f_captura."<br>".$h_captura; ?></td> 
@@ -444,7 +447,8 @@ $date_past = date("Y-m-d",strtotime('-7 day'));
 										    	while($row_cob = mysqli_fetch_array($result_cob)){
 										    	extract($row_cob);	
 										    	//$f_captura = date("d-m-Y",strtotime($f_captura));
-												$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
+												$f_captura = obMesActualespaniol($f_captura);
+												
 										    	?>
 								  			<tr>
 								  				<td style="text-align: center" ><?php echo $f_captura."<br>".$h_captura; ?></td> 
