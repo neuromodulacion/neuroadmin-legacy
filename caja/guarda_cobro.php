@@ -1,5 +1,9 @@
 <?php
-include('../functions/funciones_mysql.php');
+$ruta = "../";
+// Incluye archivos PHP necesarios para la funcionalidad adicional
+include($ruta.'functions/funciones_mysql.php');
+
+
 session_start();
 
 // Mostrar todos los errores
@@ -14,8 +18,7 @@ setlocale(LC_TIME, 'es_ES.UTF-8');
 // Asignar el tiempo actual a la sesión
 $_SESSION['time'] = time();
 
-$ruta = "../";
-include('../functions/email.php'); 
+include($ruta.'functions/email.php'); 
 
 // Tomar variables desde POST con control
 $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : '';
@@ -31,7 +34,7 @@ $otros = isset($_POST['otros']) ? $_POST['otros'] : '';
 $cantidad = isset($_POST['cantidad']) ? $_POST['cantidad'] : '';
 $protocolo = isset($_POST['protocolo']) ? $_POST['protocolo'] : '';
 $email = isset($_POST['email']) ? $_POST['email'] : '';
-$empresa_id = isset($_POST['empresa_id']) ? $_POST['empresa_id'] : '';
+$empresa_id = isset($_SESSION['empresa_id']) ? $_SESSION['empresa_id'] : '';
 $paciente_id = isset($_POST['paciente_id']) ? $_POST['paciente_id'] : 0;
 $paciente_cons_id = isset($_POST['paciente_cons_id']) ? $_POST['paciente_cons_id'] : 0;
 $fact1 = isset($_POST['fact1']) ? $_POST['fact1'] : 'no';
@@ -178,8 +181,8 @@ if ($fact1 == 'Si') {
 	<p><strong>Colonia:</strong>$cColonia</p>
 	<p><strong>Ciudad:</strong>$cCiudad</p>
 	<p><strong>Estado:</strong>$cEstado</p>
-	<p><strong>País:</strong>$cPais</p>
-    $accion = "RFC";   */
+	<p><strong>País:</strong>$cPais</p>*/
+    $accion = "RFC";   
     $mail = correo_electronico($correo, $asunto, $cuerpo_correo, $nombre, $empresa_id, $accion);	
 }
 

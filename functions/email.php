@@ -13,26 +13,55 @@ function correo_electronico_invitacion($correo_pac,$asunto,$cuerpo_correo,$pacie
 	//These must be at the top of your script, not inside a function		
 	//Load Composer's autoloader
 
-$sql = "SELECT
-	empresas.empresa_id, 
-	empresas.emp_nombre, 
-	empresas.web, 
-	empresas.e_mail, 
-	empresas.pdw, 
-	empresas.tipo_email, 
-	empresas.puerto, 
-	empresas.`host` as e_host
-FROM
-	empresas
-WHERE
-	empresas.empresa_id = $empresa_id"; 
-			
-$result = ejecutar($sql);
-//echo $sql."<hr>";
-//echo "<hr>";
-$row = mysqli_fetch_array($result);
-extract($row);
-//print_r($row);	
+	$ruta = '../';
+	
+	include($ruta.'functions/conexion_mysqli.php');
+
+	// Incluir el archivo de configuración y obtener las credenciales
+	$configPath = $ruta.'../config.php';
+	
+	if (!file_exists($configPath)) {
+		die('Archivo de configuración no encontrado.');
+	}
+	
+	$config = require $configPath;
+	
+	// Crear una instancia de la clase Mysql
+	$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+	// Consulta SQL con parámetros
+	$sql = "
+		SELECT
+			empresas.empresa_id, 
+			empresas.emp_nombre, 
+			empresas.web, 
+			empresas.e_mail, 
+			empresas.pdw, 
+			empresas.tipo_email, 
+			empresas.puerto, 
+			empresas.`host` AS e_host
+		FROM
+			empresas
+		WHERE
+			empresas.empresa_id = ?
+	";
+
+	try {
+		// Ejecutar la consulta con el método `consulta`
+		$result = $mysql->consulta($sql, [$empresa_id]);
+
+		// Verificar si hay resultados
+		if ($result['numFilas'] > 0) {
+			// Obtener la primera fila del resultado
+			$row = $result['resultado'][0];
+			extract($row); // Extraer las columnas como variables
+		} else {
+			echo "No se encontraron resultados.";
+		}
+	} catch (Exception $e) {
+		// Manejar errores
+		echo "Error: " . $e->getMessage();
+	}	
 
 	
 	if ($tipo_email == 'normal') {
@@ -147,49 +176,59 @@ extract($row);
 } 		
  
 function correo_electronico($correo_pac,$asunto,$cuerpo_correo,$paciente,$empresa_id,$accion){
-
-
-//correo_electronico($correo,$asunto,$cuerpo_correo,$nombre,$empresa_id)
-//echo "$correo , $correo_pac , $pwd , $tipo_email , $puerto , $asunto , $cuerpo_correo , $host , $emp_nombre , $paciente , $empresa_id <hr>";
-	//Import PHPMailer classes into the global namespace
-	//These must be at the top of your script, not inside a function		
-	//Load Composer's autoloader
-
-$sql = "SELECT
-	empresas.empresa_id, 
-	empresas.emp_nombre, 
-	empresas.web, 
-	empresas.e_mail, 
-	empresas.pdw, 
-	empresas.tipo_email, 
-	empresas.puerto, 
-	empresas.`host` as e_host
-FROM
-	empresas
-WHERE
-	empresas.empresa_id = $empresa_id"; 
-			
-$result = ejecutar($sql);
-//echo $sql."<hr>";
-echo "<hr>";
-$row = mysqli_fetch_array($result);
-extract($row);
-// print_r($row);	
+	$ruta = '../';
 	
-//echo "$e_mail , $correo_pac , $pdw , $tipo_email , $puerto , $asunto , $cuerpo_correo , $e_host , $emp_nombre , $paciente , $empresa_id <hr>";
-	
-// 		
-// $e_mail = "contacto@neuromodulacion.com.mx";
-// $pwd = "1n%v&_*&FFc~";
-// $puerto = "465";
-// $host = "mail.neuromodulacion.com.mx";
-// $tipo_email = 'normal';	
-// $emp_nombre = "Contacto";
+	include($ruta.'functions/conexion_mysqli.php');
 
+	// Incluir el archivo de configuración y obtener las credenciales
+	$configPath = $ruta.'../config.php';
 	
+	if (!file_exists($configPath)) {
+		die('Archivo de configuración no encontrado.');
+	}
+	
+	$config = require $configPath;
+	
+	// Crear una instancia de la clase Mysql
+	$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+	// Consulta SQL con parámetros
+	$sql = "
+		SELECT
+			empresas.empresa_id, 
+			empresas.emp_nombre, 
+			empresas.web, 
+			empresas.e_mail, 
+			empresas.pdw, 
+			empresas.tipo_email, 
+			empresas.puerto, 
+			empresas.`host` AS e_host
+		FROM
+			empresas
+		WHERE
+			empresas.empresa_id = ?
+	";
+
+	try {
+		// Ejecutar la consulta con el método `consulta`
+		$result = $mysql->consulta($sql, [$empresa_id]);
+
+		// Verificar si hay resultados
+		if ($result['numFilas'] > 0) {
+			// Obtener la primera fila del resultado
+			$row = $result['resultado'][0];
+			extract($row); // Extraer las columnas como variables
+		} else {
+			echo "No se encontraron resultados.";
+		}
+	} catch (Exception $e) {
+		// Manejar errores
+		echo "Error: " . $e->getMessage();
+	}
+
+ $tipo_email = 'normal';	
+	//echo "$correo , $correo_pac , $pwd , $tipo_email , $puerto , $asunto , $cuerpo_correo , $host , $emp_nombre , $paciente , $empresa_id <hr>";
 	if ($tipo_email == 'normal') {
-
-
 			
 	require '../vendor/autoload.php';			
 			//Create an instance; passing `true` enables exceptions
@@ -308,23 +347,51 @@ function correo_electronico_sitema($asunto,$cuerpo_correo,$usuario_id,$accion){
 	//Import PHPMailer classes into the global namespace
 	//These must be at the top of your script, not inside a function		
 	//Load Composer's autoloader
+	$ruta = '../';
+	
+	include($ruta.'functions/conexion_mysqli.php');
 
-$sql = "
-	SELECT
-		admin.usuario_id, 
-		admin.nombre, 
-		admin.usuario, 
-		admin.empresa_id
-	FROM
-		admin
-	WHERE
-		admin.usuario_id = $usuario_id"; 
-			
-$result = ejecutar($sql);
-// echo $sql."<hr>";
-// echo "<hr>";
-$row = mysqli_fetch_array($result);
-extract($row);
+	// Incluir el archivo de configuración y obtener las credenciales
+	$configPath = $ruta.'../config.php';
+	
+	if (!file_exists($configPath)) {
+		die('Archivo de configuración no encontrado.');
+	}
+	
+	$config = require $configPath;
+	
+	// Crear una instancia de la clase Mysql
+	$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+	// Consulta SQL con parámetros
+	$sql = "
+		SELECT
+			admin.usuario_id, 
+			admin.nombre, 
+			admin.usuario, 
+			admin.empresa_id
+		FROM
+			admin
+		WHERE
+			admin.usuario_id = ?
+	";
+
+	try {
+		// Ejecutar la consulta con el método `consulta`
+		$result = $mysql->consulta($sql, [$usuario_id]);
+
+		// Verificar si hay resultados
+		if ($result['numFilas'] > 0) {
+			// Obtener la primera fila del resultado
+			$row = $result['resultado'][0];
+			extract($row); // Extraer las columnas como variables
+		} else {
+			echo "No se encontraron resultados.";
+		}
+	} catch (Exception $e) {
+		// Manejar errores
+		echo "Error: " . $e->getMessage();
+	}
 
    // Configuración de correo electrónico
     $e_mail = "contacto@neuromodulacion.com.mx";
@@ -446,20 +513,51 @@ extract($row);
 
 
 function correo_electronico_base($asunto, $cuerpo_correo, $usuario_id, $adjunto = null) {
-    $sql = "
-        SELECT
-            admin.usuario_id, 
-            admin.nombre, 
-            admin.usuario, 
-            admin.empresa_id
-        FROM
-            admin
-        WHERE
-            admin.usuario_id = $usuario_id"; 
-            
-    $result = ejecutar($sql);
-    $row = mysqli_fetch_array($result);
-    extract($row);
+	$ruta = '../';
+	
+	include($ruta.'functions/conexion_mysqli.php');
+
+	// Incluir el archivo de configuración y obtener las credenciales
+	$configPath = $ruta.'../config.php';
+	
+	if (!file_exists($configPath)) {
+		die('Archivo de configuración no encontrado.');
+	}
+	
+	$config = require $configPath;
+	
+	// Crear una instancia de la clase Mysql
+	$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+	// Consulta SQL con parámetros
+	$sql = "
+		SELECT
+			admin.usuario_id, 
+			admin.nombre, 
+			admin.usuario, 
+			admin.empresa_id
+		FROM
+			admin
+		WHERE
+			admin.usuario_id = ?
+	";
+
+	try {
+		// Ejecutar la consulta con el método `consulta`
+		$result = $mysql->consulta($sql, [$usuario_id]);
+
+		// Verificar si hay resultados
+		if ($result['numFilas'] > 0) {
+			// Obtener la primera fila del resultado
+			$row = $result['resultado'][0];
+			extract($row); // Extraer las columnas como variables
+		} else {
+			echo "No se encontraron resultados.";
+		}
+	} catch (Exception $e) {
+		// Manejar errores
+		echo "Error: " . $e->getMessage();
+	}
 
     // Configuración de correo electrónico
     $e_mail = "contacto@neuromodulacion.com.mx";
