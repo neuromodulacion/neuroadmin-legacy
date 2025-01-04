@@ -58,8 +58,8 @@ function OptieneMesLargo($mes) {
 }
 
 // Obtiene el mes y año seleccionados a partir de la fecha de entrada
-$mes_sel = date('m', strtotime($fechaInput));
-$anio_sel = date('Y', strtotime($fechaInput));
+$mes_sel = date('m', strtotime($fechaInput.'-01'));
+$anio_sel = date('Y', strtotime($fechaInput.'-01'));
 
 ?>
 
@@ -228,12 +228,13 @@ include($ruta . 'header2.php');
                                                 WHERE
                                                     cobros.empresa_id = $empresa_id 
                                                     AND cobros.doctor = '$us'
-                                                    AND MONTH(f_captura) = $mes_sel
-                                                    AND YEAR(f_captura) = $anio_sel
+                                                    AND MONTH(cobros.f_captura) = $mes_sel
+                                                    AND YEAR(cobros.f_captura) = $anio_sel
                                                 ORDER BY
                                                     cobros.f_captura DESC                                              
                                             ";
-                                                // Ejecuta la consulta SQL y muestra los resultados en la tabla
+                                               // echo $sql_cob."<br>";
+                                            // Ejecuta la consulta SQL y muestra los resultados en la tabla
                                                 $result_cob = ejecutar($sql_cob); 
                                                 $cnt_cob = mysqli_num_rows($result_cob);
                                                 if ($cnt_cob <> 0) {
@@ -414,8 +415,8 @@ include($ruta . 'header2.php');
                                                 pagos
                                             WHERE
                                                 pagos.empresa_id = $empresa_id 
-                                                AND MONTH(f_captura) = $mes_sel
-                                                AND YEAR(f_captura) = $anio_sel
+                                                AND MONTH(pagos.f_captura) = $mes_sel
+                                                AND YEAR(pagos.f_captura) = $anio_sel
                                                 AND negocio = '$us'
                                             ORDER BY
                                                 pagos.f_captura DESC                                              

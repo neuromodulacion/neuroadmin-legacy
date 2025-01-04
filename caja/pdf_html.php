@@ -6,7 +6,8 @@ error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más
 
 // Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
 ini_set('default_charset', 'UTF-8');
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 // Configurar la cabecera HTTP con codificación UTF-8
 header('Content-Type: text/html; charset=UTF-8');
 
@@ -24,11 +25,30 @@ extract($_SESSION);
 extract($_GET);
 extract($_POST);
 
-include('../functions/funciones_mysql.php');
+print_r($_SESSION);
 
+include('../functions/funciones_mysql.php');
+include('../functions/functions.php');
 include('../paciente/calendario.php');
 
 include('../paciente/fun_paciente.php');
+
+$ruta = '../';
+	
+include($ruta.'functions/conexion_mysqli.php');
+
+// Incluir el archivo de configuración y obtener las credenciales
+$configPath = $ruta.'../config.php';
+
+if (!file_exists($configPath)) {
+	die('Archivo de configuración no encontrado.');
+}
+
+$config = require $configPath;
+
+// Crear una instancia de la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
 
 function tildes($palabra) {
     //Rememplazamos caracteres especiales latinos minusculas
@@ -43,45 +63,57 @@ return $palabra;
 
 //$paciente_id = 26;
 
-$grafica = "image/imagen_$paciente_id.png";
+//$grafica = "image/imagen_$paciente_id.png";
 
 //$ticket = 1712383079;
 
-$sql ="
-	SELECT
-		cobros.cobros_id, 
-		cobros.usuario_id, 
-		cobros.empresa_id, 
-		cobros.protocolo_ter_id, 
-		cobros.paciente_id, 
-		cobros.tipo, 
-		cobros.doctor, 
-		cobros.paciente_consulta, 
-		cobros.consulta, 
-		cobros.f_pago, 
-		cobros.importe, 
-		cobros.f_captura, 
-		cobros.h_captura, 
-		cobros.otros, 
-		cobros.cantidad, 
-		cobros.protocolo, 
-		cobros.ticket, 
-		cobros.facturado, 
-		cobros.email, 
-		cobros.req_factura, 
-		cobros.Invoice_ID, 
-		cobros.paciente_cons_id
-	FROM
-		cobros
-	WHERE
-		cobros.ticket = $ticket";
-	//echo $sql;	
-    $result=ejecutar($sql); 
-    $row = mysqli_fetch_array($result);
-    extract($row);	
- //print_r($row);
+$sql = "
+    SELECT
+        cobros.cobros_id, 
+        cobros.usuario_id, 
+        cobros.empresa_id, 
+        cobros.protocolo_ter_id, 
+        cobros.paciente_id, 
+        cobros.tipo, 
+        cobros.doctor, 
+        cobros.paciente_consulta, 
+        cobros.consulta, 
+        cobros.f_pago, 
+        cobros.importe, 
+        cobros.f_captura, 
+        cobros.h_captura, 
+        cobros.otros, 
+        cobros.cantidad, 
+        cobros.protocolo, 
+        cobros.ticket, 
+        cobros.facturado, 
+        cobros.email, 
+        cobros.req_factura, 
+        cobros.Invoice_ID, 
+        cobros.paciente_cons_id
+    FROM
+        cobros
+    WHERE
+        cobros.ticket = ?
+";
+try {
+    $result = $mysql->consulta($sql, [$ticket]);
+    if ($result['numFilas'] > 0) {
+        $row = $result['resultado'][0];
+        extract($row);
+    } else {
+       // die("No se encontró el registro del ticket.");
+    }
+} catch (Exception $e) {
+    die("Error en la consulta: " . $e->getMessage());
+}
 
- $clabe = substr($Invoice_ID, -8);
+if (!empty($Invoice_ID)) {
+    $clabe = substr($Invoice_ID, -8);
+} else {
+    $clabe = 'Sin información';
+}
+
  
  
 if ($tipo == 'Consulta Medica') {
@@ -122,7 +154,7 @@ if ($tipo == 'Consulta Medica') {
 		
 		case 'Dr Capacitacion':
 			$logo = '
-		            <img style="height: 150px; width: auto" src="../images/logo_aldana_g.jpg" alt="logo">	
+		            <img style="height: 150px; width: auto" src="../images/logo_aldana_t.png" alt="logo">	
 			';	
 			$fiscales = '
 		        <h2><b>DR. CAPACITACIÓN</b></h2>
@@ -139,7 +171,7 @@ if ($tipo == 'Consulta Medica') {
 		
 		case 'Capacitacion Neuromodulacion':
 			$logo = '
-		            <img align="center" style="width: 100px" style="height: 150px; width: auto" src="../images/logo_aldana_g.jpg" alt="logo">	
+		            <img align="center" style="width: 100px" style="height: 150px; width: auto" src="../images/logo_aldana_t.png" alt="logo">	
 			';	
 			$fiscales = '
 		        <h2><b>DR. CAPACITACIÓN</b></h2>
@@ -158,7 +190,7 @@ if ($tipo == 'Consulta Medica') {
 
 } else {
 	$logo = '
-            <img src="../images/logo_aldana_tc.png" alt="logo">
+            <img src="../images/logo_aldana_t.png" alt="logo">
             <h3>Neuromodulación GDL</h3>	
 	';
 	$fiscales = '
@@ -178,33 +210,48 @@ if ($tipo == 'Consulta Medica') {
 
 
 
-$sql ="
-SELECT
-	pacientes.paciente_id, 
-	pacientes.empresa_id,
-	CONCAT(pacientes.paciente,' ',pacientes.apaterno,' ',pacientes.amaterno) as pacientes
-FROM
-	pacientes
-WHERE
-	pacientes.paciente_id = $paciente_id";
-	//echo $sql;	
-    $result=ejecutar($sql); 
-    $row = mysqli_fetch_array($result);
-    extract($row);	
-
-$comentarios_reporte = stripslashes($row["comentarios_reporte"]);    
-    
-$edad = obtener_edad_segun_fecha($f_nacimiento);
+$sql = "
+    SELECT
+        pacientes.paciente_id, 
+        pacientes.empresa_id,
+        CONCAT(pacientes.paciente,' ',pacientes.apaterno,' ',pacientes.amaterno) as pacientes
+    FROM
+        pacientes
+    WHERE
+        pacientes.paciente_id = ?
+";
+try {
+    $result = $mysql->consulta($sql, [$paciente_id]);
+    if ($result['numFilas'] > 0) {
+        $row = $result['resultado'][0];
+        extract($row);
+    } else {
+       // die("No se encontró el paciente.");
+    }
+} catch (Exception $e) {
+   // die("Error en la consulta de pacientes: " . $e->getMessage());
+}
 
 $hoy = date("d-m-Y");
 
 $n_importe = numero_letra($importe); // $importe; //
+$f_pago = format_fecha_esp_dmy($f_captura);
 
+$paciente_consulta = $paciente_consulta ?? '';
+$pacientes = $pacientes ?? '';
 
-$f_pago = date('d-m-Y', strtotime($f_captura));
+if ($bind == 'Si') {
+	$text_bind = '<p align="center"><b>Obtén tu factura en:</b> https://factura.bind.com.mx  <b>Empresa:</b> 127792  <b>Referencia:</b> '.$clabe.'</p>';
+}else {
+	$text_bind = '';
+}
 
-
-
+// Validar y asignar valor basado en la lógica
+if (!empty($pacientes)) {
+    $paciente_info = $pacientes; // Usar el valor de $pacientes si no está vacío
+} else {
+    $paciente_info = $paciente_consulta; // Usar $paciente_consulta como valor alternativo
+}
 
 $cuerpo_pdf = '
 <!DOCTYPE html>
@@ -256,7 +303,7 @@ $cuerpo_pdf = '
         <tr>
             <td class="receptor"  style="width: 60%">
                 <h4>Receptor</h4>
-                <p>'.$paciente_consulta.$pacientes.'</p>
+                <p>'.codificacionUTF($paciente_info).'</p>
             </td>
             <td class="fecha-pago">
                 <h4>Fecha de Pago:</h4>
@@ -275,7 +322,7 @@ $cuerpo_pdf = '
         <tr>
             <td><b>'.$tipo.'</b></td>
             <td>'.$cantidad.'</td>
-            <td>'.$consulta.'</td>
+            <td>'.codificacionUTF($consulta).'</td>
             <td> $ '.number_format($importe).'</td>
         </tr>
     </table>
@@ -303,11 +350,11 @@ $cuerpo_pdf = '
         <tr>
             <td class="receptor"  style="width: 100%">
                 <h4 style="color: #005157">Notas:</h4>
-                <p><b>'.$consulta.'</b></p>
+                <p><b>'.codificacionUTF($consulta).'</b></p>
             </td>
         </tr>
     </table> 
-    <p align="center"><b>Obtén tu factura en:</b> https://factura.bind.com.mx  <b>Empresa:</b> 127792  <b>Referencia:</b> '.$clabe.'</p>
+    '.$text_bind.'
     <br>
 </html>
 ';
@@ -315,7 +362,7 @@ $cuerpo_pdf = '
 
 
 // echo $cuerpo_pdf;
- 
+
 //Require composer autoload
 require_once __DIR__ . '/../vendor/autoload.php';
 // Create an instance of the class:
