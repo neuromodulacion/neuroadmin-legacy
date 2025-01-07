@@ -1,5 +1,6 @@
 <?php
 include('../functions/funciones_mysql.php');
+include('../functions/functions.php');
 session_start();
 
 // Establecer el nivel de notificación de errores
@@ -114,8 +115,12 @@ $result = ejecutar($sql);
      $cnt = 1;
 while($row = mysqli_fetch_array($result)){ 
 	extract($row);
-	$f_captura1 = strftime("%e-%b-%Y<br>%A",strtotime($f_captura));
-	$dia1 = strftime("%e-%b-%Y",strtotime($f_captura));
+
+	//$f_captura1 = strftime("%e-%b-%Y<br>%A",strtotime($f_captura));
+	$f_captura1 = format_fecha_esp_dmy($f_captura);
+	//$dia1 = strftime("%e-%b-%Y",strtotime($f_captura));
+	$dia1 = format_fecha_esp_dmy($f_captura);
+
 	$total= ($sesiones*$importe);
 				//<td>".$terapia."</td>
 	$tabla .= "

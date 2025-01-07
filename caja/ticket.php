@@ -20,15 +20,28 @@ setlocale(LC_TIME, 'es_ES.UTF-8');
 $_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
 
 extract($_SESSION);
-//echo "<hr>$paciente_id hola<hr>";
 extract($_GET);
 extract($_POST);
 
-include('../functions/funciones_mysql.php');
+$ruta = '../';
 
-include('../paciente/calendario.php');
+include($ruta.'functions/funciones_mysql.php');
+include($ruta.'functions/functions.php');
+include($ruta.'paciente/calendario.php');
+include($ruta.'paciente/fun_paciente.php');
+include($ruta.'functions/conexion_mysqli.php');
 
-include('../paciente/fun_paciente.php');
+// Incluir el archivo de configuración y obtener las credenciales
+$configPath = $ruta.'../config.php';
+
+if (!file_exists($configPath)) {
+	die('Archivo de configuración no encontrado.');
+}
+
+$config = require $configPath;
+
+// Crear una instancia de la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -118,7 +131,7 @@ if ($tipo == 'Consulta Medica') {
 		
 		case 'Capacitacion Neuromodulacion':
 			$logo = '
-		            <img align="center" style="width: 100px" style="height: 150px; width: auto" src="../images/logo_aldana_g.jpg" alt="logo">	
+		            <img align="center" style="width: 100px" style="height: 150px; width: auto" src="'.$logo.'" alt="logo">	
 			';	
 			$fiscales = '
 		        <h4><b>Capacitacion Neuromodulacion</b></h4>
@@ -136,7 +149,7 @@ if ($tipo == 'Consulta Medica') {
 } else {
 
 	$logo = '
-            <img style="width: 80px" src="../images/logo_aldana_tc.png" alt="logo">
+            <img style="width: 80px" src="'.$logo.'" alt="logo">
             <h4>Neuromodulación GDL</h4>	
 	';
 	$fiscales = '
@@ -149,6 +162,19 @@ if ($tipo == 'Consulta Medica') {
         </p>	
 	';	
 }
+
+if ($bind == 'Si') {
+	$bind_val = '
+	<p align="center">
+		<b>Obtén tu factura en:</b> https://factura.bind.com.mx  <br>
+		<b>Empresa:</b> 127792<br>
+		<b>Referencia:</b> '.$clabe.'</p>
+	<img style="width: 80%; padding-left: 10%" src="../images/codigo_qr_Bind.png" alt="logo">';
+} else {
+	$bind_val = '';
+}
+
+
 // Contenido HTML del ticket
 $html = '
 <!DOCTYPE html>
@@ -216,17 +242,14 @@ $html = '
         </div>
         <div class="footer">Gracias por su visita</div>
 	        <hr><br> 
-	        <p align="center">
-	        	<b>Obtén tu factura en:</b> https://factura.bind.com.mx  <br>
-	        	<b>Empresa:</b> 127792<br>
-	            <b>Referencia:</b> '.$clabe.'</p>
-	        <img style="width: 80%; padding-left: 10%" src="../images/codigo_qr_Bind.png" alt="logo">
+			'.$bind_val.'
         </div>
     </div>
     <hr>
 </body>
 </html>
 ';
+
 
 // <pagebreak />
 // echo $html;

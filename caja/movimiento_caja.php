@@ -161,7 +161,8 @@ $anio_sel = date('Y', strtotime($fechaInput));
 									    	while($row_cob = mysqli_fetch_array($result_cob)){
 									    	extract($row_cob);	
 												$date = date("d-m-Y", strtotime($fecha));
-												$datex = strftime("%A %d de %B %Y", strtotime($fecha));
+												$datex = format_fecha_esp_extensa($fecha);
+												//$datex = strftime("%A %d de %B %Y", strtotime($fecha));
 	
 								    		?>
 	                                    <div class="panel panel-col-<?php echo $body; ?>">
@@ -213,7 +214,7 @@ $anio_sel = date('Y', strtotime($fechaInput));
 														AND admin.empresa_id = $empresa_id
 													ORDER BY admin.nombre asc
 												    ";									
-										     	 	echo $sql_dia."<hr>";
+										     	 	//echo $sql_dia."<hr>";
 											     	$result_dia=ejecutar($sql_dia);
 													$cnt_dia = mysqli_num_rows($result_dia);
 				

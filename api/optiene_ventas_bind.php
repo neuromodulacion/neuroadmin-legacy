@@ -18,7 +18,7 @@ date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
 // Registrar el timestamp actual en la sesión
-$_SESSION['time'] = mktime(); 
+$_SESSION['time'] = time(); 
 
 // Eliminar todos los registros de la tabla "invoices_bind" antes de proceder a la inserción de nuevos datos
 $delete = "

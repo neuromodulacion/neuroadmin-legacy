@@ -181,7 +181,7 @@ switch ($tipo_consulta) {
 	  			
 	  			
 
-			     	  echo $sql_cob."<hr>";
+			     	//  echo $sql_cob."<hr>";
 			     	$result_cob=ejecutar($sql_cob); 
 			    										    	
 					$cnt_cob = mysqli_num_rows($result_cob);
@@ -190,8 +190,7 @@ switch ($tipo_consulta) {
 															     	
 				    	while($row_cob = mysqli_fetch_array($result_cob)){
 				    	extract($row_cob);	
-				    	//$f_captura = date("d-m-Y",strtotime($f_captura));
-						$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
+						$f_captura = format_fecha_esp_dmy($f_captura);
 				    	?>
 				  			<tr>
 				  				<td><?php echo $f_captura; ?></td> 
@@ -459,7 +458,8 @@ switch ($tipo_consulta) {
 				    	
 				    	while($row_cob = mysqli_fetch_array($result_cob)){
 				    	extract($row_cob);	
-				    	$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
+						$f_captura = format_fecha_esp_dmy($f_captura);
+
 				    	$importet = $importet+$importe;
 				    	?>
 				  			<tr>
@@ -732,9 +732,7 @@ switch ($tipo_consulta) {
 			    																 
 		    		while($row_cob = mysqli_fetch_array($result_cob)){
 				    	extract($row_cob);	
-				    	//$f_captura = date("d-m-Y",strtotime($f_captura));
 						$f_captura = format_fecha_esp_dmy($f_captura);
-						//$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
 						$importet = $importet+$importe;
 				    	?>
 			  			<tr>

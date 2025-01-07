@@ -285,7 +285,7 @@ include($ruta.'header1.php');
                                                         <td style="text-align: center"><?php echo htmlspecialchars($x); ?></td>
                                                         <td style="text-align: center"><?php echo htmlspecialchars($y); ?></td>
                                                         <td style="text-align: center"><?php echo htmlspecialchars($umbral); ?></td>
-                                                        <td><?php echo htmlspecialchars($observaciones); ?></td>
+                                                        <td><?php echo codificacionUTF($observaciones); ?></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -370,15 +370,17 @@ include($ruta.'header1.php');
                                             foreach ($result_sem2['resultado'] as $row) {
                                                 $f_captura = (new DateTime($row['f_captura']))->format('d-M-Y');
                                                 $f_captura = strtr($f_captura, $meses_espanol); // Reemplazar meses en español
-                                        
+                                                $observaciones = codificacionUTF($row['observaciones']); // Codificar observaciones
+                                                $equipo = codificacionUTF($row['equipo']); // Codificar equipo
+                                                $nombre = codificacionUTF($row['nombre']); // Codificar nombre
                                                 $dia .= "
                                                     <tr>
                                                         <td style='text-align: center'>{$cnt_a}</td>
-                                                        <td>{$row['nombre']}</td>
-                                                        <td>{$row['equipo']}</td>
+                                                        <td>{$nombre}</td>
+                                                        <td>{$equipo}</td>
                                                         <td>{$f_captura}<br>{$row['h_captura']}</td>
                                                         <td style='text-align: center'>{$row['umbral']}</td>
-                                                        <td>{$row['observaciones']}</td>
+                                                        <td>{$observaciones}</td>
                                                     </tr>";
                                         
                                                 $cnt_a++;

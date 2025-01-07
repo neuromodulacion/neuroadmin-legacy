@@ -18,23 +18,19 @@ date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
 // Asignar el tiempo actual a la sesión en formato de timestamp
-$_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
+$_SESSION['time'] = time(); 
 
 extract($_SESSION);
-//echo "<hr>$paciente_id hola<hr>";
 extract($_GET);
 extract($_POST);
 
-print_r($_SESSION);
-
-include('../functions/funciones_mysql.php');
-include('../functions/functions.php');
-include('../paciente/calendario.php');
-
-include('../paciente/fun_paciente.php');
-
+//print_r($_SESSION);
 $ruta = '../';
-	
+
+include($ruta.'functions/funciones_mysql.php');
+include($ruta.'functions/functions.php');
+include($ruta.'paciente/calendario.php');
+include($ruta.'paciente/fun_paciente.php');
 include($ruta.'functions/conexion_mysqli.php');
 
 // Incluir el archivo de configuración y obtener las credenciales

@@ -1,5 +1,5 @@
 <?php
-include('../functions/funciones_mysql.php');
+$ruta = '../';
 session_start();
 
 // Establecer el nivel de notificación de errores
@@ -21,7 +21,21 @@ setlocale(LC_TIME, 'es_ES.UTF-8');
 // Asignar el tiempo actual a la sesión en formato de timestamp
 $_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
 
+// Incluye archivos PHP necesarios para la funcionalidad adicional
+include($ruta.'functions/funciones_mysql.php');
+include($ruta.'functions/conexion_mysqli.php');
 
+// Incluir el archivo de configuración y obtener las credenciales
+$configPath = $ruta.'../config.php';
+
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
+}
+
+$config = require $configPath;
+
+// Crear una instancia de la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
 
 include('fun_protocolo.php');
 
@@ -610,50 +624,57 @@ switch ($tipo) {
 			$umbral = 0;
 		} 
 		
-		$insert = "
-			INSERT IGNORE INTO historico_sesion 
-			( 	
-				historico_sesion.protocolo_ter_id,
-				historico_sesion.paciente_id,
-				historico_sesion.empresa_id,
-				historico_sesion.usuario_id,
-				historico_sesion.sesion,
-				historico_sesion.f_captura,
-				historico_sesion.h_captura,
-				historico_sesion.umbral,
-				historico_sesion.tms_cnt, 
-				historico_sesion.tms_d,
-				historico_sesion.adverso,
-				historico_sesion.observaciones,
-				historico_sesion.anodo,
-				historico_sesion.catodo,
-				historico_sesion.polaridad
-			)
-				values
-			( 
-				$protocolo_ter_id,
-				$paciente_id,
-				$empresa_id,
-				$usuario_id,
-				$total_sesion,
-				'$f_captura',
-				'$h_captura',
-				$umbral,
-				$tms_cnt,
-				$tms_d,
-				'$adverso',
-				'$observaciones',
-				'$anodo',
-				'$catodo',
-				'$polaridad'
-
-			)
-		";	
-		//echo $insert."<hr>";
-		//$historico_id = ejecutar_id($insert);
-		//echo "historico_id ",$historico_id;
+			// Consulta SQL con placeholders
+			$query = "
+				INSERT IGNORE INTO historico_sesion 
+				(
+					protocolo_ter_id,
+					paciente_id,
+					empresa_id,
+					usuario_id,
+					sesion,
+					f_captura,
+					h_captura,
+					umbral,
+					tms_cnt, 
+					tms_d,
+					adverso,
+					observaciones,
+					anodo,
+					catodo,
+					polaridad
+				) 
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			";
 		
-		$result_insert = ejecutar($insert);		
+			// Parámetros para la consulta
+			$params = [
+				$protocolo_ter_id,  // int
+				$paciente_id,       // int
+				$empresa_id,        // int
+				$usuario_id,        // int
+				$total_sesion,      // int
+				$f_captura,         // string (fecha en formato 'YYYY-MM-DD')
+				$h_captura,         // string (hora en formato 'HH:MM:SS')
+				$umbral,            // int
+				$tms_cnt,           // int
+				$tms_d,             // int
+				$adverso,           // string
+				$observaciones,     // string
+				$anodo,             // string
+				$catodo,            // string
+				$polaridad          // string
+			];
+		
+			// Ejecutar la consulta
+			$resultado = $mysql->consulta_simple($query, $params);
+		
+			if ($resultado) {
+				echo "Registro insertado exitosamente.";
+			} else {
+				echo "Error al insertar el registro. ".$resultado;
+			}
+
 		$sql_hist ="
 			SELECT
 				max(historico_sesion.historico_id) as historico_id
@@ -668,43 +689,64 @@ switch ($tipo) {
 			foreach ($adversos as $valor) {	
 				if ($valor == 'OTROS') {
 					$otros = strtoupper($otros);
-					$insert = "
+
+					// Consulta SQL con placeholders
+					$query = "
 						INSERT IGNORE INTO efectos_adversos 
-						( 
+						(
 							protocolo_ter_id,
 							paciente_id,
 							historico_id,
 							adversos
-						)
-							values
-						( 	
-							$protocolo_ter_id,
-							$paciente_id,
-							$historico_id,
-							'$otros'							
-						)
-					";	
-					//echo $insert;
-					$result_insert = ejecutar($insert);			
+						) 
+						VALUES (?, ?, ?, ?)
+					";
+
+					// Parámetros para la consulta
+					$params = [
+						$protocolo_ter_id,  // int
+						$paciente_id,       // int
+						$historico_id,      // int
+						$otros              // string
+					];
+
+					// Ejecutar la consulta
+					$resultado = $mysql->consulta_simple($query, $params);
+
+					if ($resultado) {
+						echo "Registro insertado exitosamente.";
+					} else {
+						echo "Error al insertar el registro. ".$resultado;
+					}								
 				}else{
-					$insert = "
+					// Consulta SQL con placeholders
+					$query = "
 						INSERT IGNORE INTO efectos_adversos 
-						( 
+						(
 							protocolo_ter_id,
 							paciente_id,
 							historico_id,
 							adversos
-						)
-							values
-						( 	
-							$protocolo_ter_id,
-							$paciente_id,
-							$historico_id,
-							'$valor'							
-						)
-					";	
-					//echo $insert;
-					$result_insert = ejecutar($insert);		
+						) 
+						VALUES (?, ?, ?, ?)
+					";
+
+					// Parámetros para la consulta
+					$params = [
+						$protocolo_ter_id,  // int
+						$paciente_id,       // int
+						$historico_id,      // int
+						$valor              // string
+					];
+
+					// Ejecutar la consulta
+					$resultado = $mysql->consulta_simple($query, $params);
+
+					if ($resultado) {
+						echo "Registro insertado exitosamente.";
+					} else {
+						echo "Error al insertar el registro.";
+					}		
 				}					
 			    //echo $valor . "<br>";
 			}			
@@ -738,9 +780,10 @@ switch ($tipo) {
 			$row_terapia = mysqli_fetch_array($result_terapia);					
 			extract($row_terapia);				
 			
-			$insert = "
+			// Consulta SQL con placeholders
+			$query = "
 				INSERT IGNORE INTO sesiones 
-				( 	
+				(
 					sesiones.terapia_id, 
 					sesiones.protocolo_ter_id, 
 					sesiones.paciente_id, 
@@ -748,59 +791,120 @@ switch ($tipo) {
 					sesiones.total_sesion, 
 					sesiones.f_alta, 
 					sesiones.h_alta
-				)
-					values
-				( 
-					$terapia_id,
-					$protocolo_ter_id,
-					$paciente_id,
-					0,
-					1,					
-					'$f_captura',
-					'$h_captura'
-				)
-			";	
-			//echo $insert."<hr>";
-			$result_insert = ejecutar($insert);			
+				) 
+				VALUES (?, ?, ?, ?, ?, ?, ?)
+			";
+
+			// Parámetros para la consulta
+			$params = [
+				$terapia_id,        // int
+				$protocolo_ter_id,  // int
+				$paciente_id,       // int
+				0,                  // int (valor fijo)
+				1,                  // int (valor fijo)
+				$f_captura,         // string (fecha en formato 'YYYY-MM-DD')
+				$h_captura          // string (hora en formato 'HH:MM:SS')
+			];
+
+			// Ejecutar la consulta
+			$resultado = $mysql->consulta_simple($query, $params);
+
+			if ($resultado) {
+				echo "Registro insertado exitosamente.";
+			} else {
+				echo "Error al insertar el registro.";
+			}			
 		} else {							
-			$update = "
-				update sesiones
-				set
-				sesiones.total_sesion = (sesiones.total_sesion +1)
-				where sesiones.paciente_id = $paciente_id
-				and protocolo_ter_id = $protocolo_ter_id	
-				";
-			//echo $update."<hr>";
-			$result_update = ejecutar($update);				
+			// Consulta SQL con placeholders
+			$query = "
+				UPDATE sesiones
+				SET sesiones.total_sesion = sesiones.total_sesion + 1
+				WHERE sesiones.paciente_id = ? 
+				AND sesiones.protocolo_ter_id = ?
+			";
+
+			// Parámetros para la consulta
+			$params = [
+				$paciente_id,       // int
+				$protocolo_ter_id   // int
+			];
+
+			// Ejecutar la consulta
+			$resultado = $mysql->consulta_simple($query, $params);
+
+			if ($resultado) {
+				echo "Registro actualizado exitosamente.";
+			} else {
+				echo "Error al actualizar el registro.";
+			}			
 		}
 
-			$update = "
-				update terapias
-				set
-				terapias.estatus = 'Activo'
-				where terapias.paciente_id = $paciente_id	
-				";
-			//echo $update."<hr>";
-			$result_update = ejecutar($update);	
+			// Consulta SQL con placeholders
+			$query = "
+				UPDATE terapias
+				SET terapias.estatus = ?
+				WHERE terapias.paciente_id = ?
+			";
 
-			$update = "
-				update pacientes
-				set
-				pacientes.estatus = 'Activo'
-				where pacientes.paciente_id = $paciente_id	
-				";
-			//echo $update;
-			$result_update = ejecutar($update);	
+			// Parámetros para la consulta
+			$params = [
+				'Activo',       // string
+				$paciente_id    // int
+			];
+
+			// Ejecutar la consulta
+			$resultado = $mysql->consulta_simple($query, $params);
+
+			if ($resultado) {
+				echo "Registro actualizado exitosamente.";
+			} else {
+				echo "Error al actualizar el registro.";
+			}
+
+			// Consulta SQL con placeholders
+			$query = "
+				UPDATE pacientes
+				SET pacientes.estatus = ?
+				WHERE pacientes.paciente_id = ?
+			";
+
+			// Parámetros para la consulta
+			$params = [
+				'Activo',       // string
+				$paciente_id    // int
+			];
+
+			// Ejecutar la consulta
+			$resultado = $mysql->consulta_simple($query, $params);
+
+			if ($resultado) {
+				echo "Registro actualizado exitosamente.";
+			} else {
+				echo "Error al actualizar el registro.";
+			}	
 
 			if ($umbral_new == 'ok') {
-				$update = "
-					update metricas
-					set
-					metricas.umbral = '$umbral'
-					where metricas.paciente_id = $paciente_id	
-					";
-				//echo $update;
-				$result_update = ejecutar($update);	
+				// Consulta SQL con placeholders
+				$query = "
+					UPDATE metricas
+					SET metricas.umbral = ?
+					WHERE metricas.paciente_id = ?
+				";
+
+				// Parámetros para la consulta
+				$params = [
+					$umbral,        // string o numérico (dependiendo del tipo de dato en la base de datos)
+					$paciente_id    // int
+				];
+
+				// Ejecutar la consulta
+				$resultado = $mysql->consulta_simple($query, $params);
+
+				if ($resultado) {
+					echo "Registro actualizado exitosamente.";
+				} else {
+					echo "Error al actualizar el registro.";
+				}
 			}	
 			
 			$tabla_enc = "";		

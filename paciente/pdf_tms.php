@@ -24,7 +24,7 @@ extract($_GET);
 extract($_POST);
 
 include('../functions/funciones_mysql.php');
-
+include('../functions/functions.php');
 include('../paciente/calendario.php');
 
 include('../paciente/fun_paciente.php');
@@ -99,9 +99,9 @@ $tabla_header ="";
 
 
 
-for ($i=1; $i <16 ; $i++) { 
+	for ($i=1; $i <16 ; $i++) { 
 
-$e = $i+15;
+		$e = $i+15;
 
 
 		$tabla_lineas.="

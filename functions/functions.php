@@ -64,6 +64,38 @@ function format_fecha_esp_dmy($f_ini) {
     return $f_ini_formateado;
 }
 
+function format_fecha_esp_extensa($fecha) {
+    // Salida: Domingo 5 de enero de 2025
+    // Verifica si la fecha está definida y es válida
+    if (!$fecha || strtotime($fecha) === false) {
+        return ""; // Retorna vacío si la fecha no es válida
+    }
+
+    try {
+        // Crear un objeto DateTime
+        $fecha_objeto = new DateTime($fecha);
+
+        // Configuración del formateador con la configuración regional de español
+        $formateador = new IntlDateFormatter(
+            'es_ES', // Configuración regional (español de España, ajusta según necesidad)
+            IntlDateFormatter::FULL, // Formato completo para la fecha
+            IntlDateFormatter::NONE, // Sin formato para la hora
+            $fecha_objeto->getTimezone(), // Zona horaria del objeto DateTime
+            IntlDateFormatter::GREGORIAN // Calendario gregoriano
+        );
+
+        // Personaliza el formato
+        $formateador->setPattern("EEEE d 'de' MMMM 'de' yyyy");
+
+        // Devuelve la fecha formateada
+        return $formateador->format($fecha_objeto);
+    } catch (Exception $e) {
+        error_log("Error formateando la fecha: " . $e->getMessage());
+        return ""; // Retorna vacío en caso de error
+    }
+}
+
+
 function mesCorto($numeroMes) {
     $mesesCortos = [
         1 => "Ene", 2 => "Feb", 3 => "Mar", 4 => "Abr",

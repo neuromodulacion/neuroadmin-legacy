@@ -46,7 +46,7 @@ if (!empty($selectedStatuses)) {
 // Variables comunes, fecha, etc.
 // ------------------------------------------------
 
-if (in_array((string)$funcion_id, ['1','5','6','8'], true)) {
+if (in_array((string)$funcion_id, ['1','2','5','6','8'], true)) {
     $class = "js-exportable";
     $where .= " AND pacientes.empresa_id = $empresa_id"; // <--- usar .=
     $app ="min-width: 320px";
