@@ -60,7 +60,7 @@ include($ruta.'header2.php');
                                     </div>
                                     <div class="modal-footer">
                                         <!-- Enlace para descargar el recibo en PDF -->
-                                        <a target="_blank" class="btn bg-<?php echo $body; ?> waves-effect" href="https://neuromodulaciongdl.com/caja/pdf_html.php?ticket=<?php echo $ticket; ?>" role="button">DESCARGA RECIBO</a>
+                                        <a target="_blank" class="btn bg-<?php echo $body; ?> waves-effect" href="pdf_html.php?ticket=<?php echo $ticket; ?>" role="button">DESCARGA RECIBO</a>
                                         <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CERRAR</button>
                                     </div>
                                 </div>

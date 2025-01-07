@@ -48,8 +48,8 @@ include($ruta . 'header1.php');
                                         <p style="color: green; font-size: 16px" align="center"><br>Ticket - <?php echo $ticket; ?></p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a target="_blank" class="btn bg-<?php echo $body; ?> waves-effect" href="https://neuromodulaciongdl.com/caja/ticket.php?ticket=<?php echo $ticket; ?>" role="button">IMPRIME TICKET</a>
-                                        <a target="_blank" class="btn bg-<?php echo $body; ?> waves-effect" href="https://neuromodulaciongdl.com/caja/pdf_html.php?ticket=<?php echo $ticket; ?>" role="button">DESCARGA RECIBO</a>
+                                        <a target="_blank" class="btn bg-<?php echo $body; ?> waves-effect" href="ticket.php?ticket=<?php echo $ticket; ?>" role="button">IMPRIME TICKET</a>
+                                        <a target="_blank" class="btn bg-<?php echo $body; ?> waves-effect" href="pdf_html.php?ticket=<?php echo $ticket; ?>" role="button">DESCARGA RECIBO</a>
                                         <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CERRAR</button>
                                     </div>
                                 </div>

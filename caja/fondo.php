@@ -21,12 +21,7 @@ include($ruta.'header1.php');
     <!-- Bootstrap  Css -->
     <link href="<?php echo $ruta; ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />   
 
-<?php  include($ruta.'header2.php');
-
-
-
-
- ?>
+<?php  include($ruta.'header2.php'); ?>
 
     <section class="content">
         <div class="container-fluid">
@@ -88,52 +83,26 @@ include($ruta.'header1.php');
 											AND admin.estatus = 'Activo'
 											AND empresa_id = $empresa_id;								  			
 							  			";
-									     	// echo $sql_cobro." hola<hr>";
-											
-									     	//$result=ejecutar($sql_cobro); 
-											// echo " hola 1<hr>";
 
 								    		$result=ejecutar($sql_cobro); 
 									    // $row_cobro = mysqli_fetch_array($result);
 									    while($row_cob = mysqli_fetch_array($result)){
 											extract($row_cob);
-											//print_r($row_cob);
-											
-											/*
-											$cnt_cobro = mysql_num_rows($result_cobro);
-											echo $result_cobro." hola 2<hr>";
-											 /*
-										// if ($cnt_cobro <>0) {												
-									    	while($row_cob = mysqli_fetch_array($result_cobro)){
-									    	extract($row_cob);	
-											print_r($row_cob);
-									    	//$f_captura = date("d-m-Y",strtotime($f_captura));
-											// $f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
-											 * */
-											 
 									    	?>
 									  			<tr>
 									  				<td><?php echo $usuario_idx; ?></td> 
 									  				<td><?php echo $nombrex; ?></td> 
 									  				<td align="right">$&nbsp;<?php echo number_format($saldox); ?></td>
 									  			</tr>														
-											<?php /* } 
-											} else {  ?>
-									  			<tr>
-									  				<th style="text-align: center" colspan="3"><i>Sin Resultados</i></th> 
-									  			</tr>													
-													
-										<?php */ }  ?>
+											<?php  }  ?>
 						  			</table>	
 							  	</div>
-							  	
 							</div>
                     	</div>
                         <div class="footer">                         	                       	
                         	<hr> 
                     	</div>                    	
                 	</div>
-                	
             	</div>
             	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         		</div>
@@ -151,12 +120,10 @@ include($ruta.'header1.php');
     <!-- Bootstrap Datepicker Plugin Js -->
     <script src="<?php echo $ruta; ?>plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
-    <!-- Waves Effect Plugin Js -->
     <!-- Autosize Plugin Js -->
     <script src="<?php echo $ruta; ?>plugins/autosize/autosize.js"></script>
 
     <!-- Moment Plugin Js -->
     <script src="<?php echo $ruta; ?>plugins/momentjs/moment.js"></script>
-
 
 <?php	include($ruta.'footer2.php');	?>

@@ -24,7 +24,7 @@ extract($_GET);
 extract($_POST);
 
 include('../functions/funciones_mysql.php');
-
+include('../functions/functions.php');
 include('../paciente/calendario.php');
 
 include('../paciente/fun_paciente.php');
@@ -78,45 +78,31 @@ $terapia == "TdCS";
 $tabla_lineas ="";
 $tabla_header ="";
 
-	if ($terapia == "TDCs ") {
-		$tabla_header.="
-		<tr>
-			<td width='10px'></td>
-			<td width='70px'></td>
-			<td width='10px'></td>
-			<td width='120px' align='center'>FIRMA</td>
-			<td width='10px'></td>
-			<td width='80px' align='center'>FECHA</td>
-			<td width='10px'></td>
-			<td width='10px'></td>
-			<td width='120px' align='center'>FIRMA</td>
-			<td width='10px'></td>
-			<td width='80px' align='center'>FECHA</td>
-			<td width='10px'></td>	
-		</tr>	
-		";
 
-	} else {
-		$tabla_header.="
-		<tr>
-			<td width='10px'></td>
-			<td width='120px'></td>
-			<td width='10px'></td>
-			<td width='120px' align='center'>FIRMA</td>
-			<td width='10px'></td>
-			<td width='80px' align='center'>FECHA</td>
-			<td  colspan='6'></td>	
-		</tr>	
-		";				
-	}
+	$tabla_header.="
+	<tr>
+		<td width='10px'></td>
+		<td width='70px'></td>
+		<td width='10px'></td>
+		<td width='120px' align='center'>FIRMA</td>
+		<td width='10px'></td>
+		<td width='80px' align='center'>FECHA</td>
+		<td width='10px'></td>
+		<td width='10px'></td>
+		<td width='120px' align='center'>FIRMA</td>
+		<td width='10px'></td>
+		<td width='80px' align='center'>FECHA</td>
+		<td width='10px'></td>	
+	</tr>	
+	";
 
 
 
-for ($i=1; $i <16 ; $i++) { 
+	for ($i=1; $i <16 ; $i++) { 
 
-$e = $i+15;
+		$e = $i+15;
 
-	if ($terapia == "TDCs ") {
+
 		$tabla_lineas.="
 			<tr>		
 				<td width='10px'></td>
@@ -132,38 +118,24 @@ $e = $i+15;
 				<td  align='center'><hr></td>
 				<td width='10px'></td>																											
 			</tr>";	
-	} else {	
-		$tabla_lineas.="
-			<tr>		
-				<td width='10px'></td>
-				<td>Sesion No. $i</td>
-				<td width='10px'></td>
-				<td  align='center'><hr></td>
-				<td width='10px'></td>
-				<td  align='center'><hr></td>			
-				<td  colspan='6'></td>																										
-			</tr>";			
+			
 	}
-
-
-
-	
-}	
 		
 $dia = date("d");
-$mes = strftime("%B");
+$hoy = date('y-m-d');
+$mes = obMesActualespaniol($hoy);
 $anio = date("Y");    
 
 $header1="
 	<table style='width: 100%' >
 		<tr>
-			<td align='center' style='background: #fff; width: 20%'>
-				<img style='width: auto; height: 80px;' src='../$logo' alt='grafica'>					
+			<td align='center' style='background: #fff; width: 30%'>
+				<img style='width: auto; height: 150px;' src='../$logo' alt='grafica'>					
 			</td>
 			<td style='background: #fff; width: 65%'>
-			<h2 align='center'><strong>NEUROMODULACI&Oacute;N GDL S.A. DE C.V.</strong></h2>	
+			<h3 align='center'><strong>NEUROMODULACI&Oacute;N GDL S.A. DE C.V.</strong></h3>	
 			</td>
-			<td align='center' style='background: #fff; width: 15%'>
+			<td align='center' style='background: #fff; width: 5%'>
 
 			</td>			
 		</tr>
@@ -171,10 +143,10 @@ $header1="
 $header="
 	<table style='width: 100%' >
 		<tr>
-			<td align='center' style='background: #fff; width: 20%'>
-				<img style='width: auto; height: 80px;' src='../$logo' alt='grafica'>					
+			<td align='center' style='background: #fff; width: 30%'>
+				<img style='width: auto; height: 150px;' src='../$logo' alt='grafica'>					
 			</td>
-			<td align='center'  style='background: #fff; width: 60%'>
+			<td align='center'  style='background: #fff; width: 50%'>
 	
 			</td>
 			<td align='center' style='background: #fff; width: 20%'>
@@ -217,11 +189,8 @@ $cuerpo_pdf="
 <body style='font-family: Arial, sans-serif; text-align: justify'>
 	$header1
 
-<br>
 <p><strong>Guadalajara, Jalisco a $dia de $mes del $anio.</strong></p>
-<br>
 <p><strong>Nombre del paciente:</strong>  $paciente</p>
-<br>
 <h2  align='center'> <strong>Terapia de Estimulaci&oacute;n Transcraneal de Corriente Directa</strong></h2>
 <br>
 <p>La TDCs es un procedimiento m&eacute;dico no invasivo y autorizado en varios pa&iacute;ses, incluyendo su aprobaci&oacute;n en Estados Unidos por la FDA (Food and Drug Agency) para el tratamiento de diversos padecimientos. La TDCs es una t&eacute;cnica de estimulaci&oacute;n cerebral que se basa en la generaci&oacute;n de campos magn&eacute;ticos breves por medio de una espiral recubierta por un aislante que se coloca sobre el cuero cabelludo.</p>

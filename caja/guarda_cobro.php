@@ -146,14 +146,16 @@ $insert = "
 ";
 
 // Ejecutar el insert
+//echo $insert.'<hr>';
 $result_insert = ejecutar($insert);
-
+//echo $result_insert.'<hr>';
 if ($f_pago == "Efectivo") {
     $update = "
         UPDATE admin
         SET admin.saldo = (admin.saldo+$importe)
         WHERE admin.usuario_id = $usuario_id
     ";
+    //echo $update.'<hr>';
     $result_update = ejecutar($update);			
 }
 

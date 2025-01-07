@@ -1,34 +1,13 @@
 <?php
-session_start();
-
-// Establecer el nivel de notificación de errores
-error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más clara y recomendada
-
-// Establecer la codificación interna a UTF-8 (ya no se utiliza `iconv_set_encoding`, sino `ini_set`)
-ini_set('default_charset', 'UTF-8');
-
-// Configurar la cabecera HTTP con codificación UTF-8
-header('Content-Type: text/html; charset=UTF-8');
-
-// Configurar la zona horaria
-date_default_timezone_set('America/Monterrey');
-
-// Configurar la localización para manejar fechas y horas en español
-setlocale(LC_TIME, 'es_ES.UTF-8');
-
-// Asignar el tiempo actual a la sesión en formato de timestamp
-$_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
-
 $ruta="../";
 $titulo ="Corte";
 
-//$usuario_id = 127;
-//include('fun_protocolo.php');
 include($ruta.'header1.php');
 
-if ($fechaInput =="") {
-	$fechaInput = $hoy;
+if (empty($fechaInput)) {
+    $fechaInput = $hoy; // Asigna el valor de $hoy si $fechaInput está vacío o es null
 }
+
 
 function OptieneMesCorto($mes){
 
@@ -71,7 +50,6 @@ function OptieneMesLargo($mes){
 
 $mes_sel = date('m', strtotime($fechaInput));
 $anio_sel = date('Y', strtotime($fechaInput));
-
 
 $date_past = date("Y-m-d",strtotime('-7 day'));
 
@@ -205,7 +183,7 @@ $date_past = date("Y-m-d",strtotime('-7 day'));
 										     	$result_cob=ejecutar($sql_cob); 
 									    	while($row_cob = mysqli_fetch_array($result_cob)){
 										    	extract($row_cob);	
-												$f_captura = obMesActualespaniol($f_captura);
+												$f_captura = format_fecha_esp_dmy($f_captura);
 										    	
 									    		if ($paciente == '') {
 													$paciente = $paciente_consulta;
@@ -267,7 +245,7 @@ $date_past = date("Y-m-d",strtotime('-7 day'));
 										     	$result_cob=ejecutar($sql_cob); 
 										    	while($row_cob = mysqli_fetch_array($result_cob)){
 										    	extract($row_cob);	
-												$f_captura = obMesActualespaniol($f_captura);
+												$f_captura = format_fecha_esp_dmy($f_captura);
 										    	
 										    	?>
 								  			<tr>
@@ -316,7 +294,7 @@ $date_past = date("Y-m-d",strtotime('-7 day'));
 										    	while($row_cob = mysqli_fetch_array($result_cob)){
 										    	extract($row_cob);	
 										    	//$f_captura = date("d-m-Y",strtotime($f_captura));
-												$f_captura = obMesActualespaniol($f_captura);
+												$f_captura = format_fecha_esp_dmy($f_captura);
 												
 										    	?>
 								  			<tr>
@@ -447,7 +425,7 @@ $date_past = date("Y-m-d",strtotime('-7 day'));
 										    	while($row_cob = mysqli_fetch_array($result_cob)){
 										    	extract($row_cob);	
 										    	//$f_captura = date("d-m-Y",strtotime($f_captura));
-												$f_captura = obMesActualespaniol($f_captura);
+												$f_captura = format_fecha_esp_dmy($f_captura);
 												
 										    	?>
 								  			<tr>
