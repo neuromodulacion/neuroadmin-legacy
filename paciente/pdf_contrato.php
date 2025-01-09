@@ -148,48 +148,39 @@ $anio = date("Y");
 $header1="
 	<table style='width: 100%' >
 		<tr>
-			<td align='center' style='background: #fff; width: 30%'>
-				<img style='width: auto; height: 150px;' src='../$logo' alt='grafica'>					
+			<td align='center' style='background: #fff; width: 20%'>
+				<img style='width: auto; height: 100px;' src='../$logo' alt='grafica'>					
 			</td>
-			<td align='center' style='background: #fff; width: 5%'>
 
-			</td>
-			<td style='background: #fff; width: 65%'>
+			<td style='background: #fff; width: 60%'>
 			<h3 align='center'><strong>NEUROMODULACI&Oacute;N GDL S.A. DE C.V.</strong></h3>	
-			</td>			
-		</tr>
-	</table>";
-$header="
-	<table style='width: 100%' >
-		<tr>
-			<td align='center' style='background: #fff; width: 30%'>
-				<img style='width: auto; height: 150px;' src='../$logo' alt='grafica'>					
-			</td>
-			<td align='center' style='background: #fff; width: 5%'>
-
-			</td>            
-			<td style='background: #fff; width: 65%'>
-			<h3 align='center'><strong>NEUROMODULACI&Oacute;N GDL S.A. DE C.V.</strong></h3>	
-			</td>
-			
-		</tr>
-	</table>";	
-/*    $header="
-	<table style='width: 100%' >
-		<tr>
-			<td align='center' style='background: #fff; width: 30%'>
-				<img style='width: auto; height: 150px;' src='../$logo' alt='grafica'>					
-			</td>
-			<td align='center'  style='background: #fff; width: 50%'>
-	
 			</td>
 			<td align='center' style='background: #fff; width: 20%'>
 
-			</td>			
+			</td>            			
 		</tr>
-	</table>";*/	
+	</table>
+    <hr><br>";
+$header="
+	<table style='width: 100%' >
+		<tr>
+			<td align='center' style='background: #fff; width: 20%'>
+				<img style='width: auto; height: 100px;' src='../$logo' alt='grafica'>					
+			</td>
+			<td style='background: #fff; width: 65%'>
+			<h3 align='center'><strong>NEUROMODULACI&Oacute;N GDL S.A. DE C.V.</strong></h3>	
+			</td>            
+			<td align='center' style='background: #fff; width: 20%'>
 
-$footer ="<hr>
+			</td>            
+
+			
+		</tr>
+	</table>
+    <hr><br>";	
+
+
+$footer ="<br><hr>
 	<table style='width: 100%' >
 		<tbody>
 			<tr>
@@ -220,8 +211,8 @@ $cuerpo_pdf="
     <title></title>
 
 </head>
-<body style='font-family: Arial, sans-serif; text-align: justify'>
-	$header1
+<body style='font-family: Arial, sans-serif; text-align: justify; color: #07252C;'>
+
 
 <p><strong>Guadalajara, Jalisco a $dia de $mes del $anio.</strong></p>
 <p><strong>Nombre del paciente:</strong>  $paciente</p>
@@ -233,9 +224,9 @@ $tratamiento_info
 <br/>
 <br/>
 <br/><br/><br/><br/><br/>
-$footer
+
 <pagebreak />
-$header
+
 <p><strong>CONTRATO DE PRESTACI&Oacute;N DE SERVICIOS DE NEUROMODULACI&Oacute;N</strong><br />
 <strong>NEUROMODULACI&Oacute;N GDL, S.A. DE C.V.</strong></p>
 
@@ -270,9 +261,9 @@ En Guadalajara, Jalisco a $dia de $mes del $anio., las partes:</p>
 <p><strong>PRIMERA.- OBJETO DEL CONTRATO.</strong><br />
 El presente contrato tiene como objetivo la prestaci&oacute;n de <strong>terapia de neuromodulaci&oacute;n (EMT/tDCS)</strong> en las instalaciones ubicadas en <strong>Av. De los Arcos 876, Col. Jardines del Bosque, Guadalajara, Jalisco</strong>.</p>
 <br>
-$footer
+
 <pagebreak />
-$header
+
 <p><strong>SEGUNDA.- HORARIOS DE SERVICIO.</strong><br />
 Las sesiones se ofrecer&aacute;n <strong>de lunes a viernes de 9:00 am a 8:00 pm y s&aacute;bados de 10:00 am a 2:00 pm</strong>, previa cita y confirmaci&oacute;n de disponibilidad.</p>
 
@@ -306,9 +297,9 @@ Este contrato es intransferible y personal. Ninguna de las partes podr&aacute; c
 <p><strong>NOVENA.- TERMINACI&Oacute;N ANTICIPADA.</strong><br />
 Si <strong>EL PACIENTE</strong> decide interrumpir el tratamiento, <strong>NEUROMODULACI&Oacute;N GDL, S.A. DE C.V.</strong> quedar&aacute; liberada de cualquier responsabilidad respecto a los resultados cl&iacute;nicos.</p>
 <br><br>
-$footer
+
 <pagebreak />
-$header
+
 <p><strong>D&Eacute;CIMA.- JURISDICCI&Oacute;N.</strong><br />
 Para la interpretaci&oacute;n y cumplimiento de este contrato, ambas partes se someten a los tribunales de Guadalajara, Jalisco, renunciando a cualquier otro fuero que pudiera corresponderles.</p>
 <br><br>
@@ -353,9 +344,9 @@ Para la interpretaci&oacute;n y cumplimiento de este contrato, ambas partes se s
 			</td>			
 		</tr>
 	</table>
-$footer
-<pagebreak />
-$header
+
+    <pagebreak />
+
 <p>En Guadalajara, Jalisco a $dia de $mes del $anio.</p>
 <h2><strong><em>AVISO DE PRIVACIDAD.</strong></h2>
 
@@ -382,9 +373,8 @@ $header
 	<li>Datos Fiscales.</li>
 </ul>
 <br>
-$footer
+
 <pagebreak />
-$header
 
 <p><strong>Sensibles:</strong></p>
 
@@ -418,9 +408,9 @@ $header
 	<li>Somatometr&iacute;a.</li>
 </ul>
 <br><br><br>
-$footer
+
 <pagebreak />
-$header
+
 
 <p><strong>TODO LO ANTERIOR SE RECABA CON LA FINALIDAD DE PROVEER LOS SERVICIOS DE SALUD QUE SE HAN SOLICITADO CON LAS POSIBLES DIVERSAS FINALIDADES DE DIAGN&Oacute;STICO, TRATAMIENTO M&Eacute;DICO, TERAP&Eacute;UTICOS O DE SEGUIMIENTO M&Eacute;DICO; AS&Iacute; COMO&nbsp; TAMBI&Eacute;N PUEDEN SER UTILIZADOS PARA FINES DE INVESTIGACI&Oacute;N CIENT&Iacute;FICA, APORTACIONES AL AVANCE DE LA MEDICINA Y PARA MEJORAMIENTO DE LA CALIDAD DE LOS SERVICIOS PRESTADOS.</strong></p>
 
@@ -439,9 +429,9 @@ $header
 <p><strong>CONSENTIMIENTO PARA LA TOMA Y USO DE FOTOGRAF&Iacute;AS Y VIDEO</strong></p>
 <p>Al firmar este documento, SE OTORGA su consentimiento para una posible toma de fotograf&iacute;as del &aacute;rea intervenida a lo largo de los procedimientos. Dichas fotograf&iacute;as, en el caso de ser tomadas, le ser&aacute; informado y permitir&aacute;n no solamente evidenciar los avances de su tratamiento, sino tambi&eacute;n llevar a cabo valoraciones m&eacute;dicas para su beneficio personal. </p>
 
-$footer
+
 <pagebreak />
-$header
+
 <p>Cabe mencionar que dichas fotos pueden ser utilizadas no solamente para fines m&eacute;dicos, sino tambi&eacute;n para fines de investigaci&oacute;n, de educaci&oacute;n y de publicidad. En caso de que no desee que sus fotograf&iacute;as sean utilizadas para alguno de estos fines, o bien, desea que sean editadas para ocultar su identidad en caso necesario, favor de indicarlo al personal m&eacute;dico.</p>
 
 
@@ -467,9 +457,9 @@ $header
 </ol>
 
 <br><br><br><br>
-$footer
+
 <pagebreak />
-$header
+
 
 <p>En caso de solicitar la rectificaci&oacute;n, adicionalmente deber&aacute; indicar las modificaciones a realizarse y aportar la documentaci&oacute;n oficial necesaria que sustente su petici&oacute;n. En el derecho de cancelaci&oacute;n debe expresar las causas que motivan la eliminaci&oacute;n. Y en el derecho de oposici&oacute;n debe se&ntilde;alar los motivos que justifican se finalice el tratamiento de los datos personales y el da&ntilde;o o perjuicio que le causar&iacute;a, o bien, si la oposici&oacute;n es parcial, debe indicar las finalidades espec&iacute;ficas con las que se no est&aacute; de acuerdo, siempre que no sea un requisito obligatorio.</p>
 
@@ -505,9 +495,9 @@ $header
 			</td>			
 		</tr>
 	</table>
-$footer
-<pagebreak />
-$header
+
+    <pagebreak />
+
 <h2><strong>ACUERDO DE CONFIDENCIALIDAD QUE CELEBRAN:</strong></h2>
 
 <ol>
@@ -523,9 +513,9 @@ $header
 
 <p><strong>PRIMERA.- INFORMACI&Oacute;N CONFIDENCIAL.</strong> Para los prop&oacute;sitos del presente ACUERDO, Informaci&oacute;n Confidencial significa: toda aquella informaci&oacute;n que surja de la relaci&oacute;n &ldquo;Prestador del servicio&rdquo; &ndash; &ldquo;Paciente&rdquo;, como lo es: atenci&oacute;n m&eacute;dica, padecimientos espec&iacute;ficos, atenci&oacute;n de urgencias m&eacute;dicas, dosis de medicamentos para el padecimiento que se presente, aplicaci&oacute;n de medicamentos bajo prescripci&oacute;n y receta m&eacute;dica, orientaci&oacute;n y asesor&iacute;a m&eacute;dica, el expediente de pacientes, estudios, registros, estad&iacute;sticas y an&aacute;lisis de informaci&oacute;n de salud, n&uacute;meros de contacto con el &ldquo;Paciente&rdquo;, citas, cambios de fecha, horario y ubicaci&oacute;n de las consultas m&eacute;dicas, cuidados del paciente, informaci&oacute;n sobre ex&aacute;menes m&eacute;dicos practicados, padecimiento, y/o evaluar la calidad del servicio brindado, registros para seguimiento a consultas y padecimientos, signos vitales, padecimiento actual, antecedentes heredo-familiares, antecedentes personales no patol&oacute;gicos, antecedentes personales patol&oacute;gicos, tratamientos m&eacute;dicos y/o quir&uacute;rgicos, tipo de sangre, resultados sobre pruebas de enfermedades infecto-contagiosas, estado de salud actual y padecimientos anteriores,
 </p>
-$footer
+
 <pagebreak />
-$header
+
 <p>resultados sobre an&aacute;lisis y pruebas de laboratorio y/o rayos x, consumo de sustancias enervantes y/o psicotr&oacute;picos, consumo de bebidas alcoh&oacute;licas, somatometr&iacute;a, etc&eacute;tera. Lo anterior, con la &uacute;nica reserva que al respecto se&ntilde;alan las Leyes Sanitarias del pa&iacute;s.</p>
 <br>
 <p><strong>SEGUNDA. - TITULARIDAD DE LA INFORMACI&Oacute;N.</strong> Expresamente reconocen las partes, que la Informaci&oacute;n Confidencial que han recibido y seguir&aacute;n recibiendo, as&iacute; como la que se obtenga o produzca derivado de la relaci&oacute;n &ldquo;Prestador del servicio&rdquo; &ndash; &ldquo;Paciente&rdquo;, no resulta evidente ni es del dominio p&uacute;blico, por lo que constituye propiedad o titularidad del &ldquo;Paciente&rdquo; y tiene un valor significativo para el mismo.</p>
@@ -534,9 +524,9 @@ $header
 <br>
 <p><strong>CUARTA. - VERACIDAD DE LA INFORMACI&Oacute;N.</strong> El &ldquo;Paciente&rdquo; reconoce que, todo lo manifestado al &ldquo;Prestador del servicio&rdquo; en o para la consulta, as&iacute; como los documentos, resultados de laboratorio y dem&aacute;s elementos proporcionados al&nbsp; &ldquo;Prestador del servicio&rdquo; son verdaderos. El &ldquo;Prestador del servicio&rdquo; no es responsable de la veracidad ni la precisi&oacute;n de la informaci&oacute;n proporcionada por el &ldquo;Paciente&rdquo;, ya que los mismos no han sido previamente validados y/o verificados. Asimismo, el &ldquo;Prestador del servicio&rdquo; no es responsable por la informaci&oacute;n que oculte u omita proporcionar el &ldquo;Paciente&rdquo;.</p>
 <br>
-$footer
+
 <pagebreak />
-$header
+
 <p><strong>QUINTA. - LIBERACIÓN DE OBLIGACIONES.</strong> El “Prestador del servicio” quedará liberada de sus obligaciones en los siguientes casos:</p>
 
 <ol style='list-style-type: upper-alpha;'>
@@ -554,9 +544,9 @@ $header
 <br>
 <p><strong>NOVENA.- MODIFICACIONES AL ACUERDO.</strong> Cualquier modificaci&oacute;n que las partes deseen realizar al contenido del presente ACUERDO, deber&aacute; efectuarse mediante acuerdo realizado por escrito y firmado por ambas partes.</p>
 <br><br>
-$footer
+
 <pagebreak />
-$header
+
 <p><strong>D&Eacute;CIMA.- DOMICILIOS CONVENCIONALES.</strong> Las partes se&ntilde;alan como domicilios convencionales para recibir todo tipo de documentos, notificaciones y dem&aacute;s comunicaciones los se&ntilde;alados en el cap&iacute;tulo de declaraciones de este instrumento.</p>
 <br>
 <p><strong>D&Eacute;CIMA PRIMERA.- JURISDICCI&Oacute;N.</strong> Para la interpretaci&oacute;n, cumplimiento y ejecuci&oacute;n del presente ACUERDO, las partes convienen en someterse expresamente a las Leyes y Tribunales con jurisdicci&oacute;n en Guadalajara, Jalisco, haciendo renuncia expresa de cualquier otro fuero que pudiere corresponderles por raz&oacute;n de su domicilio presente o futuro, o que por cualquier otra raz&oacute;n pudiera llegar a corresponderles.</p>
@@ -597,9 +587,9 @@ $header
 <p>&nbsp;</p>
 
 
-$footer
+
 <pagebreak />
-$header
+
 <h2><strong>CARTA DE CONSENTIMIENTO V&Aacute;LIDAMENTE INFORMADO&nbsp;</strong></h2>
 
 <p>Apellidos: <strong>$apellidos</strong> &nbsp; Nombre: <strong>$nom_simple</strong> &nbsp; Edad:_____________.</p>
@@ -617,7 +607,7 @@ $header
 
 <p>______________________________________________________________,</p>
 
-<p>Declaro que voluntariamente he acudido a este establecimiento de Neuromodulaci&oacute;n GDL S.A. DE C.V., donde el responsable del centro {<strong>Dr. Alan Hinojosa God&iacute;nez</strong>}, m&eacute;dico con c&eacute;dula profesional {<strong>######</strong>}, me ha explicado en qu&eacute; consiste el procedimiento m&eacute;dico de estimulaci&oacute;n magn&eacute;tica transcraneal; as&iacute; como el objetivo, los resultados esperados, posibles reacciones, riesgos o complicaciones de este, as&iacute; como beneficios esperados y tratamientos alternativos.</p>
+<p>Declaro que voluntariamente he acudido a este establecimiento de Neuromodulaci&oacute;n GDL S.A. DE C.V., donde el responsable del centro {<strong>Dr. Alan Hinojosa God&iacute;nez</strong>}, m&eacute;dico con c&eacute;dula profesional {<strong>9512714</strong>}, me ha explicado en qu&eacute; consiste el procedimiento m&eacute;dico de estimulaci&oacute;n magn&eacute;tica transcraneal; as&iacute; como el objetivo, los resultados esperados, posibles reacciones, riesgos o complicaciones de este, as&iacute; como beneficios esperados y tratamientos alternativos.</p>
 
 <p>Comprendo que el procedimiento m&eacute;dico autorizado consiste en: un tratamiento m&eacute;dico realizado por cl&iacute;nicos capacitados, en el cual se utiliza un aparato o dispositivo m&eacute;dico que cuenta con diferentes componentes, entre los m&aacute;s importantes, una bobina. En general, este aparato tiene la funci&oacute;n de generar un campo magn&eacute;tico que termina produciendo un campo el&eacute;ctrico en la zona cerebral en donde se posiciona su bobina.</p>
 
@@ -625,9 +615,9 @@ $header
 
 <p>Se realiza al implementar un pulso magn&eacute;tico sobre la corteza motora, determinando cu&aacute;nta energ&iacute;a se necesita para generar una corriente el&eacute;ctrica dentro de esta. Esta es la cantidad necesaria para que el aparato de TMS produzca un movimiento en sus dedos.</p>
 
-$footer
+
 <pagebreak />
-$header
+
 
 <p>El m&eacute;dico tomar&aacute; la bobina que emite el pulso magn&eacute;tico sobre la cabeza del paciente mientras que una serie de pulsos (no m&aacute;s r&aacute;pidos que un pulso por segundo) ser&aacute; emitida hasta que los dedos de la mano contralateral de donde se est&aacute; aplicando realicen un movimiento. Durante este proceso, el &uacute;nico efecto que el paciente podr&aacute; notar es un sonido de &ldquo;clic&rdquo; cuando los pulsos se est&eacute;n emitiendo.</p>
 
@@ -641,9 +631,9 @@ $header
 
 <p>El riesgo m&aacute;s grave conocido de la EMT es la producci&oacute;n de una convulsi&oacute;n. Aunque ha habido algunos informes sobre casos de ataques con el uso de dispositivos de EMT, el riesgo es tambi&eacute;n peque&ntilde;o en extremo, y no se han conocido casos de convulsiones con el uso de este dispositivo particular de EMT. No obstante, se me ha explicado que si presento antecedentes de alg&uacute;n trastorno convulsivo, debo informar de forma inmediata al personal m&eacute;dico del establecimiento, ya que esto podr&iacute;a influir en mi riesgo particular de desarrollar convulsiones con este procedimiento; a&uacute;n cuando el personal c&iacute;nico siga los lineamientos de seguridad actualizados para el uso de EMT dise&ntilde;ados para minimizaci&oacute;n de riesgos convulsivos con esta t&eacute;cnica.</p>
 <br><br><br>
-$footer
+
 <pagebreak />
-$header
+
 <p>En cuanto al uso de &eacute;sta t&eacute;cnica para el tratamiento de la depresi&oacute;n, se me ha informado de que no es eficaz para todos los pacientes, por lo que, cualquier signo o s&iacute;ntoma de empeoramiento debe informarse de inmediato al Doctor y de que es posible que necesite pedir a un familiar o cuidador que vigile los s&iacute;ntomas para ayudar a detectar cualquier signo de empeoramiento de la depresi&oacute;n.</p>
 
 
@@ -661,9 +651,9 @@ $header
 
 <p>As&iacute; mismo se me inform&oacute; de que en caso de ser necesario, se podr&aacute; solicitar mi autorizaci&oacute;n expresa para efecto de toma de fotograf&iacute;as para diversas finalidades como dar seguimiento al tratamiento, observar el avance o evoluci&oacute;n del mismo, para fines de investigaci&oacute;n o aportes al avance de la ciencia y la medicina, entre otros; lo cual tambi&eacute;n se autoriza por medio de la firma que se plasma dentro de la presente carta de consentimiento.</p>
 <br>
-$footer
+
 <pagebreak />
-$header
+
 <p>Se me ha informado tambi&eacute;n con claridad que tengo derecho expreso de retirar mi consentimiento en cualquier momento, y en caso de retirar mi consentimiento, lo har&eacute; por escrito, de forma expresa al correo electr&oacute;nico: <a href='mailto:neuromodulacion.gdl@gmail.com'>neuromodulacion.gdl@gmail.com</a> &nbsp;</p>
 <br>
 <p>El presente documento se firma de manera aut&oacute;grafa por los intervinientes y testigos:&nbsp;</p>
@@ -677,9 +667,9 @@ $header
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Testigo 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Testigo 2</p>
 <br><br><br><br><br><br><br><br><br><br><br><br>
-$footer
+
 <pagebreak />
-$header1 
+
 
 <table width='100%'>
 	<tr>
@@ -724,7 +714,7 @@ $header1
 	</tr>
 </table>
 
-$footer
+
 </body>
 ";
 
@@ -735,8 +725,15 @@ $footer
 // Require composer autoload
 require_once __DIR__ . '/../vendor/autoload.php';
 // Create an instance of the class:
-$mpdf = new \Mpdf\Mpdf();
+$mpdf = new \Mpdf\Mpdf([
+    'margin_top' => 45, // Ajusta este valor según necesites
+    'margin_left' => 20,
+    'margin_right' => 20,
+    'margin_bottom' => 45,
+]);
 
+$mpdf->SetHTMLHeader($header);
+$mpdf->SetHTMLFooter($footer);
 // Write some HTML code:
 $mpdf->WriteHTML($cuerpo_pdf);
 
@@ -745,6 +742,6 @@ $mpdf->WriteHTML($cuerpo_pdf);
 // I imprime
 
 // Output a PDF file directly to the browser
-$mpdf->Output('Paciente_'.$paciente_id.'.pdf','I');
+$mpdf->Output('Contrato_Paciente_'.$paciente_id.'.pdf','I');
 
 ?>
