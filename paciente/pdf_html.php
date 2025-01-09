@@ -107,11 +107,11 @@ $cuerpo_pdf = "
     <title></title>
 	<meta charset='UTF-8'>
 </head>
-<body style='font-family: Arial, sans-serif;'>
+<body style='font-family: Arial, sans-serif; color: #07252C;'>
 	<table style='width: 100%' >
 		<tr>
-			<td align='center' style='background: #005157; width: 40%'>
-				<table style='width: 70%'>
+			<td align='center' style='background: #005157; width: 100%'>
+				<table style='width: 70%; padding: 20px; '>
 					<tr>
 						<td style='color: #FFF; text-align: center;  '><h2>REPORTE</h2></td>
 						
@@ -121,12 +121,12 @@ $cuerpo_pdf = "
 					</tr>						
 				</table>					
 			</td>
-			<td align='center'  style='background: #fff; width: 60%'>
+			<!--<td align='center'  style='background: #fff; width: 60%'>
 				<img style='width: auto; height: 150px;' src='../$logo' alt='grafica'>
-			</td>
+			</td>-->
 		</tr>
 	</table>
-	<br><br><br>
+	<br>
 	<table>
 		<tr>
 			<td style='background: #0096AA; width: 200px; padding: 8px; font-size: 12px; color: #FFF'><b>PACIENTE</b></td>
@@ -206,7 +206,8 @@ WHERE efectos_adversos.historico_id = historico_sesion.historico_id) AS adversos
        //$observaciones =  utf8_decode($observaciones);		
        
        //$f_captura = date('d-m-y', strtotime($f_captura)) ;
-       $f_captura = strftime("%e-%b-%y",strtotime($f_captura));
+       //$f_captura = strftime("%e-%b-%y",strtotime($f_captura));
+	   $f_captura = format_fecha_esp_dmy($f_captura);
        if ($siglas == "TMS") {
            $tipo = $protocolo;
        }else{
@@ -250,8 +251,8 @@ FROM
        //$observaciones =  utf8_decode($observaciones);		
        
        //$f_captura = date('d-m-y', strtotime($f_captura)) ;
-       $f_captura = strftime("%e-%b-%y",strtotime($f_captura));
-       
+       //$f_captura = strftime("%e-%b-%y",strtotime($f_captura));
+       $f_captura = format_fecha_esp_dmy($f_captura);
        									        
 	   $cuerpo_pdf .= " $adversos_id - $adverso,";
   		  
@@ -262,11 +263,12 @@ $cuerpo_pdf .= "
 
 	<br>
 	<br>
-	<table style='width: 100%' >
+	<table style='min-width: 100%' >
 		<tr>
 			<td style='background: #005157; width: 100%; padding: 8px; color: #fff'><h3>EVOLUCION GRAFICADA</h3></td>
 			
 		</tr>
+
 		";
 ///////////////////////////////////////////////////////////////// inicia nuevo
 $sql_encuestas = "
@@ -291,8 +293,16 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 		base_encuesta_$encuesta_id.paciente_id,
 		base_encuesta_$encuesta_id.usuario_id,
 		base_encuesta_$encuesta_id.f_captura,
-		base_encuesta_$encuesta_id.h_captura,";												
-														
+		base_encuesta_$encuesta_id.h_captura,
+		base_encuesta_$encuesta_id.total
+	FROM
+		base_encuesta_$encuesta_id
+	WHERE
+		base_encuesta_$encuesta_id.paciente_id = $paciente_id
+	ORDER BY f_captura desc";	
+
+											
+	/*													
 	$sql_preguntas = "
 	SELECT
 		preguntas_encuestas.pregunta_id,
@@ -308,7 +318,7 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 	//$cuerpo_pdf .= $sql_preguntas."<hr>";	
 	$sql_basesX = "";
  	$result_preguntas=ejecutar($sql_preguntas); 
- 	$cnt_brake = 1;
+ 	
 	while($row_preguntas = mysqli_fetch_array($result_preguntas)){
         extract($row_preguntas);
 											
@@ -325,15 +335,23 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 	WHERE
 		base_encuesta_$encuesta_id.paciente_id = $paciente_id
 	ORDER BY f_captura desc";
+*/
 
-//echo $sql_bases."<hr>";
+$cnt_brake = 1;
+// echo $sql_bases."<hr>";
 
 	$result_bases=ejecutar($sql_bases);
 	$cnt_bases = mysqli_num_rows($result_bases);
-	//$cuerpo_pdf .= $sql_bases."<br> Res".$cnt_bases."<hr>";
+	//$cuerpo_pdf .= "<hr>".$sql_bases."<br> Res".$cnt_bases."<hr>";
 	$tot_fin = 0;
-	if ($cnt_bases >= 1) {				
-		$cuerpo_pdf .="
+	if ($cnt_bases >= 1) {	
+		
+		if ($cnt_bases >= 12 ) {
+			$pagebreak ="<pagebreak >";
+		}else{
+			$pagebreak ="";
+		}	
+		$cuerpo_pdf .="$pagebreak
 		<tr>
 			<td><hr><h3 align='center'>".$encuesta." - ".$descripcion."</h3><hr></td>
 		</tr>
@@ -354,11 +372,13 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 								
 							//$cnt_calificacion = 1;
 							$cnt_calif = 1;		
+							$total = 0;
+							$cnt_pg = mysqli_num_rows($result_bases);
 					    	while($row_bases = mysqli_fetch_array($result_bases)){
 						        extract($row_bases);
 							
-							$color = "";
-									
+							$color = "";								
+
 								$sql_calificacion = "
 								SELECT
 									calificaciones.calificacion_id, 
@@ -375,7 +395,8 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 									AND calificaciones.max >= $total
 									";
 									
-								//$tabla .= $sql_calificacion."<hr>";	
+							//echo $sql_calificacion."<hr>";	
+
 								$result_calificacion = ejecutar($sql_calificacion);	
 								$cnt_calificacion = mysqli_num_rows($result_calificacion);
 								$row_calificacion = mysqli_fetch_array($result_calificacion);
@@ -392,14 +413,14 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 									$tot_fin = $total;
 								}
 								
-
+								/*
 									if (isset($f_ini)) {
 										$f_ini_formateado = (new DateTime($f_ini))->format('d-M-Y');
 										$f_ini_formateado = strtr($f_ini_formateado, $meses_espanol);
 									} else {
 										$f_ini_formateado = "";
-									}
-									
+									}*/
+									$f_ini_formateado = format_fecha_esp_dmy($f_captura);
 									
 									$tabla .="
 									<tr>
@@ -412,9 +433,10 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 									{'y': '$f_captura', '$encuesta': $total},";
 									
 									$cnt_calif ++;
+	
 								}													
 								$tabla .="</table>";
-						
+								//echo $pagebreak;
 								//$resultado_final = round(($tot_ini/$total)*100,0);
 								//$resultado_final = 100 -$resultado_final;
 								
@@ -447,6 +469,8 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 				</td>
 			</tr>																  		
 					  	";
+						//  $cuerpo_pdf .= $pagebreak;													  		
+					 
 					if ($cnt_brake == 3 || $cnt_brake == 6 || $cnt_brake == 9 || $cnt_brake == 12) {
 						$cuerpo_pdf .= "<pagebreak >";
 					}
@@ -471,30 +495,79 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
 				<td style='background: #005157; width: 100%; padding: 8px; color: #fff'><h3>COMENTARIOS</h3></td>
 			</tr>	
 			<tr>
-				<td style=' width: 100%; padding: 8px; font-size: 14px'>
-					<ul>
-						<li></lo>$comentarios_reporte</li>
-					</ul>
-
-				</td>
+					<td style=' width: 100%; padding: 8px; font-size: 14px'>
+						<p>
+							$comentarios_reporte
+						</p>
+					</td>
 			</tr>								
-		</table>		
+		</table>	
 </body>
 ";
 
 // echo $cuerpo_pdf;
 $cuerpo_pdf = mb_convert_encoding($cuerpo_pdf, 'UTF-8', 'auto');
  
+$header="
+	<table style='width: 100%' >
+		<tr>
+			<td align='center' style='background: #fff; width: 20%'>
+				<img style='width: auto; height: 100px;' src='../$logo' alt='grafica'>					
+			</td>
+			<td style='background: #fff; width: 65%'>
+			<h3 align='center'><strong>NEUROMODULACI&Oacute;N GDL S.A. DE C.V.</strong></h3>	
+			</td>            
+			<td align='center' style='background: #fff; width: 20%'>
 
+			</td>            
+
+			
+		</tr>
+	</table>
+    <hr><br>";	
+
+
+$footer ="<br><hr>
+	<table style='width: 100%' >
+		<tbody>
+			<tr>
+				<td align='center' style='background: #fff; width: 70%'>
+					
+				</td>
+				<td align='right'  style='background: #fff; width: 30%'>
+					<h5 style='color: #005157; '>
+					        Tel. 33 3995 9901<br>   
+				                 33 3995 9904<br>
+				                 33 3470 2176<br>
+				      Av. De los Arcos N. 876<br>
+				     Col. Jardines del Bosque<br>
+				neuromodulacion.gdl@gmail.com<br>
+				   www.neuromodulaciongdl.com<br>
+					</h5>
+				</td>			
+			</tr>
+		</tbody>
+	</table>
+";
 
 // //Require composer autoload
 require_once __DIR__ . '/../vendor/autoload.php';
 
+ //echo $cuerpo_pdf;
 
- 
+ // Create an instance of the class:
+$mpdf = new \Mpdf\Mpdf([
+    'margin_top' => 45, // Ajusta este valor según necesites
+    'margin_left' => 20,
+    'margin_right' => 20,
+    'margin_bottom' => 45,
+]);
+
+$mpdf->SetHTMLHeader($header);
+$mpdf->SetHTMLFooter($footer);
 
 // Create an instance of the class:
-$mpdf = new \Mpdf\Mpdf();
+//$mpdf = new \Mpdf\Mpdf();
 
 // Write some HTML code:
 $mpdf->WriteHTML($cuerpo_pdf);
@@ -504,6 +577,6 @@ $mpdf->WriteHTML($cuerpo_pdf);
 // I imprime
 
 // Output a PDF file directly to the browser
-$mpdf->Output('Paciente_'.$paciente_id.'.pdf','D');
+$mpdf->Output('Paciente_'.$paciente_id.'.pdf','I');
 
 ?>	
