@@ -37,6 +37,7 @@ $data_time = date("Y-m-d H:i:s");
 $timestamp = time();
 
 $time = time();
+$usuario_id = $usuario_id ?? 0;
 
 if ($usuario_id === null) {
     die('Usuario no autenticado.');
