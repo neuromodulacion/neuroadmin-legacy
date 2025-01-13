@@ -1,5 +1,5 @@
 <?php
-
+// archivo actualizado
 // Iniciar la sesión
 session_start();
 //extract($_SESSION);
@@ -36,13 +36,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
 
-    // Obtener y sanitizar los datos de entrada
-    $username = isset($_POST['username']) ? trim($_POST['username']) : '';
-    $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+// Obtener y sanitizar los datos de entrada
+$username = isset($_POST['username']) ? trim($_POST['username']) : '';
+$password = isset($_POST['password']) ? trim($_POST['password']) : '';
 
+// Asignar valores a $user y $pwd
+$user = $username;
+$pwd = $password;
 
-    // Filtrar y sanitizar la entrada del nombre de usuario
-    $user = filter_var($user, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+// Filtrar y sanitizar el nombre de usuario
+$user = filter_var($user, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     // Consulta SQL para obtener el usuario por nombre de usuario
     $sql_access = "
