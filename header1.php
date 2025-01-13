@@ -61,6 +61,7 @@ $mes = obMesActualespaniol($hoy);
 // Obtiene la URL del script actual y la recorta para obtener la ruta relativa
 $ubicacion_url = $_SERVER['PHP_SELF']; 
 $ubicacion_url = $rest = substr($ubicacion_url, 1 , 100);
+$sesion = $sesion ?? null;
 
 // Verifica si la sesión es válida, si no lo es, redirige al usuario a la página de inicio
 if ($sesion != "On" || $sesion == "" || $_SESSION['usuario_id'] == '' || $empresa_id == '' || $_SESSION['body'] == '') {

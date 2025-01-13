@@ -35,9 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die('Error al conectar a la base de datos. Por favor, inténtelo más tarde.');
     }
 
+
     // Obtener y sanitizar los datos de entrada
-    $user = trim($_POST['username']);
-    $pwd = trim($_POST['password']);
+    $username = isset($_POST['username']) ? trim($_POST['username']) : '';
+    $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+
 
     // Filtrar y sanitizar la entrada del nombre de usuario
     $user = filter_var($user, FILTER_SANITIZE_FULL_SPECIAL_CHARS);

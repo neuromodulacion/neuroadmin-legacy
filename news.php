@@ -61,11 +61,13 @@ FROM
 WHERE 
 	articulo.articulo_id = $articulo_id";    
     
-    $result=ejecutar($sql); 
-    $row = mysqli_fetch_array($result);
-    extract($row);	
-	//print_r($row);
-
+     $result=ejecutar($sql); 
+     $row = mysqli_fetch_array($result);
+     $cnt = mysqli_num_rows($result);
+     if ($cnt >= 1) {
+          extract($row);	
+     }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
