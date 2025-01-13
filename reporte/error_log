@@ -1,3 +1,0 @@
-[19-Nov-2024 08:01:04 America/Monterrey] PHP Notice:  session_start(): A session had already been started - ignoring in /home/neuromod/neuromodulaciongdl.com/header1.php on line 3
-[19-Nov-2024 18:04:04 America/Monterrey] PHP Notice:  Undefined variable: sesion in /home/neuromod/neuromodulaciongdl.com/header1.php on line 49
-[19-Nov-2024 18:04:04 America/Monterrey] PHP Notice:  Undefined variable: usuario_id in /home/neuromod/neuromodulaciongdl.com/uso.php on line 41
