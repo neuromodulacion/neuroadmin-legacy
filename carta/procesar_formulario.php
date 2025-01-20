@@ -1,6 +1,8 @@
 <?php
-
+session_start();
+extract($_SESSION);
 print_r($_POST);
+
 error_reporting(7);
 iconv_set_encoding('internal_encoding', 'utf-8'); 
 header('Content-Type: text/html; charset=UTF-8');
@@ -141,10 +143,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				'$edad_perro',
 				'$email',
 				$empresa_id)";
-	
+	echo $sql."<hr>";
     if (ejecutar($sql)) {
         //echo "Registro guardado exitosamente.";
-		
+		echo 'hola<hr>';
         // Obtener el ID del último registro insertado
         $sql = "
 			SELECT
