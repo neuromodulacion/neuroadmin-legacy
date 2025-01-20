@@ -9,7 +9,7 @@ error_reporting(E_ALL); // Reemplaza `7` por `E_ALL` para usar la constante más
 ini_set('default_charset', 'UTF-8');
 
 // Configurar la cabecera HTTP con codificación UTF-8
-header('Content-Type: text/html; charset=UTF-8');
+header('Content-Type: text/html; charset=UTF-8'); 
 
 // Configurar la zona horaria
 date_default_timezone_set('America/Monterrey');

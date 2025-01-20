@@ -368,11 +368,14 @@ include($ruta.'header1.php');
                                         
                                             $cnt_a = 1;
                                             foreach ($result_sem2['resultado'] as $row) {
+                                                //extract($row);
                                                 $f_captura = (new DateTime($row['f_captura']))->format('d-M-Y');
                                                 $f_captura = strtr($f_captura, $meses_espanol); // Reemplazar meses en español
                                                 $observaciones = codificacionUTF($row['observaciones']); // Codificar observaciones
                                                 $equipo = codificacionUTF($row['equipo']); // Codificar equipo
                                                 $nombre = codificacionUTF($row['nombre']); // Codificar nombre
+                                                $nombre = codificacionUTF($row['nombre']); // Codificar nombre
+                                                
                                                 $dia .= "
                                                     <tr>
                                                         <td style='text-align: center'>{$cnt_a}</td>
