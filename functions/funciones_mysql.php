@@ -1,24 +1,27 @@
 <?php 
-	// Función para ejecutar una consulta SQL simple y devolver el resultado
+	// Función para ejecutar una consulta SQL y devolver el resultado
 	function ejecutar($sql){
-        // Conexión a la base de datos utilizando MySQLi
-        //$mysqli = new mysqli("174.136.25.64","lamanad1_conexion","7)8S!K{%NBoL", "lamanad1_medico");
-		
-		$mysqli = new mysqli("198.59.144.197","neuromod_conexion","7)8S!K{%NBoL", "neuromod_medico");
-        // Verifica si hay un error en la conexión
-        if ($mysqli->connect_errno) {
-            // Si hay un error, muestra un mensaje con el código y el error
-            echo "Falló la conexión con MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-        }
-        // Ejecuta la consulta SQL pasada como parámetro
-        $resultado = $mysqli->query($sql);
-        
-        // Cierra la conexión con la base de datos
-        mysqli_close($mysqli);
-        
-        // Retorna el resultado de la consulta
-        return $resultado;  
-    }   
+		// Conexión a la base de datos utilizando MySQLi
+		$mysqli = new mysqli("198.59.144.197", "neuromod_conexion", "7)8S!K{%NBoL", "neuromod_medico");
+	
+		// Ajuste importante para unificar el juego de caracteres
+		$mysqli->set_charset("utf8mb4");
+	
+		// Verifica si hay un error en la conexión
+		if ($mysqli->connect_errno) {
+			echo "Falló la conexión con MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+		}
+	
+		// Ejecuta la consulta SQL pasada como parámetro
+		$resultado = $mysqli->query($sql);
+	
+		// Cierra la conexión con la base de datos
+		$mysqli->close();
+	
+		// Retorna el resultado de la consulta
+		return $resultado;
+	}
+	
 
 	// Función para ejecutar una consulta SQL y devolver el objeto MySQLi, lo que permite obtener el último ID insertado
 	function ejecutar_id($sql) {
@@ -26,6 +29,9 @@
         //$mysqli = new mysqli("174.136.25.64","lamanad1_conexion","7)8S!K{%NBoL", "lamanad1_medico");
 		
 		$mysqli = new mysqli("198.59.144.197","neuromod_conexion","7)8S!K{%NBoL", "neuromod_medico");
+	
+		// Ajuste importante para unificar el juego de caracteres
+		$mysqli->set_charset("utf8mb4");
 
 	    // Verifica si hay un error en la conexión
 	    if ($mysqli->connect_errno) {

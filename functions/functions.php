@@ -1,4 +1,61 @@
 <?php
+/**
+ * Intenta normalizar el texto a UTF-8, corrigiendo 
+ * codificaciones dobles o ISO-8859-1 mal interpretado.
+ *
+ * @param mixed $texto El texto a corregir
+ * @return string El texto en UTF-8 bien formateado, o el original si no se puede corregir
+ */
+/**
+ * Intenta normalizar el texto a UTF-8, corrigiendo 
+ * codificaciones dobles o ISO-8859-1 mal interpretado.
+ *
+ * @param mixed $texto El texto a corregir
+ * @return string El texto en UTF-8 bien formateado, o el original si no se puede corregir
+ */
+function codificacionUTF($texto) {
+    // Si no es un string (por ejemplo, es null, int, array, etc.), lo retornamos tal cual.
+    if (!is_string($texto)) {
+        return $texto;
+    }
+
+    // Detectar si el texto es UTF-8 válido
+    $esUtf8Valido = (mb_detect_encoding($texto, 'UTF-8', true) === 'UTF-8');
+    
+    // Patrón típico de doble codificación: caracteres “Ã”, “Â” y similares,
+    // que indican que un texto UTF-8 fue interpretado como ISO-8859-1
+    // (creando "sesiÃ³n" en vez de "sesión").
+    $tienePatronDoble = preg_match('/(Ã|Â|�)/', $texto);
+
+    // Caso 1: El texto YA es UTF-8 pero vemos símbolos raros => probable “doble codificación”
+    if ($esUtf8Valido && $tienePatronDoble) {
+        // Antes se usaba utf8_decode($texto). En su lugar, mb_convert_encoding
+        // que interpreta el texto como UTF-8 y lo convierte a ISO-8859-1:
+        $textoDecod = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+
+        // Si lo decodificado sigue siendo UTF-8 válido, asumimos que fue doble codificación
+        if (mb_detect_encoding($textoDecod, 'UTF-8', true) === 'UTF-8') {
+            return $textoDecod;
+        } else {
+            // Si no, regresamos el texto tal cual
+            return $texto;
+        }
+    }
+    
+    // Caso 2: Si NO es UTF-8 válido, probablemente venga en ISO-8859-1/CP1252
+    if (!$esUtf8Valido) {
+        // Antes se usaba utf8_encode($texto). El equivalente con mbstring es:
+        // Interpretar $texto como ISO-8859-1 y convertirlo a UTF-8
+        return mb_convert_encoding($texto, 'UTF-8', 'ISO-8859-1');
+    }
+    
+    // Caso 3: Si ya es UTF-8 y no tiene patrón de doble codificación, no se toca
+    return $texto;
+}
+
+
+
+/*
 function codificacionUTF($texto) {
     // Validar si $texto es null o no es una cadena
     if ($texto === null || !is_string($texto)) {
@@ -22,7 +79,7 @@ function codificacionUTF($texto) {
 
     // Retornar el texto convertido o el original si no hubo conversión
     return $textoConvertido;
-}
+}*/
 
 
 function obMesActualespaniol($fecha) {

@@ -28,24 +28,10 @@ $meses_espanol = [
 	'Dec' => 'Dic',
 ];
 
-
 include($ruta.'functions/funciones_mysql.php');
 include($ruta.'functions/functions.php');
 include($ruta.'paciente/calendario.php');
 include($ruta.'paciente/fun_paciente.php');
-
-
-
-function tildes($palabra) {
-    //Rememplazamos caracteres especiales latinos minusculas
-    $encuentra = array('&','<','>','¢','£','¥','€','©','®','™','§','†','‡','¶','•','…','±','¹','²','³','½','¼','¾','µ','°','√','∞','Ω','Σ','μ','←','→','↑','↓','↔','↵','⇐','⇒'
-);
-     $remplaza = array('&amp;','&lt','&gt','&cent','&pound','&yen','&euro','&copy','&reg','&trade','&sect','&dagger','&Dagger','&para','&bull','&hellip','&plusmn','&sup1','&sup2','&sup3','&frac12','&frac14','&frac34','&micro','&deg','&radic','&infin','&ohm','&sigma','&mu','&larr','&rarr','&uarr','&darr','&harr','&crarr','&lArr','&rArr'
-
-);
-    $palabra = str_replace($encuentra, $remplaza, $palabra);
-return $palabra;
-}
 
 $paciente = isset($row['paciente']) ? $row['paciente'] : 'N/A';
 $medico = isset($row['medico']) ? $row['medico'] : 'N/A';
@@ -94,7 +80,7 @@ WHERE
     $row = mysqli_fetch_array($result);
     extract($row);	
 
-$comentarios_reporte = stripslashes($row["comentarios_reporte"]);    
+$comentarios_reporte = codificacionUTF($row["comentarios_reporte"]);    
     
 $edad = obtener_edad_segun_fecha($f_nacimiento);
 
@@ -130,11 +116,11 @@ $cuerpo_pdf = "
 	<table>
 		<tr>
 			<td style='background: #0096AA; width: 200px; padding: 8px; font-size: 12px; color: #FFF'><b>PACIENTE</b></td>
-			<td style=' padding: 8px; font-size: 12px'><b>$paciente</b></td>
+			<td style=' padding: 8px; font-size: 12px'><b>".codificacionUTF($paciente)."</b></td>
 		</tr>
 		<tr>
 			<td style='background: #0096AA; width: 200px; padding: 8px; font-size: 12px; color: #FFF'><b>MEDICO TRATANTE</b></td>
-			<td style=' padding: 8px; font-size: 12px'><b>$medico</b></td>
+			<td style=' padding: 8px; font-size: 12px'><b>".codificacionUTF($medico)."</b></td>
 		</tr>
 		<tr>
 			<td style='background: #0096AA; width: 200px; padding: 8px; font-size: 12px; color: #FFF'><b>FECHA</b></td>
@@ -147,7 +133,7 @@ $cuerpo_pdf = "
 			<td style='background: #005157; width: 100%; padding: 8px; color: #fff'><h3>RESUMEN DEL CASO</h3></td>
 		</tr>
 		<tr>
-			<td style=' width: 100%; padding: 8px; font-size: 14px'><p>$sexo de $edad Diagnostico: $diagnostico</p></td>
+			<td style=' width: 100%; padding: 8px; font-size: 14px'><p>$sexo de $edad Diagnostico: ".codificacionUTF($diagnostico)."</p></td>
 		</tr>
 		<tr>
 			<td style='background: #005157; width: 100%; padding: 8px; color: #fff'><h3>RESUMEN DEL TRATAMIENTO</h3></td>
@@ -160,26 +146,28 @@ $cuerpo_pdf = "
 			<th style='text-align: center; padding-top: 10px; padding-bottom: 10px; color: #FFF '>FECHA</th>
 			<th style='text-align: center; padding-top: 10px; padding-bottom: 10px; color: #FFF '>PROTOCOLO</th>
 			<th style='text-align: center; padding-top: 10px; padding-bottom: 10px; color: #FFF '>EFECTOS ADVERSOS</th>
-			<th style='text-align: center; padding-top: 10px; padding-bottom: 10px; color: #FFF '>COMENTARIOS</th>
+			<th style='text-align: center; padding-top: 10px; padding-bottom: 10px; color: #FFF '>NOTA DE EVOLUCIÓN</th>
 		</tr>";
 																			
 $sql_sem2 = "
 	SELECT
 		historico_sesion.f_captura, 
-		(  SELECT
-	GROUP_CONCAT(DISTINCT adversos.adversos_id SEPARATOR ', ' ) AS adversos
-FROM
-	efectos_adversos
-	INNER JOIN
-	adversos
-	ON 
-		efectos_adversos.adversos = adversos.adverso
-WHERE efectos_adversos.historico_id = historico_sesion.historico_id) AS adversos, 
-		historico_sesion.observaciones,
-		historico_sesion.anodo,
-		historico_sesion.catodo,
-		equipos.siglas,
-		protocolo_terapia.protocolo
+		(
+		SELECT
+			GROUP_CONCAT( DISTINCT adversos.adversos_id SEPARATOR ', ' ) AS adversos 
+		FROM
+			efectos_adversos
+			INNER JOIN adversos ON efectos_adversos.adversos = adversos.adverso 
+		WHERE
+			efectos_adversos.historico_id = historico_sesion.historico_id 
+		) AS adversos, 
+		historico_sesion.observaciones, 
+		historico_sesion.anodo, 
+		historico_sesion.catodo, 
+		equipos.siglas, 
+		protocolo_terapia.protocolo, 
+		admin.nombre as tecnico, 
+		admin.cedula_profesional
 	FROM
 		historico_sesion
 		INNER JOIN
@@ -190,6 +178,10 @@ WHERE efectos_adversos.historico_id = historico_sesion.historico_id) AS adversos
 		equipos
 		ON 
 			protocolo_terapia.equipo_id = equipos.equipo_id
+		INNER JOIN
+		admin
+		ON 
+			historico_sesion.usuario_id = admin.usuario_id
 	WHERE
 		historico_sesion.paciente_id = $paciente_id
 	ORDER BY
@@ -202,9 +194,9 @@ WHERE efectos_adversos.historico_id = historico_sesion.historico_id) AS adversos
 	while($row_sem2 = mysqli_fetch_array($result_sem2)){
         extract($row_sem2);	
        // print_r($row_sem2);
-       $observaciones = tildes($observaciones);
-       //$observaciones =  utf8_decode($observaciones);		
-       
+       $observaciones = codificacionUTF($observaciones);
+       $adversos = codificacionUTF($adversos);		
+       $tecnico = codificacionUTF($tecnico);
        //$f_captura = date('d-m-y', strtotime($f_captura)) ;
        //$f_captura = strftime("%e-%b-%y",strtotime($f_captura));
 	   $f_captura = format_fecha_esp_dmy($f_captura);
@@ -220,7 +212,7 @@ WHERE efectos_adversos.historico_id = historico_sesion.historico_id) AS adversos
 			<td style='text-align: center; width: 10%; background: #EBF5FB;'>$f_captura</td>
 			<td style='text-align: center; width: 10%; background: #EBF5FB;'>$tipo</td>
 			<td style='width: 10%; background: #EBF5FB;'>$adversos</td>
-			<td style='width: 60%; background: #EBF5FB;'>$observaciones</td>
+			<td style='width: 60%; background: #EBF5FB;'>$observaciones<br><br><h5>Aplico $tecnico <br>C.P. $cedula_profesional</h5></td>
 		</tr>";   
 			  
 	        $cnt++;
@@ -247,7 +239,7 @@ FROM
 	while($row_sem2 = mysqli_fetch_array($result_sem2)){
         extract($row_sem2);	
        // print_r($row_sem2);
-       $observaciones = tildes($observaciones);
+       $observaciones = codificacionUTF($observaciones);
        //$observaciones =  utf8_decode($observaciones);		
        
        //$f_captura = date('d-m-y', strtotime($f_captura)) ;

@@ -6,6 +6,7 @@ session_start();
 // error_reporting(E_ALL);
 // Notificar solamente errores de ejecución
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 // Establece el conjunto de caracteres predeterminado como UTF-8
 ini_set('default_charset', 'UTF-8');
 
