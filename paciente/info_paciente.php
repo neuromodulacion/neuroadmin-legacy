@@ -1258,7 +1258,7 @@ if ($resultado['numFilas'] > 0) {
 															// Reemplazar el mes en inglés por español
 															$f_captura = strtr($today, $meses_espanol);
 												        
-												        	
+												        	$observaciones = codificacionUTF($observaciones);
 												        //echo "<h1>$funcion</h1>";
 												        //$f_captura = strftime("%e-%b-%Y",strtotime($f_captura));
 												        
@@ -1291,7 +1291,8 @@ if ($resultado['numFilas'] > 0) {
 																		</div>					
 															";
 														}
-												        
+												        $nombre = codificacionUTF($nombre);
+														$prot_terapia = codificacionUTF($prot_terapia);
 												        
 												        $dia .= "<tr>
 																	<th>$cnt_a</th>

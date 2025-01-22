@@ -22,10 +22,10 @@ $_SESSION['time'] = time(); // `time()` es el equivalente moderno a `mktime()`
 
 $ruta = "../";
 extract($_SESSION);
-print_r($_SESSION);
+//print_r($_SESSION);
  
 extract($_POST);
-print_r($_POST);
+//print_r($_POST);
 // echo "<hr>";
 
 // echo "<hr>";
