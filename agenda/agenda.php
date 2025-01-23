@@ -71,7 +71,7 @@ $cnt_agenda = $result_agenda['numFilas'];
 $events = [];
 foreach ($result_agenda['resultado'] as $row_agenda) {
     $events[] = [
-        'title' => $row_agenda['paciente'],
+        'title' => codificacionUTF($row_agenda['paciente']),
         'id' => $row_agenda['agenda_id'],
         'start' => $row_agenda['f_ini'] . 'T' . $row_agenda['h_ini'],
         'end' => $row_agenda['f_fin'] . 'T' . $row_agenda['h_fin'],

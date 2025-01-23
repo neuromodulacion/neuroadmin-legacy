@@ -140,14 +140,14 @@ include($ruta.'header2.php');
                     <td><?php echo htmlspecialchars($fila['Number']); ?></td>
                     <td>
                         <b>
-                            <?php echo htmlspecialchars(
+                            <?php echo codificacionUTF(htmlspecialchars(
                                 $fila['paciente'] . " " . $fila['apaterno'] . " " . $fila['amaterno']
-                            ); ?>
+                            )); ?>
                         </b>
                     </td>
                     <td><?php echo htmlspecialchars($fila['celular']); ?></td>
                     <td><?php echo htmlspecialchars($fila['email']); ?></td>
-                    <td><?php echo htmlspecialchars($fila['medico']); ?></td>
+                    <td><?php echo codificacionUTF(htmlspecialchars($fila['medico'])); ?></td>
                     <td><?php echo htmlspecialchars(verificar_id_bind($fila['id_bind'])); ?></td>
                     <td>
                         <!-- Botón de edición comentado; habilitar si es necesario -->

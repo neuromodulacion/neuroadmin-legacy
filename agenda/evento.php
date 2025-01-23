@@ -1,7 +1,7 @@
 <?php
 // Incluir archivo de funciones MySQL necesarias para interactuar con la base de datos
 include('../functions/funciones_mysql.php');
-
+include('../functions/functions.php');
 // Iniciar sesión para manejar variables de sesión
 session_start();
 
@@ -93,7 +93,7 @@ extract($row);
 						$cnt_paciente = mysqli_num_rows($result_paciente);
 						while($row_paciente = mysqli_fetch_array($result_paciente)){
 							extract($row_paciente); ?>
-							<option <?php if($paciente_idx == $paciente_id){ echo "selected";} ?> value="<?php echo $paciente_idx; ?>"><?php echo $paciente_idx.".- ".$pacientex; ?></option>
+							<option <?php if($paciente_idx == $paciente_id){ echo "selected";} ?> value="<?php echo $paciente_idx; ?>"><?php echo $paciente_idx.".- ".codificacionUTF($pacientex); ?></option>
 					<?php } ?>
 				</select>
 			</div>
@@ -171,7 +171,7 @@ extract($row);
 			<label for="title" class="col-sm-2 control-label">Descripcion</label>
 			<div class="col-sm-10">
 	            <div class="form-line">
-	                <textarea rows='4' id='observ' name='observ' class='form-control no-resize' placeholder='Descripcion' disabled required><?php echo $observ; ?></textarea>
+	                <textarea rows='4' id='observ' name='observ' class='form-control no-resize' placeholder='Descripcion' disabled required><?php echo codificacionUTF($observ); ?></textarea>
 	            </div>
 			</div>
 
