@@ -124,8 +124,8 @@ include($ruta.'header2.php');
 				                                        <tr>
 				                                            <td><?php echo $paciente_id; ?></td>
 				                                            <td><?php echo $today; ?></td>
-				                                            <td><?php echo $paciente." ".$apaterno." ".$amaterno."<br><i>Edad: ".$edad; ?></td>
-				                                            <td><?php echo $medico."<br><i>".$tratamiento."</i>"; ?></td>
+				                                            <td><?php echo codificacionUTF($paciente." ".$apaterno." ".$amaterno)."<br><i>Edad: ".$edad; ?></td>
+				                                            <td><?php echo codificacionUTF($medico)."<br><i>".codificacionUTF($tratamiento)."</i>"; ?></td>
 				                                            <td><?php echo $celular; ?></td>
 				                                            <td  style="background: yellow; "><b><?php echo $estatus; ?></b></td>
 				                                            <td>

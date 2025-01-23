@@ -263,14 +263,14 @@ include($ruta . 'header2.php');
                                             <td><?php echo $paciente_id; ?></td>
                                             <td><?php echo $today; ?></td>
                                             <td>
-                                                <b><?php echo $paciente . " " . $apaterno . " " . $amaterno; ?></b><br>
+                                                <b><?php echo codificacionUTF($paciente . " " . $apaterno . " " . $amaterno); ?></b><br>
                                                 <i><?php echo $medico; ?></i>
                                             </td>
                                             <td><?php echo $total_TMS; ?></td>
                                             <td><?php echo $total_tDCS; ?></td>
                                             <td><?php echo $celular; ?></td>
                                             <td <?php echo $classHTML; ?>>
-                                                <?php echo $estatus; ?><br>
+                                                <?php echo codificacionUTF($estatus); ?><br>
                                                 <?php echo $span; ?>
                                             </td>
                                             <td>

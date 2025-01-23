@@ -1,7 +1,7 @@
 <?php
 // Incluir archivo de conexión MySQL
 require_once "../functions/conexion_mysqli.php";
-
+require_once "../functions/functions.php";
 // Iniciar sesión y configurar opciones de error, codificación y zona horaria
 session_start();
 error_reporting(E_ALL);
@@ -72,7 +72,7 @@ $h_registro = date("H:i:s");
 
                         foreach ($result_paciente['resultado'] as $row_paciente) {
                             $paciente_idx = $row_paciente['paciente_idx'];
-                            $paciente_nombre = utf8_decode($row_paciente['paciente']);
+                            $paciente_nombre = codificacionUTF($row_paciente['paciente']);
                     ?>
                     <option value="<?php echo htmlspecialchars($paciente_idx); ?>"><?php echo htmlspecialchars($paciente_nombre); ?></option>
                     <?php } ?>

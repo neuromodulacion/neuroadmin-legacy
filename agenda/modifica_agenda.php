@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Iterar sobre los resultados de la consulta SQL y agregar cada evento al calendario
                 while($row_agenda = mysqli_fetch_array($result_agenda)){
                     extract($row_agenda);
+                    $paciente = codificacionUTF($paciente); 
 					echo " {    
                           title: '$paciente',
                           id: '$agenda_id',

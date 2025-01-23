@@ -142,7 +142,7 @@ include($ruta . 'header2.php');
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $usuario_id; ?></td> 
-                                                    <td><?php echo $nombre; ?></td>
+                                                    <td><?php echo codificacionUTF($nombre); ?></td>
                                                     <td>$&nbsp;<?php echo number_format($saldo); ?></td>
                                                 </tr>                                                    
                                                 <?php 
@@ -226,10 +226,10 @@ include($ruta . 'header2.php');
                                                     <tr>
                                                         <td><?php echo $ticket; ?></td>
                                                         <td style="text-align: center"><?php echo $f_captura . " T " . $h_captura; ?></td> 
-                                                        <td><?php echo $paciente_id . "-" . $paciente." / Bind-".$id_bind;; ?></td>
-                                                        <td><?php echo $nombre; ?></td>
+                                                        <td><?php echo $paciente_id . "-" . codificacionUTF($paciente)." / Bind-".$id_bind;; ?></td>
+                                                        <td><?php echo codificacionUTF($nombre); ?></td>
                                                         <td><?php echo $f_pago; ?></td> 
-                                                        <td><?php echo $tipo; ?></td>
+                                                        <td><?php echo codificacionUTF($tipo); ?></td>
                                                         <td align="right">$&nbsp;<?php echo number_format($importe); ?></td>
                                                     </tr>                                                    
                                                     <?php 
@@ -252,6 +252,7 @@ include($ruta . 'header2.php');
                                                 <th colspan="4" align="center"><h2 align="center"><B>Cobros de Consultas</B></h2></th>
                                             </tr>                                              
                                             <tr>
+                                                <th style="text-align: center">Ticket</th>
                                                 <th style="text-align: center">Fecha</th>
                                                 <th style="text-align: center">Paciente</th>
                                                 <th style="text-align: center">Cobro</th>
@@ -273,6 +274,7 @@ include($ruta . 'header2.php');
                                                     cobros.importe,
                                                     cobros.f_captura,
                                                     cobros.h_captura,
+                                                    cobros.ticket,
                                                     cobros.otros,
                                                     cobros.paciente_id,
                                                     cobros.empresa_id,
@@ -311,12 +313,13 @@ include($ruta . 'header2.php');
                                                     $f_captura = format_fecha_esp_dmy($f_captura);   
                                                     ?>
                                                     <tr>
+                                                        <td><?php echo $ticket; ?></td>
                                                         <td style="text-align: center"><?php echo $f_captura . " T " . $h_captura; ?></td> 
-                                                        <td><?php echo $paciente_cons_id . " - " . $paciente . " " . $apaterno . " " . $amaterno." / Bind-".$id_bind; ?></td>
-                                                        <td><?php echo $nombre; ?></td>
-                                                        <td><?php echo $doctor; ?></td>
+                                                        <td><?php echo $paciente_cons_id . " - " . codificacionUTF($paciente . " " . $apaterno . " " . $amaterno)." / Bind-".$id_bind; ?></td>
+                                                        <td><?php echo codificacionUTF($nombre); ?></td>
+                                                        <td><?php echo codificacionUTF($doctor); ?></td>
                                                         <td><?php echo $f_pago; ?></td> 
-                                                        <td><?php echo $tipo; ?></td>
+                                                        <td><?php echo codificacionUTF($tipo); ?></td>
                                                         <td align="right">$&nbsp;<?php echo number_format($importe); ?></td>
                                                     </tr>                                                    
                                                     <?php 
@@ -334,15 +337,17 @@ include($ruta . 'header2.php');
                                     </div>                                      
                                     <!-- Tabla que muestra los pagos -->
                                     <div class="col-md-12">
-                                        <table style="width: 80%" class="table table-bordered">
+                                        <table style="width: 100%" class="table table-bordered">
                                             <tr>
-                                                <th colspan="4" align="center"><h2 align="center"><B>Pagos</B></h2></th>
+                                                <th colspan="5" align="center"><h2 align="center"><B>Pagos</B></h2></th>
                                             </tr>                                              
                                             <tr>
+                                                <th>Id</th>
                                                 <th style="text-align: center">Fecha</th>
                                                 <th style="text-align: center">Usuario</th>
                                                 <th style="text-align: center">Forma de pago</th>
                                                 <th style="text-align: center">Tipo</th>
+                                                <th style="text-align: center">Concepto</th>
                                                 <th style="text-align: center">Importe</th>
                                             </tr>
                                             <?php
@@ -355,6 +360,7 @@ include($ruta . 'header2.php');
                                                     pagos.h_captura,
                                                     pagos.importe,
                                                     pagos.tipo,
+                                                    pagos.concepto,
                                                     pagos.f_pago,
                                                     pagos.terapeuta,
                                                     pagos.empresa_id,
@@ -377,13 +383,15 @@ include($ruta . 'header2.php');
                                             if ($cnt_cob <> 0) {
                                                 while($row_cob = mysqli_fetch_array($result_cob)) {
                                                     extract($row_cob);    
-                                                    $f_captura = strftime("%e-%b-%Y", strtotime($f_captura));
+                                                    $f_captura = format_fecha_esp_dmy($f_captura);
                                                     ?>
                                                     <tr>
+                                                        <td><?php echo $pagos_id; ?></td>
                                                         <td><?php echo $f_captura; ?></td>
-                                                        <td><?php echo $nombre; ?></td> 
+                                                        <td><?php echo codificacionUTF($nombre); ?></td> 
                                                         <td><?php echo $f_pago; ?></td> 
-                                                        <td><?php echo $tipo; ?></td>
+                                                        <td><?php echo codificacionUTF($tipo); ?></td>
+                                                        <td><?php echo codificacionUTF($concepto); ?></td>
                                                         <td align="right">$&nbsp;<?php echo number_format($importe); ?></td>
                                                     </tr>                                                    
                                                     <?php 
@@ -446,8 +454,8 @@ include($ruta . 'header2.php');
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $f_captura; ?></td> 
-                                                        <td><?php echo $usuario; ?></td> 
-                                                        <td><?php echo $retiro; ?></td>
+                                                        <td><?php echo codificacionUTF($usuario); ?></td> 
+                                                        <td><?php echo codificacionUTF($retiro); ?></td>
                                                         <td align="right">$&nbsp;<?php echo number_format($importe); ?></td>
                                                     </tr>                                                    
                                                     <?php 
@@ -588,8 +596,8 @@ include($ruta . 'header2.php');
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $f_captura; ?></td> 
-                                                        <td><?php echo $usuario; ?></td> 
-                                                        <td><?php echo $abona; ?></td> 
+                                                        <td><?php echo codificacionUTF($usuario); ?></td> 
+                                                        <td><?php echo codificacionUTF($abona); ?></td> 
                                                         <td align="right">$&nbsp;<?php echo number_format($importe); ?></td>
                                                     </tr>                                                    
                                                     <?php 
