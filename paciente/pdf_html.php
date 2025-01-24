@@ -166,21 +166,20 @@ $sql_sem2 = "
 		historico_sesion.catodo, 
 		equipos.siglas, 
 		protocolo_terapia.protocolo, 
-		admin.nombre as tecnico, 
-		admin.cedula_profesional
-	FROM
-		historico_sesion
-		INNER JOIN
-		protocolo_terapia
-		ON 
+		admin.nombre as tecnico,
+			(SELECT
+				GROUP_CONCAT( cedulas.cedula SEPARATOR ',</br> ' ) AS cedula_profesional 
+			FROM
+				cedulas 
+			WHERE
+				cedulas.usuario_id = admin.usuario_id) AS cedula_profesional 
+		FROM
+			historico_sesion
+		INNER JOIN protocolo_terapia ON 
 			historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id
-		INNER JOIN
-		equipos
-		ON 
+		INNER JOIN equipos ON 
 			protocolo_terapia.equipo_id = equipos.equipo_id
-		INNER JOIN
-		admin
-		ON 
+		INNER JOIN admin ON 
 			historico_sesion.usuario_id = admin.usuario_id
 	WHERE
 		historico_sesion.paciente_id = $paciente_id
@@ -545,7 +544,7 @@ $footer ="<br><hr>
 // //Require composer autoload
 require_once __DIR__ . '/../vendor/autoload.php';
 
- //echo $cuerpo_pdf;
+// echo $cuerpo_pdf;
 
  // Create an instance of the class:
 $mpdf = new \Mpdf\Mpdf([

@@ -732,26 +732,26 @@ if ($resultado['numFilas'] > 0) {
 													
 				                                    <h3><b>Datos Clinicos</b></h3><br>
 		                                                <h2><b>Resumen del Caso</b></h2><br>				                                    
-		                                                <p>$resumen_caso</p><br>
+		                                                <p>".codificacionUTF($resumen_caso)."</p><br>
 		                                                <h2><b>Diagnóstico (Principal)</b></h2><br>				                                    
-		                                                <p>$diagnostico</p><br>		                                                
+		                                                <p>".codificacionUTF($diagnostico)."</p><br>		                                                
 		                                                <h2><b>Diagnóstico 2</b></h2><br>				                                    
-		                                                <p>$diagnostico2</p><br>	
+		                                                <p>".codificacionUTF($diagnostico2)."</p><br>	
 		                                                <h2><b>Diagnóstico 3</b></h2><br>				                                    
-		                                                <p>$diagnostico3</p><br>	
+		                                                <p>".codificacionUTF($diagnostico3)."</p><br>	
 	                                                <h3>Medico Tratante</h3> 	
-	                                                	<p>$medico</p><br>                                                				                                                													
+	                                                	<p>".codificacionUTF($medico)."</p><br>                                                				                                                													
 				                                    <hr>
 													<h3><b>Tratamiento farmacológico actual</b></h3><br>
-				                                    $medicamentos
+				                                    ".codificacionUTF($medicamentos)."
 				                                    <hr><h3><b>Tratamiento no farmacológico actual</b></h3><br>
-				                                    $terapias                     				                                    
+				                                    ".codificacionUTF($terapias)."                     				                                    
 				                                    <hr><h3><b>Observaciones</b></h3><br>
-				                                    $observaciones
+				                                    ".codificacionUTF($observaciones)."
 				                                    <hr>
 				                                    </div>
 				                                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-				                                    <h3><b>Protocolo que está Indicado:</b></h3> <h2 align='center'><b>$tratamiento</h2></b><hr> 
+				                                    <h3><b>Protocolo que está Indicado:</b></h3> <h2 align='center'><b>".codificacionUTF($tratamiento)."</h2></b><hr> 
 				                                    <h3><b>Protocolo Aplicado</b></h3><br>													
 												";													
 												$dia .= "<table style='width: 70%;' class='table table-bordered'>
@@ -974,7 +974,7 @@ if ($resultado['numFilas'] > 0) {
 																		<tr>
 																			<td>$f_captura</td>
 																			<td style='text-align: center'>$total</td>
-																			<td style='background-color: $color'>$valor</td>
+																			<td style='background-color: $color'>".codificacionUTF($valor)."</td>
 																			<td> <a class='btn bg-$body waves-effect' target='_blank' href='$rutaxx'>
 																					<i class='material-icons'>visibility</i> <B>Ver</B>
 																				</a> 
@@ -984,7 +984,7 @@ if ($resultado['numFilas'] > 0) {
 																	
 																	//echo $tabla."<hr>";
 																	$datos .= "
-																	{'y': '$f_captura', '$encuesta': $total},";
+																	{'y': '$f_captura', '".codificacionUTF($encuesta)."': $total},";
 																	$cnt_calif ++;
 																}
 															}

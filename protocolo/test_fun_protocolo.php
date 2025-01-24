@@ -40,7 +40,18 @@ function elementos($protocolo_ter_id){
     while($row_sem1 = mysqli_fetch_array($result_sem1)){
         extract($row_sem1);
 		//print_r($row_sem1);
-		//echo "<hr>";
+		$pregunta = codificacionUTF($pregunta);
+		$respuesta_1 = codificacionUTF($respuesta_1);
+		$respuesta_2 = codificacionUTF($respuesta_2);
+		$respuesta_3 = codificacionUTF($respuesta_3);
+		$respuesta_4 = codificacionUTF($respuesta_4);
+		$respuesta_5 = codificacionUTF($respuesta_5);
+		$respuesta_6 = codificacionUTF($respuesta_6);
+		$respuesta_7 = codificacionUTF($respuesta_7);
+		$respuesta_8 = codificacionUTF($respuesta_8);
+		$respuesta_9 = codificacionUTF($respuesta_9);
+		$respuesta_10 = codificacionUTF($respuesta_10);
+		
 		$cnt++;
 		//echo $tipo."<hr>";	
 		switch ($tipo) {
