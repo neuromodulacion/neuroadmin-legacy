@@ -70,7 +70,7 @@ include($ruta.'header1.php');
 									if ($result_paciente['numFilas'] > 0) {
 										foreach ($result_paciente['resultado'] as $row) {
 											// Decodificar el valor de pacientex con mb_convert_encoding
-											$pacientex_decoded = mb_convert_encoding($row['pacientex'], 'ISO-8859-1', 'UTF-8');
+											$pacientex_decoded = codificacionUTF($row['pacientex']);
 
 											$selected = isset($paciente_id) && $row['paciente_id'] == $paciente_id ? "selected" : "";
 											echo "<option value='{$row['paciente_id']}' $selected>{$row['paciente_id']}.- {$pacientex_decoded}</option>";

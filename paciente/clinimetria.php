@@ -67,9 +67,9 @@ include('fun_paciente.php');
 
 					// Asignar cada campo a una variable
 					$paciente_id = $row['paciente_id'];
-					$paciente = $row['paciente'];
-					$apaterno = $row['apaterno'];
-					$amaterno = $row['amaterno'];
+					$paciente = codificacionUTF($row['paciente']);
+					$apaterno = codificacionUTF($row['apaterno']);
+					$amaterno = codificacionUTF($row['amaterno']);
 				} else {
 					die('Paciente no encontrado.');
 				}
@@ -137,7 +137,7 @@ include('fun_paciente.php');
 									
 									if ($cnt_bases >= 1) {
 
-										$dia .= $encuesta." - ".$descripcion."<hr>
+										$dia .= $encuesta." - ".codificacionUTF($descripcion)."<hr>
 										<div class='row'>
 										  <div class='col-md-5'>";
 										$datos = "";															
@@ -185,7 +185,7 @@ include('fun_paciente.php');
 											<tr>
 												<td>$f_captura</td>
 												<td style='text-align: center'>$total</td>
-												<td style='background-color: $color'>$valor</td>
+												<td style='background-color: $color'>".codificacionUTF($valor)."</td>
 											</tr>
 											";
 
@@ -250,7 +250,7 @@ include('fun_paciente.php');
 										// echo 'respuesta_'.$pregunta_id.'<br>';
 										
 										$respuestax = 'respuesta_'.$pregunta_id;
-										
+										$pregunta = codificacionUTF($pregunta);
 										 // echo $respuestax_1.'<br>';
 										 // echo $$respuestax.'<hr>';
 			
@@ -275,19 +275,19 @@ include('fun_paciente.php');
 											        <div class='demo-radio-button'>
 											        	<input style='height: 0px; width: 0px' name='preg_$pregunta_id' type='text' id='preg_$pregunta_id' value='' required />  
 											            <input name='pregunta_$pregunta_id' type='radio' id='respuestax_1$pregunta_id' value='$respuestax_1' $checked_1 disabled />		            
-											            <label for='respuestax_1$pregunta_id'>$respuestax_1</label>   
+											            <label for='respuestax_1$pregunta_id'>".codificacionUTF($respuestax_1)."</label>   
 									            		<script type='text/javascript'>
 									                            $('#respuestax_1$pregunta_id').click(function(){ $('#preg_$pregunta_id').val('ok'); });										
 									                    </script>
 											            <input name='pregunta_$pregunta_id' type='radio' id='respuestax_2$pregunta_id' value='$respuestax_2' $checked_2 disabled />		            
-											            <label for='respuestax_2$pregunta_id'>$respuestax_2</label>   
+											            <label for='respuestax_2$pregunta_id'>".codificacionUTF($respuestax_2)."</label>   
 									            		<script type='text/javascript'>
 									                            $('#respuestax_2$pregunta_id').click(function(){ $('#preg_$pregunta_id').val('ok'); });										
 									                  </script>";
 								 				if ($respuestax_3 <> "" ) {
 													$preguntas .= "
 									 		            <input name='pregunta_$pregunta_id' type='radio' id='respuestax_3$pregunta_id' value='$respuestax_3' $checked_3 disabled />		            
-											            <label for='respuestax_3$pregunta_id'>$respuestax_3</label>   
+											            <label for='respuestax_3$pregunta_id'>".codificacionUTF($respuestax_3)."</label>   
 									            		<script type='text/javascript'>
 									                            $('#respuestax_3$pregunta_id').click(function(){ $('#preg_$pregunta_id').val('ok'); });										
 									                    </script>";										 
@@ -295,7 +295,7 @@ include('fun_paciente.php');
 								 				if ($respuestax_4 <> "" ) {
 													$preguntas .= "
 									 		            <input name='pregunta_$pregunta_id' type='radio' id='respuestax_4$pregunta_id' value='$respuestax_4' $checked_4 disabled />		            
-											            <label for='respuestax_4$pregunta_id'>$respuestax_4</label>   
+											            <label for='respuestax_4$pregunta_id'>".codificacionUTF($respuestax_4)."</label>   
 									            		<script type='text/javascript'>
 									                            $('#respuestax_4$pregunta_id').click(function(){ $('#preg_$pregunta_id').val('ok'); });										
 									                    </script>";										 
@@ -303,7 +303,7 @@ include('fun_paciente.php');
 								 				if ($respuestax_5 <> "" ) {
 													$preguntas .= "
 									 		            <input name='pregunta_$pregunta_id' type='radio' id='respuestax_5$pregunta_id' value='$respuestax_5' $checked_5 disabled />		            
-											            <label for='respuestax_5$pregunta_id'>$respuestax_5</label>   
+											            <label for='respuestax_5$pregunta_id'>".codificacionUTF($respuestax_5)."</label>   
 									            		<script type='text/javascript'>
 									                            $('#respuestax_5$pregunta_id').click(function(){ $('#preg_$pregunta_id').val('ok'); });										
 									                    </script>";										 
@@ -311,7 +311,7 @@ include('fun_paciente.php');
 								 				if ($respuestax_6 <> "" ) {
 													$preguntas .= "
 									 		            <input name='pregunta_$pregunta_id' type='radio' id='respuestax_6$pregunta_id' value='$respuestax_6' $checked_6 disabled />		            
-											            <label for='respuestax_6$pregunta_id'>$respuestax_6</label>   
+											            <label for='respuestax_6$pregunta_id'>".codificacionUTF($respuestax_6)."</label>   
 									            		<script type='text/javascript'>
 									                            $('#respuestax_6$pregunta_id').click(function(){ $('#preg_$pregunta_id').val('ok'); });										
 									                    </script>";										 
@@ -319,7 +319,7 @@ include('fun_paciente.php');
 								 				if ($respuestax_7 <> "" ) {
 													$preguntas .= "
 									 		            <input name='pregunta_$pregunta_id' type='radio' id='respuestax_7$pregunta_id' value='$respuestax_7' $checked_7 disabled />		            
-											            <label for='respuestax_7$pregunta_id'>$respuestax_7</label>   
+											            <label for='respuestax_7$pregunta_id'>".codificacionUTF($respuestax_7)."</label>   
 									            		<script type='text/javascript'>
 									                            $('#respuestax_7$pregunta_id').click(function(){ $('#preg_$pregunta_id').val('ok'); });										
 									                    </script>";										 
@@ -327,7 +327,7 @@ include('fun_paciente.php');
 								 				if ($respuestax_8 <> "" ) {
 													$preguntas .= "
 									 		            <input name='pregunta_$pregunta_id' type='radio' id='respuestax_8$pregunta_id' value='$respuestax_8' $checked_8 disabled />		            
-											            <label for='respuestax_8$pregunta_id'>$respuestax_8</label>   
+											            <label for='respuestax_8$pregunta_id'>".codificacionUTF($respuestax_8)."</label>   
 									            		<script type='text/javascript'>
 									                            $('#respuestax_8$pregunta_id').click(function(){ $('#preg_$pregunta_id').val('ok'); });										
 									                    </script>";										 
@@ -335,7 +335,7 @@ include('fun_paciente.php');
 								 				if ($respuestax_9 <> "" ) {
 													$preguntas .= "
 									 		            <input name='pregunta_$pregunta_id' type='radio' id='respuestax_9$pregunta_id' value='$respuestax_9' $checked_9 disabled />		            
-											            <label for='respuestax_9$pregunta_id'>$respuestax_9</label>   
+											            <label for='respuestax_9$pregunta_id'>".codificacionUTF($respuestax_9)."</label>   
 									            		<script type='text/javascript'>
 									                            $('#respuestax_9$pregunta_id').click(function(){ $('#preg_$pregunta_id').val('ok'); });										
 									                    </script>";										 
@@ -343,7 +343,7 @@ include('fun_paciente.php');
 								 				if ($respuestax_10 <> "" ) {
 													$preguntas .= "
 									 		            <input name='pregunta_$pregunta_id' type='radio' id='respuestax_10$pregunta_id' value='$respuestax_10' $checked_10 disabled />		            
-											            <label for='respuestax_10$pregunta_id'>$respuestax_10</label>   
+											            <label for='respuestax_10$pregunta_id'>".codificacionUTF($respuestax_10)."</label>   
 									            		<script type='text/javascript'>
 									                            $('#respuestax_10$pregunta_id').click(function(){ $('#preg_$pregunta_id').val('ok'); });										
 									                    </script>";										 
@@ -360,16 +360,16 @@ include('fun_paciente.php');
 								                            
 											                <select id='pregunta_$pregunta_id' name='pregunta_$pregunta_id' class='form-control show-tick'>
 											                    <option value=''>-- Seleciona tipo de Respuesta --</option>
-											                    <option value='$respuestax_1'>$respuestax_1</option>
-											                    <option value='$respuestax_2'>$respuestax_2</option>";
-												 				if ($respuestax_3 <> "" ) { $preguntas .= "<option value='$respuestax_3'>$respuestax_3</option>"; }			                    
-															    if ($respuestax_4 <> "" ) { $preguntas .= "<option value='$respuestax_4'>$respuestax_3</option>"; }
-															    if ($respuestax_5 <> "" ) { $preguntas .= "<option value='$respuestax_5'>$respuestax_3</option>"; }
-																if ($respuestax_6 <> "" ) { $preguntas .= "<option value='$respuestax_6'>$respuestax_3</option>"; }
-																if ($respuestax_7 <> "" ) { $preguntas .= "<option value='$respuestax_7'>$respuestax_3</option>"; }
-																if ($respuestax_8 <> "" ) { $preguntas .= "<option value='$respuestax_8'>$respuestax_3</option>"; }
-																if ($respuestax_9 <> "" ) { $preguntas .= "<option value='$respuestax_9'>$respuestax_3</option>"; }
-																if ($respuestax_10 <> "" ) { $preguntas .= "<option value='$respuestax_10'>$respuestax_3</option>"; }                			                    			      
+											                    <option value='$respuestax_1'>".codificacionUTF($respuestax_1)."</option>
+											                    <option value='$respuestax_2'>".codificacionUTF($respuestax_2)."</option>";
+												 				if ($respuestax_3 <> "" ) { $preguntas .= "<option value='$respuestax_3'>".codificacionUTF($respuestax_3)."</option>"; }			                    
+															    if ($respuestax_4 <> "" ) { $preguntas .= "<option value='$respuestax_4'>".codificacionUTF($respuestax_3)."</option>"; }
+															    if ($respuestax_5 <> "" ) { $preguntas .= "<option value='$respuestax_5'>".codificacionUTF($respuestax_3)."</option>"; }
+																if ($respuestax_6 <> "" ) { $preguntas .= "<option value='$respuestax_6'>".codificacionUTF($respuestax_3)."</option>"; }
+																if ($respuestax_7 <> "" ) { $preguntas .= "<option value='$respuestax_7'>".codificacionUTF($respuestax_3)."</option>"; }
+																if ($respuestax_8 <> "" ) { $preguntas .= "<option value='$respuestax_8'>".codificacionUTF($respuestax_3)."</option>"; }
+																if ($respuestax_9 <> "" ) { $preguntas .= "<option value='$respuestax_9'>".codificacionUTF($respuestax_3)."</option>"; }
+																if ($respuestax_10 <> "" ) { $preguntas .= "<option value='$respuestax_10'>".codificacionUTF($respuestax_3)."</option>"; }                			                    			      
 											      $preguntas .= "              
 								                            </select> 
 								                    	</div> 
@@ -383,7 +383,7 @@ include('fun_paciente.php');
 								                    	<h4>$numero.- $pregunta</h4><br>								
 								                        <div class='form-group form-float'>
 								                           
-								                            <input class='form-control' name='pregunta_$pregunta_id' type='text' id='pregunta_$pregunta_id' placeholder='$pregunta'   value='".$$respuestax."'disabled />
+								                            <input class='form-control' name='pregunta_$pregunta_id' type='text' id='pregunta_$pregunta_id' placeholder='$pregunta'   value='".codificacionUTF($$respuestax)."'disabled />
 								                             
 								                    	</div> 
 								                	</div>";				
@@ -392,7 +392,7 @@ include('fun_paciente.php');
 											$preguntas .= "<hr>			
 								                <div class='form-group form-float'>
 								                    <div class='form-line'>
-								                        <textarea class='form-control' id='observaciones$pregunta_id' name='observaciones$pregunta_id' rows='3' required>".$$respuestax."</textarea>
+								                        <textarea class='form-control' id='observaciones$pregunta_id' name='observaciones$pregunta_id' rows='3' required>".codificacionUTF($$respuestax)."</textarea>
 								                        <label class='form-label'>Observaciones</label>
 								                    </div>
 								                </div>";
@@ -403,7 +403,7 @@ include('fun_paciente.php');
 								                    <div>
 								                    	<h4>$numero.- $pregunta</h4><br>								
 								                        <div class='form-group form-float'>
-								                            <input class='form-control' name='pregunta_$pregunta_id' type='date' id='pregunta_$pregunta_id' placeholder='$pregunta'  value='".$$respuestax."'disabled />
+								                            <input class='form-control' name='pregunta_$pregunta_id' type='date' id='pregunta_$pregunta_id' placeholder='$pregunta'  value='".codificacionUTF($$respuestax)."'disabled />
 								                             
 								                    	</div> 
 								                	</div>";				
@@ -413,7 +413,7 @@ include('fun_paciente.php');
 								                    <div>
 								                    	<h4>$numero.- $pregunta</h4><br>								
 								                        <div class='form-group form-float'>
-								                            <input class='form-control' name='pregunta_$pregunta_id' type='number' id='pregunta_$pregunta_id' placeholder='$pregunta'  value='".$$respuestax."'disabled />
+								                            <input class='form-control' name='pregunta_$pregunta_id' type='number' id='pregunta_$pregunta_id' placeholder='$pregunta'  value='".codificacionUTF($$respuestax)."'disabled />
 								                             
 								                    	</div> 
 								                	</div>";				
@@ -431,7 +431,7 @@ include('fun_paciente.php');
 											$preguntas .= "<hr>
 								                    <div>
 								                    	<h4>$pregunta</h4><br>
-								                    	<p>$respuestax_1</p><br>								
+								                    	<p>".codificacionUTF($respuestax_1)."</p><br>								
 								                	</div>";				
 												break;
 																	

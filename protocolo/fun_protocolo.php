@@ -43,6 +43,7 @@ function elementos($protocolo_ter_id){
 		//print_r($row_sem1);
 		//echo "<hr>";
 		$cnt++;
+		$pregunta = codificacionUTF($pregunta);
 		//echo $tipo."<hr>";	
 		switch ($tipo) {
 			case 'radio': 
@@ -237,7 +238,7 @@ $h_captura = date("H:i:s");
 			preguntas.protocolo_ter_id = $protocolo_ter_id
 			
 	    ";
-		echo $sql_sem1."<hr>";
+		// echo $sql_sem1."<hr>";
 		$result_sem1 = ejecutar($sql_sem1); 
 		$preguntas = "
 		CREATE TABLE base_protocolo_$protocolo_ter_id (
