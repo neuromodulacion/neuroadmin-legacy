@@ -255,11 +255,11 @@ include($ruta . 'header2.php');
                                                                 <a target="_blank" href="pdf_html.php?ticket=<?php echo $ticket; ?>" role="button"><?php echo $ticket; ?></a>
                                                             </td> 
                                                             <td style="text-align: center"><?php echo $req_factura; ?></td>
-                                                            <td><?php echo $paciente_id . " - " . $paciente; ?></td>
-                                                            <td><?php echo $nombre; ?></td>
+                                                            <td><?php echo $paciente_id . " - " . codificacionUTF($paciente); ?></td>
+                                                            <td><?php echo codificacionUTF($nombre); ?></td>
                                                             <td><?php echo $f_pago; ?></td> 
-                                                            <td><?php echo $tipo; ?></td>
-                                                            <td align="right">$&nbsp;<?php echo number_format($importe); ?></td>
+                                                            <td><?php echo codificacionUTF($tipo); ?></td>
+                                                            <td align="right">$&nbsp;<?php echo number_format($importe, 2); ?></td>
                                                         </tr>                                                    
                                                         <?php 
                                                     } 
@@ -354,10 +354,10 @@ include($ruta . 'header2.php');
                                                             </td>
                                                             <td style="text-align: center"><?php echo $req_factura; ?></td> 
                                                             <td><?php echo "A-" . $paciente_cons_id . " - " . $paciente_consulta . "<br>" . $consulta; ?></td>
-                                                            <td><?php echo $nombre; ?></td>
+                                                            <td><?php echo codificacionUTF($nombre); ?></td>
                                                             <td><?php echo $f_pago; ?></td> 
                                                             <td><?php echo $tipo; ?></td>
-                                                            <td align="right">$&nbsp;<?php echo number_format($importe); ?></td>
+                                                            <td align="right">$&nbsp;<?php echo number_format($importe, 2); ?></td>
                                                         </tr>                                                    
                                                         <?php 
                                                     } 
@@ -388,7 +388,7 @@ include($ruta . 'header2.php');
                                     <h3 align="center"><b>Pagos</b></h3>
                                     <table class="table table-bordered">                                              
                                         <tr>
-                                            <th style="text-align: center">Fecha</th>
+                                            <th style="text-align: center;">Fecha</th>
                                             <th style="text-align: center">Usuario</th>
                                             <th style="text-align: center">Forma de pago</th>
                                             <th style="text-align: center">Tipo</th>
@@ -433,9 +433,9 @@ include($ruta . 'header2.php');
                                                         <td><?php echo $f_captura; ?></td> 
                                                         <td><?php echo $usuario; ?></td>
                                                         <td><?php echo $f_pago; ?></td> 
-                                                        <td><?php echo $tipo; ?></td>
-                                                        <td><?php echo $terapeuta . $concepto; ?></td>
-                                                        <td align="right">$&nbsp;<?php echo number_format($importe); ?></td>
+                                                        <td><?php echo codificacionUTF($tipo); ?></td>
+                                                        <td><?php echo codificacionUTF($terapeuta . $concepto); ?></td>
+                                                        <td align="right">$&nbsp;<?php echo number_format($importe, 2); ?></td>
                                                     </tr>                                                    
                                                     <?php 
                                                 } 
@@ -493,12 +493,12 @@ include($ruta . 'header2.php');
                                         ?>
                                         <tr>
                                             <td><?php echo $f_pago ; ?></td>
-                                            <td style="text-align: right"> $ <?php echo number_format($total) ; ?></td>
+                                            <td style="text-align: right"> $ <?php echo number_format($total, 2) ; ?></td>
                                         </tr>
                                         <?php } ?>
                                         <tr>
                                             <td>Total</td>
-                                            <td style="text-align: right"> $ <?php echo number_format($Gtotal) ; ?></td>
+                                            <td style="text-align: right"> $ <?php echo number_format($Gtotal, 2) ; ?></td>
                                         </tr>                                              
                                     </table>                                        
                                 </div>
@@ -534,12 +534,12 @@ include($ruta . 'header2.php');
                                         ?>
                                         <tr>
                                             <td><?php echo $tipo ; ?></td>
-                                            <td style="text-align: right"> $ <?php echo number_format($total) ; ?></td>
+                                            <td style="text-align: right"> $ <?php echo number_format($total, 2) ; ?></td>
                                         </tr>
                                         <?php } ?>
                                         <tr>
                                             <td>Total</td>
-                                            <td style="text-align: right"> $ <?php echo number_format($Gtotal) ; ?></td>
+                                            <td style="text-align: right"> $ <?php echo number_format($Gtotal, 2) ; ?></td>
                                         </tr>
                                     </table>                                        
                                 </div>
@@ -577,12 +577,12 @@ include($ruta . 'header2.php');
                                         ?>
                                         <tr>
                                             <td><?php echo $f_pago ; ?></td>
-                                            <td style="text-align: right"> $ <?php echo number_format($total) ; ?></td>
+                                            <td style="text-align: right"> $ <?php echo number_format($total, 2) ; ?></td>
                                         </tr>
                                         <?php } ?>
                                         <tr>
                                             <td>Total</td>
-                                            <td style="text-align: right"> $ <?php echo number_format($Gtotal) ; ?></td>
+                                            <td style="text-align: right"> $ <?php echo number_format($Gtotal, 2) ; ?></td>
                                         </tr>
                                     </table>                                        
                                 </div>
@@ -618,12 +618,12 @@ include($ruta . 'header2.php');
                                         ?>
                                         <tr>
                                             <td><?php echo $tipo ; ?></td>
-                                            <td style="text-align: right"> $ <?php echo number_format($total) ; ?></td>
+                                            <td style="text-align: right"> $ <?php echo number_format($total, 2) ; ?></td>
                                         </tr>
                                         <?php } ?>
                                         <tr>
                                             <td>Total</td>
-                                            <td style="text-align: right"> $ <?php echo number_format($Gtotal) ; ?></td>
+                                            <td style="text-align: right"> $ <?php echo number_format($Gtotal, 2) ; ?></td>
                                         </tr>
                                     </table>                                        
                                 </div>                                                                                                    
@@ -631,7 +631,7 @@ include($ruta . 'header2.php');
                                 <div class="col-md-12">
                                     <!-- Muestra el balance final de pagos y cobros -->
                                     <h1 align="center"><b><?php echo $us; ?></b></h1>
-                                    <table style="width: 600px; font-size: 25px" class="table table-bordered">                                              
+                                    <table style="width: 80%; font-size: 25px" class="table table-bordered">                                              
                                         <tr>
                                             <th style="text-align: center">Mes</th>
                                             <th style="text-align: center">Pagos</th>
@@ -640,9 +640,9 @@ include($ruta . 'header2.php');
                                         </tr>
                                         <tr style="text-align: center">
                                             <td><?php echo OptieneMesLargo($mes_sel) . " " . $anio_sel; ?></td> 
-                                            <td>$ <?php echo number_format($Gtotal_pagos); ?></td>
-                                            <td>$ <?php echo number_format($Gtotal_cobros); ?></td> 
-                                            <td>$ <?php echo number_format(($Gtotal_cobros - $Gtotal_pagos)); ?></td>
+                                            <td>$ <?php echo number_format($Gtotal_pagos, 2); ?></td>
+                                            <td>$ <?php echo number_format($Gtotal_cobros, 2); ?></td> 
+                                            <td>$ <?php echo number_format(($Gtotal_cobros - $Gtotal_pagos), 2); ?></td>
                                         </tr>                                                    
                                     </table>
                                     
