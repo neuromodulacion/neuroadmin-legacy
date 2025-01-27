@@ -1,6 +1,4 @@
 <?php
-include('functions/funciones_mysql.php'); // Incluye el archivo con la función `ejecutar`
-
 // Inicializa la sesión y configura el entorno
 error_reporting(E_ALL);
 ini_set('default_charset', 'UTF-8');
@@ -8,33 +6,26 @@ header('Content-Type: text/html; charset=UTF-8');
 date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
-// Define el título y ruta base
-$title = 'INICIO';
 $ruta = "";
+// Incluye archivos PHP necesarios para la funcionalidad adicional
+//include($ruta.'functions/funciones_mysql.php');
+include($ruta.'functions/conexion_mysqli.php');
+include($ruta.'functions/functions.php');
 
-// Consulta de artículos activos
-$sql_art = "SELECT
-                articulo.articulo_id AS articulo_idx,
-                articulo.titulo AS titulox,
-                articulo.descripcion AS descripcionx,
-                articulo.f_alta AS f_altax
-            FROM articulo
-            WHERE articulo.estatus = 'Activo'
-            ORDER BY articulo.titulo ASC";
+// Incluir el archivo de configuración y obtener las credenciales
+$configPath = $ruta.'../config.php';
 
-// Ejecuta la consulta y obtiene el resultado usando `ejecutar`
-$result_art = ejecutar($sql_art);
-
-// Verifica si la consulta se ejecutó correctamente
-if (!$result_art) {
-    echo "Error al ejecutar la consulta de artículos.";
-    exit();
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
 }
 
-// 
-// extract($_SESSION);
-// extract($_POST);
-// extract($_GET);
+$config = require $configPath;
+
+// Crear una instancia de la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
+// Define el título y ruta base
+$title = 'INICIO';
 
 ?>
 
@@ -130,9 +121,39 @@ if (!$result_art) {
 						    </a>
 		                    <ul class="dropdown-menu">
 		                        <?php
-		                        while ($row = mysqli_fetch_assoc($result_art)) {
-		                            echo '<li><a href="news.php?articulo_id=' . htmlspecialchars($row['articulo_idx']) . '">' . htmlspecialchars($row['descripcionx']) . '</a></li>';
-		                        }
+                                        try {
+                                             // Conéctate a la base de datos
+                                             $mysql->conectarse();
+                                        
+                                             // Consulta de artículos activos
+                                             $sql_art = "SELECT
+                                                            articulo.articulo_id AS articulo_idx,
+                                                            articulo.titulo AS titulox,
+                                                            articulo.descripcion AS descripcionx,
+                                                            articulo.f_alta AS f_altax
+                                                       FROM articulo
+                                                       WHERE articulo.estatus = ?
+                                                       ORDER BY articulo.titulo ASC";
+                                        
+                                             // Ejecuta la consulta y obtiene el resultado
+                                             $result_art = $mysql->consulta($sql_art, ['Activo']);
+                                        
+                                             // Verifica si la consulta tiene resultados
+                                             if ($result_art['numFilas'] > 0) {
+                                             foreach ($result_art['resultado'] as $row) {
+                                                  // Imprime cada artículo como un elemento de lista
+                                                  echo '<li><a href="news.php?articulo_id=' . htmlspecialchars($row['articulo_idx']) . '">' . codificacionUTF(htmlspecialchars($row['descripcionx'])) . '</a></li>';
+                                             }
+                                             } else {
+                                             echo '<li>No hay artículos activos.</li>';
+                                             }
+                                        
+                                             // Desconecta la base de datos
+                                             $mysql->desconectarse();
+                                        } catch (Exception $e) {
+                                             // Manejo de errores
+                                             echo '<li>Error al cargar los artículos: ' . htmlspecialchars($e->getMessage()) . '</li>';
+                                        }
 		                        ?>
 		                    </ul>
 						 </li>

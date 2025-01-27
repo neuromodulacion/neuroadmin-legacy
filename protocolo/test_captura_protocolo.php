@@ -105,7 +105,7 @@ function esMultiploDe10o15($numero) {
 		<input name="paciente" type="hidden" id="paciente" value="<?php echo $paciente; ?>" />
 		<input name="total_sesion" type="hidden" id="total_sesion" value="1" />
 		<input name="prot_terapia" type="hidden" id="prot_terapia" value="<?php echo $prot_terapia; ?>" />
-		<input name="protocolo_ter_id" type="hidden" id="protocolo_ter_id" value="<?php echo $protocolo_ter_id; ?>" />
+	<!--	<input name="protocolo_ter_id" type="hidden" id="protocolo_ter_id" value="<?php // echo $protocolo_ter_id; ?>" /> -->
 		<input name="terapia_id" type="hidden" id="terapia_id" value="<?php echo $terapia_id; ?>" />
 		<input name="tipo" type="hidden" id="tipo" value="inicial" />
 		
@@ -401,7 +401,7 @@ function esMultiploDe10o15($numero) {
 				echo $pregunta;
 ?>	
 
-		<input name="protocolo_ter_id" type="hidden" id="protocolo_ter_id" value="<?php echo $protocolo_ter_id; ?>" />
+	<!--	<input name="protocolo_ter_id" type="hidden" id="protocolo_ter_id" value="<?php // echo $protocolo_ter_id; ?>" /> -->
 		<input name="terapia_id" type="hidden" id="terapia_id" value="<?php echo $terapia_id; ?>" />
 		<input name="paciente_id" type="hidden" id="paciente_id" value="<?php echo $paciente_id; ?>" /> 	
 		<input name="paciente" type="hidden" id="paciente" value="<?php echo $paciente; ?>" />

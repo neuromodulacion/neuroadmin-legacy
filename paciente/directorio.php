@@ -250,8 +250,9 @@ include($ruta . 'header2.php');
                                         // Lógica simple para mostrar un span (solo como ejemplo)
                                         $terapias = $total_TMS + $total_tDCS;
                                         $span = "";
-                                        if ($terapias > 0 && $pago == 0) {
-                                            $span = '<span class="label label-danger">Falta pago</span>';
+                                        if ($terapias > 0 && $pago == 0 || ($terapias > $cnt_pagos)) {
+                                            $falta_pago = $terapias - $cnt_pagos;
+                                            $span = '<span class="label label-danger">Faltan '.$falta_pago.' pagos</span>';
                                         } else {
                                             $span = '<span class="label label-success">OK</span>';
                                         }

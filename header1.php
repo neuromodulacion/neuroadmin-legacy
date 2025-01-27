@@ -88,6 +88,9 @@ $mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'
 // Crear una instancia de la clase Mysql
 $conexion = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
 
+// Conéctate a la base de datos
+$mysql->conectarse();
+
 // Función auxiliar para sanitizar valores y evitar pasar null a htmlspecialchars()
 function sanitizarValor($valor) {
     return htmlspecialchars($valor ?? '', ENT_QUOTES, 'UTF-8');

@@ -55,7 +55,11 @@ include('calendario.php');
 include('fun_paciente.php');
 
 // Consulta segura utilizando parámetros
-$sql = "SELECT * FROM pacientes WHERE paciente_id = ?";
+$sql = "SELECT *, 
+( SELECT DISTINCT COUNT(*) FROM historico_sesion WHERE historico_sesion.paciente_id = pacientes.paciente_id ) AS total_sesion,
+	( SELECT SUM( cobros.cantidad ) FROM cobros WHERE cobros.empresa_id = pacientes.empresa_id AND cobros.paciente_id = pacientes.paciente_id ORDER BY cobros.f_captura ASC ) AS cnt_pagos,
+	( SELECT SUM( cobros.importe ) FROM cobros WHERE cobros.empresa_id = pacientes.empresa_id AND cobros.paciente_id = pacientes.paciente_id ORDER BY cobros.f_captura ASC 
+	) AS pago FROM pacientes WHERE paciente_id =  ?";
 $params = [$paciente_id];
 
 // Ejecución de la consulta
@@ -119,6 +123,24 @@ if ($resultado['numFilas'] > 0) {
 							</div>
 							<h1 style="text-align: center" >Paciente</h1>
 							<h2 style="text-align: center" ><b>No. <?php echo codificacionUTF($paciente_id." ".$paciente." ".$apaterno." ".$amaterno); ?><b></h2>
+                            
+							<hr>
+
+							<?php if ($total_sesion > $cnt_pagos): 
+								$n_sesiones = $total_sesion - $cnt_pagos; // Importe pendiente por pagar
+							?>
+							<hr>
+							<div style="text-align: center;" class="alert alert-danger" role="alert">
+								<h1>Alerta de pago</h1>
+								<h3>
+									<strong>¡Atención!</strong> Hacen falta 
+									<span><?php echo htmlspecialchars($n_sesiones, ENT_QUOTES, 'UTF-8'); ?></span> 
+									por pagar para estar al corriente.
+								</h3>
+								<h2>Favor de indicar al paciente, de manera muy amable, que pase a pagar a recepción.</h2>
+							</div>
+							<?php endif; ?>
+							
 							<hr>
 							<!-- Acceso a inteligencia artificial -->
 							<?php if ($acceso_ia == 'si') { ?>

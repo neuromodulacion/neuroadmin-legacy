@@ -64,34 +64,57 @@
                     <!-- Notifications (Notificaciones) -->
                     <?php
                     // Consulta SQL para obtener el número de pacientes pendientes
-					$sql_protocolo = "
-					SELECT
-						paciente_id
-					FROM
-						pacientes
-					WHERE
-						pacientes.estatus = 'Pendiente'
-						and pacientes.empresa_id = $empresa_id
-			        ";
-			        $result_protocolo=ejecutar($sql_protocolo);    
-		            $cnt= mysqli_num_rows($result_protocolo); 
+                    try {
 
-                    $query = "SELECT COUNT(*) AS totalPendientes
-                    FROM notices n
-                    LEFT JOIN notice_reads nr ON n.id = nr.notice_id AND nr.usuario_id = ?
-                    WHERE n.empresa_id = ?
-                    AND (n.usuario_id = ? OR n.usuario_id IS NULL)
-                    AND (nr.is_read = 0 OR nr.is_read IS NULL)";
-          
-                    $params = [$usuario_id, $empresa_id, $usuario_id];
-                    $result = $mysql->consulta($query, $params);
                     
-                    if ($result['numFilas'] > 0) {
-                        $totalPendientes = $result['resultado'][0]['totalPendientes'];
-                      //  echo "Total de mensajes pendientes: " . $totalPendientes;
-                    } else {
-                      //  echo "No hay mensajes pendientes.";
-          }                    
+                        // ID de la empresa (asegúrate de que venga sanitizado si es externo)
+                        $empresa_id = $_GET['empresa_id'] ?? 0;
+                    
+                        // Consulta preparada para obtener el número de pacientes pendientes
+                        $sql_protocolo = "
+                            SELECT
+                                COUNT(*) AS total_pendientes
+                            FROM
+                                pacientes
+                            WHERE
+                                pacientes.estatus = ?
+                                AND pacientes.empresa_id = ?
+                        ";
+                    
+                        // Ejecuta la consulta con los parámetros
+                        $result_protocolo = $mysql->consulta($sql_protocolo, ['Pendiente', $empresa_id]);
+                    
+                        // Obtén el número de pacientes pendientes
+                        if ($result_protocolo['numFilas'] > 0) {
+                            $cnt = $result_protocolo['resultado'][0]['total_pendientes'];
+                            //echo "Número de pacientes pendientes: " . $cnt;
+                        } else {
+                           // echo "No hay pacientes pendientes.";
+                        }
+                    
+                        $query = "SELECT COUNT(*) AS totalPendientes
+                        FROM notices n
+                        LEFT JOIN notice_reads nr ON n.id = nr.notice_id AND nr.usuario_id = ?
+                        WHERE n.empresa_id = ?
+                        AND (n.usuario_id = ? OR n.usuario_id IS NULL)
+                        AND (nr.is_read = 0 OR nr.is_read IS NULL)";
+              
+                        $params = [$usuario_id, $empresa_id, $usuario_id];
+                        $result = $mysql->consulta($query, $params);
+                        
+                        $totalPendientes = 0; // Inicializa por defecto
+                        if ($result['numFilas'] > 0) {
+                            $totalPendientes = $result['resultado'][0]['totalPendientes'];
+                        }             
+
+                        // Desconecta la base de datos
+                        //$mysql->desconectarse();
+                    } catch (Exception $e) {
+                        // Manejo de errores
+                        echo "Error: " . htmlspecialchars($e->getMessage());
+                    }
+
+                
                         $notificationCount = $cnt + $totalPendientes; 
                         $iconColor = ($notificationCount > 0) ? 'red' : 'white';
                     ?>
