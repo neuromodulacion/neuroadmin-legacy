@@ -880,7 +880,7 @@ if ($resultado['numFilas'] > 0) {
 												        extract($row_preguntas);			
 																								
 														$sql_basesX .= "
-														( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_$encuesta_id.respuesta_$pregunta_id and respuestas.encuesta_id = $encuesta_id )+";
+														( SELECT DISTINCT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_$encuesta_id.respuesta_$pregunta_id and respuestas.encuesta_id = $encuesta_id )+";
 														//echo $cnt." - ".$pregunta_id."<br>";
 														if ( $cnt == 1) {
 															//echo $cnt." - ".$pregunta_id."<br>";
