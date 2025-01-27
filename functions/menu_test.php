@@ -160,26 +160,51 @@
                                                             </a>
                                                         </li>
                                                         <!-- Submenú: Balance por cada médico registrado en la empresa -->
-                                                        <?php
-                                                            $sql_medico = "
-                                                                SELECT
-                                                                    medicos.medico_id, 
-                                                                    medicos.medico
-                                                                FROM
-                                                                    medicos
-                                                                WHERE
-                                                                    medicos.empresa_id = $empresa_id
-                                                            ";
-                                                            $result_medico = ejecutar($sql_medico); 
-                                                            while ($row_medico = mysqli_fetch_array($result_medico)) { 
-                                                                extract($row_medico);
+                                                        <?php extract($_SESSION); 
+                                                        //echo $empresa_id; 
+try {
+
+    // Consulta SQL con un placeholder para el parámetro
+    $sql_medico = "
+        SELECT
+            medicos.medico_id, 
+            medicos.medico
+        FRO
+            medicos
+        WHERE
+            medicos.empresa_id = ?
+    ";
+
+    // Ejecutar la consulta usando consultas preparadas
+    $result_medico = $mysql->consulta($sql_medico, [$empresa_id]);
+
+    // Verificar si se encontraron resultados
+    if ($result_medico['numFilas'] > 0) {
+        foreach ($result_medico['resultado'] as $row_medico) {
+            print_r($row_medico);
+            // Accede a los datos de cada fila
+            $medico_id = $row_medico['medico_id'];
+            $medico = $row_medico['medico'];
+            ?>
+            <li>
+                <a href="<?php echo $ruta; ?>caja/balance_mes.php?us=<?php echo $medico; ?>">
+                    <span><?php echo $medico; ?></span>
+                </a>
+            </li>
+            <?php 
+            // Ejemplo de salida o procesamiento
+            //echo "<li>$medico (ID: $medico_id)</li>";
+        }
+    } else {
+        echo "<p>No se encontraron médicos para esta empresa.</p>";
+    }
+
+} catch (Exception $e) {
+    // Manejo de errores
+    echo "<p>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
+}
+ 
                                                         ?>
-                                                        <li>
-                                                            <a href="<?php echo $ruta; ?>caja/balance_mes.php?us=<?php echo $medico; ?>">
-                                                                <span><?php echo $medico; ?></span>
-                                                            </a>
-                                                        </li>
-                                                        <?php } ?>
                                                     </ul>
                                                 </li>
                     

@@ -1,72 +1,83 @@
 <?php
-include('functions/funciones_mysql.php');
-// Inicia una nueva sesión o reanuda la existente
-session_start();
-
-// Configura la notificación de errores para mostrar todos los errores
+// Inicializa la sesión y configura el entorno
 error_reporting(E_ALL);
-
-// Establece el conjunto de caracteres predeterminado como UTF-8
 ini_set('default_charset', 'UTF-8');
-
-// Configura la cabecera HTTP para que el contenido se interprete como HTML con codificación UTF-8
 header('Content-Type: text/html; charset=UTF-8');
-
-// Establece la zona horaria predeterminada para la aplicación
-// date_default_timezone_set('America/Monterrey'); // Opción comentada para Monterrey
 date_default_timezone_set('America/Monterrey');
-
-// Establece la configuración regional para las funciones de tiempo a español (España) con codificación UTF-8
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
-$ruta="";
+$ruta = "";
+// Incluye archivos PHP necesarios para la funcionalidad adicional
+//include($ruta.'functions/funciones_mysql.php');
+include($ruta.'functions/conexion_mysqli.php');
+include($ruta.'functions/functions.php');
 
-extract($_SESSION);
+// Incluir el archivo de configuración y obtener las credenciales
+$configPath = $ruta.'../config.php';
+
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
+}
+
+$config = require $configPath;
+
+// Crear una instancia de la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
+
 extract($_POST);
 extract($_GET);
 
-
-$sql_art ="
-SELECT
-	articulo.articulo_id as articulo_idx, 
-	articulo.titulo as titulox, 
-	articulo.titulo_corto as titulo_cortox,
-	articulo.descripcion as descripcionx, 
-	articulo.f_alta as f_altax
-FROM
-	articulo
-WHERE
-	estatus = 'Activo'
-ORDER BY articulo_id ASC"; 
-
-
-
-$sql ="
-SELECT
-	articulo.articulo_id, 
-	articulo.usuario_id, 
-	articulo.titulo, 
-	articulo.titulo_corto, 
-	articulo.descripcion, 
-	articulo.insert_multimedia,
-	articulo.multimedia, 
-	articulo.autor, 
-	articulo.titulo_autor, 
-	articulo.imagen_autor, 
-	articulo.f_alta, 
-	articulo.h_alta, 
-	articulo.contenido
-FROM
-	articulo
-WHERE 
-	articulo.articulo_id = $articulo_id";    
-    
-     $result=ejecutar($sql); 
-     $row = mysqli_fetch_array($result);
-     $cnt = mysqli_num_rows($result);
-     if ($cnt >= 1) {
-          extract($row);	
+try {
+     // Conéctate a la base de datos
+     $mysql->conectarse();
+ 
+     // ID del artículo (asegúrate de que venga sanitizado si es externo)
+     $articulo_id = $_GET['articulo_id'] ?? 0;
+ 
+     // Consulta preparada para evitar inyecciones SQL
+     $sql = "
+         SELECT
+             articulo.articulo_id, 
+             articulo.usuario_id, 
+             articulo.titulo, 
+             articulo.titulo_corto, 
+             articulo.descripcion, 
+             articulo.insert_multimedia,
+             articulo.multimedia, 
+             articulo.autor, 
+             articulo.titulo_autor, 
+             articulo.imagen_autor, 
+             articulo.f_alta, 
+             articulo.h_alta, 
+             articulo.contenido
+         FROM
+             articulo
+         WHERE 
+             articulo.articulo_id = ?
+     ";
+ 
+     // Ejecuta la consulta
+     $result = $mysql->consulta($sql, [$articulo_id]);
+ 
+     // Verifica si hay resultados
+     if ($result['numFilas'] >= 1) {
+         // Extrae la primera fila como un arreglo asociativo
+         $row = $result['resultado'][0];
+         extract($row); // Extrae las claves del arreglo como variables
+ 
+         // Ejemplo de uso de las variables
+         // echo "<h1>" . htmlspecialchars($titulo) . "</h1>";
+         // echo "<p>" . htmlspecialchars($descripcion) . "</p>";
+     } else {
+         echo "No se encontró el artículo con el ID especificado.";
      }
+ 
+     // Desconecta la base de datos
+     $mysql->desconectarse();
+ } catch (Exception $e) {
+     // Manejo de errores
+     echo "Error: " . htmlspecialchars($e->getMessage());
+ }
     
 ?>
 <!DOCTYPE html>
@@ -104,14 +115,14 @@ http://www.tooplate.com/view/2098-health
 </head>
 <body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
-     <!-- PRE LOADER -->
+     <!-- PRE LOADER 
      <section class="preloader">
           <div class="spinner">
 
                <span class="spinner-rotate"></span>
                
           </div>
-     </section>
+     </section>-->
 
 
      <!-- HEADER -->
@@ -161,13 +172,41 @@ http://www.tooplate.com/view/2098-health
 						      Noticias<span class="caret"></span>
 						    </a>
 						    <ul class="dropdown-menu">	
-						    	<?php
-										$result_art = ejecutar($sql_art);
-										while($row_sem2 = mysqli_fetch_array($result_art)){ 
-											extract($row_sem2);
-											?>
-											<li><a href="news.php?articulo_id=<?php echo $articulo_idx; ?>" ><?php echo $descripcionx; ?></a></li>								    
-								<?php }	 ?>					    						    	            
+                                  <?php
+                                        try {
+                                             // Conéctate a la base de datos
+                                             $mysql->conectarse();
+                                        
+                                             // Consulta de artículos activos
+                                             $sql_art = "SELECT
+                                                            articulo.articulo_id AS articulo_idx,
+                                                            articulo.titulo AS titulox,
+                                                            articulo.descripcion AS descripcionx,
+                                                            articulo.f_alta AS f_altax
+                                                       FROM articulo
+                                                       WHERE articulo.estatus = ?
+                                                       ORDER BY articulo.titulo ASC";
+                                        
+                                             // Ejecuta la consulta y obtiene el resultado
+                                             $result_art = $mysql->consulta($sql_art, ['Activo']);
+                                        
+                                             // Verifica si la consulta tiene resultados
+                                             if ($result_art['numFilas'] > 0) {
+                                             foreach ($result_art['resultado'] as $row) {
+                                                  // Imprime cada artículo como un elemento de lista
+                                                  echo '<li><a href="news.php?articulo_id=' . htmlspecialchars($row['articulo_idx']) . '">' . codificacionUTF(htmlspecialchars($row['descripcionx'])) . '</a></li>';
+                                             }
+                                             } else {
+                                             echo '<li>No hay artículos activos.</li>';
+                                             }
+                                        
+                                             // Desconecta la base de datos
+                                             $mysql->desconectarse();
+                                        } catch (Exception $e) {
+                                             // Manejo de errores
+                                             echo '<li>Error al cargar los artículos: ' . htmlspecialchars($e->getMessage()) . '</li>';
+                                        }
+		                        ?>					    						    	            
 						    </ul>
 						  </li>
                          <li><a href="index.php#google-map" class="smoothScroll">Contacto</a></li>
@@ -199,9 +238,9 @@ http://www.tooplate.com/view/2098-health
 									                               		
                               		  ?>                                  
                               </div>
-                              <h3><?php echo $titulo; ?></h3>
+                              <h3><?php echo codificacionUTF($titulo); ?></h3>
                               
-                              <?php echo $contenido; ?>
+                              <?php echo codificacionUTF($contenido); ?>
                               
                               <div class="news-social-share">
                                    <h4>Comparte este artículo</h4>
@@ -222,19 +261,53 @@ http://www.tooplate.com/view/2098-health
                               <div class="recent-post">
                                    <h4>Noticias Recientes</h4>
 							    	<?php
-										$result_art = ejecutar($sql_art);
-										while($row_sem2 = mysqli_fetch_array($result_art)){ 
-											extract($row_sem2); ?>
-                                        <div class="media">
-                                             <div class="media-object pull-left">
-                                                  <a href="news-tms.html"><img src="images/news-image.jpg" class="img-responsive" alt=""></a>
-                                             </div>
-                                             <div class="media-body">
-                                                  <h4 class="media-heading"><a href="news.php?articulo_id=<?php echo $articulo_idx; ?>"><?php echo $titulo_cortox; ?></a></h4>
-                                             </div>
-                                        </div>											
-
-									<?php }	 ?>	
+                                             try {
+                                                  // Conéctate a la base de datos
+                                                  $mysql->conectarse();
+                                             
+                                                  // Consulta preparada para obtener los artículos activos
+                                                  $sql_art = "
+                                                  SELECT
+                                                       articulo.articulo_id AS articulo_idx, 
+                                                       articulo.titulo AS titulox, 
+                                                       articulo.titulo_corto AS titulo_cortox,
+                                                       articulo.descripcion AS descripcionx, 
+                                                       articulo.f_alta AS f_altax
+                                                  FROM
+                                                       articulo
+                                                  WHERE
+                                                       estatus = ?
+                                                  ORDER BY articulo_id ASC
+                                                  ";
+                                             
+                                                  // Ejecuta la consulta con el parámetro 'Activo'
+                                                  $result_art = $mysql->consulta($sql_art, ['Activo']);
+                                             
+                                                  // Verifica si hay resultados
+                                                  if ($result_art['numFilas'] > 0) {
+                                                  foreach ($result_art['resultado'] as $row_sem2) {
+                                                       extract($row_sem2); // Extrae las claves del arreglo como variables
+                                                       ?>
+                                                       <div class="media">
+                                                            <div class="media-object pull-left">
+                                                                 <a href="news-tms.html"><img src="images/news-image.jpg" class="img-responsive" alt=""></a>
+                                                            </div>
+                                                            <div class="media-body">
+                                                                 <h4 class="media-heading"><a href="news.php?articulo_id=<?php echo htmlspecialchars($articulo_idx); ?>"><?php echo codificacionUTF($titulo_cortox); ?></a></h4>
+                                                            </div>
+                                                       </div>
+                                                       <?php
+                                                  }
+                                                  } else {
+                                                  echo "<p>No hay artículos activos disponibles.</p>";
+                                                  }
+                                             
+                                                  // Desconecta la base de datos
+                                                  $mysql->desconectarse();
+                                             } catch (Exception $e) {
+                                                  // Manejo de errores
+                                                  echo "<p>Error al cargar los artículos: " . htmlspecialchars($e->getMessage()) . "</p>";
+                                             } ?>	
                               </div>
 
                               <div class="news-categories">
@@ -289,21 +362,58 @@ http://www.tooplate.com/view/2098-health
                          <div class="footer-thumb"> 
                               <h4 class="wow fadeInUp" data-wow-delay="0.4s">&Uacute;ltimas Noticias</h4>
 						    	<?php
-									$result_art = ejecutar($sql_art);
-									while($row_sem2 = mysqli_fetch_array($result_art)){ 
-										extract($row_sem2); ?>
-			                              <div class="latest-stories">
-			                                   <div class="stories-image">
-			                                        <a href="news.php?articulo_id=<?php echo $articulo_idx; ?>">
-			                                        	<img src="images/news-image.jpg" class="img-responsive" alt=""></a>
-			                                   </div>
-			                                   <div class="stories-info">
-			                                        <a href="news.php?articulo_id=<?php echo $articulo_idx; ?>"><h5><?php echo $titulo_cortox; ?></h5></a>
-			                                        <span><?php echo $f_altax; ?></span>
-			                                   </div>
-			                              </div>										
-							    
-								<?php }	 ?>	                              
+                                        try {
+                                             // Conéctate a la base de datos
+                                             $mysql->conectarse();
+                                        
+                                             // Consulta preparada para obtener los artículos activos
+                                             $sql_art = "
+                                             SELECT
+                                                  articulo.articulo_id AS articulo_idx, 
+                                                  articulo.titulo AS titulox, 
+                                                  articulo.titulo_corto AS titulo_cortox,
+                                                  articulo.descripcion AS descripcionx, 
+                                                  articulo.f_alta AS f_altax
+                                             FROM
+                                                  articulo
+                                             WHERE
+                                                  estatus = ?
+                                             ORDER BY articulo_id ASC
+                                             ";
+                                        
+                                             // Ejecuta la consulta con el parámetro 'Activo'
+                                             $result_art = $mysql->consulta($sql_art, ['Activo']);
+                                        
+                                             // Verifica si hay resultados
+                                             if ($result_art['numFilas'] > 0) {
+                                             foreach ($result_art['resultado'] as $row_sem2) {
+                                                  extract($row_sem2); // Extrae las claves del arreglo como variables
+                                                  ?>
+                                                  <div class="latest-stories">
+                                                       <div class="stories-image">
+                                                            <a href="news.php?articulo_id=<?php echo htmlspecialchars($articulo_idx); ?>">
+                                                                 <img src="images/news-image.jpg" class="img-responsive" alt="">
+                                                            </a>
+                                                       </div>
+                                                       <div class="stories-info">
+                                                            <a href="news.php?articulo_id=<?php echo htmlspecialchars($articulo_idx); ?>">
+                                                                 <h5><?php echo codificacionUTF($titulo_cortox); ?></h5>
+                                                            </a>
+                                                            <span><?php echo htmlspecialchars($f_altax); ?></span>
+                                                       </div>
+                                                  </div>
+                                                  <?php
+                                             }
+                                             } else {
+                                             echo "<p>No hay artículos activos disponibles.</p>";
+                                             }
+                                        
+                                             // Desconecta la base de datos
+                                             $mysql->desconectarse();
+                                        } catch (Exception $e) {
+                                             // Manejo de errores
+                                             echo "<p>Error al cargar los artículos: " . htmlspecialchars($e->getMessage()) . "</p>";
+                                        }	 ?>	                              
                          </div>
                     </div>
 
@@ -329,7 +439,7 @@ http://www.tooplate.com/view/2098-health
                     <div class="col-md-12 col-sm-12 border-top">
                          <div class="col-md-5 col-sm-6">
                               <div class="copyright-text"> 
-                                   <p>Copyright &copy; 2023 Neuromodulación Gdl  
+                                   <p>Copyright &copy; <?php echo date("Y"); ?> Neuromodulación Gdl  
                                    
                                    | Design: <a href="http://www.tooplate.com" target="_parent">Tooplate</a></p>
                               </div>
