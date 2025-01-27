@@ -6,13 +6,13 @@ iconv_set_encoding('internal_encoding', 'utf-8');
 header('Content-Type: text/html; charset=UTF-8');
 date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=mktime();
+$_SESSION['time']=time();
 
 $ruta = "../";
 extract($_SESSION);
 // print_r($_SESSION);
 
-$ticket = mktime();	 
+$ticket = time();	 
  
 extract($_POST);
 //print_r($_POST);
@@ -38,18 +38,19 @@ FROM
 	cobros
 WHERE
 	cobros.ticket = $ticket";
-echo $sql."<br>";	
+// echo $sql."<br>";	
 $result =ejecutar($sql); 
 $cnt = mysqli_num_rows($result);
-echo $cnt."<br>";
+// echo $cnt."<br>";
 $row = mysqli_fetch_array($result);
 extract($row);
-print_r($row);
+// print_r($row);
 if ($cnt <> 0) { ?>
 <div class="table-responsive">
 	<table class="table table-bordered table-striped table-hover dataTable">
 		<tr>
 			<th>Ticket</th>
+			<th></th>
 			<th>Fecha</th>
 			<th>Forma de pago</th>
 			<th>Importe</th>
@@ -58,6 +59,7 @@ if ($cnt <> 0) { ?>
 		</tr>
 		<tr>
 			<td><?php echo $ticket; ?></td>
+			<td><?php echo $doctor; ?></td>
 			<td><?php echo $f_captura; ?></td>
 			<td><?php echo $f_pago; ?></td>
 			<td>$ <?php echo number_format($importe); ?></td>
@@ -98,8 +100,7 @@ if ($cnt <> 0) { ?>
                     	//alert('Test'); 
                     	$('#contenido2').html(''); 
                         var cRFC = $('#cRFCx').val();
-                        var ticket = '<?php echo $ticket; ?>
-							';
+                        var ticket = '<?php echo $ticket; ?>';
 							if (cRFC !==''){
 							$('#load').show();
 							$('#buscar_rfc').hide();

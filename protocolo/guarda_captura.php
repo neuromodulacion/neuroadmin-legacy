@@ -670,9 +670,9 @@ switch ($tipo) {
 			$resultado = $mysql->consulta_simple($query, $params);
 		
 			if ($resultado) {
-				echo "Registro insertado exitosamente.";
+				//echo "Registro insertado exitosamente <br>.";
 			} else {
-				echo "Error al insertar el registro. ".$resultado;
+				//echo "Error al insertar el registro <br>. ".$resultado;
 			}
 
 		$sql_hist ="
@@ -714,9 +714,9 @@ switch ($tipo) {
 					$resultado = $mysql->consulta_simple($query, $params);
 
 					if ($resultado) {
-						echo "Registro insertado exitosamente.";
+						//echo "Registro insertado exitosamente.";
 					} else {
-						echo "Error al insertar el registro. ".$resultado;
+						//echo "Error al insertar el registro. ".$resultado;
 					}								
 				}else{
 					// Consulta SQL con placeholders
@@ -743,9 +743,9 @@ switch ($tipo) {
 					$resultado = $mysql->consulta_simple($query, $params);
 
 					if ($resultado) {
-						echo "Registro insertado exitosamente.";
+						//echo "Registro insertado exitosamente.";
 					} else {
-						echo "Error al insertar el registro.";
+						//echo "Error al insertar el registro.";
 					}		
 				}					
 			    //echo $valor . "<br>";
@@ -810,9 +810,9 @@ switch ($tipo) {
 			$resultado = $mysql->consulta_simple($query, $params);
 
 			if ($resultado) {
-				echo "Registro insertado exitosamente.";
+				//echo "Registro insertado exitosamente.";
 			} else {
-				echo "Error al insertar el registro.";
+				//echo "Error al insertar el registro.";
 			}			
 		} else {							
 			// Consulta SQL con placeholders
@@ -980,7 +980,7 @@ switch ($tipo) {
 					
 					// estamos construyendo la consulta para sumar las respuestas y tener los resultados
 					$sql_basesX .= "
-					( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_$encuesta_id.respuesta_$pregunta_id and respuestas.encuesta_id = $encuesta_id )+";
+					( SELECT DISTINCT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_$encuesta_id.respuesta_$pregunta_id and respuestas.encuesta_id = $encuesta_id )+";
 					//echo $cnt." - ".$pregunta_id."<br>";
 					if ( $cnt == 1) {
 						//echo $cnt." - ".$pregunta_id."<br>";
@@ -1021,6 +1021,7 @@ switch ($tipo) {
 					$row_bases = mysqli_fetch_array($result_bases);
 					extract($row_bases);
 					//echo $total."<hr>";
+					//echo $valor."<hr>";
 
 					//-------------------- fin de la consulta para sumar las respuestas y tener los resultados
 					if ($total_sesion !== 1 and $valor == 11) {
@@ -1037,13 +1038,13 @@ switch ($tipo) {
 							SET base_encuesta_11.total = 
 								CASE
 									WHEN historico_sesion.sesion = 1 THEN
-										(SELECT respuestas.valor 
+										(SELECT DISTINCT respuestas.valor 
 										FROM respuestas 
 										WHERE respuestas.respuesta LIKE base_encuesta_11.respuesta_125 
 										AND respuestas.encuesta_id = 11 
 										LIMIT 1)
 									ELSE
-										(SELECT respuestas.valor 
+										(SELECT DISTINCT respuestas.valor 
 										FROM respuestas 
 										WHERE respuestas.respuesta LIKE base_encuesta_11.respuesta_127 
 										AND respuestas.encuesta_id = 11 
@@ -1063,7 +1064,7 @@ switch ($tipo) {
 							";
 							
 					}
-					//echo $update;
+					//echo $update." xxx<hr>";
 					$result_update = ejecutar($update);
 					//-------------------- fin de la consulta con resultados
 
@@ -1074,8 +1075,8 @@ switch ($tipo) {
 						base_encuesta_$valor.f_captura, 
 						base_encuesta_$valor.h_captura,
 						base_encuesta_$valor.total,
-						(SELECT valor FROM calificaciones WHERE encuesta_id = $valor AND min <= base_encuesta_$valor.total and max >= base_encuesta_$valor.total $extra) as evaluacion,
-						(SELECT color FROM calificaciones WHERE encuesta_id = $valor AND min <= base_encuesta_$valor.total and max >= base_encuesta_$valor.total $extra) as color
+						(SELECT DISTINCT valor FROM calificaciones WHERE encuesta_id = $valor AND min <= base_encuesta_$valor.total and max >= base_encuesta_$valor.total $extra) as evaluacion,
+						(SELECT DISTINCT color FROM calificaciones WHERE encuesta_id = $valor AND min <= base_encuesta_$valor.total and max >= base_encuesta_$valor.total $extra) as color
 					FROM
 						base_encuesta_$valor
 					WHERE

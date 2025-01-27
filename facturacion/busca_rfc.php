@@ -1,18 +1,19 @@
 <?php
 include('../functions/funciones_mysql.php');
+include('../functions/functions.php');
 session_start();
 error_reporting(7);
 iconv_set_encoding('internal_encoding', 'utf-8'); 
 header('Content-Type: text/html; charset=UTF-8');
 date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=mktime();
+$_SESSION['time']=time();
 
 $ruta = "../";
 extract($_SESSION);
 // print_r($_SESSION);
 
-//$ticket = mktime();	 
+//$ticket = time();	 
  $rutas = '';
 extract($_POST);
 //print_r($_POST);
@@ -57,7 +58,7 @@ $row = mysqli_fetch_array($result);
     <label class="form-label">Razón Social</label>
     <div class="form-group form-float"> 
         <div class="form-line">
-            <input type="text" id="cRazonSocial" name="cRazonSocial" class="form-control" placeholder="Razón Social"  required value="<?php echo utf8_decode($cRazonSocial); ?>">
+            <input type="text" id="cRazonSocial" name="cRazonSocial" class="form-control" placeholder="Razón Social"  required value="<?php echo codificacionUTF($cRazonSocial); ?>">
         </div>
     </div>
 
@@ -98,21 +99,21 @@ $row = mysqli_fetch_array($result);
     <label class="form-label">Nombre Calle</label>
     <div class="form-group form-float">
         <div class="form-line">
-            <input type="text" id="cNombreCalle" name="cNombreCalle" class="form-control" placeholder="Nombre Calle"  required value="<?php echo utf8_decode($cNombreCalle); ?>">
+            <input type="text" id="cNombreCalle" name="cNombreCalle" class="form-control" placeholder="Nombre Calle"  required value="<?php echo codificacionUTF($cNombreCalle); ?>">
         </div>
     </div>
 
     <label class="form-label">Número Exterior</label>
     <div class="form-group form-float">
         <div class="form-line">
-            <input type="text" id="cNumeroExterior" name="cNumeroExterior" class="form-control" placeholder="Numero Exterior"  required value="<?php echo utf8_decode($cNumeroExterior); ?>">
+            <input type="text" id="cNumeroExterior" name="cNumeroExterior" class="form-control" placeholder="Numero Exterior"  required value="<?php echo codificacionUTF($cNumeroExterior); ?>">
         </div>
     </div>
 
     <label class="form-label">Número Interior</label>
     <div class="form-group form-float">
         <div class="form-line">
-            <input type="text" id="cNumeroInterior" name="cNumeroInterior" class="form-control" placeholder="Numero Interior"  required value="<?php echo utf8_decode($cNumeroInterior); ?>">
+            <input type="text" id="cNumeroInterior" name="cNumeroInterior" class="form-control" placeholder="Numero Interior"  required value="<?php echo codificacionUTF($cNumeroInterior); ?>">
         </div>
     </div>
 
@@ -189,28 +190,28 @@ $row = mysqli_fetch_array($result);
     <label class="form-label">Colonia</label>
     <div class="form-group form-float">
         <div class="form-line">
-            <input type="text" id="cColonia" name="cColonia" class="form-control" placeholder="Colonia"  required value="<?php echo utf8_decode($cColonia); ?>">
+            <input type="text" id="cColonia" name="cColonia" class="form-control" placeholder="Colonia"  required value="<?php echo codificacionUTF($cColonia); ?>">
         </div>
     </div>
 
     <label class="form-label">Ciudad</label>
     <div class="form-group form-float">
         <div class="form-line">
-            <input type="text" id="cCiudad" name="cCiudad" class="form-control" placeholder="Ciudad"  required value="<?php echo utf8_decode($cCiudad); ?>">
+            <input type="text" id="cCiudad" name="cCiudad" class="form-control" placeholder="Ciudad"  required value="<?php echo codificacionUTF($cCiudad); ?>">
         </div>
     </div>
 
     <label class="form-label">Estado</label>
     <div class="form-group form-float">
         <div class="form-line">
-            <input type="text" id="cEstado" name="cEstado" class="form-control" placeholder="Estado"  required value="<?php echo utf8_decode($cEstado); ?>">
+            <input type="text" id="cEstado" name="cEstado" class="form-control" placeholder="Estado"  required value="<?php echo codificacionUTF($cEstado); ?>">
         </div>
     </div>
 
     <label class="form-label">País</label>
     <div class="form-group form-float">
         <div class="form-line">
-            <input type="text" id="cPais" name="cPais" class="form-control" placeholder="País" required value="<?php echo utf8_decode($cPais); ?>">
+            <input type="text" id="cPais" name="cPais" class="form-control" placeholder="País" required value="<?php echo codificacionUTF($cPais); ?>">
         </div>
     </div>
 </div>
