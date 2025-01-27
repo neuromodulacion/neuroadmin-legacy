@@ -3,13 +3,6 @@
 
 $ruta="../";
 $title = 'INICIO';
-
-//extract($_SESSION);
-//print_r($_SESSION);
-$hoy = date("Y-m-d");
-$ahora = date("H:i:00"); 
-$anio = date("Y");
-$mes_ahora = date("m");
 $titulo ="Altas";
 //include($ruta.'header.php'); 
 

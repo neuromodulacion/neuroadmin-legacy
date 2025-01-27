@@ -121,7 +121,7 @@ include($ruta . 'header2.php');
                                     />
                                     <!-- El label referencia a ese mismo ID -->
                                     <label for="<?php echo $checkboxId; ?>">
-                                        <?php echo $est; ?>
+                                        <?php echo codificacionUTF($est); ?>
                                     </label>
                                 </div>
                                 <?php
@@ -187,39 +187,54 @@ include($ruta . 'header2.php');
                                             estatus_paciente.color,
                                             estatus_paciente.rgb,
                                             estatus_paciente.class,
-                                            (SELECT DISTINCT COUNT(*) 
-                                             FROM historico_sesion 
-                                             WHERE historico_sesion.paciente_id = pacientes.paciente_id
-                                            ) AS total_sesion,
-                                            (SELECT DISTINCT COUNT(*) 
-                                             FROM historico_sesion 
-                                             INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
-                                             WHERE historico_sesion.paciente_id = pacientes.paciente_id 
-                                               AND protocolo_terapia.terapia = 'TMS'
+                                            ( SELECT DISTINCT COUNT(*) FROM historico_sesion WHERE historico_sesion.paciente_id = pacientes.paciente_id and historico_sesion.f_captura >='2024-05-01' ) AS total_sesion,
+                                            (
+                                            SELECT DISTINCT
+                                                COUNT(*) 
+                                            FROM
+                                                historico_sesion
+                                                INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+                                            WHERE
+                                                historico_sesion.paciente_id = pacientes.paciente_id 
+                                                AND protocolo_terapia.terapia = 'TMS' and historico_sesion.f_captura >='2024-05-01' 
                                             ) AS total_TMS,
-                                            (SELECT DISTINCT COUNT(*) 
-                                             FROM historico_sesion 
-                                             INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
-                                             WHERE historico_sesion.paciente_id = pacientes.paciente_id 
-                                               AND protocolo_terapia.terapia = 'tDCS'
+                                            (
+                                            SELECT DISTINCT
+                                                COUNT(*) 
+                                            FROM
+                                                historico_sesion
+                                                INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
+                                            WHERE
+                                                historico_sesion.paciente_id = pacientes.paciente_id 
+                                                AND protocolo_terapia.terapia = 'tDCS'  and historico_sesion.f_captura >='2024-05-01' 
                                             ) AS total_tDCS,
-                                            (SELECT SUM(cobros.cantidad) 
-                                             FROM cobros 
-                                             WHERE cobros.empresa_id = pacientes.empresa_id  
-                                               AND cobros.paciente_id = pacientes.paciente_id
-                                             ORDER BY cobros.f_captura ASC
+                                            (
+                                            SELECT
+                                                SUM( cobros.cantidad ) 
+                                            FROM
+                                                cobros 
+                                            WHERE
+                                                cobros.empresa_id = pacientes.empresa_id 
+                                                AND cobros.paciente_id = pacientes.paciente_id and cobros.f_captura >='2024-05-01'
+                                            ORDER BY
+                                                cobros.f_captura ASC 
                                             ) AS cnt_pagos,
-                                            (SELECT SUM(cobros.importe) 
-                                             FROM cobros 
-                                             WHERE cobros.empresa_id = pacientes.empresa_id 
-                                               AND cobros.paciente_id = pacientes.paciente_id
-                                             ORDER BY cobros.f_captura ASC
+                                            (
+                                            SELECT
+                                                SUM( cobros.importe ) 
+                                            FROM
+                                                cobros 
+                                            WHERE
+                                                cobros.empresa_id = pacientes.empresa_id 
+                                                AND cobros.paciente_id = pacientes.paciente_id  and cobros.f_captura >='2024-05-01'
+                                            ORDER BY
+                                                cobros.f_captura ASC 
                                             ) AS pago,
-                                            admin.nombre AS medico
-                                        FROM 
+                                            admin.nombre AS medico 
+                                        FROM
                                             pacientes
-                                        INNER JOIN estatus_paciente ON pacientes.estatus = estatus_paciente.estatus
-                                        INNER JOIN admin ON pacientes.usuario_id = admin.usuario_id
+                                            INNER JOIN estatus_paciente ON pacientes.estatus = estatus_paciente.estatus
+                                            INNER JOIN admin ON pacientes.usuario_id = admin.usuario_id 
                                         WHERE  1=1 
                                             $where
                                         ORDER BY f_captura DESC
