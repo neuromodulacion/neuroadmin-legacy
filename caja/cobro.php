@@ -300,7 +300,7 @@ include($ruta.'header2.php');
                                                 $result_costo = ejecutar($sql_costo);  
                                                 while($row_costo = mysqli_fetch_array($result_costo)){
                                                     extract($row_costo); ?>
-                                            <option value="<?php echo $costos_id; ?>|<?php echo $producto; ?>|<?php echo $costos; ?>|<?php echo $sesiones; ?>" ><?php echo $producto." - $ ".number_format($costos); ?></option>				
+                                            <option value="<?php echo $costos_id; ?>|<?php echo $producto; ?>|<?php echo $costos; ?>|<?php echo $sesiones; ?>" ><?php echo codificacionUTF($producto)." - $ ".number_format($costos); ?></option>				
                                             <?php } ?>
                                         </select>  
                                         <script>
