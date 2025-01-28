@@ -7,7 +7,7 @@
 // 
 // $mysqli = new mysqli("174.136.25.64","lamanad1_conexion","7)8S!K{%NBoL", "lamanad1_medico");
 
-$conn = new mysqli("174.136.25.64","lamanad1_conexion","7)8S!K{%NBoL", "lamanad1_medico");
+$conn = new mysqli("198.59.144.197" , "neuromod_conexion", "7)8S!K{%NBoL", "neuromod_medico");
 
 // Verificar la conexión
 if ($conn->connect_error) {

@@ -280,7 +280,7 @@ include($ruta . 'header2.php');
                                             <td><?php echo $today; ?></td>
                                             <td>
                                                 <b><?php echo codificacionUTF($paciente . " " . $apaterno . " " . $amaterno); ?></b><br>
-                                                <i><?php echo $medico; ?></i>
+                                                <i><?php echo codificacionUTF($medico); ?></i>
                                             </td>
                                             <td><?php echo $total_TMS; ?></td>
                                             <td><?php echo $total_tDCS; ?></td>
