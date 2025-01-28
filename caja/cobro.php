@@ -28,13 +28,17 @@ include($ruta.'header1.php');
 <?php  
 // Incluye el segundo archivo de cabecera
 include($ruta.'header2.php'); 
+
+
 ?>
 
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
             <h2>COBROS</h2> <!-- Título de la sección -->
-            <?php echo $ubicacion_url; ?>
+            <?php echo $ubicacion_url; 
+            extract($_SESSION);
+            //print_r($_SESSION);?>
         </div>
         
         <!-- Contenido principal de la página -->
@@ -230,13 +234,16 @@ include($ruta.'header2.php');
                                                     WHERE
                                                         medicos.empresa_id = $empresa_id
                                                 ";
+                                                
                                                 $result_medico=ejecutar($sql_medico); 
                                                 while($row_medico = mysqli_fetch_array($result_medico)){ 
+                                                    
                                                     extract($row_medico);
                                                     ?>		                                        
                                             <option value="<?php echo $medico; ?>"><?php echo $medico; ?></option>
                                                 <?php } ?>
                                         </select>  
+                                        <?php //echo $sql_medico; ?>
                                         <script>
                                             // Cambia el valor del campo hidden "doctor" cuando se selecciona un médico
                                             $('#doctor1').change(function() {
