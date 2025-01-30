@@ -46,6 +46,8 @@ include ($ruta . 'header1.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>PAGOS</h2>
+				<?php echo $ubicacion_url."<br>"; 
+				print_r($_SESSION); ?>
             </div>
            
 <!-- // ************** Contenido ************** // -->
@@ -86,7 +88,7 @@ include ($ruta . 'header1.php');
 				                        <select id="negocio" name="negocio" class="form-control show-tick" required>
 				                            <option value="">-- Selecciona Negocio--</option>
 				                            <option value="<?php echo $emp_nombre; ?>"><?php echo $emp_nombre; ?></option>
-											<?php
+											<?php extract($_SESSION);
 				                                $sql_medico = "
 													SELECT
 														medicos.medico_id, 
@@ -97,7 +99,7 @@ include ($ruta . 'header1.php');
 														medicos.empresa_id = $empresa_id
 				                                ";
 				                                $result_medico=ejecutar($sql_medico); 
-				                                   // echo $sql_medico."<br>";      
+				                                         
 				                                    $saldo_t=0;
 				                                while($row_medico = mysqli_fetch_array($result_medico)){ 
 				                                	extract($row_medico);
@@ -105,6 +107,7 @@ include ($ruta . 'header1.php');
 				                            <option value="<?php echo $medico; ?>"><?php echo $medico; ?></option>
 				                            	<?php } ?>
 				                        </select>
+										<?php //echo $sql_medico."<br>";  ?>
 				                        <script>
 											$('#negocio').change(function(){
 				                        		var negocio = $('#negocio').val();
@@ -244,7 +247,7 @@ include ($ruta . 'header1.php');
 				                            <label class="form-label">Terapeuta*</label> 
 				                            <select class='form-control show-tick'  id="terapeuta" name="terapeuta" required><!--  -->
 				                                <option value="">-- Selecciona Terapeuta--</option>
-												<?php
+												<?php 	
 				                                    $sql_medico = "
 													SELECT DISTINCT
 														admin.usuario_id AS usuario_idx, 

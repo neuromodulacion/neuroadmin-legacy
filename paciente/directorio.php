@@ -187,7 +187,7 @@ include($ruta . 'header2.php');
                                             estatus_paciente.color,
                                             estatus_paciente.rgb,
                                             estatus_paciente.class,
-                                            ( SELECT DISTINCT COUNT(*) FROM historico_sesion WHERE historico_sesion.paciente_id = pacientes.paciente_id and historico_sesion.f_captura >='2024-05-01' ) AS total_sesion,
+                                            ( SELECT DISTINCT COUNT(*) FROM historico_sesion WHERE historico_sesion.paciente_id = pacientes.paciente_id and historico_sesion.f_captura >='2024-04-01' ) AS total_sesion,
                                             (
                                             SELECT DISTINCT
                                                 COUNT(*) 
@@ -196,7 +196,7 @@ include($ruta . 'header2.php');
                                                 INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
                                             WHERE
                                                 historico_sesion.paciente_id = pacientes.paciente_id 
-                                                AND protocolo_terapia.terapia = 'TMS' and historico_sesion.f_captura >='2024-05-01' 
+                                                AND protocolo_terapia.terapia = 'TMS' and historico_sesion.f_captura >='2024-04-01' 
                                             ) AS total_TMS,
                                             (
                                             SELECT DISTINCT
@@ -206,7 +206,7 @@ include($ruta . 'header2.php');
                                                 INNER JOIN protocolo_terapia ON historico_sesion.protocolo_ter_id = protocolo_terapia.protocolo_ter_id 
                                             WHERE
                                                 historico_sesion.paciente_id = pacientes.paciente_id 
-                                                AND protocolo_terapia.terapia = 'tDCS'  and historico_sesion.f_captura >='2024-05-01' 
+                                                AND protocolo_terapia.terapia = 'tDCS'  and historico_sesion.f_captura >='2024-04-01' 
                                             ) AS total_tDCS,
                                             (
                                             SELECT
@@ -215,7 +215,7 @@ include($ruta . 'header2.php');
                                                 cobros 
                                             WHERE
                                                 cobros.empresa_id = pacientes.empresa_id 
-                                                AND cobros.paciente_id = pacientes.paciente_id and cobros.f_captura >='2024-05-01'
+                                                AND cobros.paciente_id = pacientes.paciente_id and cobros.f_captura >='2024-04-01'
                                             ORDER BY
                                                 cobros.f_captura ASC 
                                             ) AS cnt_pagos,
@@ -226,7 +226,7 @@ include($ruta . 'header2.php');
                                                 cobros 
                                             WHERE
                                                 cobros.empresa_id = pacientes.empresa_id 
-                                                AND cobros.paciente_id = pacientes.paciente_id  and cobros.f_captura >='2024-05-01'
+                                                AND cobros.paciente_id = pacientes.paciente_id  and cobros.f_captura >='2024-04-01'
                                             ORDER BY
                                                 cobros.f_captura ASC 
                                             ) AS pago,
