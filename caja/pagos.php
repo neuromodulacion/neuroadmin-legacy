@@ -46,8 +46,8 @@ include ($ruta . 'header1.php');
         <div class="container-fluid">
             <div class="block-header">
                 <h2>PAGOS</h2>
-				<?php echo $ubicacion_url."<br>"; 
-				print_r($_SESSION); ?>
+				<?php echo $ubicacion_url."<br>"; ?>
+				<?php //print_r($_SESSION); ?>
             </div>
            
 <!-- // ************** Contenido ************** // -->

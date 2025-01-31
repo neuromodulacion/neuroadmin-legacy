@@ -161,7 +161,7 @@
                                                         </li>
                                                         <!-- Submenú: Balance por cada médico registrado en la empresa -->
                                                         <?php extract($_SESSION); 
-                                                        //echo $empresa_id; 
+                                                        //echo "hhh ".$empresa_id; 
 try {
 
     // Consulta SQL con un placeholder para el parámetro
@@ -169,7 +169,7 @@ try {
         SELECT
             medicos.medico_id, 
             medicos.medico
-        FRO
+        FROM
             medicos
         WHERE
             medicos.empresa_id = ?
@@ -181,7 +181,7 @@ try {
     // Verificar si se encontraron resultados
     if ($result_medico['numFilas'] > 0) {
         foreach ($result_medico['resultado'] as $row_medico) {
-            print_r($row_medico);
+            //print_r($row_medico);
             // Accede a los datos de cada fila
             $medico_id = $row_medico['medico_id'];
             $medico = $row_medico['medico'];
