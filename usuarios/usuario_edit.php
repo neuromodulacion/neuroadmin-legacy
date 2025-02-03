@@ -28,7 +28,8 @@ SELECT
     admin.nombre, 
     admin.usuario, 
     admin.telefono,
-    admin.funcion as funcionx
+    admin.funcion as funcionx,
+		(SELECT cedula from cedulas WHERE admin.usuario_id = cedulas.usuario_id and cedulas.principal = 'si') as cedula_profesional 
 FROM
     admin
 WHERE
@@ -86,6 +87,14 @@ $usuario = validarSinEspacio($usuario);
                                         </div>
                                     </div>
 
+                                   <!-- Campo de Cedula Profesional -->
+                                   <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="tel" id="cedula" name="cedula" class="form-control" value="<?php echo $cedula_profesional; ?>" required>
+                                            <label max="10" class="form-label">Cedula Profesional</label>
+                                        </div>
+                                    </div>
+                                    
                                     <!-- Campo de Tipo de Usuario (función) -->
                                     <div class="form-group form-float">
                                         <?php if ($funcion == 'TECNICO') { ?>

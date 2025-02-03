@@ -1251,7 +1251,7 @@ if ($resultado['numFilas'] > 0) {
 																	<th>Fecha</th>
 																	<th>Hora</th>
 																	<th>Umbral</th>
-																	<th>Observaciones</th>
+																	<th>Nota de evolución</th>
 																</tr>";	
 												// Array de meses en español
 															$meses_espanol = [
@@ -1336,7 +1336,7 @@ if ($resultado['numFilas'] > 0) {
 													                <div class='modal-dialog' role='document'>
 													                    <div class='modal-content'>
 													                        <div class='modal-header'>
-													                            <h4 class='modal-title' id='defaultModalLabel'>Modifica Observaciones</h4>
+													                            <h4 class='modal-title' id='defaultModalLabel'>Modifica nota de evolución</h4>
 													                        </div>
 													                        <div id='edit_contenido' class='modal-body'>
 	

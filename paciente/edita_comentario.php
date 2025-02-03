@@ -90,7 +90,7 @@ switch ($option) {
 
 		</select>
 		
-		<h3>Observaciones</h3>
+		<h3>Nota de evolución</h3>
 		<fieldset>
 		    <div class="form-group form-float">
 		        <div class="form-line">

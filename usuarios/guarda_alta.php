@@ -92,10 +92,11 @@ if ($cnt >= 1) {
                     <div align="center"> 
                         <div style="width: 90% !important;" align="left">
                             <h2><?php echo $mensaje; ?></h2>
-                            Registro: <?php echo $usuario_id; ?><br>
-                            Nombre: <?php echo $nombre; ?><br>
-                            Correo Electrónico: <?php echo $usuario; ?><br>
-                            Teléfono: <?php echo $celular; ?><br><br>               
+                            <b>Registro:</b> <?php echo $usuario_id; ?><br>
+							<b>Nombre:</b> <?php echo $nombre; ?><br>
+							<b>Correo Electronico:</b> <?php echo $usuario; ?><br>
+							<b>Telefono:</b> <?php echo $telefono; ?><br>
+							<b>Cedula Profesional:</b> <?php echo $cedula; ?><br><br>              
                             <a href="<?php echo $ruta; ?>menu.php" class="btn bg-green btn-lg waves-effect">CONTINUAR</a>                
                         </div>                
                     </div>
@@ -135,6 +136,15 @@ if ($cnt >= 1) {
     $row1 = mysqli_fetch_array($result_insert);
     extract($row1);
 
+    $update = "
+    UPDATE cedulas
+    SET
+        cedulas.cedula ='$cedula',
+        cedulas.principal = 'si'
+    WHERE
+        cedulas.usuario_id = $usuario_id";
+    $update_insert = ejecutar($update);
+
     // Insertar configuración del sistema en "herramientas_sistema" para el nuevo usuario
     $insert1 = "
     INSERT IGNORE INTO herramientas_sistema 
@@ -159,6 +169,7 @@ if ($cnt >= 1) {
             <b>Nombre:</b> '.$nombre.'<br>
             <b>Correo Electrónico y Usuario:</b> '.$usuario.'<br>
             <b>Celular:</b> '.$celular.'<br>
+            <b>Cedula Profesional:</b> '.$cedula.'<br>
             <b>Contraseña Provisional:</b> '.$pwd.'<br>
             Atte. Neuromodulación Gdl <br>    
             <a class="btn btn-default" href="https://neuromodulaciongdl.com/confirmacion.php?us='.$usuario_id.'" role="button"><h1>Confirmar</h1></a><br>         

@@ -55,53 +55,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $especialidad = isset($_POST['especialidad']) ? sanitizarValor($_POST['especialidad']) : '';
     $horarios = isset($_POST['horarios']) ? sanitizarValor($_POST['horarios']) : '';
     $estatus = isset($_POST['estatus']) ? sanitizarValor($_POST['estatus']) : '';
-
+    $cedula = isset($_POST['cedula']) ? validarSinEspacio($_POST['cedula']) : '';
     // Validar datos requeridos
     if ($usuario_id <= 0) {
         die('ID de usuario inválido.');
     }
 
-    // Preparar y ejecutar la consulta UPDATE utilizando sentencias preparadas
-    $sql_update = "
-        UPDATE admin 
-        SET 
-            nombre = ?,
-            usuario = ?,
-            telefono = ?,
-            observaciones = ?,
-            especialidad = ?,
-            horarios = ?,
-            estatus = ? 
-        WHERE
-            usuario_id = ?
-    ";
-
-    // Parámetros para la consulta
-    $params = [
-        $nombre,
-        $usuario,
-        $telefono,
-        $observaciones,
-        $especialidad,
-        $horarios,
-        $estatus,
-        $usuario_id
-    ];
-
-    // Ejecutar la consulta utilizando la instancia $mysql y el método adecuado
-    // Asegúrate de que $mysql->actualizar() está correctamente implementado para manejar consultas preparadas
     try {
-        $resultado_update = $mysql->actualizar($sql_update, $params);
-
-        if ($resultado_update >= 0) {
+        // Iniciar una transacción
+        $mysql->comenzarTransaccion();
+    
+        // Query para actualizar la tabla admin
+        $sql_update_admin = "
+            UPDATE admin 
+            SET 
+                nombre = ?,
+                usuario = ?,
+                telefono = ?,
+                observaciones = ?,
+                especialidad = ?,
+                horarios = ?,
+                estatus = ? 
+            WHERE usuario_id = ?
+        ";
+    
+        // Parámetros para la actualización en admin
+        $params_admin = [
+            $nombre,
+            $usuario,
+            $telefono,
+            $observaciones,
+            $especialidad,
+            $horarios,
+            $estatus,
+            $usuario_id
+        ];
+    
+        // Ejecutar la actualización en admin
+        $resultado_update_admin = $mysql->actualizar($sql_update_admin, $params_admin);
+    
+        // Query para actualizar o insertar en la tabla cedulas
+        $sql_update_cedula = "
+            UPDATE cedulas 
+            SET 
+                cedula = ?, 
+                principal = 'si' 
+            WHERE usuario_id = ?
+        ";
+    
+        // Parámetros para la actualización en cedulas
+        $params_cedula = [
+            $cedula,
+            $usuario_id
+        ];
+    
+        // Ejecutar la actualización en cedulas
+        $resultado_update_cedula = $mysql->actualizar($sql_update_cedula, $params_cedula);
+    
+        // Confirmar la transacción si ambas consultas se ejecutaron correctamente
+        $mysql->confirmarTransaccion();
+    
+        // Verificar si hubo cambios en alguna de las dos consultas
+        if ($resultado_update_admin >= 0 || $resultado_update_cedula >= 0) {
             echo "Registro actualizado con éxito.";
         } else {
-            echo "No se realizaron cambios en el registro.";
+            echo "No se realizaron cambios en los registros.";
         }
     } catch (Exception $e) {
-        // Manejar excepciones y errores de la base de datos
+        // Revertir cambios en caso de error
+        $mysql->revertirTransaccion();
+        
+        // Registrar error y mostrar mensaje
         error_log($e->getMessage());
         echo "Hubo un error al actualizar los datos.";
     }
+    
 }
 ?>

@@ -60,7 +60,6 @@ if ($usuario_idx <= 0) {
 // Preparar y ejecutar consultas utilizando sentencias preparadas
 // Asumiendo que $mysql es la instancia de la clase Mysql
 
-// Obtener datos del médico
 $sql_medico = "
     SELECT
         admin.usuario_id AS medico_id,
@@ -72,17 +71,17 @@ $sql_medico = "
         admin.telefono AS celular,
         admin.especialidad,
         admin.horarios,
-        (SELECT COUNT(*) FROM pacientes WHERE pacientes.usuario_id = admin.usuario_id) AS pacientes
-    FROM
-        admin
-    WHERE
-        admin.empresa_id = ?
-        AND usuario_id = ?
+        (SELECT COUNT(*) FROM pacientes WHERE pacientes.usuario_id = admin.usuario_id) AS pacientes,
+        (SELECT cedula FROM cedulas WHERE cedulas.usuario_id = admin.usuario_id AND cedulas.principal = 'si' LIMIT 1) AS cedula_profesional
+    FROM admin
+    WHERE admin.empresa_id = ? 
+      AND admin.usuario_id = ?
 ";
 
 // Ejecutar consulta preparada
-$params_medico = [ $empresa_id, $usuario_idx ];
+$params_medico = [$empresa_id, $usuario_idx];
 $result_medico = $mysql->consulta($sql_medico, $params_medico);
+
 
 // Verificar si se encontraron resultados
 if ($result_medico['numFilas'] > 0) {
@@ -99,6 +98,7 @@ if ($result_medico['numFilas'] > 0) {
     $especialidad = sanitizarValor($row_medico['especialidad']);
     $horarios = sanitizarValor($row_medico['horarios']);
     $pacientes = intval($row_medico['pacientes']);
+	$cedula_profesional = intval($row_medico['cedula_profesional']);
 } else {
     die('Médico no encontrado.');
 }
@@ -188,6 +188,14 @@ if ($result_ubicacion['numFilas'] > 0) {
                                         <label class="form-label">Celular*</label>
                                     </div>
                                 </div>
+
+								<!-- Campo de Cedula Profesional -->
+								<div class="form-group form-float">
+									<div class="form-line">
+										<input type="tel" id="cedula" name="cedula" class="form-control" value="<?php echo $cedula_profesional; ?>" required>
+										<label max="10" class="form-label">Cedula Profesional</label>
+									</div>
+								</div>
 
                                 <!-- Observaciones -->
                                 <div class="form-group form-float">
@@ -284,7 +292,7 @@ if ($result_ubicacion['numFilas'] > 0) {
                                             <div id="collapseOne_17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne_17">
                                                 <div class="panel-body">
                                                 	<div class="table-responsive">
-	                                                	<h1><?php echo $usuario_idx." ".$nombrex; ?></h1>
+	                                                	<h1><?php echo $usuario_idx." ".codificacionUTF($nombrex); ?></h1>
 												        <!-- Tabla para mostrar los resultados de la consulta -->
 												        <table class="table table-bordered table-striped">
 												            <tr>
@@ -378,7 +386,7 @@ if ($result_ubicacion['numFilas'] > 0) {
 												                <tr>
 												                    <td style="text-align: center"><?php echo $paciente_id; ?></td>
 												                    <td style="text-align: center"><?php echo $meses_desde_inicio; ?></td>
-												                    <td><?php echo $paciente." ".$apaterno." ".$amaterno; ?></td>
+												                    <td><?php echo codificacionUTF($paciente." ".$apaterno." ".$amaterno); ?></td>
 												                    <td class="<?php echo $span; ?>" style="text-align: center"><?php echo $estatus; ?></td>
 												                    <td style="text-align: center"><?php echo $sesiones; ?></td>
 												                    <td style="text-align: center"><?php echo $TMS; ?></td>
@@ -626,9 +634,9 @@ if ($result_ubicacion['numFilas'] > 0) {
 															                    <td style="text-align: center"><?php echo $visita_id; ?></td>
 															                    <td style="text-align: center"><?php echo $fecha; ?></td>  
 															                    <td style="text-align: center"><?php echo $duracion; ?></td>
-															                    <td style="text-align: center"><?php echo $objetivo; ?></td>
-															                    <td style="text-align: center"><?php echo $resultados; ?></td>
-															                    <td style="text-align: center"><?php echo $observaciones; ?></td>
+															                    <td style="text-align: center"><?php echo codificacionUTF($objetivo); ?></td>
+															                    <td style="text-align: center"><?php echo codificacionUTF($resultados); ?></td>
+															                    <td style="text-align: center"><?php echo codificacionUTF($observaciones); ?></td>
 															                    <td style="text-align: center"><?php echo $nom_representante; ?></td> 
 															                    <td style="text-align: center"><?php echo $f_visita; ?></td>             
 															                </tr>

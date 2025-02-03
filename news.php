@@ -211,7 +211,7 @@ http://www.tooplate.com/view/2098-health
 						  </li>
                          <li><a href="index.php#google-map" class="smoothScroll">Contacto</a></li>
                          <li class="appointment-btn"><a style="background: #0096AA"  href="#appointment">Solicita una cita</a></li>
-                         <li class="appointment-btn"><a style="background: #BBBABA"  href="../inicio.html">Ingreso Medico</a></li>
+                         <li class="appointment-btn"><a style="background: #BBBABA"  href="inicio.html">Ingreso Medico</a></li>
                     </ul>
                </div>
 
