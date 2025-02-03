@@ -81,6 +81,25 @@ function codificacionUTF($texto) {
     return $textoConvertido;
 }*/
 
+function traducirMesInglesAEspanol($mesIngles) {
+    $meses_espanol = [
+        'Jan' => 'Ene',
+        'Feb' => 'Feb',
+        'Mar' => 'Mar',
+        'Apr' => 'Abr',
+        'May' => 'May',
+        'Jun' => 'Jun',
+        'Jul' => 'Jul',
+        'Aug' => 'Ago',
+        'Sep' => 'Sep',
+        'Oct' => 'Oct',
+        'Nov' => 'Nov',
+        'Dec' => 'Dic',
+    ];
+
+    // Verificar si el mes está en el array y devolver su equivalente en español
+    return $meses_espanol[$mesIngles] ?? 'Mes no válido';
+}
 
 function obMesActualespaniol($fecha) {
     $formatter = new IntlDateFormatter(

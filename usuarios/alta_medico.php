@@ -102,6 +102,14 @@ include($ruta.'header2.php');
 	                                            <label max="10" class="form-label">Celular*</label>
 	                                        </div>
 	                                    </div>
+										<!-- Campo de Cedula Profesional -->
+										<div class="form-group form-float">
+											<div class="form-line">
+												<input type="tel" id="cedula" name="cedula" class="form-control"  >
+												<label max="10" class="form-label">Cedula Profesional</label>
+											</div>
+										</div>
+                                    
 		                                <div class="form-group form-float">
                                         	<select id="funcion" name="funcion" class="form-control show-tick">
 

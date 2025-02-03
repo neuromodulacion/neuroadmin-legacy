@@ -304,7 +304,7 @@ while($row_encuestas = mysqli_fetch_array($result_encuestas)){
         extract($row_preguntas);
 											
 		$sql_basesX .= "
-		( SELECT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_$encuesta_id.respuesta_$pregunta_id and respuestas.encuesta_id = $encuesta_id )+";
+		( SELECT DISTINCT respuestas.valor FROM respuestas WHERE respuestas.respuesta LIKE base_encuesta_$encuesta_id.respuesta_$pregunta_id and respuestas.encuesta_id = $encuesta_id )+";
 	}
 
 	$sql_basesX = substr($sql_basesX, 0, -1);
@@ -464,7 +464,7 @@ try {
     ]);
 
     $mpdf->WriteHTML($cuerpo_pdf);
-    $mpdf->Output('Paciente_'.$paciente_id.'.pdf', 'D');
+    $mpdf->Output('Paciente_'.$paciente_id.'.pdf', 'I');
 } catch (\Mpdf\MpdfException $e) {
     error_log($e->getMessage());
     echo "Error generando el PDF. Consulte el registro de errores.";

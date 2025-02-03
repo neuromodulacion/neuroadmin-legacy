@@ -2,15 +2,16 @@
 $ruta="../";
 $titulo ="Reporte"; 
  
+
+
+include($ruta.'header1.php');
 $hoy = date("Y-m-d");
 $ahora = date("H:i:00"); 
 $anio = date("Y");
 $mes_ahora = date("m");
-$mes = strftime("%B");
+$mes = obMesActualespaniol(date("M"));
 $dia = date("N");
 $semana = date("W");
-
-include($ruta.'header1.php');
 ?>
     <link href="<?php echo $ruta; ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="<?php echo $ruta; ?>plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
@@ -70,7 +71,7 @@ include($ruta.'header2.php');
 						        $aniox ="aniox".$fecha_cnt;
 						        $$aniox = $anio;
 						        $$mesx = $mes;	
-						        $th .= "<th style='background: #FFF; text-align: center'>$anio<br>$mes_corto</th>";
+						        $th .= "<th style='background: #FFF; text-align: center'>$anio<br>".traducirMesInglesAEspanol($mes_corto)."</th>";
 						        $count_expr = "
 						            COUNT(
 						                DISTINCT CASE WHEN MONTH(pps.primera_sesion) = $mes 

@@ -346,7 +346,7 @@ include($ruta.'header1.php');
                                                             <th>Equipo</th>
                                                             <th>Hora</th>
                                                             <th>Umbral</th>
-                                                            <th>Observaciones</th>
+                                                            <th>Nota de evolución</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>";

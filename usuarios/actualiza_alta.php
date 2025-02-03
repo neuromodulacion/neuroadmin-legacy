@@ -26,7 +26,6 @@ switch ($option) {
 	case 'perfil':
 
 		$update ="
-		
 		UPDATE admin
 		SET
 			admin.nombre ='$nombre',
@@ -38,8 +37,32 @@ switch ($option) {
 		WHERE
 			admin.usuario_id = $usuario_idx";
 			
-		    // echo $update."<hr>";
-		$result_insert = ejecutar($update);
+			// echo $update."<hr>";
+			$result_insert = ejecutar($update);
+
+			// Verificar si existe el campo cedula para el usuario
+			$check_query = "SELECT COUNT(*) as count FROM cedulas WHERE usuario_id = $usuario_idx and principal = 'si'";
+			$result_check = ejecutar($check_query);
+			$row = mysqli_fetch_assoc($result_check);
+
+			if ($row['count'] > 0) {
+				// Si existe, hacer update
+				$update = "
+				UPDATE cedulas
+				SET
+					cedulas.cedula ='$cedula',
+					cedulas.principal = 'si'
+				WHERE
+					cedulas.usuario_id = $usuario_idx";
+			} else {
+				// Si no existe, hacer insert
+				$update = "
+				INSERT INTO cedulas (usuario_id, cedula, principal)
+				VALUES ($usuario_idx, '$cedula', 'si')";
+			}
+
+			// echo $update."<hr>";
+			$result_insert = ejecutar($update);
 		?>            
 <!-- HTML para mostrar el mensaje de éxito de registro -->
 <!DOCTYPE html>
@@ -76,10 +99,11 @@ switch ($option) {
                 <div><h2>Se guardo correctamente la información</h2></div>
                 <div style="text-align: center"> 
                     <div style="width: 90% !important; text-align: center">
-						        	Registro: <?php echo $usuario_id; ?><br>
-						        	Nombre: <?php echo $nombre; ?><br>
-						        	Correo Electronico: <?php echo $usuario; ?><br>
-						        	Telefono: <?php echo $telefono; ?><br><br>			        	 
+						        	<b>Registro:</b> <?php echo $usuario_id; ?><br>
+						        	<b>Nombre:</b> <?php echo $nombre; ?><br>
+						        	<b>Correo Electronico:</b> <?php echo $usuario; ?><br>
+						        	<b>Telefono:</b> <?php echo $telefono; ?><br>
+									<b>Cedula Profesional:</b> <?php echo $cedula; ?><br><br>			        	 
 							<a href="<?php echo $ruta; ?>menu.php" class="btn bg-green btn-lg waves-effect">CONTINUAR</a>     	      	
 				    	</div>         		
 						</div>                
@@ -200,6 +224,30 @@ switch ($option) {
 			
 		     // echo "<hr>".$update."<hr>";
 		$result_insert = ejecutar($update);
+
+			// Verificar si existe el campo cedula para el usuario
+			$check_query = "SELECT COUNT(*) as count FROM cedulas WHERE usuario_id = $usuario_idx and principal = 'si'";
+			$result_check = ejecutar($check_query);
+			$row = mysqli_fetch_assoc($result_check);
+
+			if ($row['count'] > 0) {
+				// Si existe, hacer update
+				$update = "
+				UPDATE cedulas
+				SET
+					cedulas.cedula ='$cedula',
+					cedulas.principal = 'si'
+				WHERE
+					cedulas.usuario_id = $usuario_idx";
+			} else {
+				// Si no existe, hacer insert
+				$update = "
+				INSERT INTO cedulas (usuario_id, cedula, principal)
+				VALUES ($usuario_idx, '$cedula', 'si')";
+			}
+
+			// echo $update."<hr>";
+			$result_insert = ejecutar($update);		
 		?>            
 <!-- HTML para mostrar el mensaje de éxito de registro -->
 <!DOCTYPE html>
@@ -237,10 +285,11 @@ switch ($option) {
 					<div><h2>Se guardo correctamente la información</h2></div>
 					<div  style="text-align: center"> 
 						<div style="width: 90% !important; text-align: left">
-									Registro: <?php echo $usuario_id; ?><br>
-									Nombre: <?php echo $nombre; ?><br>
-									Correo Electronico: <?php echo $usuario; ?><br>
-									Telefono: <?php echo $telefono; ?><br><br>			        	 
+							<b>Registro:</b> <?php echo $usuario_id; ?><br>
+							<b>Nombre:</b> <?php echo $nombre; ?><br>
+							<b>Correo Electronico:</b> <?php echo $usuario; ?><br>
+							<b>Telefono:</b> <?php echo $telefono; ?><br>
+							<b>Cedula Profesional:</b> <?php echo $cedula; ?><br><br>			        	 
 							<a href="<?php echo $ruta; ?>menu.php" class="btn bg-green btn-lg waves-effect">CONTINUAR</a>     	      	
 						</div>                
 					</div>
