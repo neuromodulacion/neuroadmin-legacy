@@ -2,6 +2,14 @@
 // archivo actualizado
 // Iniciar la sesión
 session_start();
+
+if (isset($_POST['timezone'])) {
+    $_SESSION['timezone'] = $_POST['timezone'];
+    echo "Timezone guardado: " . $_SESSION['timezone'];
+} else {
+    echo "No se recibió la zona horaria.";
+}
+
 //extract($_SESSION);
 //print_r($_SESSION);
 $timezone = $_SESSION['timezone'];

@@ -29,6 +29,20 @@
         .then(data => console.log('Zona horaria enviada:', data))
         .catch(error => console.error('Error al enviar la zona horaria:', error));
     </script>
+    <script>
+        // Detectar la zona horaria del usuario y enviarla al servidor
+        function detectarTimezone() {
+            var timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "guardar_timezone.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send("timezone=" + encodeURIComponent(timezone));
+        }
+
+        // Ejecutar la función al cargar la página
+        window.onload = detectarTimezone;     
+    </script>
+
 </head>
 <body class="login-page">
     <div class="login-box">

@@ -6,7 +6,7 @@ iconv_set_encoding('internal_encoding', 'utf-8');
 header('Content-Type: text/html; charset=UTF-8');
 date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=mktime();
+$_SESSION['time']=time();
 
 	//Import PHPMailer classes into the global namespace
 	//These must be at the top of your script, not inside a function
@@ -70,7 +70,7 @@ if ($cnt !== 0) { ?>
         <div> <h1>Ya esta registrado anteriormente</h1></div>
         <div> <h2>Usuario registrado intente recuperar su contraseña</h2></div>
         <div align="center"> 
-			<div style="width: 90% ;!important;" align="left" >
+            <div style="width: 90% !important;" align="left" >
 				<h2><?php echo $mensaje; ?></h2>
 			        	
 			        	Nombre: <?php echo $nombre; ?><br>
