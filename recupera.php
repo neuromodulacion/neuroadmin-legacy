@@ -1,179 +1,144 @@
 <?php
-include('functions/funciones_mysql.php');
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+$ruta = "";
+// Cargar dependencias de PHPMailer
+require 'vendor/autoload.php';
+
+// Incluir funciones necesarias
+include('functions/conexion_mysqli.php');  // Conexión segura a MySQL
+
+// Incluir el archivo de configuración y obtener las credenciales
+$configPath = $ruta.'../config.php';
+
+if (!file_exists($configPath)) {
+    die('Archivo de configuración no encontrado.');
+}
+
+$config = require $configPath;
+
+// Crear una instancia de la clase Mysql
+$mysql = new Mysql($config['servidor'], $config['usuario'], $config['contrasena'], $config['baseDatos']);
 include('functions/email.php');
-//session_start();
-error_reporting(7);
-iconv_set_encoding('internal_encoding', 'utf-8'); 
+
+session_start();
+error_reporting(E_ALL);
+mb_internal_encoding('UTF-8'); // Reemplazo de `iconv_set_encoding()`
 header('Content-Type: text/html; charset=UTF-8');
 date_default_timezone_set('America/Monterrey');
 setlocale(LC_TIME, 'es_ES.UTF-8');
-$_SESSION['time']=time();
 
-$ruta = "../";
-extract($_POST);
-// print_r($_POST);
+$_SESSION['time'] = time();
 
+// Sanitizar datos de entrada
+$email = $_POST['email'] ?? '';
 
-$sql = "SELECT
-			* 
-		FROM
-			admin
-		WHERE
-			usuario ='$email'"; 
-$result_insert = ejecutar($sql);
-$cnt = mysqli_num_rows($result_insert);
-$row = mysqli_fetch_array($result_insert);
-extract($row);
-// echo $cnt;
+// Validar que el email no esté vacío
+if (empty($email)) {
+    die('El email es obligatorio.');
+}
 
-if ($cnt == 0) { ?>
-	
-<!DOCTYPE html>
-<html>
+// Consulta SQL segura con prepared statements
+$sql = "SELECT * FROM admin WHERE usuario = ?";
+$params = [$email];
 
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Alta</title>
-    <!-- Favicon-->
-    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+// Ejecutar consulta segura
+$result = $mysql->consulta($sql, $params);
+$cnt = $result['numFilas'];
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-
-    <!-- Bootstrap Core Css -->
-    <link href="../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Waves Effect Css -->
-    <link href="../plugins/node-waves/waves.css" rel="stylesheet" />
-
-    <!-- Custom Css -->
-    <link href="../css/style.css" rel="stylesheet">
-</head>
-
-<!-- <body class="five-zero-zero"></body>-->
-<body class="theme-<?php echo $body; ?>">	
-    <div style="text-align: center;" class="five-zero-zero-container">
-        <div> <h1>No esta registrado este usuario</h1></div>
-        <div> <h2>Usuario no registrado favor de registrarse</h2></div>
-        <div style="text-align: center;"> 
-			<div style="width: 90% !important; text-align: left;" >
-			        	 
-				<a href="sign-up.html" class="btn bg-green btn-lg waves-effect">REGISTRARCE</a>     	      	
-	    	</div>        		
+if ($cnt == 0) {
+?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <title>Alta</title>
+        <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+        <link href="../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="../plugins/node-waves/waves.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet">
+    </head>
+    <body class="theme-<?php echo $body; ?>">
+        <div style="text-align: center;">
+            <h1>No está registrado este usuario</h1>
+            <h2>Favor de registrarse</h2>
+            <a href="sign-up.html" class="btn bg-green btn-lg waves-effect">REGISTRARSE</a>
         </div>
-    </div>
+    </body>
+    </html>
+<?php
+} else {
+    // Obtener datos del usuario
+    $row = $result['resultado'][0];
+    $nombre = $row['nombre'];
+    $pwd = $row['password']; // Asegúrate de encriptar las contraseñas en la BD.
 
-	            
-    <!-- Jquery Core Js -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
+    // Cuerpo del correo
+    $asunto = "Recuperación de contraseña - $nombre";
+    $cuerpo = "
+    <html>
+    <head>
+        <title>Recuperación de contraseña</title>
+    </head>
+    <body>
+        <p>Estimado(a) <strong>$nombre</strong>,</p>
+        <p>Hemos recibido una solicitud para recuperar su contraseña.</p>
+        <p><strong>Contraseña:</strong> $pwd</p>
+        <p>Si no solicitó esta recuperación, contacte a soporte.</p>
+        <p>Saludos,<br><strong>Equipo de Neuromodulación GDL</strong></p>
+    </body>
+    </html>";
 
-    <!-- Bootstrap Core Js -->
-    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+    // Configuración del correo
+    $mail = new PHPMailer(true);
+    try {
+        $mail->CharSet = 'UTF-8';
+        $mail->isSMTP();
+        $mail->Host = 'mail.neuromodulacion.com.mx';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'contacto@neuromodulacion.com.mx';
+        $mail->Password = '1n%v&_*&FFc~'; // ⚠️ Almacena esto en una variable de entorno segura
+        $mail->Port = 465;
+        $mail->setFrom('contacto@neuromodulacion.com.mx', 'Neuromodulación GDL');
+        $mail->addAddress($email, $nombre);
+        $mail->addBCC('contacto@neuromodulacion.com.mx');
+        $mail->addCC('sanzaleonardo@gmail.com');
 
-    <!-- Waves Effect Plugin Js -->
-    <script src="../../plugins/node-waves/waves.js"></script>
-</body>
+        $mail->isHTML(true);
+        $mail->Subject = $asunto;
+        $mail->Body = $cuerpo;
+        $mail->AltBody = strip_tags($cuerpo);
 
-</html> 	
-
-<?php	
-
-}else{ 
-
-
-$destinatario = $email; 
-$asunto = "Recuperación de contraseña ".$nombre; 
- 
-$cuerpo = ' 
-<html> 
-<head> 
-   <title>Recuperación de contraseña</title> 
-</head> 
-<body> 
-<p>Estimado(a) ' . $nombre . ',</p>
-<p>Hemos recibido una solicitud para recuperar su contraseña. A continuación, encontrará su contraseña registrada:</p>
-<p><strong>Contraseña:</strong> ' . $pwd . '</p>
-<p>Si no solicitó esta recuperación de contraseña, por favor, póngase en contacto con nuestro equipo de soporte inmediatamente.</p>
-<p>Saludos cordiales,</p>
-<p><strong>Equipo de Soporte</strong><br>
-Neuromodulación Gdl</p>
-</body> 
-</html> 
-'; 
-
-
-// 
-$accion = '';
-// echo $asunto." asunto<hr>";
-// echo $cuerpo." cuerpo<hr>";
-// echo $usuario_id." usuario_id<hr>";
-// echo $accion." accion<hr>";
-
-$mensaje = correo_electronico_base($asunto,$cuerpo,$usuario_id,$accion);
-
-
-// echo $mail;
-// //$mail = mail($destinatario,$asunto,$cuerpo,$headers); 
-// // echo "hola mundo";
-// 
-// if ($mail == 1) {
-	// $mensaje = "<h1>Mensaje Enviado</h1>";
-// } else {
-	// $mensaje = "<h1>ERROR No Enviado</h1>";
-// } 
-
-?>            
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Generado</title>
-    <!-- Favicon-->
-    <link rel="icon" href="images/favicon.png" type="image/x-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-
-    <!-- Bootstrap Core Css -->
-    <link href="<?php echo $ruta; ?>plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Waves Effect Css -->
-    <link href="<?php echo $ruta; ?>plugins/node-waves/waves.css" rel="stylesheet" />
-
-    <!-- Custom Css -->
-    <link href="<?php echo $ruta; ?>css/style.css" rel="stylesheet">
-</head>
-
-<!-- <body class="five-zero-zero"></body>-->
-<body  align="center"  class="theme-<?php echo $body; ?>">	
-	<div align="center" style="padding-top: 10%" class="container">
-	    <div style="width: 500px; padding: 15px" align="center" class="card">
-	        <div> <h1>Exito</h1></div>
-	        <div> <h2>Se mando la contraseña a su correo</h2>
-	        	</div>
-	        <div align="center"> 
-				<h3>Favor de checar su correo para concluir con el proceso</h3>
-				<?php echo $mensaje; ?>
-				<a href="inicio.html" class="btn bg-green btn-lg waves-effect">CONTINUAR</a>        		
-	        </div>
-	    </div>
-	</div>
-	            
-    <!-- Jquery Core Js -->
-    <script src="<?php echo $ruta; ?>plugins/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core Js -->
-    <script src="<?php echo $ruta; ?>plugins/bootstrap/js/bootstrap.js"></script>
-
-    <!-- Waves Effect Plugin Js -->
-    <script src="<?php echo $ruta; ?>plugins/node-waves/waves.js"></script>
-</body>
-
-</html>   
-
-<?php } ?>
+        $mail->send();
+        $mensaje = '<h3>El mensaje ha sido enviado con éxito</h3>';
+    } catch (Exception $e) {
+        $mensaje = "Error al enviar correo: {$mail->ErrorInfo}";
+    }
+?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <title>Generado</title>
+        <link rel="icon" href="images/favicon.png" type="image/x-icon">
+        <link href="../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="../plugins/node-waves/waves.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet">
+    </head>
+    <body class="theme-<?php echo $body; ?>">
+        <div align="center" class="container" style="padding-top: 10%">
+            <div class="card" style="width: 500px; padding: 15px" align="center">
+                <h1>Éxito</h1>
+                <h2>Se envió la contraseña a su correo</h2>
+                <h3>Revise su correo para continuar</h3>
+                <?php echo $mensaje; ?>
+                <a href="inicio.html" class="btn bg-green btn-lg waves-effect">CONTINUAR</a>
+            </div>
+        </div>
+    </body>
+    </html>
+<?php
+}
+?>
